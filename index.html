@@ -403,6 +403,7 @@
         inset 0 0 0 1px rgba(255,255,255,0.1);
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
       transform: translateY(-10px) scale(0.96);
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
@@ -437,6 +438,7 @@
     .menu-dropdown.show {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
       transform: translateY(0) scale(1);
     }
     
@@ -911,23 +913,18 @@
     }
     
     .store-badge {
-      height: 54px;
-      width: 158px;
+      height: 50px;
+      width: 165px;
       object-fit: contain;
       object-position: center;
       display: block;
       transition: opacity 0.3s ease;
     }
     
-    
-    .app-store-badge {
-      height: 54px;
-      width: 158px;
-    }
-    
+    .app-store-badge,
     .google-play-badge {
-      height: 58px;
-      width: 170px;
+      height: 50px;
+      width: 165px;
     }
     
     [data-theme="dark"] .app-store-badge {
@@ -1024,14 +1021,11 @@
         min-height: 72px;
       }
       
-      .store-badge {
-        height: 48px;
-        width: 140px;
-      }
-      
+      .store-badge,
+      .app-store-badge,
       .google-play-badge {
-        height: 52px;
-        width: 152px;
+        height: 46px;
+        width: 150px;
       }
       
       .coming-soon {
@@ -1757,26 +1751,89 @@
     }
     
     /* ============================================
-       Contact Section - Chat UI
+       Floating Chat Widget
        ============================================ */
-    .contact {
-      padding: 4rem 2rem;
-      max-width: 520px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
+    .chat-widget {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 99999;
+      font-family: inherit;
+    }
+    
+    [dir="ltr"] .chat-widget {
+      right: auto;
+      left: 1.5rem;
     }
 
-    .contact-card {
+    .chat-widget-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,140,242,0.4);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1001;
+      pointer-events: auto;
+    }
+
+    .chat-widget-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(0,140,242,0.5);
+    }
+
+    .chat-widget-panel {
+      position: absolute;
+      bottom: calc(100% + 0.75rem);
+      right: 0;
+      width: 380px;
+      max-width: calc(100vw - 2rem);
+      max-height: 500px;
       background: var(--glass);
       backdrop-filter: blur(30px) saturate(180%);
       -webkit-backdrop-filter: blur(30px) saturate(180%);
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid var(--glass-border);
       overflow: hidden;
-      box-shadow:
-        0 8px 32px var(--shadow-dark),
-        inset 0 0 0 1px rgba(255,255,255,0.1);
+      box-shadow: 0 12px 48px var(--shadow-dark);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    [dir="ltr"] .chat-widget-panel {
+      right: auto;
+      left: 0;
+    }
+
+    .chat-widget.open .chat-widget-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .chat-widget.open .chat-widget-btn {
+      transform: rotate(0deg);
+    }
+
+    .contact-card {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      max-height: 480px;
+      display: flex;
+      flex-direction: column;
     }
 
     .chat-header {
@@ -1810,7 +1867,7 @@
     }
 
     .chat-messages {
-      height: 320px;
+      height: 280px;
       overflow-y: auto;
       padding: 1.25rem;
       display: flex;
@@ -1936,21 +1993,113 @@
     }
 
     @media (max-width: 768px) {
-      .contact {
-        padding: 3rem 1.5rem;
-      }
-      .chat-messages {
-        height: 280px;
-      }
+      .chat-widget-panel { width: 340px; }
+      .chat-messages { height: 260px; }
     }
 
     @media (max-width: 480px) {
-      .contact {
-        padding: 2.5rem 1rem;
-      }
-      .chat-messages {
-        height: 260px;
-      }
+      .chat-widget { bottom: 1rem; right: 1rem; }
+      [dir="ltr"] .chat-widget { left: 1rem; }
+      .chat-widget-panel { width: calc(100vw - 2rem); max-height: 85vh; }
+      .chat-messages { height: 240px; }
+    }
+
+    /* Admin Panel */
+    .admin-panel {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .admin-panel-inner {
+      background: var(--glass-strong);
+      backdrop-filter: blur(30px);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .admin-header {
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-header h2 { font-size: 1.2rem; margin: 0; }
+    .admin-close {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    .admin-conversations {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0.5rem;
+    }
+    .admin-conv-item {
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .admin-conv-item:hover { background: var(--bg-mid); }
+    .admin-conv-item .name { font-weight: 600; color: var(--text-primary); }
+    .admin-conv-item .email { font-size: 0.85rem; color: var(--text-secondary); }
+    .admin-chat { display: flex; flex-direction: column; height: 400px; }
+    .admin-chat-header {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--glass-border);
+      font-weight: 600;
+    }
+    .admin-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .admin-msg { padding: 0.6rem 1rem; border-radius: 12px; max-width: 85%; font-size: 0.95rem; }
+    .admin-msg.visitor { align-self: flex-start; background: var(--bg-mid); }
+    .admin-msg.admin { align-self: flex-end; background: var(--primary); color: white; }
+    .admin-chat-input-wrap {
+      padding: 1rem;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      gap: 0.5rem;
+    }
+    .admin-chat-input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .admin-chat-send {
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     /* Reduced motion preference */
@@ -2118,38 +2267,65 @@
     </div>
   </section>
 
-  <!-- Contact Section - Chat -->
-  <section class="contact" id="contact">
-    <div class="contact-card">
-      <div class="chat-header">
-        <div class="chat-header-avatar">🤖</div>
-        <div>
-          <div class="chat-header-title" data-i18n="chatBotTitle">مساعد PARKINZI</div>
-          <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
+  <!-- Floating Chat Widget -->
+  <div class="chat-widget" id="chatWidget">
+    <button type="button" class="chat-widget-btn" id="chatWidgetBtn" aria-label="فتح الدردشة" title="تواصل معنا" onclick="this.closest('.chat-widget').classList.toggle('open'); event.stopPropagation();">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
+    <div class="chat-widget-panel">
+      <div class="contact-card">
+        <div class="chat-header">
+          <div class="chat-header-avatar">🤖</div>
+          <div>
+            <div class="chat-header-title" data-i18n="chatBotTitle">مساعد PARKINZI</div>
+            <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-wrap">
+          <input type="text" class="chat-input" id="chatInput" placeholder="" autocomplete="off" maxlength="500">
+          <button type="button" class="chat-send-btn" id="chatSendBtn" aria-label="إرسال">
+            <span class="spinner" style="display:none"></span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="chatSendIcon">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+          </button>
         </div>
       </div>
-      <div class="chat-messages" id="chatMessages"></div>
-      <div class="chat-input-wrap">
-        <input type="text" class="chat-input" id="chatInput" placeholder="" autocomplete="off" maxlength="500">
-        <button type="button" class="chat-send-btn" id="chatSendBtn" aria-label="إرسال">
-          <span class="spinner" style="display:none"></span>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="chatSendIcon">
-            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-          </svg>
-        </button>
-      </div>
     </div>
-  </section>
+  </div>
 
   <footer class="footer">
     <p data-i18n="copyright">© 2026 PARKINZI. جميع الحقوق محفوظة.</p>
     <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
       <a href="privacy.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="privacyLink">سياسة الخصوصية</a>
       <a href="refund.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="refundLink">سياسة الاسترجاع</a>
-      <a href="#contact" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="contactLink">تواصل معنا</a>
+      <a href="#" id="footerContactLink" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="contactLink">تواصل معنا</a>
     </p>
   </footer>
 
+  <!-- Admin Panel - يظهر عند زيارة ?admin=parkinzi -->
+  <div id="adminPanel" class="admin-panel" style="display:none">
+    <div class="admin-panel-inner">
+      <div class="admin-header">
+        <h2>إدارة المحادثات</h2>
+        <button type="button" class="admin-close" id="adminClose">✕</button>
+      </div>
+      <div class="admin-conversations" id="adminConversations"></div>
+      <div class="admin-chat" id="adminChat" style="display:none">
+        <div class="admin-chat-header" id="adminChatHeader"></div>
+        <div class="admin-chat-messages" id="adminChatMessages"></div>
+        <div class="admin-chat-input-wrap">
+          <input type="text" class="admin-chat-input" id="adminChatInput" placeholder="اكتب ردك...">
+          <button type="button" class="admin-chat-send" id="adminChatSend">إرسال</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const translations = {
       ar: {
@@ -2193,6 +2369,9 @@
         chatAskMessage: "اكتب رسالتك:",
         chatSending: "جاري الإرسال...",
         chatDone: "تم إرسال رسالتك بنجاح",
+        chatLiveHint: "يمكنك متابعة المحادثة هنا وسنرد عليك فوراً.",
+        chatTypeMessage: "اكتب رسالتك...",
+        chatWelcomeBack: "مرحباً مجدداً! يمكنك متابعة المحادثة.",
         language: "اللغة",
         appearance: "المظهر",
         light: "فاتح",
@@ -2239,6 +2418,9 @@
         chatAskMessage: "Type your message:",
         chatSending: "Sending...",
         chatDone: "Message sent successfully",
+        chatLiveHint: "You can continue the conversation here. We'll reply shortly.",
+        chatTypeMessage: "Type your message...",
+        chatWelcomeBack: "Welcome back! You can continue the conversation.",
         language: "Language",
         appearance: "Appearance",
         light: "Light",
@@ -2285,6 +2467,9 @@
         chatAskMessage: "Tapez votre message :",
         chatSending: "Envoi en cours...",
         chatDone: "Message envoyé avec succès",
+        chatLiveHint: "Vous pouvez continuer la conversation ici.",
+        chatTypeMessage: "Tapez votre message...",
+        chatWelcomeBack: "Bienvenue ! Continuez la conversation.",
         language: "Langue",
         appearance: "Apparence",
         light: "Clair",
@@ -2331,6 +2516,9 @@
         chatAskMessage: "اپنا پیغام لکھیں:",
         chatSending: "بھیج رہا ہے...",
         chatDone: "پیغام کامیابی سے بھیج دیا گیا",
+        chatLiveHint: "آپ یہاں بات جاری رکھ سکتے ہیں۔",
+        chatTypeMessage: "اپنا پیغام لکھیں...",
+        chatWelcomeBack: "خوش آمدید! بات جاری رکھیں۔",
         language: "زبان",
         appearance: "ظہور",
         light: "روشن",
@@ -2406,48 +2594,51 @@
       }
     }
 
-    // Language Menu Toggle
+    // Language & Theme Menu Toggle
     const langMenuBtn = document.getElementById("langMenuBtn");
-    const langDropdown = document.getElementById("langDropdown");
-    
-    langMenuBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      langDropdown.classList.toggle("show");
-      themeDropdown.classList.remove("show");
-    });
-
-    // Theme Menu Toggle
     const themeMenuBtn = document.getElementById("themeMenuBtn");
+    const langDropdown = document.getElementById("langDropdown");
     const themeDropdown = document.getElementById("themeDropdown");
     
-    themeMenuBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      themeDropdown.classList.toggle("show");
-      langDropdown.classList.remove("show");
-    });
+    if (langMenuBtn && langDropdown) {
+      langMenuBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        langDropdown.classList.toggle("show");
+        if (themeDropdown) themeDropdown.classList.remove("show");
+      });
+    }
+    
+    if (themeMenuBtn && themeDropdown) {
+      themeMenuBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        themeDropdown.classList.toggle("show");
+        if (langDropdown) langDropdown.classList.remove("show");
+      });
+    }
 
-    // Language Selection
     document.querySelectorAll("#langDropdown .menu-dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
         const selectedLang = item.dataset.lang;
-        setLang(selectedLang);
-        langDropdown.classList.remove("show");
+        if (selectedLang) { setLang(selectedLang); langDropdown.classList.remove("show"); }
       });
     });
 
-    // Theme Selection
     document.querySelectorAll("#themeDropdown .menu-dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
         const selectedTheme = item.dataset.theme;
-        setTheme(selectedTheme);
-        themeDropdown.classList.remove("show");
+        if (selectedTheme) { setTheme(selectedTheme); themeDropdown.classList.remove("show"); }
       });
     });
 
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", () => {
-      langDropdown.classList.remove("show");
-      themeDropdown.classList.remove("show");
+    document.addEventListener("click", (e) => {
+      if (langMenuBtn && themeMenuBtn && !langMenuBtn.contains(e.target) && !themeMenuBtn.contains(e.target)) {
+        if (langDropdown) langDropdown.classList.remove("show");
+        if (themeDropdown) themeDropdown.classList.remove("show");
+      }
     });
 
     // Initialize
@@ -2575,22 +2766,27 @@
     }, false);
     
     // ============================================
-    // Chat Bot - Supabase Integration
+    // Chat - Supabase Realtime (دردشة فورية)
+    // الجداول المطلوبة في Supabase - شغّل هذا SQL في SQL Editor:
+    // CREATE TABLE chat_conversations (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), visitor_name TEXT NOT NULL, visitor_email TEXT NOT NULL, subject TEXT NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW());
+    // CREATE TABLE chat_messages (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), conversation_id UUID NOT NULL REFERENCES chat_conversations(id) ON DELETE CASCADE, sender TEXT NOT NULL CHECK (sender IN ('visitor','admin')), content TEXT NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW());
+    // ثم: Database > Replication > أضف chat_messages للـ publication
     // ============================================
     const SUPABASE_URL = "https://brqsvtobletrlkpkhooc.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
+    
+    let supabase = null;
+    try {
+      if (typeof window.supabase !== "undefined" && window.supabase.createClient) {
+        const { createClient } = window.supabase;
+        supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch (e) {}
     
     const chatMessages = document.getElementById("chatMessages");
     const chatInput = document.getElementById("chatInput");
     const chatSendBtn = document.getElementById("chatSendBtn");
     const chatSendIcon = document.getElementById("chatSendIcon");
-    
-    const chatSteps = {
-      subject: { next: "name", key: "subject" },
-      name: { next: "email", key: "name" },
-      email: { next: "message", key: "email" },
-      message: { next: "send", key: "message" }
-    };
     
     const subjectOptions = [
       { value: "general_inquiry", i18n: "generalInquiry" },
@@ -2599,7 +2795,7 @@
       { value: "billing", i18n: "billingOpt" }
     ];
     
-    let chatState = { step: "subject", data: {} };
+    let chatState = { step: "subject", data: {}, conversationId: null, realtimeChannel: null };
     
     function addChatMsg(text, isBot, options = null) {
       const div = document.createElement("div");
@@ -2632,19 +2828,32 @@
       chatState.step = "name";
       document.querySelectorAll(".chat-option-btn").forEach((b) => b.remove());
       addChatMsg(translations[lang()].chatAskName, true);
-      setInputPlaceholder(translations[lang()].contactName);
+      chatInput.placeholder = translations[lang()].contactName;
     }
     
-    function setInputPlaceholder(placeholder) {
-      chatInput.placeholder = placeholder;
+    function setInputPlaceholder(ph) { chatInput.placeholder = ph; }
+    
+    function subscribeRealtime(convId) {
+      if (!supabase || chatState.realtimeChannel) return;
+      chatState.realtimeChannel = supabase.channel("chat-" + convId)
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_messages", filter: "conversation_id=eq." + convId }, (payload) => {
+          const m = payload.new;
+          if (m.sender === "admin") {
+            addChatMsg(m.content, true);
+          }
+        })
+        .subscribe();
     }
     
-    function initChat() {
-      chatMessages.innerHTML = "";
-      chatState = { step: "subject", data: {} };
+    async function startLiveChat(convId) {
+      chatState.conversationId = convId;
+      localStorage.setItem("parkinzi_conv", convId);
+      chatState.step = "live";
       const t = translations[lang()];
-      addChatMsg(t.chatWelcome, true, subjectOptions.map((o) => ({ value: o.value, label: t[o.i18n] })));
-      setInputPlaceholder(t.chatTypeOrSelect);
+      addChatMsg(t.contactSuccess + " " + t.chatLiveHint, true);
+      setInputPlaceholder(t.chatTypeMessage);
+      chatInput.disabled = false;
+      subscribeRealtime(convId);
     }
     
     async function sendToSupabase() {
@@ -2653,27 +2862,38 @@
       chatSendBtn.querySelector(".spinner").style.display = "block";
       const t = translations[lang()];
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+        const convRes = await fetch(`${SUPABASE_URL}/rest/v1/chat_conversations`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify(chatState.data)
+          headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "Prefer": "return=representation" },
+          body: JSON.stringify({ visitor_name: chatState.data.name, visitor_email: chatState.data.email, subject: chatState.data.subject })
         });
-        if (res.ok || res.status === 201) {
-          const botMsgs = chatMessages.querySelectorAll(".chat-msg.bot");
-          if (botMsgs.length) botMsgs[botMsgs.length - 1].remove();
-          addChatMsg(t.contactSuccess, true);
-          chatState.step = "done";
-          chatInput.placeholder = t.chatDone || "تم إرسال رسالتك";
-          chatInput.disabled = true;
-        } else throw new Error("Failed");
+        if (!convRes.ok) {
+          const fallback = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+            body: JSON.stringify(chatState.data)
+          });
+          if (fallback.ok) {
+            chatMessages.querySelectorAll(".chat-msg.bot").forEach((b) => b.remove());
+            addChatMsg(t.contactSuccess, true);
+            chatState.step = "done";
+            chatInput.placeholder = t.chatDone;
+            chatInput.disabled = true;
+          } else throw new Error("Failed");
+          return;
+        }
+        const convs = await convRes.json();
+        const convId = convs[0].id;
+        const msgRes = await fetch(`${SUPABASE_URL}/rest/v1/chat_messages`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+          body: JSON.stringify({ conversation_id: convId, sender: "visitor", content: chatState.data.message })
+        });
+        if (!msgRes.ok) throw new Error("Msg failed");
+        chatMessages.querySelectorAll(".chat-msg.bot").forEach((b) => b.remove());
+        await startLiveChat(convId);
       } catch (err) {
-        const botMsgs = chatMessages.querySelectorAll(".chat-msg.bot");
-        if (botMsgs.length) botMsgs[botMsgs.length - 1].remove();
+        chatMessages.querySelectorAll(".chat-msg.bot").forEach((b) => b.remove());
         addChatMsg(t.contactError, true);
         chatState.step = "message";
       } finally {
@@ -2683,12 +2903,27 @@
       }
     }
     
-    function handleChatSend() {
+    async function sendLiveMessage() {
       const text = chatInput.value.trim();
-      if (!text || chatState.step === "done") return;
+      if (!text || !chatState.conversationId || !supabase) return;
       addChatMsg(text, false);
       chatInput.value = "";
+      try {
+        await supabase.from("chat_messages").insert({ conversation_id: chatState.conversationId, sender: "visitor", content: text });
+      } catch (e) { addChatMsg(translations[lang()].contactError, true); }
+    }
+    
+    function handleChatSend() {
+      const text = chatInput.value.trim();
+      if (!text) return;
       const t = translations[lang()];
+      if (chatState.step === "live") {
+        sendLiveMessage();
+        return;
+      }
+      if (chatState.step === "done") return;
+      addChatMsg(text, false);
+      chatInput.value = "";
       if (chatState.step === "subject") {
         const opt = subjectOptions.find((o) => t[o.i18n] === text || o.value === text);
         chatState.data.subject = opt ? opt.value : "general_inquiry";
@@ -2713,15 +2948,136 @@
       }
     }
     
+    function initChat() {
+      chatMessages.innerHTML = "";
+      const savedConv = localStorage.getItem("parkinzi_conv");
+      if (savedConv && supabase) {
+        chatState = { step: "live", data: {}, conversationId: savedConv, realtimeChannel: null };
+        addChatMsg(translations[lang()].chatWelcomeBack, true);
+        setInputPlaceholder(translations[lang()].chatTypeMessage);
+        subscribeRealtime(savedConv);
+        supabase.from("chat_messages").select("content,sender").eq("conversation_id", savedConv).order("created_at").then(({ data, error }) => {
+          if (!error && data && data.length) data.forEach((m) => addChatMsg(m.content, m.sender === "admin"));
+        }).catch(() => {});
+      } else {
+        chatState = { step: "subject", data: {}, conversationId: null, realtimeChannel: null };
+        const t = translations[lang()];
+        addChatMsg(t.chatWelcome, true, subjectOptions.map((o) => ({ value: o.value, label: t[o.i18n] })));
+        setInputPlaceholder(t.chatTypeOrSelect);
+      }
+    }
+    
     chatSendBtn.addEventListener("click", handleChatSend);
     chatInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        handleChatSend();
-      }
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleChatSend(); }
     });
     
     initChat();
+    
+    // Chat widget toggle
+    const chatWidget = document.getElementById("chatWidget");
+    const chatWidgetBtn = document.getElementById("chatWidgetBtn");
+    const footerContactLink = document.getElementById("footerContactLink");
+    
+    function openChat() {
+      chatWidget.classList.add("open");
+    }
+    function closeChat() {
+      chatWidget.classList.remove("open");
+    }
+    function toggleChat() {
+      chatWidget.classList.toggle("open");
+    }
+    
+    if (footerContactLink) {
+      footerContactLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        openChat();
+      });
+    }
+    document.addEventListener("click", (e) => {
+      if (chatWidget && chatWidget.classList.contains("open") && !chatWidget.contains(e.target)) {
+        closeChat();
+      }
+    });
+    
+    // ============================================
+    // Admin Panel - ?admin=parkinzi
+    // ============================================
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("admin") === "parkinzi" && supabase) {
+      const adminPanel = document.getElementById("adminPanel");
+      const adminConvs = document.getElementById("adminConversations");
+      const adminChat = document.getElementById("adminChat");
+      const adminChatHeader = document.getElementById("adminChatHeader");
+      const adminChatMsgs = document.getElementById("adminChatMessages");
+      const adminInput = document.getElementById("adminChatInput");
+      const adminSend = document.getElementById("adminChatSend");
+      let currentConvId = null;
+      
+      adminPanel.style.display = "flex";
+      
+      document.getElementById("adminClose").onclick = () => {
+        adminPanel.style.display = "none";
+        window.history.replaceState({}, "", window.location.pathname);
+      };
+      
+      async function loadConversations() {
+        const { data } = await supabase.from("chat_conversations").select("*").order("created_at", { ascending: false });
+        adminConvs.innerHTML = "";
+        if (!data || !data.length) {
+          adminConvs.innerHTML = "<p style='padding:1rem;color:var(--text-secondary)'>لا توجد محادثات</p>";
+          return;
+        }
+        data.forEach((c) => {
+          const el = document.createElement("div");
+          el.className = "admin-conv-item";
+          el.innerHTML = `<div class="name">${c.visitor_name}</div><div class="email">${c.visitor_email} · ${c.subject}</div>`;
+          el.onclick = () => openConversation(c);
+          adminConvs.appendChild(el);
+        });
+      }
+      
+      async function openConversation(c) {
+        currentConvId = c.id;
+        adminChat.style.display = "flex";
+        adminChatHeader.textContent = `${c.visitor_name} (${c.visitor_email})`;
+        const { data } = await supabase.from("chat_messages").select("content,sender").eq("conversation_id", c.id).order("created_at");
+        adminChatMsgs.innerHTML = "";
+        if (data) data.forEach((m) => {
+          const div = document.createElement("div");
+          div.className = "admin-msg " + m.sender;
+          div.textContent = m.content;
+          adminChatMsgs.appendChild(div);
+        });
+        supabase.channel("admin-" + c.id).on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_messages", filter: "conversation_id=eq." + c.id }, (payload) => {
+          const m = payload.new;
+          const div = document.createElement("div");
+          div.className = "admin-msg " + m.sender;
+          div.textContent = m.content;
+          adminChatMsgs.appendChild(div);
+          adminChatMsgs.scrollTop = adminChatMsgs.scrollHeight;
+        }).subscribe();
+      }
+      
+      adminSend.onclick = async () => {
+        const text = adminInput.value.trim();
+        if (!text || !currentConvId) return;
+        await supabase.from("chat_messages").insert({ conversation_id: currentConvId, sender: "admin", content: text });
+        const div = document.createElement("div");
+        div.className = "admin-msg admin";
+        div.textContent = text;
+        adminChatMsgs.appendChild(div);
+        adminInput.value = "";
+        adminChatMsgs.scrollTop = adminChatMsgs.scrollHeight;
+      };
+      
+      adminInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); adminSend.click(); }
+      });
+      
+      loadConversations();
+    }
   </script>
 </body>
 </html>
