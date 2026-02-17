@@ -403,7 +403,6 @@
         inset 0 0 0 1px rgba(255,255,255,0.1);
       opacity: 0;
       visibility: hidden;
-      pointer-events: none;
       transform: translateY(-10px) scale(0.96);
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
@@ -438,7 +437,6 @@
     .menu-dropdown.show {
       opacity: 1;
       visibility: visible;
-      pointer-events: auto;
       transform: translateY(0) scale(1);
     }
     
@@ -2594,51 +2592,48 @@
       }
     }
 
-    // Language & Theme Menu Toggle
+    // Language Menu Toggle
     const langMenuBtn = document.getElementById("langMenuBtn");
-    const themeMenuBtn = document.getElementById("themeMenuBtn");
     const langDropdown = document.getElementById("langDropdown");
+    
+    langMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      langDropdown.classList.toggle("show");
+      themeDropdown.classList.remove("show");
+    });
+
+    // Theme Menu Toggle
+    const themeMenuBtn = document.getElementById("themeMenuBtn");
     const themeDropdown = document.getElementById("themeDropdown");
     
-    if (langMenuBtn && langDropdown) {
-      langMenuBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        langDropdown.classList.toggle("show");
-        if (themeDropdown) themeDropdown.classList.remove("show");
-      });
-    }
-    
-    if (themeMenuBtn && themeDropdown) {
-      themeMenuBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        themeDropdown.classList.toggle("show");
-        if (langDropdown) langDropdown.classList.remove("show");
-      });
-    }
+    themeMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      themeDropdown.classList.toggle("show");
+      langDropdown.classList.remove("show");
+    });
 
+    // Language Selection
     document.querySelectorAll("#langDropdown .menu-dropdown-item").forEach(item => {
-      item.addEventListener("click", (e) => {
-        e.stopPropagation();
+      item.addEventListener("click", () => {
         const selectedLang = item.dataset.lang;
-        if (selectedLang) { setLang(selectedLang); langDropdown.classList.remove("show"); }
+        setLang(selectedLang);
+        langDropdown.classList.remove("show");
       });
     });
 
+    // Theme Selection
     document.querySelectorAll("#themeDropdown .menu-dropdown-item").forEach(item => {
-      item.addEventListener("click", (e) => {
-        e.stopPropagation();
+      item.addEventListener("click", () => {
         const selectedTheme = item.dataset.theme;
-        if (selectedTheme) { setTheme(selectedTheme); themeDropdown.classList.remove("show"); }
+        setTheme(selectedTheme);
+        themeDropdown.classList.remove("show");
       });
     });
 
-    document.addEventListener("click", (e) => {
-      if (langMenuBtn && themeMenuBtn && !langMenuBtn.contains(e.target) && !themeMenuBtn.contains(e.target)) {
-        if (langDropdown) langDropdown.classList.remove("show");
-        if (themeDropdown) themeDropdown.classList.remove("show");
-      }
+    // Close dropdowns when clicking outside
+    document.addEventListener("click", () => {
+      langDropdown.classList.remove("show");
+      themeDropdown.classList.remove("show");
     });
 
     // Initialize
