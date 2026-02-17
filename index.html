@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <meta name="theme-color" content="#008cf2">
+  <meta name="theme-color" content="#1a2933" id="themeColorMeta">
   <meta name="description" content="PARKINZI - مواقف ذكية. وفر وقتك وطاقتك مع حل الوقوف الذكي">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,14 +23,14 @@
     
     /* Parkinzi - NeumorphicTheme - نفس الألوان من التطبيق */
     :root, [data-theme="light"] {
-      /* Primary Colors - مطابق NeumorphicTheme.Colors.primary */
-      --primary: rgb(0, 140, 242);        /* Color(0.0, 0.55, 0.95) */
-      --primary-light: rgb(25, 179, 255);  /* Color(0.1, 0.7, 1.0) */
-      --primary-dark: rgb(0, 128, 230);    /* Color(0.0, 0.5, 0.9) */
+      /* Primary Colors - أزرق أغمق للثيم */
+      --primary: rgb(0, 104, 184);        /* أزرق أغمق */
+      --primary-light: rgb(25, 140, 220); /* أزرق فاتح */
+      --primary-dark: rgb(0, 88, 160);    /* أزرق داكن */
       
-      /* Secondary Colors - مطابق NeumorphicTheme.Colors.secondary */
-      --secondary: rgb(51, 102, 204);      /* Color(0.2, 0.4, 0.8) */
-      --accent: rgb(77, 127, 230);         /* Color(0.3, 0.5, 0.9) */
+      /* Secondary Colors */
+      --secondary: rgb(40, 85, 170);      /* أزرق ثانوي */
+      --accent: rgb(60, 110, 200);        /* لون التمييز */
       
       /* Text Colors - مطابق NeumorphicTheme.Colors.text* */
       --text-primary: rgb(26, 26, 38);      /* Color(0.1, 0.1, 0.15) */
@@ -59,20 +59,22 @@
       
       /* Hero Colors */
       --hero-bg: rgb(250, 252, 255);
-      --hero-glow: rgba(0, 140, 242, 0.06);
+      --hero-glow: rgba(0, 104, 184, 0.06);
+      --primary-shadow: rgba(0, 104, 184, 0.3);
+      --primary-glow: rgba(0, 104, 184, 0.15);
       
       --white: #ffffff;
     }
 
     [data-theme="dark"] {
-      /* Primary Colors - مطابق NeumorphicTheme.Colors.primary (dark) */
-      --primary: rgb(0, 204, 255);          /* Color(0.0, 0.8, 1.0) */
-      --primary-light: rgb(51, 230, 255);   /* Color(0.2, 0.9, 1.0) */
-      --primary-dark: rgb(0, 179, 230);     /* Color(0.0, 0.7, 0.9) */
+      /* Primary Colors - أزرق أغمق للثيم الداكن */
+      --primary: rgb(0, 160, 210);          /* أزرق سماوي أغمق */
+      --primary-light: rgb(40, 180, 220);  /* أزرق فاتح */
+      --primary-dark: rgb(0, 140, 190);    /* أزرق داكن */
       
-      /* Secondary Colors - مطابق NeumorphicTheme.Colors.secondary (dark) */
-      --secondary: rgb(0, 204, 255);        /* Color(0.0, 0.8, 1.0) */
-      --accent: rgb(77, 179, 255);          /* Color(0.3, 0.7, 1.0) */
+      /* Secondary Colors */
+      --secondary: rgb(0, 160, 210);
+      --accent: rgb(50, 160, 210);
       
       /* Text Colors - مطابق NeumorphicTheme.Colors.text* (dark) */
       --text-primary: rgb(255, 255, 255);
@@ -101,7 +103,9 @@
       
       /* Hero Colors */
       --hero-bg: rgb(31, 46, 56);
-      --hero-glow: rgba(0, 204, 255, 0.04);
+      --hero-glow: rgba(0, 160, 210, 0.04);
+      --primary-shadow: rgba(0, 160, 210, 0.35);
+      --primary-glow: rgba(0, 160, 210, 0.2);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -391,7 +395,9 @@
       position: absolute;
       top: calc(100% + 0.5rem);
       right: 0;
-      min-width: 160px;
+      min-width: 240px;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
       background: var(--glass-strong);
       backdrop-filter: blur(30px) saturate(180%);
       -webkit-backdrop-filter: blur(30px) saturate(180%);
@@ -407,31 +413,33 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
       z-index: 1000;
-      padding: 6px;
+      padding: 8px 10px;
     }
     
     /* Better contrast for dropdown background */
     [data-theme="light"] .menu-dropdown {
       background: rgba(255, 255, 255, 0.98);
-      border-color: rgba(0, 140, 242, 0.15);
+      border-color: rgba(0, 104, 184, 0.15);
       box-shadow: 
-        0 8px 24px rgba(0, 140, 242, 0.12),
+        0 8px 24px rgba(0, 104, 184, 0.12),
         0 3px 8px rgba(0,0,0,0.06),
         inset 0 0 0 1px rgba(255,255,255,0.3);
     }
     
     [data-theme="dark"] .menu-dropdown {
       background: rgba(31, 46, 56, 0.95);
-      border-color: rgba(0, 204, 255, 0.2);
+      border-color: rgba(0, 160, 210, 0.2);
       box-shadow: 
         0 8px 24px rgba(0, 0, 0, 0.5),
-        0 3px 8px rgba(0, 204, 255, 0.15),
+        0 3px 8px rgba(0, 160, 210, 0.15),
         inset 0 0 0 1px rgba(255,255,255,0.08);
     }
     
     [dir="ltr"] .menu-dropdown {
-      right: auto;
-      left: 0;
+      right: 0;
+      left: auto;
+      direction: ltr;
+      text-align: left;
     }
     
     .menu-dropdown.show {
@@ -445,7 +453,8 @@
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 0.5rem;
       color: var(--text-primary);
       text-decoration: none;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -458,18 +467,30 @@
     
     [dir="ltr"] .menu-dropdown-item {
       flex-direction: row;
+      justify-content: flex-start;
+      direction: ltr;
+    }
+    
+    [dir="ltr"] .menu-dropdown-item .checkmark {
+      order: 1;
+    }
+    
+    [dir="ltr"] .menu-dropdown-item > span:not(.checkmark) {
+      order: 0;
     }
     
     .menu-dropdown-item > span:not(.checkmark) {
-      flex: 1;
+      flex: 1 1 auto;
+      min-width: min-content;
+      white-space: nowrap;
       text-align: right;
-      padding-right: 0.4rem;
+      padding-right: 0.5rem;
     }
     
     [dir="ltr"] .menu-dropdown-item > span:not(.checkmark) {
       text-align: left;
       padding-right: 0;
-      padding-left: 0.4rem;
+      padding-left: 0.5rem;
     }
     
     .menu-dropdown-item .checkmark {
@@ -479,9 +500,6 @@
       order: -1;
     }
     
-    [dir="ltr"] .menu-dropdown-item .checkmark {
-      order: -1;
-    }
     
     .menu-dropdown-item:last-child {
       margin-bottom: 0;
@@ -506,13 +524,13 @@
       color: white;
       transform: translateX(-2px);
       box-shadow: 
-        0 3px 8px rgba(0,140,242,0.25),
+        0 3px 8px rgba(0,104,184,0.25),
         inset 0 1px 0 rgba(255,255,255,0.2);
     }
     
     [data-theme="dark"] .menu-dropdown-item:hover {
       box-shadow: 
-        0 3px 8px rgba(0,204,255,0.35),
+        0 3px 8px rgba(0,160,210,0.35),
         inset 0 1px 0 rgba(255,255,255,0.2);
     }
     
@@ -528,8 +546,8 @@
     .menu-dropdown-item.active {
       background: linear-gradient(
         135deg,
-        rgba(0,140,242,0.1),
-        rgba(0,204,255,0.05)
+        rgba(0,104,184,0.1),
+        rgba(0,160,210,0.05)
       );
       border-right: 2px solid var(--primary);
       padding-right: calc(0.9rem - 2px);
@@ -543,7 +561,7 @@
     }
     
     [data-theme="dark"] .menu-dropdown-item.active {
-      background: rgba(0,204,255,0.12);
+      background: rgba(0,160,210,0.12);
     }
     
     .menu-dropdown-item .checkmark {
@@ -555,11 +573,11 @@
     
     /* Ensure checkmark is visible in both themes */
     [data-theme="light"] .menu-dropdown-item .checkmark {
-      color: rgb(0, 140, 242);
+      color: rgb(0, 104, 184);
     }
     
     [data-theme="dark"] .menu-dropdown-item .checkmark {
-      color: rgb(0, 204, 255);
+      color: rgb(0, 160, 210);
     }
     
     .menu-dropdown-item:hover .checkmark {
@@ -611,7 +629,7 @@
       width: auto;
       display: block;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 8px 20px rgba(0,140,242,0.2));
+      filter: drop-shadow(0 8px 20px rgba(0,104,184,0.2));
       animation: logoFloat 6s ease-in-out infinite;
       position: relative;
       z-index: 10;
@@ -628,7 +646,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 4px 12px rgba(0,140,242,0.3));
+      filter: drop-shadow(0 4px 12px rgba(0,104,184,0.3));
       animation: logoFloat 6s ease-in-out infinite;
     }
     
@@ -637,20 +655,20 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 4px 12px rgba(0,204,255,0.4));
+      filter: drop-shadow(0 4px 12px rgba(0,160,210,0.4));
     }
     
     [data-theme="dark"] .hero-logo-img {
-      filter: drop-shadow(0 8px 20px rgba(0,204,255,0.25));
+      filter: drop-shadow(0 8px 20px rgba(0,160,210,0.25));
     }
     
     .hero-logo-img:hover {
       transform: translateY(-8px) scale(1.02);
-      filter: drop-shadow(0 25px 50px rgba(0,140,242,0.3));
+      filter: drop-shadow(0 25px 50px rgba(0,104,184,0.3));
     }
     
     [data-theme="dark"] .hero-logo-img:hover {
-      filter: drop-shadow(0 25px 50px rgba(0,204,255,0.35));
+      filter: drop-shadow(0 25px 50px rgba(0,160,210,0.35));
     }
     
     @keyframes logoFloat {
@@ -661,6 +679,41 @@
         transform: translateY(-12px);
       }
     }
+
+    /* Brand logo inline - للاستخدام في أي مكان */
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15em;
+      direction: ltr;
+      vertical-align: middle;
+    }
+    .brand-logo-img {
+      height: 1.2em;
+      width: auto;
+      display: block;
+      vertical-align: middle;
+    }
+    .brand-logo-text {
+      font-family: 'Monoton', cursive;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    [data-theme="dark"] .brand-logo-text {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .brand-logo--sm .brand-logo-img { height: 1.4em; }
+    .brand-logo--sm .brand-logo-text { font-size: 1.4em; }
+    .brand-logo--xs .brand-logo-img { height: 1em; }
+    .brand-logo--xs .brand-logo-text { font-size: 1em; }
     
     /* Smooth logo transition on theme change */
     picture {
@@ -668,11 +721,11 @@
     }
 
     [data-theme="dark"] .btn-primary {
-      box-shadow: 0 4px 14px rgba(0,204,255,0.2);
+      box-shadow: 0 4px 14px rgba(0,160,210,0.2);
     }
 
     [data-theme="dark"] .btn-primary:hover {
-      box-shadow: 0 6px 20px rgba(0,204,255,0.3);
+      box-shadow: 0 6px 20px rgba(0,160,210,0.3);
     }
 
     .tagline {
@@ -688,7 +741,7 @@
     }
     
     [data-theme="dark"] .tagline {
-      text-shadow: 0 2px 20px rgba(0,204,255,0.3);
+      text-shadow: 0 2px 20px rgba(0,160,210,0.3);
     }
 
     .cta {
@@ -781,16 +834,16 @@
     .btn-primary {
       color: var(--white);
       box-shadow: 
-        0 10px 30px rgba(0,140,242,0.4),
-        0 0 20px rgba(0,140,242,0.2),
+        0 10px 30px rgba(0,104,184,0.4),
+        0 0 20px rgba(0,104,184,0.2),
         inset 0 1px 1px rgba(255,255,255,0.3);
     }
 
     .btn-primary:hover {
       transform: translateY(-4px) scale(1.05);
       box-shadow: 
-        0 20px 50px rgba(0,140,242,0.6),
-        0 0 40px rgba(0,140,242,0.4),
+        0 20px 50px rgba(0,104,184,0.6),
+        0 0 40px rgba(0,104,184,0.4),
         inset 0 1px 1px rgba(255,255,255,0.4);
     }
     
@@ -801,21 +854,21 @@
     .btn-primary:active {
       transform: translateY(-2px) scale(1.02);
       box-shadow: 
-        0 10px 25px rgba(0,140,242,0.5),
+        0 10px 25px rgba(0,104,184,0.5),
         inset 0 2px 4px rgba(0,0,0,0.2);
     }
 
     [data-theme="dark"] .btn-primary {
       box-shadow: 
-        0 10px 30px rgba(0,204,255,0.35),
-        0 0 25px rgba(0,204,255,0.25),
+        0 10px 30px rgba(0,160,210,0.35),
+        0 0 25px rgba(0,160,210,0.25),
         inset 0 1px 1px rgba(255,255,255,0.2);
     }
 
     [data-theme="dark"] .btn-primary:hover {
       box-shadow: 
-        0 20px 50px rgba(0,204,255,0.5),
-        0 0 50px rgba(0,204,255,0.35),
+        0 20px 50px rgba(0,160,210,0.5),
+        0 0 50px rgba(0,160,210,0.35),
         inset 0 1px 1px rgba(255,255,255,0.3);
     }
 
@@ -827,7 +880,7 @@
       border: 2px solid var(--primary);
       box-shadow: 
         0 8px 20px var(--shadow-dark),
-        0 0 20px rgba(0,140,242,0.1);
+        0 0 20px rgba(0,104,184,0.1);
       position: relative;
     }
     
@@ -847,8 +900,8 @@
       border-color: transparent;
       transform: translateY(-4px) scale(1.05);
       box-shadow: 
-        0 15px 40px rgba(0,140,242,0.4),
-        0 0 30px rgba(0,140,242,0.3);
+        0 15px 40px rgba(0,104,184,0.4),
+        0 0 30px rgba(0,104,184,0.3);
     }
     
     .btn-outline:hover::before {
@@ -1071,7 +1124,7 @@
     }
     
     [data-theme="dark"] .section-title::before {
-      box-shadow: 0 4px 20px rgba(0,204,255,0.6);
+      box-shadow: 0 4px 20px rgba(0,160,210,0.6);
     }
 
     .features-grid {
@@ -1147,8 +1200,8 @@
     .feature-card:hover {
       transform: translateY(-8px) scale(1.02) rotateX(2deg);
       box-shadow: 
-        0 20px 60px rgba(0,140,242,0.25),
-        0 0 40px rgba(0,140,242,0.15),
+        0 20px 60px rgba(0,104,184,0.25),
+        0 0 40px rgba(0,104,184,0.15),
         inset 0 0 0 1px rgba(255,255,255,0.2);
       border-color: var(--primary);
     }
@@ -1170,8 +1223,8 @@
     
     [data-theme="dark"] .feature-card:hover {
       box-shadow: 
-        0 20px 60px rgba(0,204,255,0.3),
-        0 0 50px rgba(0,204,255,0.2),
+        0 20px 60px rgba(0,160,210,0.3),
+        0 0 50px rgba(0,160,210,0.2),
         inset 0 0 0 1px rgba(255,255,255,0.15);
     }
 
@@ -1200,7 +1253,7 @@
     .feature-card:hover .feature-icon-wrapper {
       transform: translateY(-10px) scale(1.1);
       box-shadow: 
-        0 20px 60px rgba(0,140,242,0.3),
+        0 20px 60px rgba(0,104,184,0.3),
         inset 0 0 0 1px rgba(255,255,255,0.2);
       background: linear-gradient(
         135deg,
@@ -1211,7 +1264,7 @@
     
     [data-theme="dark"] .feature-card:hover .feature-icon-wrapper {
       box-shadow: 
-        0 20px 60px rgba(0,204,255,0.4),
+        0 20px 60px rgba(0,160,210,0.4),
         inset 0 0 0 1px rgba(255,255,255,0.2);
     }
     
@@ -1292,6 +1345,42 @@
       position: relative;
       overflow: hidden;
     }
+
+    [data-theme="light"] .footer {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border-top: 1px solid var(--glass-border);
+      box-shadow: 0 -4px 24px rgba(0, 104, 184, 0.08);
+      color: var(--text-primary);
+      animation: none;
+    }
+
+    [data-theme="light"] .footer::before {
+      background: linear-gradient(90deg, transparent, rgba(0, 104, 184, 0.3), transparent);
+    }
+
+    [data-theme="light"] .footer::after {
+      background: radial-gradient(circle at 50% 50%, rgba(0, 104, 184, 0.06) 0%, transparent 70%);
+      animation: none;
+    }
+
+    [data-theme="light"] .footer p {
+      color: var(--text-primary);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="light"] .footer a {
+      color: var(--text-primary) !important;
+      border-bottom-color: rgba(0, 104, 184, 0.4) !important;
+    }
+
+    [data-theme="light"] .footer .brand-logo-text {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     
     .footer::before {
       content: '';
@@ -1330,6 +1419,39 @@
       position: relative;
       z-index: 1;
       text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .footer-copyright {
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .footer-copyright-line1 {
+      display: block;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .footer-copyright-line2 {
+      display: block;
+      unicode-bidi: isolate;
+    }
+
+    [data-theme="dark"] .footer {
+      background: linear-gradient(135deg, rgb(20, 36, 46), rgb(26, 41, 51), rgb(15, 30, 40));
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    [data-theme="dark"] .footer::before {
+      background: linear-gradient(90deg, transparent, rgba(0, 160, 210, 0.4), transparent);
+    }
+
+    [data-theme="dark"] .footer::after {
+      background: radial-gradient(circle at 50% 50%, rgba(0, 160, 210, 0.08) 0%, transparent 70%);
+    }
+
+    [data-theme="dark"] .footer p {
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     }
 
     [dir="ltr"] body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
@@ -1623,7 +1745,8 @@
       }
       
       .menu-dropdown {
-        min-width: 190px;
+        min-width: 240px;
+        max-width: calc(100vw - 2rem);
         border-radius: 16px;
         padding: 6px;
       }
@@ -1786,7 +1909,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
-      box-shadow: 0 4px 20px rgba(0,140,242,0.4);
+      box-shadow: 0 4px 20px rgba(0,104,184,0.4);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       z-index: 1001;
@@ -1795,7 +1918,7 @@
 
     .chat-widget-btn:hover {
       transform: scale(1.08);
-      box-shadow: 0 6px 28px rgba(0,140,242,0.5);
+      box-shadow: 0 6px 28px rgba(0,104,184,0.5);
     }
 
     .chat-widget-panel {
@@ -1843,22 +1966,61 @@
 
     .chat-header {
       padding: 1.25rem 1.5rem;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      border-bottom: 1px solid transparent;
+    }
+
+    [data-theme="light"] .chat-header {
+      background: linear-gradient(180deg,
+        rgba(250, 252, 255, 0.98) 0%,
+        rgba(242, 247, 252, 0.95) 50%,
+        rgba(0, 104, 184, 0.05) 100%
+      );
+      color: var(--text-primary);
+      border-bottom-color: rgba(0, 104, 184, 0.2);
+    }
+
+    [data-theme="light"] .chat-header .brand-logo-img {
+      filter: brightness(0);
+    }
+
+    [data-theme="light"] .chat-header .brand-logo-text {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    [data-theme="dark"] .chat-header {
+      background: 
+        linear-gradient(180deg, rgba(0, 160, 210, 0.08) 0%, rgba(0, 160, 210, 0.02) 100%),
+        linear-gradient(145deg, var(--bg-mid), var(--bg-bottom));
+      color: var(--text-primary);
+      border-bottom-color: rgba(0, 160, 210, 0.22);
+    }
+
+    [data-theme="dark"] .chat-header .brand-logo-img {
+      filter: brightness(0) invert(1);
     }
 
     .chat-header-avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.25);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
+    }
+
+    [data-theme="light"] .chat-header-avatar {
+      background: rgba(0, 104, 184, 0.12);
+    }
+
+    [data-theme="dark"] .chat-header-avatar {
+      background: rgba(0, 160, 210, 0.2);
     }
 
     .chat-header-title {
@@ -1868,7 +2030,7 @@
 
     .chat-header-status {
       font-size: 0.8rem;
-      opacity: 0.9;
+      color: var(--text-secondary);
     }
 
     .chat-messages {
@@ -1902,9 +2064,13 @@
     .chat-msg.user {
       align-self: flex-end;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      box-shadow: 0 4px 12px rgba(0,140,242,0.3);
+      color: var(--white);
+      box-shadow: 0 4px 12px var(--primary-shadow);
     }
+
+    .chat-msg .brand-logo { vertical-align: middle; }
+    [data-theme="light"] .chat-msg .brand-logo-img { filter: brightness(0); }
+    [data-theme="dark"] .chat-msg .brand-logo-img { filter: brightness(0) invert(1); }
 
     .chat-options {
       display: flex;
@@ -1927,7 +2093,7 @@
 
     .chat-option-btn:hover {
       background: var(--primary);
-      color: white;
+      color: var(--white);
       transform: translateY(-1px);
     }
 
@@ -1956,7 +2122,7 @@
 
     .chat-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0,140,242,0.15);
+      box-shadow: 0 0 0 2px var(--primary-glow);
     }
 
     .chat-input::placeholder {
@@ -1970,7 +2136,7 @@
       border-radius: 14px;
       border: none;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
+      color: var(--white);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -1981,7 +2147,7 @@
 
     .chat-send-btn:hover:not(:disabled) {
       transform: scale(1.05);
-      box-shadow: 0 4px 16px rgba(0,140,242,0.4);
+      box-shadow: 0 4px 16px var(--primary-shadow);
     }
 
     .chat-send-btn:disabled {
@@ -2090,22 +2256,22 @@
     <!-- Theme Menu -->
     <div class="menu-btn" id="themeMenuBtn">
       <div class="icon-circle">
-        <span class="icon" id="themeIcon">☀️</span>
+        <span class="icon" id="themeIcon">🌙</span>
       </div>
       <div class="menu-text">
         <div class="menu-label" data-i18n="appearance">المظهر</div>
-        <div class="menu-value" id="currentThemeDisplay" data-i18n="light">فاتح</div>
+        <div class="menu-value" id="currentThemeDisplay" data-i18n="dark">داكن</div>
       </div>
       <span class="menu-icon">⋯</span>
       
       <!-- Theme Dropdown -->
       <div class="menu-dropdown" id="themeDropdown">
         <div class="menu-dropdown-item" data-theme="light">
-          <span class="checkmark" id="check-light">✓</span>
+          <span class="checkmark" id="check-light" style="display:none">✓</span>
           <span data-i18n="light">فاتح</span>
         </div>
         <div class="menu-dropdown-item" data-theme="dark">
-          <span class="checkmark" id="check-dark" style="display:none">✓</span>
+          <span class="checkmark" id="check-dark">✓</span>
           <span data-i18n="dark">داكن</span>
         </div>
       </div>
@@ -2116,7 +2282,7 @@
     <div class="hero-content">
       <!-- Parkinzi Logo with Text -->
       <div class="logo-with-text">
-        <img src="parkinzi-logo-light.png" alt="P" class="hero-logo-img" id="heroLogo">
+        <img src="parkinzi-logo-dark.png" alt="P" class="hero-logo-img" id="heroLogo">
         <h1 class="logo-text">ARKINZI</h1>
       </div>
       <p class="tagline" data-i18n="tagline">مواقف ذكية · وفر وقتك وطاقتك</p>
@@ -2170,7 +2336,14 @@
   </section>
 
   <section class="features" id="features">
-    <h2 class="section-title" data-i18n="why">لماذا PARKINZI؟</h2>
+    <h2 class="section-title">
+      <span data-i18n="whyPrefix">لماذا </span>
+      <span class="brand-logo brand-logo--sm">
+        <img src="parkinzi-logo-dark.png" alt="P" class="brand-logo-img" data-brand-logo>
+        <span class="brand-logo-text">ARKINZI</span>
+      </span>
+      <span data-i18n="whySuffix">؟</span>
+    </h2>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon-wrapper">
@@ -2214,7 +2387,13 @@
         <div class="chat-header">
           <div class="chat-header-avatar">🤖</div>
           <div>
-            <div class="chat-header-title" data-i18n="chatBotTitle">مساعد PARKINZI</div>
+            <div class="chat-header-title">
+              <span data-i18n="chatPrefix">مساعد </span>
+              <span class="brand-logo brand-logo--sm">
+                <img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" data-brand-logo-header>
+                <span class="brand-logo-text">ARKINZI</span>
+              </span>
+            </div>
             <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
           </div>
         </div>
@@ -2233,11 +2412,20 @@
   </div>
 
   <footer class="footer">
-    <p data-i18n="copyright">© 2026 PARKINZI. جميع الحقوق محفوظة.</p>
-    <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+    <p style="font-size: 0.9rem; opacity: 0.85; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
       <a href="privacy.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="privacyLink">سياسة الخصوصية</a>
       <a href="refund.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="refundLink">سياسة الاسترجاع</a>
       <a href="#" id="footerContactLink" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="contactLink">تواصل معنا</a>
+    </p>
+    <p class="footer-copyright" style="margin-top: 0.75rem;">
+      <span class="footer-copyright-line1">
+        <span class="brand-logo brand-logo--xs">
+          <img src="parkinzi-logo-dark.png" alt="P" class="brand-logo-img" data-brand-logo>
+          <span class="brand-logo-text">ARKINZI</span>
+        </span>
+        <span data-i18n="copyrightLine1"> © 2026</span>
+      </span>
+      <span class="footer-copyright-line2" data-i18n="copyrightLine2">جميع الحقوق محفوظة.</span>
     </p>
   </footer>
 
@@ -2251,14 +2439,16 @@
         scanQR: "امسح الباركود لتحميل التطبيق مباشرة",
         comingSoon: "قريباً",
         about: "تعرف علينا",
-        why: "لماذا PARKINZI؟",
+        whyPrefix: "لماذا ",
+        whySuffix: "؟",
         f1: "اكتشف أماكن الوقوف",
         f1p: "اعثر على مواقف متاحة في الوقت الفعلي بالقرب منك",
         f2: "وفر وقتك",
         f2p: "لا مزيد من البحث عن مواقف لفترات طويلة",
         f3: "دفع سهل",
         f3p: "ادفع بسهولة من خلال التطبيق",
-        copyright: "© 2026 PARKINZI. جميع الحقوق محفوظة.",
+        copyrightLine1: "© 2026",
+        copyrightLine2: "جميع الحقوق محفوظة.",
         privacyLink: "سياسة الخصوصية",
         refundLink: "سياسة الاسترجاع",
         contactTitle: "تواصل معنا",
@@ -2275,9 +2465,9 @@
         contactSuccess: "تم إرسال رسالتك بنجاح!",
         contactError: "حدث خطأ أثناء الإرسال، حاول مرة أخرى",
         contactLink: "تواصل معنا",
-        chatBotTitle: "مساعد PARKINZI",
+        chatPrefix: "مساعد ",
         chatBotStatus: "متصل · يرد عادة خلال دقائق",
-        chatWelcome: "مرحباً! أنا مساعد PARKINZI. اختر الموضوع أو اكتب رسالتك:",
+        chatWelcome: "مرحباً! أنا مساعد PARKINZI<br>اختر الموضوع أو اكتب رسالتك:",
         chatTypeOrSelect: "اختر أو اكتب...",
         chatAskName: "ما اسمك؟",
         chatAskEmail: "ما بريدك الإلكتروني؟",
@@ -2297,14 +2487,16 @@
         scanQR: "Scan the QR code to download the app directly",
         comingSoon: "Coming soon",
         about: "About Us",
-        why: "Why PARKINZI?",
+        whyPrefix: "Why ",
+        whySuffix: "?",
         f1: "Find Parking Spots",
         f1p: "Discover available spots in real-time near you",
         f2: "Save Your Time",
         f2p: "No more searching for parking for long periods",
         f3: "Easy Payment",
         f3p: "Pay easily through the app",
-        copyright: "© 2026 PARKINZI. All rights reserved.",
+        copyrightLine1: "© 2026",
+        copyrightLine2: "All rights reserved.",
         privacyLink: "Privacy Policy",
         refundLink: "Refund Policy",
         contactTitle: "Contact Us",
@@ -2321,9 +2513,9 @@
         contactSuccess: "Your message has been sent successfully!",
         contactError: "An error occurred, please try again",
         contactLink: "Contact Us",
-        chatBotTitle: "PARKINZI Assistant",
+        chatPrefix: "Assistant ",
         chatBotStatus: "Online · Usually replies within minutes",
-        chatWelcome: "Hi! I'm your PARKINZI assistant. Choose a topic or type your message:",
+        chatWelcome: "Hi! I'm your PARKINZI assistant<br>Choose a topic or type your message:",
         chatTypeOrSelect: "Choose or type...",
         chatAskName: "What's your name?",
         chatAskEmail: "What's your email?",
@@ -2344,14 +2536,16 @@
         downloadAndroid: "Google Play",
         forAndroid: "pour Android",
         about: "À propos",
-        why: "Pourquoi PARKINZI ?",
+        whyPrefix: "Pourquoi ",
+        whySuffix: " ?",
         f1: "Trouver des places",
         f1p: "Découvrez les places disponibles en temps réel près de vous",
         f2: "Gagnez du temps",
         f2p: "Fini la recherche de stationnement pendant des heures",
         f3: "Paiement facile",
         f3p: "Payez facilement via l'application",
-        copyright: "© 2026 PARKINZI. Tous droits réservés.",
+        copyrightLine1: "© 2026",
+        copyrightLine2: "Tous droits réservés.",
         privacyLink: "Politique de confidentialité",
         contactTitle: "Contactez-nous",
         contactName: "Nom",
@@ -2367,9 +2561,9 @@
         contactSuccess: "Votre message a bien été envoyé !",
         contactError: "Une erreur s'est produite, veuillez réessayer",
         contactLink: "Contactez-nous",
-        chatBotTitle: "Assistant PARKINZI",
+        chatPrefix: "Assistant ",
         chatBotStatus: "En ligne · Répond généralement en quelques minutes",
-        chatWelcome: "Bonjour ! Je suis l'assistant PARKINZI. Choisissez un sujet ou tapez votre message :",
+        chatWelcome: "Bonjour ! Je suis l'assistant PARKINZI<br>Choisissez un sujet ou tapez votre message :",
         chatTypeOrSelect: "Choisissez ou tapez...",
         chatAskName: "Quel est votre nom ?",
         chatAskEmail: "Quel est votre e-mail ?",
@@ -2397,7 +2591,8 @@
         f2p: "لمبے وقت تک پارکنگ کی تلاش ختم",
         f3: "آسان ادائیگی",
         f3p: "ایپ کے ذریعے آسانی سے ادا کریں",
-        copyright: "© 2026 PARKINZI. جملہ حقوق محفوظ ہیں۔",
+        copyrightLine1: "© 2026 PARKINZI",
+        copyrightLine2: "جملہ حقوق محفوظ ہیں۔",
         privacyLink: "رازداری کی پالیسی",
         contactTitle: "ہم سے رابطہ کریں",
         contactName: "نام",
@@ -2415,7 +2610,7 @@
         contactLink: "ہم سے رابطہ کریں",
         chatBotTitle: "PARKINZI اسسٹنٹ",
         chatBotStatus: "آن لائن · عام طور پر منٹوں میں جواب",
-        chatWelcome: "ہیلو! میں PARKINZI اسسٹنٹ ہوں۔ موضوع منتخب کریں یا اپنا پیغام لکھیں:",
+        chatWelcome: "ہیلو! میں PARKINZI اسسٹنٹ ہوں<br>موضوع منتخب کریں یا اپنا پیغام لکھیں:",
         chatTypeOrSelect: "منتخب کریں یا اپنا پیغام لکھیں...",
         chatAskName: "آپ کا نام کیا ہے؟",
         chatAskEmail: "آپ کا ای میل کیا ہے؟",
@@ -2430,7 +2625,7 @@
     };
 
     const lang = () => localStorage.getItem("parkinzi_lang") || "ar";
-    const theme = () => localStorage.getItem("parkinzi_theme") || "light";
+    const theme = () => localStorage.getItem("parkinzi_theme") || "dark";
 
     const langNames = { ar: "العربية", en: "English", fr: "Français", ur: "اردو" };
     const langTitles = {
@@ -2474,6 +2669,11 @@
       localStorage.setItem("parkinzi_theme", t);
       document.documentElement.dataset.theme = t;
       
+      const themeColorMeta = document.getElementById("themeColorMeta");
+      if (themeColorMeta) {
+        themeColorMeta.content = t === "dark" ? "#1a2933" : "#0068b8";
+      }
+      
       // Update theme icon and display
       const icon = t === "dark" ? "🌙" : "☀️";
       document.getElementById("themeIcon").textContent = icon;
@@ -2487,14 +2687,14 @@
       document.getElementById("check-light").style.display = t === "light" ? "inline" : "none";
       document.getElementById("check-dark").style.display = t === "dark" ? "inline" : "none";
       
-      // Update logo based on theme (REVERSED: light logo for light theme)
+      // Update all logos based on theme
+      const logoSrc = t === "dark" ? "parkinzi-logo-dark.png" : "parkinzi-logo-light.png";
       const heroLogo = document.getElementById("heroLogo");
-      if (heroLogo) {
-        heroLogo.src = t === "dark" 
-          ? "parkinzi-logo-dark.png" 
-          : "parkinzi-logo-light.png";
-        console.log("Logo changed to:", heroLogo.src); // Debug
-      }
+      if (heroLogo) heroLogo.src = logoSrc;
+      document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = logoSrc; });
+      // Chat header: خلفية داكنة → شعار أبيض
+      const headerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
+      document.querySelectorAll("[data-brand-logo-header]").forEach(img => { img.src = headerLogoSrc; });
     }
 
     // Language Menu Toggle
@@ -2544,15 +2744,6 @@
     // Initialize
     setLang(lang());
     setTheme(theme());
-    
-    // Force logo update on page load (REVERSED)
-    const initialTheme = theme();
-    const heroLogo = document.getElementById("heroLogo");
-    if (heroLogo) {
-      heroLogo.src = initialTheme === "dark" 
-        ? "parkinzi-logo-dark.png" 
-        : "parkinzi-logo-light.png";
-    }
     
     // Detect if device is mobile
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
@@ -2696,7 +2887,13 @@
       const div = document.createElement("div");
       div.className = "chat-msg " + (isBot ? "bot" : "user");
       const content = document.createElement("div");
-      content.textContent = text;
+      if (text.includes("PARKINZI")) {
+        const logoHtml = '<span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img"><span class="brand-logo-text">ARKINZI</span></span>';
+        const parts = text.split("PARKINZI");
+        content.innerHTML = parts.map((p, i) => p + (i < parts.length - 1 ? logoHtml : "")).join("");
+      } else {
+        content.textContent = text;
+      }
       div.appendChild(content);
       if (options && isBot) {
         const opts = document.createElement("div");
@@ -2825,6 +3022,7 @@
     if (footerContactLink) {
       footerContactLink.addEventListener("click", (e) => {
         e.preventDefault();
+        e.stopPropagation();
         chatWidget.classList.add("open");
       });
     }
