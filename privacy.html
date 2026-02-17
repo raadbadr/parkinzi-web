@@ -4,538 +4,232 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="theme-color" content="#008cf2">
-  <meta name="description" content="PARKINZI - سياسة الخصوصية">
-  <title>PARKINZI | سياسة الخصوصية</title>
+  <title>سياسة الخصوصية | PARKINZI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: 'Monoton';
-      src: url('Monoton-Regular.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    :root, [data-theme="light"] {
-      --primary: rgb(0, 140, 242);
-      --primary-light: rgb(25, 179, 255);
-      --primary-dark: rgb(0, 128, 230);
-      --secondary: rgb(51, 102, 204);
-      --accent: rgb(77, 127, 230);
-      --text-primary: rgb(26, 26, 38);
-      --text-secondary: rgb(77, 77, 89);
-      --text-tertiary: rgb(115, 115, 128);
-      --bg-top: rgb(250, 252, 255);
-      --bg-bottom: rgb(237, 245, 250);
-      --glass: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(0, 0, 0, 0.08);
-      --glass-strong: rgba(255, 255, 255, 0.95);
-      --shadow-dark: rgba(0, 0, 0, 0.08);
-      --white: #ffffff;
-    }
-
-    [data-theme="dark"] {
-      --primary: rgb(0, 204, 255);
-      --primary-light: rgb(51, 230, 255);
-      --primary-dark: rgb(0, 179, 230);
-      --secondary: rgb(0, 204, 255);
-      --accent: rgb(77, 179, 255);
-      --text-primary: rgb(255, 255, 255);
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-tertiary: rgba(255, 255, 255, 0.55);
-      --bg-top: rgb(31, 46, 56);
-      --bg-bottom: rgb(20, 36, 46);
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.15);
-      --glass-strong: rgba(255, 255, 255, 0.12);
-      --shadow-dark: rgba(5, 10, 15, 0.3);
+    :root {
+      --primary: #008cf2;
+      --primary-light: #19b3ff;
+      --text-primary: #1a1a26;
+      --text-secondary: #4d4d59;
+      --bg-top: #fafcff;
+      --bg-bottom: #edf3f9;
+      --glass: rgba(255,255,255,0.85);
+      --glass-border: rgba(0,0,0,0.08);
       --white: #ffffff;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'IBM Plex Sans Arabic', -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
       color: var(--text-primary);
-      min-height: 100vh;
       line-height: 1.8;
+      min-height: 100vh;
     }
 
-    /* Header */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
     .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--glass-strong);
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--glass);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
 
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: var(--text-primary);
-      direction: ltr;
-    }
-
-    .header-logo img {
-      height: 2.5rem;
-    }
-
-    .header-logo span {
-      font-family: 'Monoton', cursive;
-      font-size: 1.5rem;
+    h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-transform: uppercase;
     }
 
-    .theme-toggle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    /* Content */
-    .content {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 3rem 2rem 4rem;
-    }
-
-    .page-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    .page-subtitle {
-      text-align: center;
-      color: var(--text-tertiary);
-      font-size: 0.95rem;
-      margin-bottom: 3rem;
-    }
-
-    .section {
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .section:hover {
-      box-shadow: 0 8px 30px var(--shadow-dark);
-    }
-
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .section-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    .section p, .section li {
+    .last-updated {
       color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.9;
+      font-size: 0.95rem;
     }
 
-    .section ul {
-      padding-right: 1.5rem;
-      margin-top: 0.5rem;
+    .content {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
     }
 
-    [dir="ltr"] .section ul {
-      padding-right: 0;
-      padding-left: 1.5rem;
-    }
-
-    .section li {
-      margin-bottom: 0.4rem;
-    }
-
-    .section li::marker {
+    h2 {
       color: var(--primary);
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
     }
 
-    .contact-link {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      transition: opacity 0.3s;
+    h3 {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.75rem;
     }
 
-    .contact-link:hover {
-      opacity: 0.7;
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
     }
 
-    /* Footer */
-    .footer {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light), var(--secondary));
-      color: var(--white);
-      text-align: center;
-      padding: 2rem;
+    ul, ol {
+      margin: 1rem 0 1rem 2rem;
+      color: var(--text-secondary);
     }
 
-    .footer a {
-      color: var(--white);
-      text-decoration: none;
-      opacity: 0.9;
-      transition: opacity 0.3s;
+    li {
+      margin-bottom: 0.5rem;
     }
 
-    .footer a:hover {
-      opacity: 1;
-    }
-
-    .back-link {
+    .back-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: var(--primary);
+      padding: 1rem 2rem;
+      background: var(--primary);
+      color: var(--white);
       text-decoration: none;
+      border-radius: 12px;
       font-weight: 600;
-      margin-bottom: 2rem;
-      transition: opacity 0.3s;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,140,242,0.3);
     }
 
-    .back-link:hover {
-      opacity: 0.7;
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,140,242,0.4);
     }
 
     @media (max-width: 768px) {
-      .content { padding: 2rem 1.25rem 3rem; }
-      .page-title { font-size: 1.7rem; }
-      .section { padding: 1.5rem; border-radius: 16px; }
-      .section-title { font-size: 1.15rem; }
+      .container { padding: 1rem; }
+      .content { padding: 2rem 1.5rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
-
-  <div class="header">
-    <a href="index.html" class="header-logo" id="logoLink" dir="ltr">
-      <img src="parkinzi-logo-light.png" alt="P" id="headerLogo">
-      <span>ARKINZI</span>
-    </a>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
-  </div>
-
-  <div class="content">
-    <a href="index.html" class="back-link" id="backLink">
-      <span>←</span>
-      <span data-i18n="back">الرجوع للرئيسية</span>
-    </a>
-
-    <h1 class="page-title" data-i18n="privacyTitle">سياسة الخصوصية</h1>
-    <p class="page-subtitle" data-i18n="lastUpdated">آخر تحديث: فبراير 2026</p>
-
-    <!-- Introduction -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">📋</div>
-        <span data-i18n="introTitle">مقدمة</span>
-      </div>
-      <p data-i18n="introText">نحن في PARKINZI نقدّر خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضح هذه السياسة كيف نجمع ونستخدم ونحمي معلوماتك عند استخدام تطبيقنا وموقعنا الإلكتروني.</p>
+  <div class="container">
+    <div class="header">
+      <h1>سياسة الخصوصية</h1>
+      <p class="last-updated">آخر تحديث: فبراير 2026</p>
     </div>
 
-    <!-- Data We Collect -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">📊</div>
-        <span data-i18n="collectTitle">البيانات التي نجمعها</span>
-      </div>
-      <p data-i18n="collectIntro">نجمع الأنواع التالية من البيانات:</p>
+    <div class="content">
+      <h2>1. مقدمة</h2>
+      <p>مرحباً بك في تطبيق PARKINZI (المشار إليه بـ "نحن" أو "التطبيق"). نحن نلتزم بحماية خصوصيتك وبياناتك الشخصية. توضح هذه السياسة كيفية جمعنا واستخدامنا وحمايتنا للمعلومات التي تقدمها عند استخدام خدماتنا.</p>
+
+      <h2>2. المعلومات التي نجمعها</h2>
+      
+      <h3>2.1 المعلومات الشخصية</h3>
       <ul>
-        <li data-i18n="collect1">معلومات الحساب: الاسم، البريد الإلكتروني، رقم الهاتف</li>
-        <li data-i18n="collect2">بيانات الموقع الجغرافي: لعرض المواقف القريبة منك</li>
-        <li data-i18n="collect3">معلومات الدفع: تتم معالجتها بشكل آمن عبر مزود خدمة الدفع</li>
-        <li data-i18n="collect4">بيانات الاستخدام: كيفية تفاعلك مع التطبيق لتحسين الخدمة</li>
-        <li data-i18n="collect5">صور المركبات: عند استخدام خدمة الكاميرات الذكية</li>
+        <li>الاسم الكامل</li>
+        <li>عنوان البريد الإلكتروني</li>
+        <li>رقم الهاتف</li>
+        <li>معلومات الدفع (يتم تشفيرها ومعالجتها بشكل آمن)</li>
       </ul>
-    </div>
 
-    <!-- How We Use Data -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">⚙️</div>
-        <span data-i18n="useTitle">كيف نستخدم بياناتك</span>
-      </div>
+      <h3>2.2 معلومات الموقع</h3>
+      <p>نجمع معلومات الموقع الجغرافي لمساعدتك في العثور على أقرب مواقف السيارات المتاحة. يمكنك إيقاف مشاركة الموقع في أي وقت من خلال إعدادات جهازك.</p>
+
+      <h3>2.3 معلومات الاستخدام</h3>
       <ul>
-        <li data-i18n="use1">تقديم خدمة البحث عن مواقف السيارات وحجزها</li>
-        <li data-i18n="use2">معالجة المدفوعات وإصدار الفواتير</li>
-        <li data-i18n="use3">إرسال إشعارات متعلقة بحجوزاتك</li>
-        <li data-i18n="use4">تحسين التطبيق وتجربة المستخدم</li>
-        <li data-i18n="use5">التواصل معك بخصوص حسابك أو الدعم الفني</li>
+        <li>سجل حجوزات المواقف</li>
+        <li>تاريخ المعاملات</li>
+        <li>تفضيلات المستخدم</li>
+        <li>البيانات التحليلية لتحسين الخدمة</li>
       </ul>
-    </div>
 
-    <!-- Data Protection -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">🔒</div>
-        <span data-i18n="protectTitle">حماية البيانات</span>
-      </div>
-      <p data-i18n="protectText">نستخدم تقنيات تشفير متقدمة ومعايير أمان عالية لحماية بياناتك. يتم تخزين جميع البيانات على خوادم آمنة مع تشفير كامل أثناء النقل والتخزين. لا نبيع أو نشارك بياناتك الشخصية مع أطراف ثالثة لأغراض تسويقية.</p>
-    </div>
-
-    <!-- Third-Party Services -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">🔗</div>
-        <span data-i18n="thirdTitle">خدمات الطرف الثالث</span>
-      </div>
-      <p data-i18n="thirdIntro">نستخدم الخدمات التالية لتشغيل التطبيق:</p>
+      <h2>3. كيفية استخدام المعلومات</h2>
+      <p>نستخدم المعلومات المجمعة للأغراض التالية:</p>
       <ul>
-        <li data-i18n="third1">خدمات المصادقة: لتسجيل الدخول بأمان (Google، Apple)</li>
-        <li data-i18n="third2">خدمات الخرائط: لعرض المواقف على الخريطة</li>
-        <li data-i18n="third3">خدمات الدفع: لمعالجة المدفوعات بشكل آمن</li>
-        <li data-i18n="third4">خدمات التخزين السحابي: لتخزين البيانات بأمان</li>
+        <li>توفير وتحسين خدماتنا</li>
+        <li>معالجة الحجوزات والمدفوعات</li>
+        <li>إرسال إشعارات وتحديثات مهمة</li>
+        <li>تحليل استخدام التطبيق لتحسين التجربة</li>
+        <li>الامتثال للمتطلبات القانونية</li>
+        <li>منع الاحتيال وضمان الأمان</li>
       </ul>
-    </div>
 
-    <!-- User Rights -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">✅</div>
-        <span data-i18n="rightsTitle">حقوقك</span>
-      </div>
+      <h2>4. مشاركة المعلومات</h2>
+      <p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك فقط في الحالات التالية:</p>
       <ul>
-        <li data-i18n="right1">الوصول إلى بياناتك الشخصية وطلب نسخة منها</li>
-        <li data-i18n="right2">تصحيح أو تحديث بياناتك في أي وقت</li>
-        <li data-i18n="right3">طلب حذف حسابك وجميع بياناتك</li>
-        <li data-i18n="right4">الانسحاب من الإشعارات التسويقية</li>
-        <li data-i18n="right5">تقييد معالجة بياناتك في حالات معينة</li>
+        <li>مع مقدمي خدمات الدفع لمعالجة المعاملات</li>
+        <li>مع السلطات القانونية عند الضرورة</li>
+        <li>مع شركاء الخدمة لتحسين التطبيق (بموجب اتفاقيات سرية)</li>
+        <li>في حالة اندماج أو استحواذ الشركة</li>
       </ul>
-    </div>
 
-    <!-- Location Data -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">📍</div>
-        <span data-i18n="locationTitle">بيانات الموقع</span>
-      </div>
-      <p data-i18n="locationText">يستخدم التطبيق موقعك الجغرافي لعرض مواقف السيارات القريبة منك وتوفير خدمة الملاحة. يمكنك التحكم في إذن الموقع من إعدادات جهازك في أي وقت. لا نتتبع موقعك في الخلفية إلا إذا فعّلت هذه الميزة.</p>
-    </div>
-
-    <!-- Data Retention -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">🗄️</div>
-        <span data-i18n="retentionTitle">الاحتفاظ بالبيانات</span>
-      </div>
-      <p data-i18n="retentionText">نحتفظ ببياناتك طالما حسابك نشط أو حسب الحاجة لتقديم الخدمات. عند حذف حسابك، نحذف بياناتك الشخصية خلال 30 يوماً، باستثناء ما يلزم قانونياً الاحتفاظ به مثل سجلات المعاملات المالية.</p>
-    </div>
-
-    <!-- Children -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">👤</div>
-        <span data-i18n="childrenTitle">الأطفال</span>
-      </div>
-      <p data-i18n="childrenText">خدماتنا غير موجهة للأشخاص الذين تقل أعمارهم عن 18 عاماً. لا نجمع بيانات من القاصرين عن قصد. إذا علمنا بجمع بيانات من شخص أقل من 18 عاماً، سنحذفها فوراً.</p>
-    </div>
-
-    <!-- Changes -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">📝</div>
-        <span data-i18n="changesTitle">التعديلات على هذه السياسة</span>
-      </div>
-      <p data-i18n="changesText">قد نحدّث سياسة الخصوصية من وقت لآخر. سنُعلمك بأي تغييرات جوهرية عبر التطبيق أو البريد الإلكتروني. نشجعك على مراجعة هذه السياسة بشكل دوري.</p>
-    </div>
-
-    <!-- Contact -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-icon">📧</div>
-        <span data-i18n="contactTitle">تواصل معنا</span>
-      </div>
-      <p data-i18n="contactText">إذا كان لديك أي استفسار حول سياسة الخصوصية أو بياناتك الشخصية، تواصل معنا عبر:</p>
+      <h2>5. أمن البيانات</h2>
+      <p>نتخذ إجراءات أمنية صارمة لحماية بياناتك:</p>
       <ul>
-        <li>
-          <span data-i18n="contactEmail">البريد الإلكتروني: </span>
-          <a href="mailto:support@parkinzi.com" class="contact-link">support@parkinzi.com</a>
-        </li>
+        <li>تشفير البيانات أثناء النقل والتخزين</li>
+        <li>خوادم آمنة ومحمية</li>
+        <li>مراقبة مستمرة للأنشطة المشبوهة</li>
+        <li>تحديثات أمنية منتظمة</li>
+        <li>وصول محدود للموظفين المصرح لهم فقط</li>
       </ul>
+
+      <h2>6. حقوقك</h2>
+      <p>لديك الحق في:</p>
+      <ul>
+        <li>الوصول إلى بياناتك الشخصية</li>
+        <li>تصحيح أو تحديث معلوماتك</li>
+        <li>حذف حسابك وبياناتك</li>
+        <li>سحب الموافقة على معالجة البيانات</li>
+        <li>تنزيل نسخة من بياناتك</li>
+        <li>الاعتراض على معالجة بياناتك</li>
+      </ul>
+
+      <h2>7. الاحتفاظ بالبيانات</h2>
+      <p>نحتفظ بمعلوماتك الشخصية طالما كان حسابك نشطاً أو حسب الحاجة لتقديم الخدمات. بعد حذف الحساب، قد نحتفظ ببعض البيانات للامتثال القانوني أو لحل النزاعات.</p>
+
+      <h2>8. ملفات تعريف الارتباط (Cookies)</h2>
+      <p>نستخدم ملفات تعريف الارتباط والتقنيات المشابهة لتحسين تجربتك وتحليل استخدام التطبيق. يمكنك التحكم في ملفات تعريف الارتباط من خلال إعدادات المتصفح.</p>
+
+      <h2>9. خصوصية الأطفال</h2>
+      <p>خدماتنا غير موجهة للأطفال دون سن 18 عاماً. لا نجمع عن قصد معلومات شخصية من الأطفال.</p>
+
+      <h2>10. التغييرات على السياسة</h2>
+      <p>قد نحدث هذه السياسة من وقت لآخر. سنخطرك بأي تغييرات جوهرية عبر البريد الإلكتروني أو إشعار في التطبيق.</p>
+
+      <h2>11. الاتصال بنا</h2>
+      <p>إذا كانت لديك أي أسئلة أو مخاوف بشأن سياسة الخصوصية، يرجى التواصل معنا:</p>
+      <ul>
+        <li>البريد الإلكتروني: privacy@parkinzi.com</li>
+        <li>الهاتف: +966 XX XXX XXXX</li>
+        <li>العنوان: الرياض، المملكة العربية السعودية</li>
+      </ul>
+
+      <h2>12. الموافقة</h2>
+      <p>باستخدام تطبيق PARKINZI، فإنك توافق على جمع واستخدام المعلومات كما هو موضح في هذه السياسة.</p>
+    </div>
+
+    <div style="text-align: center; padding: 2rem;">
+      <a href="index.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+        </svg>
+        العودة للرئيسية
+      </a>
     </div>
   </div>
-
-  <footer class="footer">
-    <p>© 2026 PARKINZI. <a href="index.html" data-i18n="allRights">جميع الحقوق محفوظة</a></p>
-  </footer>
-
-  <script>
-    const translations = {
-      ar: {
-        back: "الرجوع للرئيسية",
-        privacyTitle: "سياسة الخصوصية",
-        lastUpdated: "آخر تحديث: فبراير 2026",
-        introTitle: "مقدمة",
-        introText: "نحن في PARKINZI نقدّر خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضح هذه السياسة كيف نجمع ونستخدم ونحمي معلوماتك عند استخدام تطبيقنا وموقعنا الإلكتروني.",
-        collectTitle: "البيانات التي نجمعها",
-        collectIntro: "نجمع الأنواع التالية من البيانات:",
-        collect1: "معلومات الحساب: الاسم، البريد الإلكتروني، رقم الهاتف",
-        collect2: "بيانات الموقع الجغرافي: لعرض المواقف القريبة منك",
-        collect3: "معلومات الدفع: تتم معالجتها بشكل آمن عبر مزود خدمة الدفع",
-        collect4: "بيانات الاستخدام: كيفية تفاعلك مع التطبيق لتحسين الخدمة",
-        collect5: "صور المركبات: عند استخدام خدمة الكاميرات الذكية",
-        useTitle: "كيف نستخدم بياناتك",
-        use1: "تقديم خدمة البحث عن مواقف السيارات وحجزها",
-        use2: "معالجة المدفوعات وإصدار الفواتير",
-        use3: "إرسال إشعارات متعلقة بحجوزاتك",
-        use4: "تحسين التطبيق وتجربة المستخدم",
-        use5: "التواصل معك بخصوص حسابك أو الدعم الفني",
-        protectTitle: "حماية البيانات",
-        protectText: "نستخدم تقنيات تشفير متقدمة ومعايير أمان عالية لحماية بياناتك. يتم تخزين جميع البيانات على خوادم آمنة مع تشفير كامل أثناء النقل والتخزين. لا نبيع أو نشارك بياناتك الشخصية مع أطراف ثالثة لأغراض تسويقية.",
-        thirdTitle: "خدمات الطرف الثالث",
-        thirdIntro: "نستخدم الخدمات التالية لتشغيل التطبيق:",
-        third1: "خدمات المصادقة: لتسجيل الدخول بأمان (Google، Apple)",
-        third2: "خدمات الخرائط: لعرض المواقف على الخريطة",
-        third3: "خدمات الدفع: لمعالجة المدفوعات بشكل آمن",
-        third4: "خدمات التخزين السحابي: لتخزين البيانات بأمان",
-        rightsTitle: "حقوقك",
-        right1: "الوصول إلى بياناتك الشخصية وطلب نسخة منها",
-        right2: "تصحيح أو تحديث بياناتك في أي وقت",
-        right3: "طلب حذف حسابك وجميع بياناتك",
-        right4: "الانسحاب من الإشعارات التسويقية",
-        right5: "تقييد معالجة بياناتك في حالات معينة",
-        locationTitle: "بيانات الموقع",
-        locationText: "يستخدم التطبيق موقعك الجغرافي لعرض مواقف السيارات القريبة منك وتوفير خدمة الملاحة. يمكنك التحكم في إذن الموقع من إعدادات جهازك في أي وقت. لا نتتبع موقعك في الخلفية إلا إذا فعّلت هذه الميزة.",
-        retentionTitle: "الاحتفاظ بالبيانات",
-        retentionText: "نحتفظ ببياناتك طالما حسابك نشط أو حسب الحاجة لتقديم الخدمات. عند حذف حسابك، نحذف بياناتك الشخصية خلال 30 يوماً، باستثناء ما يلزم قانونياً الاحتفاظ به مثل سجلات المعاملات المالية.",
-        childrenTitle: "الأطفال",
-        childrenText: "خدماتنا غير موجهة للأشخاص الذين تقل أعمارهم عن 18 عاماً. لا نجمع بيانات من القاصرين عن قصد. إذا علمنا بجمع بيانات من شخص أقل من 18 عاماً، سنحذفها فوراً.",
-        changesTitle: "التعديلات على هذه السياسة",
-        changesText: "قد نحدّث سياسة الخصوصية من وقت لآخر. سنُعلمك بأي تغييرات جوهرية عبر التطبيق أو البريد الإلكتروني. نشجعك على مراجعة هذه السياسة بشكل دوري.",
-        contactTitle: "تواصل معنا",
-        contactText: "إذا كان لديك أي استفسار حول سياسة الخصوصية أو بياناتك الشخصية، تواصل معنا عبر:",
-        contactEmail: "البريد الإلكتروني: ",
-        allRights: "جميع الحقوق محفوظة"
-      },
-      en: {
-        back: "Back to Home",
-        privacyTitle: "Privacy Policy",
-        lastUpdated: "Last updated: February 2026",
-        introTitle: "Introduction",
-        introText: "At PARKINZI, we value your privacy and are committed to protecting your personal data. This policy explains how we collect, use, and protect your information when using our app and website.",
-        collectTitle: "Data We Collect",
-        collectIntro: "We collect the following types of data:",
-        collect1: "Account information: name, email, phone number",
-        collect2: "Location data: to show nearby parking spots",
-        collect3: "Payment information: processed securely through our payment provider",
-        collect4: "Usage data: how you interact with the app to improve our service",
-        collect5: "Vehicle photos: when using the smart camera service",
-        useTitle: "How We Use Your Data",
-        use1: "Providing parking spot search and booking services",
-        use2: "Processing payments and issuing invoices",
-        use3: "Sending notifications related to your bookings",
-        use4: "Improving the app and user experience",
-        use5: "Communicating with you about your account or support",
-        protectTitle: "Data Protection",
-        protectText: "We use advanced encryption technologies and high security standards to protect your data. All data is stored on secure servers with full encryption during transit and storage. We do not sell or share your personal data with third parties for marketing purposes.",
-        thirdTitle: "Third-Party Services",
-        thirdIntro: "We use the following services to operate the app:",
-        third1: "Authentication services: for secure login (Google, Apple)",
-        third2: "Map services: to display parking spots on the map",
-        third3: "Payment services: to process payments securely",
-        third4: "Cloud storage services: to store data securely",
-        rightsTitle: "Your Rights",
-        right1: "Access your personal data and request a copy",
-        right2: "Correct or update your data at any time",
-        right3: "Request deletion of your account and all your data",
-        right4: "Opt out of marketing notifications",
-        right5: "Restrict processing of your data in certain cases",
-        locationTitle: "Location Data",
-        locationText: "The app uses your location to show nearby parking spots and provide navigation. You can control location permissions from your device settings at any time. We do not track your location in the background unless you enable this feature.",
-        retentionTitle: "Data Retention",
-        retentionText: "We retain your data as long as your account is active or as needed to provide services. When you delete your account, we delete your personal data within 30 days, except for data legally required to be retained such as financial transaction records.",
-        childrenTitle: "Children",
-        childrenText: "Our services are not directed at persons under the age of 18. We do not knowingly collect data from minors. If we learn that we have collected data from someone under 18, we will delete it immediately.",
-        changesTitle: "Changes to This Policy",
-        changesText: "We may update this privacy policy from time to time. We will notify you of any material changes through the app or email. We encourage you to review this policy periodically.",
-        contactTitle: "Contact Us",
-        contactText: "If you have any questions about this privacy policy or your personal data, contact us at:",
-        contactEmail: "Email: ",
-        allRights: "All rights reserved"
-      }
-    };
-
-    const lang = () => localStorage.getItem("parkinzi_lang") || "ar";
-    const theme = () => localStorage.getItem("parkinzi_theme") || "light";
-
-    function setLang(l) {
-      localStorage.setItem("parkinzi_lang", l);
-      document.documentElement.lang = l;
-      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const k = el.dataset.i18n;
-        if (translations[l][k]) el.textContent = translations[l][k];
-      });
-    }
-
-    function setTheme(t) {
-      localStorage.setItem("parkinzi_theme", t);
-      document.documentElement.setAttribute("data-theme", t);
-      document.getElementById("themeToggle").textContent = t === "dark" ? "🌙" : "☀️";
-      const logo = document.getElementById("headerLogo");
-      logo.src = t === "dark" ? "parkinzi-logo-dark.png" : "parkinzi-logo-light.png";
-    }
-
-    function toggleTheme() {
-      setTheme(theme() === "dark" ? "light" : "dark");
-    }
-
-    // Initialize
-    setTheme(theme());
-    setLang(lang());
-  </script>
 </body>
 </html>

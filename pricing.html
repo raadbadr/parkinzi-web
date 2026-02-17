@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#008cf2">
+  <title>المنتجات والأسعار | PARKINZI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #008cf2;
+      --primary-light: #19b3ff;
+      --primary-dark: #0080e6;
+      --secondary: #3366cc;
+      --text-primary: #1a1a26;
+      --text-secondary: #4d4d59;
+      --bg-top: #fafcff;
+      --bg-bottom: #edf3f9;
+      --glass: rgba(255,255,255,0.85);
+      --glass-border: rgba(0,0,0,0.08);
+      --white: #ffffff;
+      --success: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      margin-bottom: 3rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,140,242,0.2);
+      border-color: var(--primary);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 12px 40px rgba(0,140,242,0.25);
+    }
+
+    .pricing-card.featured::before {
+      height: 6px;
+    }
+
+    .badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--success);
+      color: white;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .plan-name {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .plan-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .price-unit {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .features {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .features li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .features li:last-child {
+      border-bottom: none;
+    }
+
+    .checkmark {
+      color: var(--success);
+      font-size: 1.2rem;
+    }
+
+    .cta-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,140,242,0.3);
+    }
+
+    .cta-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,140,242,0.4);
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: none;
+    }
+
+    .cta-btn.secondary:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .info-section {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .info-section h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-section p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .info-section ul {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .info-section li {
+      padding: 0.75rem 0;
+      padding-right: 1.5rem;
+      color: var(--text-secondary);
+      position: relative;
+    }
+
+    .info-section li::before {
+      content: "•";
+      position: absolute;
+      right: 0;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: var(--primary);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,140,242,0.3);
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,140,242,0.4);
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+      .price { font-size: 2.5rem; }
+      .info-section { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>المنتجات والأسعار</h1>
+      <p class="subtitle">اختر الباقة المناسبة لاحتياجاتك</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- خطة الدفع حسب الاستخدام -->
+      <div class="pricing-card">
+        <div class="plan-name">الدفع حسب الاستخدام</div>
+        <div class="plan-desc">مثالية للاستخدام العرضي والزيارات القصيرة</div>
+        <div class="price">10 ريال<span style="font-size: 1.5rem;">/ساعة</span></div>
+        <div class="price-unit">ابدأ من ساعة واحدة</div>
+        <ul class="features">
+          <li><span class="checkmark">✓</span> حجز فوري بدون التزام</li>
+          <li><span class="checkmark">✓</span> دفع حسب المدة الفعلية</li>
+          <li><span class="checkmark">✓</span> إلغاء مجاني قبل 24 ساعة</li>
+          <li><span class="checkmark">✓</span> الوصول لجميع المواقف</li>
+          <li><span class="checkmark">✓</span> خدمة عملاء 24/7</li>
+        </ul>
+        <button class="cta-btn secondary">ابدأ الآن</button>
+      </div>
+
+      <!-- الخطة الأساسية -->
+      <div class="pricing-card">
+        <div class="plan-name">الباقة الأساسية</div>
+        <div class="plan-desc">للاستخدام المتكرر خلال الأسبوع</div>
+        <div class="price">199 ريال<span style="font-size: 1.5rem;">/شهر</span></div>
+        <div class="price-unit">30 ساعة شهرياً</div>
+        <ul class="features">
+          <li><span class="checkmark">✓</span> 30 ساعة وقوف شهرياً</li>
+          <li><span class="checkmark">✓</span> خصم 15% على الساعات الإضافية</li>
+          <li><span class="checkmark">✓</span> حجز مسبق حتى 7 أيام</li>
+          <li><span class="checkmark">✓</span> إلغاء مجاني قبل 12 ساعة</li>
+          <li><span class="checkmark">✓</span> دعم فني مميز</li>
+          <li><span class="checkmark">✓</span> تقارير شهرية</li>
+        </ul>
+        <button class="cta-btn">اشترك الآن</button>
+      </div>
+
+      <!-- الخطة المميزة -->
+      <div class="pricing-card featured">
+        <span class="badge">الأكثر شعبية</span>
+        <div class="plan-name">الباقة المميزة</div>
+        <div class="plan-desc">الأفضل للاستخدام اليومي والعمل</div>
+        <div class="price">349 ريال<span style="font-size: 1.5rem;">/شهر</span></div>
+        <div class="price-unit">80 ساعة شهرياً</div>
+        <ul class="features">
+          <li><span class="checkmark">✓</span> 80 ساعة وقوف شهرياً</li>
+          <li><span class="checkmark">✓</span> خصم 25% على الساعات الإضافية</li>
+          <li><span class="checkmark">✓</span> حجز مسبق حتى 14 يوم</li>
+          <li><span class="checkmark">✓</span> إلغاء مجاني قبل 6 ساعات</li>
+          <li><span class="checkmark">✓</span> أولوية في المواقف المزدحمة</li>
+          <li><span class="checkmark">✓</span> دعم فني VIP</li>
+          <li><span class="checkmark">✓</span> مواقف مخصصة في أماكن مختارة</li>
+          <li><span class="checkmark">✓</span> تقارير أسبوعية وشهرية</li>
+        </ul>
+        <button class="cta-btn">اشترك الآن</button>
+      </div>
+
+      <!-- الخطة الاحترافية -->
+      <div class="pricing-card">
+        <div class="plan-name">الباقة الاحترافية</div>
+        <div class="plan-desc">للشركات والاستخدام المكثف</div>
+        <div class="price">599 ريال<span style="font-size: 1.5rem;">/شهر</span></div>
+        <div class="price-unit">وقوف غير محدود</div>
+        <ul class="features">
+          <li><span class="checkmark">✓</span> ساعات وقوف غير محدودة</li>
+          <li><span class="checkmark">✓</span> حجز مسبق حتى 30 يوم</li>
+          <li><span class="checkmark">✓</span> إلغاء مجاني حتى ساعة واحدة</li>
+          <li><span class="checkmark">✓</span> أولوية قصوى في جميع المواقف</li>
+          <li><span class="checkmark">✓</span> مدير حساب مخصص</li>
+          <li><span class="checkmark">✓</span> فواتير شهرية موحدة</li>
+          <li><span class="checkmark">✓</span> إدارة أساطيل السيارات</li>
+          <li><span class="checkmark">✓</span> تقارير تحليلية متقدمة</li>
+          <li><span class="checkmark">✓</span> عروض حصرية وخصومات إضافية</li>
+        </ul>
+        <button class="cta-btn">تواصل معنا</button>
+      </div>
+    </div>
+
+    <!-- معلومات إضافية -->
+    <div class="info-section">
+      <h2>معلومات هامة عن الأسعار</h2>
+      
+      <h3 style="color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem;">شروط الاستخدام:</h3>
+      <ul>
+        <li>جميع الأسعار شاملة ضريبة القيمة المضافة</li>
+        <li><strong>من لحظة تأكيد الحجز، الموقف يصبح ملكك والوقت يبدأ بالاحتساب سواء وصلت أم لا</strong></li>
+        <li>يتم احتساب الوقت بالدقيقة</li>
+        <li>الساعات غير المستخدمة لا تنتقل للشهر التالي</li>
+        <li>يمكن ترقية الباقة في أي وقت</li>
+        <li>يمكن إلغاء الاشتراك قبل موعد التجديد بـ 7 أيام</li>
+      </ul>
+
+      <h3 style="color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem;">خدمات إضافية:</h3>
+      <ul>
+        <li>غسيل السيارة أثناء الوقوف: 50 ريال</li>
+        <li>شحن السيارات الكهربائية: 20 ريال/ساعة</li>
+        <li>خدمة الحارس الشخصي: 100 ريال/يوم</li>
+        <li>تنظيف داخلي للسيارة: 80 ريال</li>
+      </ul>
+
+      <h3 style="color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem;">عروض خاصة:</h3>
+      <ul>
+        <li>خصم 20% للطلاب (بموجب إثبات)</li>
+        <li>خصم 15% لكبار السن (60+ سنة)</li>
+        <li>خصم 10% للعملاء الجدد في الشهر الأول</li>
+        <li>عروض موسمية في المناسبات</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h2>الأسئلة الشائعة</h2>
+      
+      <h3 style="color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.5rem;">كيف يتم احتساب الوقت؟</h3>
+      <p>من لحظة تأكيد الحجز، الموقف يصبح ملكك والوقت يبدأ بالاحتساب سواء وصلت للموقع أم لا. أنت تدفع مقابل حجز الموقف وحقك فيه طوال المدة المحجوزة، وتحتسب بالدقيقة.</p>
+
+      <h3 style="color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.5rem;">هل يمكنني تغيير الباقة؟</h3>
+      <p>نعم، يمكنك الترقية في أي وقت وسيتم احتساب الفرق بالتناسب. للتخفيض، سيطبق في دورة الفوترة التالية.</p>
+
+      <h3 style="color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.5rem;">ماذا يحدث إذا تجاوزت الساعات المخصصة؟</h3>
+      <p>سيتم احتساب الساعات الإضافية حسب السعر العادي مع الخصم المحدد في باقتك.</p>
+
+      <h3 style="color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.5rem;">هل هناك فترة تجريبية؟</h3>
+      <p>نعم، نقدم 7 أيام تجريبية مجانية للباقة الأساسية والمميزة للمشتركين الجدد.</p>
+    </div>
+
+    <div style="text-align: center; padding: 2rem;">
+      <a href="index.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+        </svg>
+        العودة للرئيسية
+      </a>
+    </div>
+  </div>
+</body>
+</html>

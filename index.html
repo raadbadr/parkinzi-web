@@ -517,7 +517,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 5rem 2rem 3rem;
+      padding: 6rem 2rem 4rem;
       position: relative;
       overflow: hidden;
       z-index: 2;
@@ -531,6 +531,7 @@
       flex-direction: column;
       align-items: center;
       max-width: 600px;
+      gap: 0;
       transition: transform 0.3s ease-out;
     }
 
@@ -542,7 +543,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.1rem;
-      margin: 0 auto 2.5rem;
+      margin: 0 0 2.5rem 0;
       direction: ltr;
     }
     
@@ -618,7 +619,7 @@
     .tagline {
       font-size: 1.5rem;
       color: var(--text-primary);
-      margin-bottom: 2.5rem;
+      margin: 0 0 2.5rem 0;
       font-weight: 600;
       line-height: 1.8;
       text-shadow: 0 2px 12px rgba(0,0,0,0.15);
@@ -633,10 +634,11 @@
 
     .cta {
       display: flex;
-      gap: 1rem;
+      gap: 1.25rem;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
+      margin-bottom: 0;
     }
 
     /* ============================================
@@ -796,6 +798,146 @@
     
     .btn-outline:active {
       transform: translateY(-2px) scale(1.02);
+    }
+    
+    /* Official Store Badges - رموز Apple و Google الرسمية */
+    .store-badge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .coming-soon {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .store-badge-link {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    
+    .store-badge-link:hover {
+      transform: translateY(-4px);
+    }
+    
+    .store-badge {
+      height: 50px;
+      width: auto;
+      display: block;
+      border-radius: 8px;
+      transition: opacity 0.3s ease;
+    }
+    
+    .store-badge-link:hover .store-badge {
+      opacity: 0.9;
+    }
+    
+    .app-store-badge {
+      height: 50px;
+    }
+    
+    .google-play-badge {
+      height: 50px;
+    }
+    
+    /* الثيم الداكن - Apple يوفر رمز أبيض */
+    [data-theme="dark"] .app-store-badge {
+      filter: invert(1);
+    }
+    
+    /* QR Code Section */
+    .qr-section {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      animation: fadeInUp 1s ease-out 0.5s backwards;
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .qr-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    
+    .qr-codes {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    
+    .qr-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .qr-code-link {
+      display: block;
+      padding: 10px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 
+        0 8px 24px rgba(0,0,0,0.15),
+        inset 0 0 0 1px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .qr-code-link:hover {
+      transform: scale(1.05);
+      box-shadow: 
+        0 12px 32px rgba(0,0,0,0.2),
+        inset 0 0 0 1px rgba(0,0,0,0.08);
+    }
+    
+    .qr-code-img {
+      width: 130px;
+      height: 130px;
+      display: block;
+      border-radius: 4px;
+    }
+    
+    .qr-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .qr-item .coming-soon {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+    
+    /* Hide QR codes on mobile, show store buttons prominently */
+    @media (max-width: 768px) {
+      .qr-section {
+        display: none;
+      }
+      
+      .cta {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+      }
+      
+      .store-badge {
+        height: 48px;
+      }
+      
+      .store-badge-link {
+        display: block;
+      }
     }
 
     .features {
@@ -1279,13 +1421,14 @@
 
     @media (max-width: 480px) {
       .hero { 
-        padding: 4.5rem 1rem 2rem;
-        min-height: 85vh;
+        padding: 5rem 1rem 3rem;
+        min-height: auto;
       }
       
       .logo-with-text {
         flex-direction: row;
         gap: 0.1rem;
+        margin-bottom: 1.5rem;
       }
       
       .hero-logo-img { 
@@ -1515,6 +1658,203 @@
       }
     }
     
+    /* ============================================
+       Contact Section
+       ============================================ */
+    .contact {
+      padding: 4rem 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      padding: 2.5rem;
+      box-shadow:
+        0 8px 32px var(--shadow-dark),
+        inset 0 0 0 1px rgba(255,255,255,0.1);
+    }
+
+    .contact-card .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,140,242,0.15);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-dim);
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+      padding-right: 12px;
+    }
+
+    [dir="ltr"] .form-select {
+      background-position: calc(100% - 12px) center;
+      padding-left: 12px;
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 16px;
+      border: none;
+      outline: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,140,242,0.35);
+    }
+
+    .form-submit:active {
+      transform: translateY(0);
+    }
+
+    .form-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .form-submit .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .form-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .form-submit.loading .submit-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .form-feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .form-feedback.success {
+      display: flex;
+      background: rgba(52,199,89,0.15);
+      color: var(--success);
+      border: 1px solid rgba(52,199,89,0.3);
+    }
+
+    .form-feedback.error {
+      display: flex;
+      background: rgba(255,59,48,0.15);
+      color: var(--error);
+      border: 1px solid rgba(255,59,48,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .contact {
+        padding: 3rem 1.5rem;
+      }
+      .contact-card {
+        padding: 1.75rem;
+        border-radius: 20px;
+      }
+      .contact-card .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact {
+        padding: 2.5rem 1rem;
+      }
+      .contact-card {
+        padding: 1.25rem;
+      }
+    }
+
     /* Reduced motion preference */
     @media (prefers-reduced-motion: reduce) {
       *,
@@ -1554,6 +1894,14 @@
           <span class="checkmark" id="check-en" style="display:none">✓</span>
           <span>English</span>
         </div>
+        <div class="menu-dropdown-item" data-lang="fr">
+          <span class="checkmark" id="check-fr" style="display:none">✓</span>
+          <span>Français</span>
+        </div>
+        <div class="menu-dropdown-item" data-lang="ur">
+          <span class="checkmark" id="check-ur" style="display:none">✓</span>
+          <span>اردو</span>
+        </div>
       </div>
     </div>
     
@@ -1591,18 +1939,50 @@
       </div>
       <p class="tagline" data-i18n="tagline">مواقف ذكية · وفر وقتك وطاقتك</p>
       <div class="cta">
-        <a href="#" class="btn btn-primary" data-i18n="download">
-          <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H7V4h10v16z" fill="currentColor"/>
-          </svg>
-          <span data-i18n="download">حمّل التطبيق</span>
-        </a>
-        <a href="#features" class="btn btn-outline" data-i18n="about">
-          <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
-          </svg>
-          <span data-i18n="about">تعرف علينا</span>
-        </a>
+        <!-- App Store - الرمز الرسمي من Apple -->
+        <div class="store-badge-wrap">
+          <a href="https://apps.apple.com/app/parkinzi" class="store-badge-link" target="_blank" rel="noopener">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                 alt="تحميل من App Store" 
+                 class="store-badge app-store-badge">
+          </a>
+          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+        </div>
+        
+        <!-- Google Play - الرمز الرسمي من Google -->
+        <div class="store-badge-wrap">
+          <a href="https://play.google.com/store/apps/details?id=com.parkinzi" class="store-badge-link" target="_blank" rel="noopener">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                 alt="احصل عليه من Google Play" 
+                 class="store-badge google-play-badge">
+          </a>
+          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+        </div>
+      </div>
+      
+      <!-- QR Codes - باركود حقيقي يوديك مباشرة للمتجر -->
+      <div class="qr-section">
+        <div class="qr-text" data-i18n="scanQR">امسح الباركود لتحميل التطبيق مباشرة</div>
+        <div class="qr-codes">
+          <div class="qr-item">
+            <a href="https://apps.apple.com/app/parkinzi" target="_blank" rel="noopener" class="qr-code-link">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fparkinzi" 
+                   alt="QR Code - App Store" 
+                   class="qr-code-img">
+            </a>
+            <div class="qr-label">App Store</div>
+            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+          </div>
+          <div class="qr-item">
+            <a href="https://play.google.com/store/apps/details?id=com.parkinzi" target="_blank" rel="noopener" class="qr-code-link">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.parkinzi" 
+                   alt="QR Code - Google Play" 
+                   class="qr-code-img">
+            </a>
+            <div class="qr-label">Google Play</div>
+            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1640,10 +2020,49 @@
     </div>
   </section>
 
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="contact-card">
+      <h2 class="section-title" data-i18n="contactTitle">تواصل معنا</h2>
+      <form id="contactForm" autocomplete="on">
+        <div class="form-group">
+          <label class="form-label" data-i18n="contactName">الاسم</label>
+          <input type="text" class="form-input" id="contactName" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="contactEmail">البريد الإلكتروني</label>
+          <input type="email" class="form-input" id="contactEmail" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="contactSubject">الموضوع</label>
+          <select class="form-select" id="contactSubject" required>
+            <option value="" disabled selected data-i18n="selectSubject">اختر الموضوع</option>
+            <option value="general_inquiry" data-i18n="generalInquiry">استفسار عام</option>
+            <option value="bug_report" data-i18n="bugReport">بلاغ عن خطأ</option>
+            <option value="suggestion" data-i18n="suggestionOpt">اقتراح</option>
+            <option value="billing" data-i18n="billingOpt">الفوترة والدفع</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="contactMessage">الرسالة</label>
+          <textarea class="form-textarea" id="contactMessage" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="contactSubmitBtn">
+          <span class="spinner"></span>
+          <span class="submit-text" data-i18n="contactSend">إرسال</span>
+        </button>
+      </form>
+      <div class="form-feedback" id="contactFeedback"></div>
+    </div>
+  </section>
+
   <footer class="footer">
     <p data-i18n="copyright">© 2026 PARKINZI. جميع الحقوق محفوظة.</p>
-    <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85;">
+    <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+      <a href="pricing.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="pricingLink">الأسعار والباقات</a>
       <a href="privacy.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="privacyLink">سياسة الخصوصية</a>
+      <a href="refund.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="refundLink">سياسة الاسترجاع</a>
+      <a href="#contact" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="contactLink">تواصل معنا</a>
     </p>
   </footer>
 
@@ -1652,6 +2071,10 @@
       ar: {
         tagline: "مواقف ذكية · وفر وقتك وطاقتك",
         download: "حمّل التطبيق",
+        downloadOn: "التحميل من",
+        getItOn: "احصل عليه من",
+        scanQR: "امسح الباركود لتحميل التطبيق مباشرة",
+        comingSoon: "قريباً",
         about: "تعرف علينا",
         why: "لماذا PARKINZI؟",
         f1: "اكتشف أماكن الوقوف",
@@ -1662,6 +2085,22 @@
         f3p: "ادفع بسهولة من خلال التطبيق",
         copyright: "© 2026 PARKINZI. جميع الحقوق محفوظة.",
         privacyLink: "سياسة الخصوصية",
+        refundLink: "سياسة الاسترجاع",
+        pricingLink: "الأسعار والباقات",
+        contactTitle: "تواصل معنا",
+        contactName: "الاسم",
+        contactEmail: "البريد الإلكتروني",
+        contactSubject: "الموضوع",
+        contactMessage: "الرسالة",
+        contactSend: "إرسال",
+        selectSubject: "اختر الموضوع",
+        generalInquiry: "استفسار عام",
+        bugReport: "بلاغ عن خطأ",
+        suggestionOpt: "اقتراح",
+        billingOpt: "الفوترة والدفع",
+        contactSuccess: "تم إرسال رسالتك بنجاح!",
+        contactError: "حدث خطأ أثناء الإرسال، حاول مرة أخرى",
+        contactLink: "تواصل معنا",
         language: "اللغة",
         appearance: "المظهر",
         light: "فاتح",
@@ -1670,6 +2109,10 @@
       en: {
         tagline: "Smart parking solution · Save your time and effort",
         download: "Download App",
+        downloadOn: "Download on the",
+        getItOn: "GET IT ON",
+        scanQR: "Scan the QR code to download the app directly",
+        comingSoon: "Coming soon",
         about: "About Us",
         why: "Why PARKINZI?",
         f1: "Find Parking Spots",
@@ -1680,52 +2123,142 @@
         f3p: "Pay easily through the app",
         copyright: "© 2026 PARKINZI. All rights reserved.",
         privacyLink: "Privacy Policy",
+        refundLink: "Refund Policy",
+        pricingLink: "Pricing",
+        contactTitle: "Contact Us",
+        contactName: "Name",
+        contactEmail: "Email",
+        contactSubject: "Subject",
+        contactMessage: "Message",
+        contactSend: "Send",
+        selectSubject: "Select Subject",
+        generalInquiry: "General Inquiry",
+        bugReport: "Bug Report",
+        suggestionOpt: "Suggestion",
+        billingOpt: "Billing",
+        contactSuccess: "Your message has been sent successfully!",
+        contactError: "An error occurred, please try again",
+        contactLink: "Contact Us",
         language: "Language",
         appearance: "Appearance",
         light: "Light",
         dark: "Dark"
+      },
+      fr: {
+        tagline: "Stationnement intelligent · Gagnez du temps et de l'énergie",
+        download: "Télécharger l'app",
+        comingSoon: "Bientôt disponible",
+        downloadIOS: "App Store",
+        forIOS: "pour iPhone",
+        downloadAndroid: "Google Play",
+        forAndroid: "pour Android",
+        about: "À propos",
+        why: "Pourquoi PARKINZI ?",
+        f1: "Trouver des places",
+        f1p: "Découvrez les places disponibles en temps réel près de vous",
+        f2: "Gagnez du temps",
+        f2p: "Fini la recherche de stationnement pendant des heures",
+        f3: "Paiement facile",
+        f3p: "Payez facilement via l'application",
+        copyright: "© 2026 PARKINZI. Tous droits réservés.",
+        privacyLink: "Politique de confidentialité",
+        contactTitle: "Contactez-nous",
+        contactName: "Nom",
+        contactEmail: "E-mail",
+        contactSubject: "Sujet",
+        contactMessage: "Message",
+        contactSend: "Envoyer",
+        selectSubject: "Choisir le sujet",
+        generalInquiry: "Demande générale",
+        bugReport: "Signaler un bug",
+        suggestionOpt: "Suggestion",
+        billingOpt: "Facturation",
+        contactSuccess: "Votre message a bien été envoyé !",
+        contactError: "Une erreur s'est produite, veuillez réessayer",
+        contactLink: "Contactez-nous",
+        language: "Langue",
+        appearance: "Apparence",
+        light: "Clair",
+        dark: "Sombre"
+      },
+      ur: {
+        tagline: "ذہین پارکنگ · اپنا وقت اور توانائی بچائیں",
+        download: "ایپ ڈاؤن لوڈ کریں",
+        comingSoon: "جلد آ رہا ہے",
+        downloadIOS: "App Store",
+        forIOS: "آئی فون کے لیے",
+        downloadAndroid: "Google Play",
+        forAndroid: "اینڈرائیڈ کے لیے",
+        about: "ہمارے بارے میں",
+        why: "PARKINZI کیوں؟",
+        f1: "پارکنگ جگہیں تلاش کریں",
+        f1p: "اپنے قریب ریل ٹائم میں دستیاب جگہیں دریافت کریں",
+        f2: "وقت بچائیں",
+        f2p: "لمبے وقت تک پارکنگ کی تلاش ختم",
+        f3: "آسان ادائیگی",
+        f3p: "ایپ کے ذریعے آسانی سے ادا کریں",
+        copyright: "© 2026 PARKINZI. جملہ حقوق محفوظ ہیں۔",
+        privacyLink: "رازداری کی پالیسی",
+        contactTitle: "ہم سے رابطہ کریں",
+        contactName: "نام",
+        contactEmail: "ای میل",
+        contactSubject: "موضوع",
+        contactMessage: "پیغام",
+        contactSend: "بھیجیں",
+        selectSubject: "موضوع منتخب کریں",
+        generalInquiry: "عام استفسار",
+        bugReport: "بگ رپورٹ",
+        suggestionOpt: "تجویز",
+        billingOpt: "بلنگ",
+        contactSuccess: "آپ کا پیغام کامیابی سے بھیج دیا گیا!",
+        contactError: "خطا ہوئی، براہ کرم دوبارہ کوشش کریں",
+        contactLink: "ہم سے رابطہ کریں",
+        language: "زبان",
+        appearance: "ظہور",
+        light: "روشن",
+        dark: "اندھیرا"
       }
     };
 
     const lang = () => localStorage.getItem("parkinzi_lang") || "ar";
     const theme = () => localStorage.getItem("parkinzi_theme") || "light";
 
+    const langNames = { ar: "العربية", en: "English", fr: "Français", ur: "اردو" };
+    const langTitles = {
+      ar: "PARKINZI | مواقف ذكية",
+      en: "PARKINZI | Smart Parking",
+      fr: "PARKINZI | Stationnement intelligent",
+      ur: "PARKINZI | ذہین پارکنگ"
+    };
+
     function setLang(l) {
       localStorage.setItem("parkinzi_lang", l);
       document.documentElement.lang = l;
-      document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
-      
-      // Update translations (preserve icons in buttons)
+      document.documentElement.dir = (l === "ar" || l === "ur") ? "rtl" : "ltr";
+
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const k = el.dataset.i18n;
-        if (translations[l][k]) {
-          // If element has children (like button icons), only update text nodes
+        if (translations[l] && translations[l][k]) {
           if (el.children.length > 0) {
-            // Find text span and update only that
             const textSpan = Array.from(el.children).find(child => child.hasAttribute('data-i18n'));
-            if (textSpan) {
-              textSpan.textContent = translations[l][k];
-            }
+            if (textSpan) textSpan.textContent = translations[l][k];
           } else {
             el.textContent = translations[l][k];
           }
         }
       });
-      
-      // Update language display
-      const langDisplay = l === "ar" ? "العربية" : "English";
-      document.getElementById("currentLangDisplay").textContent = langDisplay;
-      
-      // Update checkmarks
-      document.getElementById("check-ar").style.display = l === "ar" ? "inline" : "none";
-      document.getElementById("check-en").style.display = l === "en" ? "inline" : "none";
-      
-      // Update theme display text when language changes
+
+      document.getElementById("currentLangDisplay").textContent = langNames[l] || l;
+      ["ar", "en", "fr", "ur"].forEach(code => {
+        const el = document.getElementById("check-" + code);
+        if (el) el.style.display = l === code ? "inline" : "none";
+      });
+
       const currentTheme = theme();
       const themeText = currentTheme === "dark" ? translations[l].dark : translations[l].light;
       document.getElementById("currentThemeDisplay").textContent = themeText;
-      
-      document.title = l === "ar" ? "PARKINZI | مواقف ذكية" : "PARKINZI | Smart Parking";
+
+      document.title = langTitles[l] || "PARKINZI";
     }
 
     function setTheme(t) {
@@ -1850,7 +2383,7 @@
         const x = (e.clientX - left) / width - 0.5;
         const y = (e.clientY - top) / height - 0.5;
         
-        heroContent.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+        heroContent.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
       });
       
       hero.addEventListener('mouseleave', () => {
@@ -1922,6 +2455,61 @@
       }
       lastTouchEnd = now;
     }, false);
+    
+    // ============================================
+    // Contact Form - Supabase Integration
+    // النتائج تصب في جدول contact_messages في Supabase
+    // تأكد من وجود الجدول بالأعمدة: name, email, subject, message
+    // ============================================
+    const SUPABASE_URL = "https://brqsvtobletrlkpkhooc.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
+    
+    const contactForm = document.getElementById("contactForm");
+    const submitBtn = document.getElementById("contactSubmitBtn");
+    const feedbackEl = document.getElementById("contactFeedback");
+    
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const subject = document.getElementById("contactSubject").value;
+      const message = document.getElementById("contactMessage").value.trim();
+      
+      if (!name || !email || !subject || !message) return;
+      
+      // Show loading
+      submitBtn.classList.add("loading");
+      submitBtn.disabled = true;
+      feedbackEl.className = "form-feedback";
+      
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        
+        if (res.ok || res.status === 201) {
+          feedbackEl.textContent = translations[lang()].contactSuccess;
+          feedbackEl.className = "form-feedback success";
+          contactForm.reset();
+        } else {
+          throw new Error("Failed");
+        }
+      } catch (err) {
+        feedbackEl.textContent = translations[lang()].contactError;
+        feedbackEl.className = "form-feedback error";
+      } finally {
+        submitBtn.classList.remove("loading");
+        submitBtn.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#008cf2">
+  <title>سياسة الاسترجاع والاسترداد | PARKINZI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #008cf2;
+      --primary-light: #19b3ff;
+      --text-primary: #1a1a26;
+      --text-secondary: #4d4d59;
+      --bg-top: #fafcff;
+      --bg-bottom: #edf3f9;
+      --glass: rgba(255,255,255,0.85);
+      --glass-border: rgba(0,0,0,0.08);
+      --white: #ffffff;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+      color: var(--text-primary);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .last-updated {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .content {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    h3 {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    ul, ol {
+      margin: 1rem 0 1rem 2rem;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, rgba(0,140,242,0.1), rgba(25,179,255,0.1));
+      border-right: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .warning-box {
+      background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(251,191,36,0.1));
+      border-right: 4px solid var(--warning);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .success-box {
+      background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(52,211,153,0.1));
+      border-right: 4px solid var(--success);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: var(--primary);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,140,242,0.3);
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,140,242,0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: right;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    th {
+      background: var(--primary);
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .content { padding: 2rem 1.5rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      table { font-size: 0.9rem; }
+      th, td { padding: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>سياسة الاسترجاع والاسترداد</h1>
+      <p class="last-updated">آخر تحديث: فبراير 2026</p>
+    </div>
+
+    <div class="content">
+      <div class="info-box">
+        <strong>ملاحظة مهمة:</strong> نحن في PARKINZI نلتزم برضا عملائنا وحقوقهم. تم تصميم هذه السياسة لضمان تجربة عادلة وشفافة لجميع المستخدمين.
+      </div>
+
+      <h2>1. نظرة عامة</h2>
+      <p>توضح هذه السياسة شروط وأحكام استرجاع واسترداد المدفوعات في تطبيق PARKINZI لحجز مواقف السيارات.</p>
+
+      <div class="info-box">
+        <strong>مبدأ الحجز:</strong> من لحظة تأكيد الحجز، الموقف يصبح ملكك والوقت يبدأ بالاحتساب سواء وصلت للموقع أم لا. أنت تدفع مقابل حجز الموقف وحقك فيه طوال المدة المحجوزة.
+      </div>
+
+      <h2>2. حالات الاسترداد المؤهلة</h2>
+      
+      <h3>2.1 إلغاء الحجز المسبق</h3>
+      <table>
+        <tr>
+          <th>وقت الإلغاء</th>
+          <th>نسبة الاسترداد</th>
+        </tr>
+        <tr>
+          <td>أكثر من 24 ساعة قبل موعد الحجز</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td>12-24 ساعة قبل موعد الحجز</td>
+          <td>75%</td>
+        </tr>
+        <tr>
+          <td>6-12 ساعة قبل موعد الحجز</td>
+          <td>50%</td>
+        </tr>
+        <tr>
+          <td>أقل من 6 ساعات قبل موعد الحجز</td>
+          <td>لا يوجد استرداد</td>
+        </tr>
+      </table>
+
+      <h3>2.2 مشاكل تقنية</h3>
+      <div class="success-box">
+        <p><strong>استرداد كامل 100%</strong> في الحالات التالية:</p>
+        <ul>
+          <li>فشل في الوصول إلى الموقف بسبب خطأ في التطبيق</li>
+          <li>معلومات موقف خاطئة أو مضللة</li>
+          <li>عطل تقني منع استخدام الخدمة</li>
+          <li>رسوم مكررة أو غير صحيحة</li>
+        </ul>
+      </div>
+
+      <h3>2.3 ظروف طارئة</h3>
+      <ul>
+        <li>حالات طوارئ طبية (بموجب إثبات)</li>
+        <li>ظروف جوية قاهرة</li>
+        <li>إغلاق طرق غير متوقع</li>
+        <li>أعطال في السيارة (بموجب إثبات)</li>
+      </ul>
+      <p><em>يتم مراجعة هذه الحالات بشكل فردي وقد تستحق استرداداً كاملاً أو جزئياً.</em></p>
+
+      <h2>3. حالات عدم الاسترداد</h2>
+      <div class="warning-box">
+        <p><strong>لا يمكن استرداد المبالغ في الحالات التالية:</strong></p>
+        <ul>
+          <li>بعد بدء فترة الحجز (لأن الموقف أصبح ملكك من لحظة التأكيد سواء وصلت أم لا)</li>
+          <li>استخدام الموقف أو انتهاء فترة الحجز</li>
+          <li>إلغاء متأخر (أقل من 6 ساعات قبل موعد بدء الحجز)</li>
+          <li>عدم الالتزام بشروط الخدمة</li>
+          <li>استخدام غير مصرح به أو احتيالي</li>
+        </ul>
+      </div>
+
+      <h2>4. آلية طلب الاسترداد</h2>
+      
+      <h3>الخطوة 1: تقديم الطلب</h3>
+      <ul>
+        <li>افتح التطبيق وانتقل إلى "حجوزاتي"</li>
+        <li>اختر الحجز المراد استرداده</li>
+        <li>اضغط على "طلب استرداد"</li>
+        <li>اختر السبب من القائمة</li>
+        <li>أرفق أي مستندات داعمة إن لزم الأمر</li>
+      </ul>
+
+      <h3>الخطوة 2: المراجعة</h3>
+      <ul>
+        <li>سيتم مراجعة طلبك خلال 24-48 ساعة عمل</li>
+        <li>قد نطلب معلومات أو مستندات إضافية</li>
+        <li>ستتلقى إشعاراً بحالة الطلب</li>
+      </ul>
+
+      <h3>الخطوة 3: المعالجة</h3>
+      <ul>
+        <li>في حالة الموافقة، سيتم استرداد المبلغ خلال 5-7 أيام عمل</li>
+        <li>سيتم الاسترداد إلى نفس وسيلة الدفع المستخدمة</li>
+        <li>ستتلقى تأكيداً عبر البريد الإلكتروني والتطبيق</li>
+      </ul>
+
+      <h2>5. طرق الاسترداد</h2>
+      <ul>
+        <li><strong>بطاقات الائتمان/الخصم:</strong> 5-7 أيام عمل</li>
+        <li><strong>المحافظ الإلكترونية:</strong> 2-3 أيام عمل</li>
+        <li><strong>Apple Pay:</strong> 3-5 أيام عمل</li>
+        <li><strong>رصيد التطبيق:</strong> فوري</li>
+      </ul>
+
+      <h2>6. الاعتراض على قرار الاسترداد</h2>
+      <p>إذا تم رفض طلب الاسترداد ولديك معلومات إضافية:</p>
+      <ul>
+        <li>يمكنك تقديم اعتراض خلال 14 يوماً</li>
+        <li>أرفق أي مستندات جديدة تدعم طلبك</li>
+        <li>سيتم مراجعة الاعتراض من قبل فريق أعلى</li>
+        <li>القرار النهائي سيكون ملزماً</li>
+      </ul>
+
+      <h2>7. رسوم المعالجة</h2>
+      <div class="info-box">
+        <p><strong>بدون رسوم معالجة!</strong></p>
+        <p>PARKINZI لا تفرض أي رسوم على معالجة طلبات الاسترداد. المبلغ المسترد سيكون كاملاً وفقاً للنسبة المستحقة.</p>
+      </div>
+
+      <h2>8. الاستثناءات الخاصة</h2>
+      
+      <h3>8.1 العملاء الجدد</h3>
+      <p>للحجز الأول: يمكن الإلغاء مجاناً حتى ساعة واحدة قبل الموعد.</p>
+
+      <h3>8.2 الاشتراكات الشهرية</h3>
+      <ul>
+        <li>يمكن إلغاء الاشتراك في أي وقت</li>
+        <li>لا يوجد استرداد للفترة الحالية</li>
+        <li>سيظل نشطاً حتى نهاية دورة الفوترة</li>
+      </ul>
+
+      <h3>8.3 العروض والخصومات</h3>
+      <p>الحجوزات المستفيدة من عروض خاصة أو أكواد خصم قد تخضع لشروط استرداد مختلفة موضحة في تفاصيل العرض.</p>
+
+      <h2>9. حقوق المستخدم</h2>
+      <ul>
+        <li>الحق في معرفة حالة طلب الاسترداد</li>
+        <li>الحق في الاعتراض على القرار</li>
+        <li>الحق في الحصول على تفسير مكتوب للرفض</li>
+        <li>الحق في التصعيد لخدمة العملاء</li>
+      </ul>
+
+      <h2>10. الاتصال بنا</h2>
+      <p>لأي استفسارات أو مساعدة في طلبات الاسترداد:</p>
+      <ul>
+        <li><strong>البريد الإلكتروني:</strong> refunds@parkinzi.com</li>
+        <li><strong>الهاتف:</strong> +966 XX XXX XXXX</li>
+        <li><strong>الدعم داخل التطبيق:</strong> متوفر 24/7</li>
+        <li><strong>WhatsApp:</strong> +966 XX XXX XXXX</li>
+      </ul>
+
+      <h2>11. التعديلات على السياسة</h2>
+      <p>نحتفظ بالحق في تعديل هذه السياسة في أي وقت. سيتم إخطار المستخدمين بأي تغييرات جوهرية قبل 30 يوماً من تطبيقها.</p>
+
+      <div class="success-box">
+        <p><strong>التزامنا تجاهك:</strong></p>
+        <p>نسعى دائماً لتقديم أفضل خدمة وأكثر عدالة. رضاك هو أولويتنا، ونعمل باستمرار على تحسين سياساتنا لخدمتك بشكل أفضل.</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 2rem;">
+      <a href="index.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+        </svg>
+        العودة للرئيسية
+      </a>
+    </div>
+  </div>
+</body>
+</html>
