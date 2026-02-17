@@ -194,11 +194,11 @@
       top: 0;
       left: 0;
       right: 0;
-      padding: 1rem 1.5rem;
+      padding: 0.4rem 0.75rem;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
       z-index: 100;
       background: var(--glass);
       backdrop-filter: blur(25px) saturate(180%);
@@ -224,59 +224,124 @@
       }
     }
     
-    /* Language/Theme Menu Button */
+    /* Language/Theme Menu Button - Neumorphic 3D */
     .menu-btn {
       position: relative;
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      padding: 0.35rem;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(145deg, var(--bg-top), var(--bg-mid));
       color: var(--text-primary);
       cursor: pointer;
       font-size: 0.9rem;
       font-family: inherit;
-      transition: all 0.25s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 
-        0 2px 8px var(--shadow-dark),
-        0 1px 2px var(--shadow-light);
+        6px 6px 14px var(--shadow-dark),
+        -6px -6px 14px var(--shadow-light),
+        inset 0 1px 0 rgba(255,255,255,0.6);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: center;
+      gap: 0;
+    }
+    
+    [data-theme="dark"] .menu-btn {
+      background: linear-gradient(145deg, var(--bg-mid), var(--bg-bottom));
+      box-shadow: 
+        6px 6px 14px rgba(0,0,0,0.5),
+        -6px -6px 14px rgba(255,255,255,0.03),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    
+    .menu-btn:hover {
+      box-shadow: 
+        8px 8px 18px var(--shadow-dark),
+        -8px -8px 18px var(--shadow-light),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    
+    [data-theme="dark"] .menu-btn:hover {
+      box-shadow: 
+        8px 8px 18px rgba(0,0,0,0.6),
+        -8px -8px 18px rgba(255,255,255,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    
+    .menu-btn:active {
+      box-shadow: 
+        inset 4px 4px 10px var(--shadow-dark),
+        inset -4px -4px 10px var(--shadow-light);
+    }
+    
+    [data-theme="dark"] .menu-btn:active {
+      box-shadow: 
+        inset 4px 4px 10px rgba(0,0,0,0.5),
+        inset -4px -4px 10px rgba(255,255,255,0.02);
+    }
+    
+    .menu-btn .menu-text,
+    .menu-btn .menu-icon {
+      display: none !important;
     }
     
     .menu-btn .icon-circle {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--bg-top), var(--bg-mid));
+      background: linear-gradient(145deg, var(--bg-top), var(--bg-bottom));
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 
-        4px 4px 8px rgba(5,10,15,0.2),
-        -4px -4px 8px var(--shadow-light);
-      transition: all 0.3s ease;
+        5px 5px 10px var(--shadow-dark),
+        -5px -5px 10px var(--shadow-light),
+        inset 2px 2px 4px rgba(255,255,255,0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     [data-theme="dark"] .menu-btn .icon-circle {
+      background: linear-gradient(145deg, var(--bg-top), var(--bg-bottom));
       box-shadow: 
-        4px 4px 8px rgba(5,10,15,0.6),
-        -4px -4px 8px rgba(255,255,255,0.05);
+        5px 5px 10px rgba(0,0,0,0.6),
+        -5px -5px 10px rgba(255,255,255,0.03),
+        inset 2px 2px 4px rgba(255,255,255,0.04);
+    }
+    
+    .menu-btn:hover .icon-circle {
+      box-shadow: 
+        6px 6px 12px var(--shadow-dark),
+        -6px -6px 12px var(--shadow-light),
+        inset 1px 1px 2px rgba(255,255,255,0.6);
+    }
+    
+    [data-theme="dark"] .menu-btn:hover .icon-circle {
+      box-shadow: 
+        6px 6px 12px rgba(0,0,0,0.7),
+        -6px -6px 12px rgba(255,255,255,0.04),
+        inset 1px 1px 2px rgba(255,255,255,0.06);
+    }
+    
+    .menu-btn:active .icon-circle {
+      box-shadow: 
+        inset 3px 3px 6px var(--shadow-dark),
+        inset -3px -3px 6px var(--shadow-light);
+    }
+    
+    [data-theme="dark"] .menu-btn:active .icon-circle {
+      box-shadow: 
+        inset 3px 3px 6px rgba(0,0,0,0.6),
+        inset -3px -3px 6px rgba(255,255,255,0.02);
     }
     
     .menu-btn .icon-circle .icon {
-      font-size: 18px;
+      font-size: 15px;
       transition: transform 0.3s ease;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
     }
     
     .menu-btn:hover .icon-circle .icon {
-      transform: scale(1.1);
-    }
-    
-    [data-theme="dark"] .menu-btn .icon-circle {
-      background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+      transform: scale(1.08);
     }
     
     .menu-btn .menu-text {
@@ -318,12 +383,6 @@
       margin-right: 0;
     }
     
-    .menu-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 4px 12px rgba(0,140,242,0.2),
-        0 2px 4px var(--shadow-light);
-    }
     
     /* ============================================
        Dropdown Menu - Enhanced Neumorphic Design
@@ -517,7 +576,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 6rem 2rem 4rem;
+      padding: 5rem 2rem 4rem;
       position: relative;
       overflow: hidden;
       z-index: 2;
@@ -543,7 +602,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.1rem;
-      margin: 0 0 2.5rem 0;
+      margin: 0 0 2.75rem 0;
       direction: ltr;
     }
     
@@ -617,14 +676,14 @@
     }
 
     .tagline {
-      font-size: 1.5rem;
+      font-size: 1.85rem;
       color: var(--text-primary);
       margin: 0 0 2.5rem 0;
       font-weight: 600;
       line-height: 1.8;
       text-shadow: 0 2px 12px rgba(0,0,0,0.15);
       position: relative;
-      max-width: 500px;
+      max-width: 560px;
       padding: 0 1rem;
     }
     
@@ -634,10 +693,10 @@
 
     .cta {
       display: flex;
-      gap: 1.25rem;
+      gap: 1.75rem;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      align-items: stretch;
       margin-bottom: 0;
     }
 
@@ -805,45 +864,72 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .coming-soon {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      font-weight: 500;
+      gap: 0.6rem;
+      width: 200px;
+      flex: 0 0 200px;
     }
     
     .store-badge-link {
-      display: inline-block;
-      transition: transform 0.3s ease;
-    }
-    
-    .store-badge-link:hover {
-      transform: translateY(-4px);
-    }
-    
-    .store-badge {
-      height: 50px;
-      width: auto;
-      display: block;
-      border-radius: 8px;
-      transition: opacity 0.3s ease;
-    }
-    
-    .store-badge-link:hover .store-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      min-width: 200px;
+      height: 82px;
+      min-height: 82px;
+      flex-shrink: 0;
+      padding: 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 
+        0 4px 16px var(--shadow-dark),
+        0 0 0 1px rgba(0,0,0,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: not-allowed;
+      pointer-events: none;
       opacity: 0.9;
     }
     
+    
+    [data-theme="dark"] .store-badge-link {
+      background: var(--glass);
+      border-color: var(--glass-border);
+      box-shadow: 
+        0 4px 20px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    
+    .coming-soon {
+      font-size: 1rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .store-badge {
+      height: 54px;
+      width: 158px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    
+    
     .app-store-badge {
-      height: 50px;
+      height: 54px;
+      width: 158px;
     }
     
     .google-play-badge {
-      height: 50px;
+      height: 58px;
+      width: 170px;
     }
     
-    /* الثيم الداكن - Apple يوفر رمز أبيض */
     [data-theme="dark"] .app-store-badge {
       filter: invert(1);
     }
@@ -892,13 +978,9 @@
         0 8px 24px rgba(0,0,0,0.15),
         inset 0 0 0 1px rgba(0,0,0,0.05);
       transition: all 0.3s ease;
-    }
-    
-    .qr-code-link:hover {
-      transform: scale(1.05);
-      box-shadow: 
-        0 12px 32px rgba(0,0,0,0.2),
-        inset 0 0 0 1px rgba(0,0,0,0.08);
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.9;
     }
     
     .qr-code-img {
@@ -931,12 +1013,29 @@
         gap: 1rem;
       }
       
-      .store-badge {
-        height: 48px;
+      .store-badge-wrap {
+        width: 175px;
       }
       
       .store-badge-link {
-        display: block;
+        width: 175px;
+        min-width: 175px;
+        height: 72px;
+        min-height: 72px;
+      }
+      
+      .store-badge {
+        height: 48px;
+        width: 140px;
+      }
+      
+      .google-play-badge {
+        height: 52px;
+        width: 152px;
+      }
+      
+      .coming-soon {
+        font-size: 0.95rem;
       }
     }
 
@@ -1494,22 +1593,21 @@
       
       /* Menu adjustments for mobile */
       .header {
-        padding: 0.75rem 1rem;
+        padding: 0.35rem 0.6rem;
       }
       
       .menu-btn {
-        padding: 0.6rem 0.75rem;
-        gap: 0.5rem;
-        border-radius: 10px;
+        padding: 0.3rem;
+        border-radius: 12px;
       }
       
       .menu-btn .icon-circle {
-        width: 34px;
-        height: 34px;
+        width: 28px;
+        height: 28px;
       }
       
       .menu-btn .icon-circle .icon {
-        font-size: 15px;
+        font-size: 13px;
       }
       
       .menu-btn .menu-label {
@@ -1659,11 +1757,11 @@
     }
     
     /* ============================================
-       Contact Section
+       Contact Section - Chat UI
        ============================================ */
     .contact {
       padding: 4rem 2rem;
-      max-width: 700px;
+      max-width: 520px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
@@ -1675,174 +1773,174 @@
       -webkit-backdrop-filter: blur(30px) saturate(180%);
       border-radius: 24px;
       border: 1px solid var(--glass-border);
-      padding: 2.5rem;
+      overflow: hidden;
       box-shadow:
         0 8px 32px var(--shadow-dark),
         inset 0 0 0 1px rgba(255,255,255,0.1);
     }
 
-    .contact-card .section-title {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-    }
-
-    .form-input,
-    .form-select,
-    .form-textarea {
-      width: 100%;
-      padding: 0.9rem 1.1rem;
-      border-radius: 14px;
-      border: 1.5px solid var(--glass-border);
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: var(--text-primary);
-      font-family: inherit;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0,140,242,0.15);
-    }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color: var(--text-dim);
-    }
-
-    .form-select {
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: 12px center;
-      padding-right: 12px;
-    }
-
-    [dir="ltr"] .form-select {
-      background-position: calc(100% - 12px) center;
-      padding-left: 12px;
-    }
-
-    .form-textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 1rem;
-      border-radius: 16px;
-      border: none;
-      outline: none;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    .chat-header {
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      font-family: inherit;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .chat-header-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .chat-header-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .chat-header-status {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .chat-messages {
+      height: 320px;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 0.85rem 1.1rem;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .chat-msg.bot {
+      align-self: flex-start;
+      background: linear-gradient(145deg, var(--bg-mid), var(--bg-bottom));
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+      box-shadow: 4px 4px 12px var(--shadow-dark), -2px -2px 8px var(--shadow-light);
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,140,242,0.3);
+    }
+
+    .chat-options {
+      display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
       margin-top: 0.5rem;
     }
 
-    .form-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,140,242,0.35);
+    .chat-option-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
 
-    .form-submit:active {
-      transform: translateY(0);
+    .chat-option-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-1px);
     }
 
-    .form-submit:disabled {
+    .chat-input-wrap {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 0.85rem 1.1rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0,140,242,0.15);
+    }
+
+    .chat-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .chat-send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .chat-send-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px rgba(0,140,242,0.4);
+    }
+
+    .chat-send-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
     }
 
-    .form-submit .spinner {
+    .chat-send-btn .spinner {
       width: 20px;
       height: 20px;
-      border: 2.5px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255,255,255,0.3);
       border-top-color: white;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
-      display: none;
-    }
-
-    .form-submit.loading .spinner {
-      display: inline-block;
-    }
-
-    .form-submit.loading .submit-text {
-      display: none;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    .form-feedback {
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 14px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      display: none;
-      align-items: center;
-      gap: 0.5rem;
-      animation: fadeInUp 0.3s ease;
-    }
-
-    .form-feedback.success {
-      display: flex;
-      background: rgba(52,199,89,0.15);
-      color: var(--success);
-      border: 1px solid rgba(52,199,89,0.3);
-    }
-
-    .form-feedback.error {
-      display: flex;
-      background: rgba(255,59,48,0.15);
-      color: var(--error);
-      border: 1px solid rgba(255,59,48,0.3);
-    }
-
     @media (max-width: 768px) {
       .contact {
         padding: 3rem 1.5rem;
       }
-      .contact-card {
-        padding: 1.75rem;
-        border-radius: 20px;
-      }
-      .contact-card .section-title {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
+      .chat-messages {
+        height: 280px;
       }
     }
 
@@ -1850,8 +1948,8 @@
       .contact {
         padding: 2.5rem 1rem;
       }
-      .contact-card {
-        padding: 1.25rem;
+      .chat-messages {
+        height: 260px;
       }
     }
 
@@ -1939,23 +2037,23 @@
       </div>
       <p class="tagline" data-i18n="tagline">مواقف ذكية · وفر وقتك وطاقتك</p>
       <div class="cta">
-        <!-- App Store - الرمز الرسمي من Apple -->
+        <!-- App Store - قريباً -->
         <div class="store-badge-wrap">
-          <a href="https://apps.apple.com/app/parkinzi" class="store-badge-link" target="_blank" rel="noopener">
+          <span class="store-badge-link" aria-disabled="true" title="قريباً">
             <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
                  alt="تحميل من App Store" 
                  class="store-badge app-store-badge">
-          </a>
+          </span>
           <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
         </div>
         
-        <!-- Google Play - الرمز الرسمي من Google -->
+        <!-- Google Play - قريباً -->
         <div class="store-badge-wrap">
-          <a href="https://play.google.com/store/apps/details?id=com.parkinzi" class="store-badge-link" target="_blank" rel="noopener">
+          <span class="store-badge-link" aria-disabled="true" title="قريباً">
             <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
                  alt="احصل عليه من Google Play" 
                  class="store-badge google-play-badge">
-          </a>
+          </span>
           <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
         </div>
       </div>
@@ -1965,20 +2063,20 @@
         <div class="qr-text" data-i18n="scanQR">امسح الباركود لتحميل التطبيق مباشرة</div>
         <div class="qr-codes">
           <div class="qr-item">
-            <a href="https://apps.apple.com/app/parkinzi" target="_blank" rel="noopener" class="qr-code-link">
+            <span class="qr-code-link" aria-disabled="true" title="قريباً">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fparkinzi" 
                    alt="QR Code - App Store" 
                    class="qr-code-img">
-            </a>
+            </span>
             <div class="qr-label">App Store</div>
             <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
           </div>
           <div class="qr-item">
-            <a href="https://play.google.com/store/apps/details?id=com.parkinzi" target="_blank" rel="noopener" class="qr-code-link">
+            <span class="qr-code-link" aria-disabled="true" title="قريباً">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.parkinzi" 
                    alt="QR Code - Google Play" 
                    class="qr-code-img">
-            </a>
+            </span>
             <div class="qr-label">Google Play</div>
             <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
           </div>
@@ -2020,46 +2118,32 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact Section - Chat -->
   <section class="contact" id="contact">
     <div class="contact-card">
-      <h2 class="section-title" data-i18n="contactTitle">تواصل معنا</h2>
-      <form id="contactForm" autocomplete="on">
-        <div class="form-group">
-          <label class="form-label" data-i18n="contactName">الاسم</label>
-          <input type="text" class="form-input" id="contactName" required autocomplete="name">
+      <div class="chat-header">
+        <div class="chat-header-avatar">🤖</div>
+        <div>
+          <div class="chat-header-title" data-i18n="chatBotTitle">مساعد PARKINZI</div>
+          <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
         </div>
-        <div class="form-group">
-          <label class="form-label" data-i18n="contactEmail">البريد الإلكتروني</label>
-          <input type="email" class="form-input" id="contactEmail" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label class="form-label" data-i18n="contactSubject">الموضوع</label>
-          <select class="form-select" id="contactSubject" required>
-            <option value="" disabled selected data-i18n="selectSubject">اختر الموضوع</option>
-            <option value="general_inquiry" data-i18n="generalInquiry">استفسار عام</option>
-            <option value="bug_report" data-i18n="bugReport">بلاغ عن خطأ</option>
-            <option value="suggestion" data-i18n="suggestionOpt">اقتراح</option>
-            <option value="billing" data-i18n="billingOpt">الفوترة والدفع</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" data-i18n="contactMessage">الرسالة</label>
-          <textarea class="form-textarea" id="contactMessage" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="form-submit" id="contactSubmitBtn">
-          <span class="spinner"></span>
-          <span class="submit-text" data-i18n="contactSend">إرسال</span>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-wrap">
+        <input type="text" class="chat-input" id="chatInput" placeholder="" autocomplete="off" maxlength="500">
+        <button type="button" class="chat-send-btn" id="chatSendBtn" aria-label="إرسال">
+          <span class="spinner" style="display:none"></span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="chatSendIcon">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
         </button>
-      </form>
-      <div class="form-feedback" id="contactFeedback"></div>
+      </div>
     </div>
   </section>
 
   <footer class="footer">
     <p data-i18n="copyright">© 2026 PARKINZI. جميع الحقوق محفوظة.</p>
     <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-      <a href="pricing.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="pricingLink">الأسعار والباقات</a>
       <a href="privacy.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="privacyLink">سياسة الخصوصية</a>
       <a href="refund.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="refundLink">سياسة الاسترجاع</a>
       <a href="#contact" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="contactLink">تواصل معنا</a>
@@ -2086,7 +2170,6 @@
         copyright: "© 2026 PARKINZI. جميع الحقوق محفوظة.",
         privacyLink: "سياسة الخصوصية",
         refundLink: "سياسة الاسترجاع",
-        pricingLink: "الأسعار والباقات",
         contactTitle: "تواصل معنا",
         contactName: "الاسم",
         contactEmail: "البريد الإلكتروني",
@@ -2101,6 +2184,15 @@
         contactSuccess: "تم إرسال رسالتك بنجاح!",
         contactError: "حدث خطأ أثناء الإرسال، حاول مرة أخرى",
         contactLink: "تواصل معنا",
+        chatBotTitle: "مساعد PARKINZI",
+        chatBotStatus: "متصل · يرد عادة خلال دقائق",
+        chatWelcome: "مرحباً! أنا مساعد PARKINZI. اختر الموضوع أو اكتب رسالتك:",
+        chatTypeOrSelect: "اختر أو اكتب...",
+        chatAskName: "ما اسمك؟",
+        chatAskEmail: "ما بريدك الإلكتروني؟",
+        chatAskMessage: "اكتب رسالتك:",
+        chatSending: "جاري الإرسال...",
+        chatDone: "تم إرسال رسالتك بنجاح",
         language: "اللغة",
         appearance: "المظهر",
         light: "فاتح",
@@ -2124,7 +2216,6 @@
         copyright: "© 2026 PARKINZI. All rights reserved.",
         privacyLink: "Privacy Policy",
         refundLink: "Refund Policy",
-        pricingLink: "Pricing",
         contactTitle: "Contact Us",
         contactName: "Name",
         contactEmail: "Email",
@@ -2139,6 +2230,15 @@
         contactSuccess: "Your message has been sent successfully!",
         contactError: "An error occurred, please try again",
         contactLink: "Contact Us",
+        chatBotTitle: "PARKINZI Assistant",
+        chatBotStatus: "Online · Usually replies within minutes",
+        chatWelcome: "Hi! I'm your PARKINZI assistant. Choose a topic or type your message:",
+        chatTypeOrSelect: "Choose or type...",
+        chatAskName: "What's your name?",
+        chatAskEmail: "What's your email?",
+        chatAskMessage: "Type your message:",
+        chatSending: "Sending...",
+        chatDone: "Message sent successfully",
         language: "Language",
         appearance: "Appearance",
         light: "Light",
@@ -2176,6 +2276,15 @@
         contactSuccess: "Votre message a bien été envoyé !",
         contactError: "Une erreur s'est produite, veuillez réessayer",
         contactLink: "Contactez-nous",
+        chatBotTitle: "Assistant PARKINZI",
+        chatBotStatus: "En ligne · Répond généralement en quelques minutes",
+        chatWelcome: "Bonjour ! Je suis l'assistant PARKINZI. Choisissez un sujet ou tapez votre message :",
+        chatTypeOrSelect: "Choisissez ou tapez...",
+        chatAskName: "Quel est votre nom ?",
+        chatAskEmail: "Quel est votre e-mail ?",
+        chatAskMessage: "Tapez votre message :",
+        chatSending: "Envoi en cours...",
+        chatDone: "Message envoyé avec succès",
         language: "Langue",
         appearance: "Apparence",
         light: "Clair",
@@ -2213,6 +2322,15 @@
         contactSuccess: "آپ کا پیغام کامیابی سے بھیج دیا گیا!",
         contactError: "خطا ہوئی، براہ کرم دوبارہ کوشش کریں",
         contactLink: "ہم سے رابطہ کریں",
+        chatBotTitle: "PARKINZI اسسٹنٹ",
+        chatBotStatus: "آن لائن · عام طور پر منٹوں میں جواب",
+        chatWelcome: "ہیلو! میں PARKINZI اسسٹنٹ ہوں۔ موضوع منتخب کریں یا اپنا پیغام لکھیں:",
+        chatTypeOrSelect: "منتخب کریں یا اپنا پیغام لکھیں...",
+        chatAskName: "آپ کا نام کیا ہے؟",
+        chatAskEmail: "آپ کا ای میل کیا ہے؟",
+        chatAskMessage: "اپنا پیغام لکھیں:",
+        chatSending: "بھیج رہا ہے...",
+        chatDone: "پیغام کامیابی سے بھیج دیا گیا",
         language: "زبان",
         appearance: "ظہور",
         light: "روشن",
@@ -2457,32 +2575,83 @@
     }, false);
     
     // ============================================
-    // Contact Form - Supabase Integration
-    // النتائج تصب في جدول contact_messages في Supabase
-    // تأكد من وجود الجدول بالأعمدة: name, email, subject, message
+    // Chat Bot - Supabase Integration
     // ============================================
     const SUPABASE_URL = "https://brqsvtobletrlkpkhooc.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
     
-    const contactForm = document.getElementById("contactForm");
-    const submitBtn = document.getElementById("contactSubmitBtn");
-    const feedbackEl = document.getElementById("contactFeedback");
+    const chatMessages = document.getElementById("chatMessages");
+    const chatInput = document.getElementById("chatInput");
+    const chatSendBtn = document.getElementById("chatSendBtn");
+    const chatSendIcon = document.getElementById("chatSendIcon");
     
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      
-      const name = document.getElementById("contactName").value.trim();
-      const email = document.getElementById("contactEmail").value.trim();
-      const subject = document.getElementById("contactSubject").value;
-      const message = document.getElementById("contactMessage").value.trim();
-      
-      if (!name || !email || !subject || !message) return;
-      
-      // Show loading
-      submitBtn.classList.add("loading");
-      submitBtn.disabled = true;
-      feedbackEl.className = "form-feedback";
-      
+    const chatSteps = {
+      subject: { next: "name", key: "subject" },
+      name: { next: "email", key: "name" },
+      email: { next: "message", key: "email" },
+      message: { next: "send", key: "message" }
+    };
+    
+    const subjectOptions = [
+      { value: "general_inquiry", i18n: "generalInquiry" },
+      { value: "bug_report", i18n: "bugReport" },
+      { value: "suggestion", i18n: "suggestionOpt" },
+      { value: "billing", i18n: "billingOpt" }
+    ];
+    
+    let chatState = { step: "subject", data: {} };
+    
+    function addChatMsg(text, isBot, options = null) {
+      const div = document.createElement("div");
+      div.className = "chat-msg " + (isBot ? "bot" : "user");
+      const content = document.createElement("div");
+      content.textContent = text;
+      div.appendChild(content);
+      if (options && isBot) {
+        const opts = document.createElement("div");
+        opts.className = "chat-options";
+        options.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "chat-option-btn";
+          btn.textContent = opt.label;
+          btn.onclick = () => handleOption(opt.value);
+          opts.appendChild(btn);
+        });
+        div.appendChild(opts);
+      }
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function handleOption(value) {
+      const opt = subjectOptions.find((o) => o.value === value);
+      const label = opt ? translations[lang()][opt.i18n] : value;
+      addChatMsg(label, false);
+      chatState.data.subject = value;
+      chatState.step = "name";
+      document.querySelectorAll(".chat-option-btn").forEach((b) => b.remove());
+      addChatMsg(translations[lang()].chatAskName, true);
+      setInputPlaceholder(translations[lang()].contactName);
+    }
+    
+    function setInputPlaceholder(placeholder) {
+      chatInput.placeholder = placeholder;
+    }
+    
+    function initChat() {
+      chatMessages.innerHTML = "";
+      chatState = { step: "subject", data: {} };
+      const t = translations[lang()];
+      addChatMsg(t.chatWelcome, true, subjectOptions.map((o) => ({ value: o.value, label: t[o.i18n] })));
+      setInputPlaceholder(t.chatTypeOrSelect);
+    }
+    
+    async function sendToSupabase() {
+      chatSendBtn.disabled = true;
+      chatSendIcon.style.display = "none";
+      chatSendBtn.querySelector(".spinner").style.display = "block";
+      const t = translations[lang()];
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
           method: "POST",
@@ -2492,24 +2661,67 @@
             "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
             "Prefer": "return=minimal"
           },
-          body: JSON.stringify({ name, email, subject, message })
+          body: JSON.stringify(chatState.data)
         });
-        
         if (res.ok || res.status === 201) {
-          feedbackEl.textContent = translations[lang()].contactSuccess;
-          feedbackEl.className = "form-feedback success";
-          contactForm.reset();
-        } else {
-          throw new Error("Failed");
-        }
+          const botMsgs = chatMessages.querySelectorAll(".chat-msg.bot");
+          if (botMsgs.length) botMsgs[botMsgs.length - 1].remove();
+          addChatMsg(t.contactSuccess, true);
+          chatState.step = "done";
+          chatInput.placeholder = t.chatDone || "تم إرسال رسالتك";
+          chatInput.disabled = true;
+        } else throw new Error("Failed");
       } catch (err) {
-        feedbackEl.textContent = translations[lang()].contactError;
-        feedbackEl.className = "form-feedback error";
+        const botMsgs = chatMessages.querySelectorAll(".chat-msg.bot");
+        if (botMsgs.length) botMsgs[botMsgs.length - 1].remove();
+        addChatMsg(t.contactError, true);
+        chatState.step = "message";
       } finally {
-        submitBtn.classList.remove("loading");
-        submitBtn.disabled = false;
+        chatSendBtn.disabled = false;
+        chatSendIcon.style.display = "block";
+        chatSendBtn.querySelector(".spinner").style.display = "none";
+      }
+    }
+    
+    function handleChatSend() {
+      const text = chatInput.value.trim();
+      if (!text || chatState.step === "done") return;
+      addChatMsg(text, false);
+      chatInput.value = "";
+      const t = translations[lang()];
+      if (chatState.step === "subject") {
+        const opt = subjectOptions.find((o) => t[o.i18n] === text || o.value === text);
+        chatState.data.subject = opt ? opt.value : "general_inquiry";
+        chatState.step = "name";
+        addChatMsg(t.chatAskName, true);
+        setInputPlaceholder(t.contactName);
+      } else if (chatState.step === "name") {
+        chatState.data.name = text;
+        chatState.step = "email";
+        addChatMsg(t.chatAskEmail, true);
+        setInputPlaceholder(t.contactEmail);
+      } else if (chatState.step === "email") {
+        chatState.data.email = text;
+        chatState.step = "message";
+        addChatMsg(t.chatAskMessage, true);
+        setInputPlaceholder(t.contactMessage);
+      } else if (chatState.step === "message") {
+        chatState.data.message = text;
+        chatState.step = "send";
+        addChatMsg(t.chatSending, true);
+        sendToSupabase();
+      }
+    }
+    
+    chatSendBtn.addEventListener("click", handleChatSend);
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleChatSend();
       }
     });
+    
+    initChat();
   </script>
 </body>
 </html>
