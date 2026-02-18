@@ -1714,6 +1714,14 @@
       font-size: 0.8rem;
       color: var(--text-secondary);
     }
+    .chat-support-email {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--primary);
+      text-decoration: none;
+      margin-top: 0.25rem;
+    }
+    .chat-support-email:hover { text-decoration: underline; }
 
     .chat-messages {
       flex: 1 1 0;
@@ -2077,6 +2085,7 @@
               </span>
             </div>
             <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
+            <a href="mailto:support@parkinzi.com" class="chat-support-email">support@parkinzi.com</a>
           </div>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
@@ -2109,6 +2118,7 @@
       <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
       <a href="refund.html" data-i18n="refundLink">سياسة الاسترجاع</a>
       <a href="#" id="footerContactLink" data-i18n="contactLink">تواصل معنا</a>
+      <a href="mailto:support@parkinzi.com">support@parkinzi.com</a>
     </p>
   </footer>
 
@@ -2624,6 +2634,7 @@
       setInputPlaceholder(t.chatTypeOrSelect);
     }
     
+    /* للتنبيه على support@parkinzi.com عند استخدام الدردشة: أضف Database Webhook في Supabase على contact_messages (INSERT) أو Edge Function يرسل بريداً */
     async function sendToSupabase() {
       chatSendBtn.disabled = true;
       chatSendBtn.classList.add("sending");

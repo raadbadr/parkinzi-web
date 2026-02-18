@@ -13,11 +13,10 @@ cd /Users/Raad/Documents/Xcode/Web
 ```
 
 تأكد أن جميع الملفات التالية موجودة:
-- `index.html`
+- `index.html`, `privacy.html`, `refund.html`
+- `header.css`, `footer.css`
 - `Monoton-Regular.ttf`
-- `parkinzi-logo.png` (أو `logo.png`)
-- `parkinzi-logo-dark.png`
-- `parkinzi-logo-light.png`
+- `parkinzi-logo-dark.png`, `parkinzi-logo-light.png`
 
 ### الخطوة 2: إنشاء ملف ZIP
 
@@ -214,4 +213,4 @@ Zero Trust يمنح التحكم في الوصول عبر البريد الإل�
 
 ---
 
-**تم التحديث:** 2026-02-12
+**تم التحديث:** 2026-02-17
