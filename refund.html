@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="footer.css">
   <style>
     :root, [data-theme="light"] {
       --primary: rgb(0, 104, 184);
@@ -195,72 +196,6 @@
       font-weight: 600;
     }
 
-    .footer {
-      background: linear-gradient(135deg, rgb(20, 36, 46), rgb(26, 41, 51));
-      color: var(--white);
-      text-align: center;
-      padding: 2rem;
-      margin-top: 2rem;
-      border-radius: 20px;
-    }
-
-    [data-theme="light"] .footer {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(30px);
-      color: var(--text-primary);
-      border: 1px solid var(--glass-border);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      font-size: 0.9rem;
-    }
-
-    .footer-links a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.4);
-    }
-
-    [data-theme="light"] .footer-links a {
-      border-bottom-color: rgba(0,104,184,0.4);
-    }
-
-    .footer-copyright {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    .brand-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.15em;
-      direction: ltr;
-    }
-
-    .brand-logo-img { height: 1em; width: auto; }
-    .brand-logo-text {
-      font-family: 'Monoton', cursive;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, var(--primary-light), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    [data-theme="light"] .brand-logo-text {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
     @media (max-width: 768px) {
       .container { padding: 1rem; }
       .content { padding: 2rem 1.5rem; }
@@ -419,16 +354,52 @@
         <li>الحق في التصعيد لخدمة العملاء</li>
       </ul>
 
-      <h2>10. الاتصال بنا</h2>
+      <h2 id="violations">10. دليل المخالفات</h2>
+      <p>جدول مخالفات استخدام المواقف في المواقع التجارية والأماكن العامة وفق قرار مجلس الوزراء رقم (550) وتاريخ 1442/09/15هـ:</p>
+      
+      <h3>مخالفات المجموعة الأولى</h3>
+      <table>
+        <tr><th>المادة</th><th>نوع المخالفة</th><th>الغرامة (ريال)</th><th>العقوبة</th></tr>
+        <tr><td>1/1</td><td>استخدام الموقف من غير دفع أجرة</td><td>200</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>1/2</td><td>انتهاء مدة الوقوف المدفوعة دون إخلاء الموقف</td><td>100</td><td>دفع الأجرة الإضافية</td></tr>
+        <tr><td>1/3</td><td>تجاوز المدة الزمنية القصوى المسموح بها للوقوف</td><td>100</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>1/4</td><td>الوقوف بشكل مخالف ضمن حيز الموقف</td><td>100</td><td>—</td></tr>
+      </table>
+
+      <h3>مخالفات المجموعة الثانية</h3>
+      <table>
+        <tr><th>المادة</th><th>نوع المخالفة</th><th>الغرامة (ريال)</th><th>العقوبة</th></tr>
+        <tr><td>2/1</td><td>الوقوف في مكان موقف محجوز لاستخدام معين</td><td>300</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>2/2</td><td>الوقوف في موقف محظور</td><td>300</td><td>سحب المركبة وحجزها</td></tr>
+      </table>
+
+      <h3>مخالفات المجموعة الثالثة</h3>
+      <table>
+        <tr><th>المادة</th><th>نوع المخالفة</th><th>الغرامة (ريال)</th><th>العقوبة</th></tr>
+        <tr><td>3/1</td><td>وضع حواجز أو معوقات أو تسوير أو إغلاق موقف دون تصريح</td><td>400</td><td>تحمل تكلفة إزالة الأحداث</td></tr>
+      </table>
+
+      <h3>مخالفات المجموعة الرابعة</h3>
+      <table>
+        <tr><th>المادة</th><th>نوع المخالفة</th><th>الغرامة (ريال)</th><th>العقوبة</th></tr>
+        <tr><td>4/1</td><td>الوقوف في المنطقة المخصصة لخدمة أبواب الطوارئ</td><td>900</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>4/2</td><td>وقوف المركبة عند مداخل ومخارج مباني مواقف السيارات</td><td>500</td><td>سحب المركبة وحجزها</td></tr>
+      </table>
+
+      <h3>مقابل السحب والحجز</h3>
+      <table>
+        <tr><th>وزن المركبة</th><th>المقابل المادي للسحب (ريال/يوم)</th><th>المقابل المالي للحجز (ريال/يوم)</th></tr>
+        <tr><td>المركبات الخفيفة (إلى 3 طن)</td><td>250</td><td>20</td></tr>
+        <tr><td>المركبات الثقيلة (إلى 5 طن)</td><td>1,250</td><td>50</td></tr>
+      </table>
+
+      <h2>11. الاتصال بنا</h2>
       <p>لأي استفسارات أو مساعدة في طلبات الاسترداد:</p>
       <ul>
-        <li><strong>البريد الإلكتروني:</strong> refunds@parkinzi.com</li>
-        <li><strong>الهاتف:</strong> +966 XX XXX XXXX</li>
-        <li><strong>الدعم داخل التطبيق:</strong> متوفر 24/7</li>
-        <li><strong>WhatsApp:</strong> +966 XX XXX XXXX</li>
+        <li><strong>البريد الإلكتروني:</strong> support@parkinzi.com</li>
       </ul>
 
-      <h2>11. التعديلات على السياسة</h2>
+      <h2>12. التعديلات على السياسة</h2>
       <p>نحتفظ بالحق في تعديل هذه السياسة في أي وقت. سيتم إخطار المستخدمين بأي تغييرات جوهرية قبل 30 يوماً من تطبيقها.</p>
 
       <div class="success-box">
@@ -448,18 +419,22 @@
   </div>
 
   <footer class="footer">
-    <div class="footer-links">
+    <p class="footer-links">
       <a href="privacy.html">سياسة الخصوصية</a>
+      <a href="refund.html#violations">دليل المخالفات</a>
+      <a href="refund.html">سياسة الاسترجاع</a>
       <a href="index.html">الرئيسية</a>
       <a href="index.html#contact">تواصل معنا</a>
-    </div>
+    </p>
     <p class="footer-copyright">
-      <span class="brand-logo brand-logo--xs">
-        <img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" id="footerLogo">
-        <span class="brand-logo-text">ARKINZI</span>
+      <span class="footer-copyright-line1">
+        <span class="brand-logo brand-logo--xs">
+          <img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" id="footerLogo">
+          <span class="brand-logo-text">ARKINZI</span>
+        </span>
+        <span> © 2026</span>
       </span>
-      <span> © 2026</span><br>
-      <span>جميع الحقوق محفوظة.</span>
+      <span class="footer-copyright-line2">جميع الحقوق محفوظة.</span>
     </p>
   </footer>
 

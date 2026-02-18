@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="footer.css">
   <style>
     /* Monoton Font - Local */
     @font-face {
@@ -1370,6 +1371,17 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
+    .footer a {
+      color: #ffffff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    [data-theme="dark"] .footer a {
+      color: #ffffff;
+      border-bottom-color: rgba(255, 255, 255, 0.5);
+    }
+
     [data-theme="light"] .footer a {
       color: var(--text-primary) !important;
       border-bottom-color: rgba(0, 104, 184, 0.4) !important;
@@ -1421,6 +1433,15 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
+    .footer-links {
+      font-size: 0.9rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+
     .footer-copyright {
       line-height: 1.6;
       text-align: center;
@@ -1435,23 +1456,43 @@
     .footer-copyright-line2 {
       display: block;
       unicode-bidi: isolate;
+      opacity: 0.85;
+    }
+
+    [data-theme="dark"] .footer .footer-copyright-line1,
+    [data-theme="dark"] .footer .footer-copyright-line2 {
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .footer .footer-copyright-line2 {
+      color: var(--text-secondary);
     }
 
     [data-theme="dark"] .footer {
-      background: linear-gradient(135deg, rgb(20, 36, 46), rgb(26, 41, 51), rgb(15, 30, 40));
-      color: rgba(255, 255, 255, 0.95);
+      background: #26333d;
+      color: #ffffff;
+      animation: none;
     }
 
-    [data-theme="dark"] .footer::before {
-      background: linear-gradient(90deg, transparent, rgba(0, 160, 210, 0.4), transparent);
-    }
-
+    [data-theme="dark"] .footer::before,
     [data-theme="dark"] .footer::after {
-      background: radial-gradient(circle at 50% 50%, rgba(0, 160, 210, 0.08) 0%, transparent 70%);
+      display: none;
+    }
+
+    [data-theme="dark"] .footer .brand-logo-text {
+      color: rgb(0, 160, 210);
+      background: linear-gradient(135deg, rgb(0, 160, 210), rgb(40, 180, 220));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    [data-theme="dark"] .footer .brand-logo-img {
+      filter: brightness(0) invert(1);
     }
 
     [data-theme="dark"] .footer p {
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      text-shadow: none;
     }
 
     [dir="ltr"] body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
@@ -2412,20 +2453,21 @@
   </div>
 
   <footer class="footer">
-    <p style="font-size: 0.9rem; opacity: 0.85; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-      <a href="privacy.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="privacyLink">سياسة الخصوصية</a>
-      <a href="refund.html" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="refundLink">سياسة الاسترجاع</a>
-      <a href="#" id="footerContactLink" style="color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);" data-i18n="contactLink">تواصل معنا</a>
-    </p>
-    <p class="footer-copyright" style="margin-top: 0.75rem;">
+    <p class="footer-copyright">
       <span class="footer-copyright-line1">
         <span class="brand-logo brand-logo--xs">
-          <img src="parkinzi-logo-dark.png" alt="P" class="brand-logo-img" data-brand-logo>
+          <img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" data-brand-logo-footer>
           <span class="brand-logo-text">ARKINZI</span>
         </span>
         <span data-i18n="copyrightLine1"> © 2026</span>
       </span>
       <span class="footer-copyright-line2" data-i18n="copyrightLine2">جميع الحقوق محفوظة.</span>
+    </p>
+    <p class="footer-links">
+      <a href="privacy.html" data-i18n="privacyLink">سياسة الخصوصية</a>
+      <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
+      <a href="refund.html" data-i18n="refundLink">سياسة الاسترجاع</a>
+      <a href="#" id="footerContactLink" data-i18n="contactLink">تواصل معنا</a>
     </p>
   </footer>
 
@@ -2451,6 +2493,7 @@
         copyrightLine2: "جميع الحقوق محفوظة.",
         privacyLink: "سياسة الخصوصية",
         refundLink: "سياسة الاسترجاع",
+        violationsLink: "دليل المخالفات",
         contactTitle: "تواصل معنا",
         contactName: "الاسم",
         contactEmail: "البريد الإلكتروني",
@@ -2499,6 +2542,7 @@
         copyrightLine2: "All rights reserved.",
         privacyLink: "Privacy Policy",
         refundLink: "Refund Policy",
+        violationsLink: "Violations Guide",
         contactTitle: "Contact Us",
         contactName: "Name",
         contactEmail: "Email",
@@ -2547,6 +2591,8 @@
         copyrightLine1: "© 2026",
         copyrightLine2: "Tous droits réservés.",
         privacyLink: "Politique de confidentialité",
+        refundLink: "Politique de remboursement",
+        violationsLink: "Guide des infractions",
         contactTitle: "Contactez-nous",
         contactName: "Nom",
         contactEmail: "E-mail",
@@ -2594,6 +2640,8 @@
         copyrightLine1: "© 2026 PARKINZI",
         copyrightLine2: "جملہ حقوق محفوظ ہیں۔",
         privacyLink: "رازداری کی پالیسی",
+        refundLink: "واپسی کی پالیسی",
+        violationsLink: "خلاف ورزیوں کی گائیڈ",
         contactTitle: "ہم سے رابطہ کریں",
         contactName: "نام",
         contactEmail: "ای میل",
@@ -2692,9 +2740,9 @@
       const heroLogo = document.getElementById("heroLogo");
       if (heroLogo) heroLogo.src = logoSrc;
       document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = logoSrc; });
-      // Chat header: خلفية داكنة → شعار أبيض
-      const headerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
-      document.querySelectorAll("[data-brand-logo-header]").forEach(img => { img.src = headerLogoSrc; });
+      // Footer & chat header: خلفية داكنة → شعار أبيض
+      const footerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
+      document.querySelectorAll("[data-brand-logo-footer], [data-brand-logo-header]").forEach(img => { img.src = footerLogoSrc; });
     }
 
     // Language Menu Toggle
@@ -3025,6 +3073,10 @@
         e.stopPropagation();
         chatWidget.classList.add("open");
       });
+    }
+    
+    if (window.location.hash === "#contact" || window.location.search.includes("open=contact")) {
+      chatWidget.classList.add("open");
     }
     
     document.addEventListener("click", (e) => {

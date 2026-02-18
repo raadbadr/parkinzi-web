@@ -1,0 +1,125 @@
+/* ============================================
+   Footer - موحد لجميع الصفحات
+   عدّل هنا فقط وطبق في index, privacy, refund
+   قواعد الشعار: راجع DESIGN_STANDARDS.md
+   ============================================ */
+
+.footer {
+  background: #26333d;
+  color: #ffffff;
+  text-align: center;
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+  border-radius: 20px;
+  position: relative;
+}
+
+.footer::before,
+.footer::after { display: none; }
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-links a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.footer-copyright {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-copyright-line1 { display: block; direction: ltr; unicode-bidi: isolate; }
+.footer-copyright-line2 { display: block; unicode-bidi: isolate; opacity: 0.85; }
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15em;
+  direction: ltr;
+}
+
+.brand-logo-img { height: 1em; width: auto; }
+.brand-logo--xs .brand-logo-img { height: 1em; }
+.brand-logo--xs .brand-logo-text { font-size: 1em; }
+
+.brand-logo-text {
+  font-family: 'Monoton', cursive;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dark theme - خلفية داكنة، شعار أبيض، ARKINZI أزرق */
+[data-theme="dark"] .footer {
+  background: #26333d;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .footer a,
+[data-theme="dark"] .footer-links a {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .footer-copyright,
+[data-theme="dark"] .footer .footer-copyright-line1,
+[data-theme="dark"] .footer .footer-copyright-line2 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .footer .brand-logo-text {
+  color: rgb(0, 160, 210);
+  background: linear-gradient(135deg, rgb(0, 160, 210), rgb(40, 180, 220));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .footer .brand-logo-img {
+  filter: brightness(0) invert(1);
+}
+
+/* Light theme - شعار أسود، ARKINZI أزرق */
+[data-theme="light"] .footer {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(30px);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+[data-theme="light"] .footer a,
+[data-theme="light"] .footer-links a {
+  border-bottom-color: rgba(0, 104, 184, 0.4);
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .footer-copyright { color: var(--text-primary); }
+[data-theme="light"] .footer .footer-copyright-line2 { color: var(--text-secondary); }
+
+[data-theme="light"] .footer .brand-logo-img {
+  filter: brightness(0);
+}
+
+[data-theme="light"] .footer .brand-logo-text {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
