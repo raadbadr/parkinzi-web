@@ -530,18 +530,18 @@
       flex-direction: column;
       align-items: center;
       gap: 0.8rem;
-      width: 240px;
-      flex: 0 0 240px;
+      width: 100%;
+      max-width: 100%;
     }
     
     .store-badge-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 240px;
-      min-width: 240px;
-      height: 100px;
-      min-height: 100px;
+      width: 100%;
+      min-width: 200px;
+      height: 130px;
+      min-height: 130px;
       flex-shrink: 0;
       padding: 0;
       background: var(--glass);
@@ -574,10 +574,19 @@
       font-weight: 500;
       letter-spacing: 0.5px;
     }
+    .coming-soon-badge {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
     
     .store-badge {
-      height: 64px;
-      width: 190px;
+      height: 88px;
+      width: 100%;
+      max-width: 260px;
       object-fit: contain;
       object-position: center;
       display: block;
@@ -586,34 +595,76 @@
     
     
     .app-store-badge {
-      height: 64px;
-      width: 190px;
+      height: 88px;
+      max-width: 260px;
     }
     
     .google-play-badge {
-      height: 68px;
-      width: 200px;
+      height: 92px;
+      max-width: 270px;
     }
     
     [data-theme="dark"] .app-store-badge {
       filter: invert(1);
     }
     
-    /* Download Section - أزرار التحميل + QR كجزء واحد */
+    /* Download Section - أزرار التحميل + قائمة الانتظار في سطر واحد */
     .download-section {
-      margin-top: 2rem;
-      padding: 1.75rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
+      margin-top: 0.75rem;
+      padding: 1.25rem 1.5rem;
       width: 100%;
       background: var(--glass);
       border-radius: 20px;
       border: 1px solid var(--glass-border);
     }
+    .download-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      width: 100%;
+    }
     
-    .download-section .cta { margin-top: 0; gap: 1.75rem; }
+    .store-options {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .store-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 0 1 auto;
+      min-width: 0;
+      max-width: 320px;
+    }
+    .store-option .store-badge-wrap { margin: 0; }
+    .store-status {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .store-status.store-coming { color: var(--text-tertiary); }
+    .store-status.store-available { color: var(--success); font-weight: 600; }
+    .store-qr {
+      margin-top: 0.5rem;
+      padding: 12px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .store-qr-img { width: 120px; height: 120px; display: block; border-radius: 6px; }
+    .download-section[data-has-available="true"] .coming-soon-badge { display: none; }
+    .download-section[data-has-available="false"] .store-option .store-coming { display: none !important; }
+    .store-option[data-available="true"] .store-coming { display: none !important; }
+    .store-option[data-available="true"] .store-available { display: inline !important; }
+    .store-option[data-available="true"] .store-qr { display: block !important; }
+    .store-option[data-available="true"] .store-badge-link { cursor: pointer; pointer-events: auto; opacity: 1; }
+    .store-option[data-available="true"] .store-badge-link[href] { text-decoration: none; }
     
     /* QR Code Section - داخل download-section */
     .download-section .qr-section {
@@ -684,10 +735,12 @@
     
     /* Waitlist Section */
     .waitlist-section {
-      width: 100%;
+      flex: 1;
+      min-width: 280px;
       max-width: 420px;
       text-align: center;
-      padding-top: 0.5rem;
+      padding: 0;
+      margin: 0;
     }
     .waitlist-title {
       font-size: 1.15rem;
@@ -746,11 +799,9 @@
     
     /* Hide QR codes on mobile, show store buttons prominently */
     @media (max-width: 768px) {
-      .download-section {
-        padding: 1.5rem 1.25rem;
-        gap: 1.25rem;
-      }
-      .download-section .cta { gap: 1.25rem; }
+      .download-section { padding: 1rem 1.25rem; }
+      .download-row { flex-direction: column; gap: 1rem; }
+      .waitlist-section { min-width: 100%; max-width: 100%; }
       .download-section .qr-section {
         display: none;
       }
@@ -790,20 +841,23 @@
         text-align: center;
       }
       
+      .store-options { flex-wrap: wrap; justify-content: center; }
+      .store-option { min-width: 140px; max-width: none; }
       .store-badge-wrap {
-        width: 220px;
+        width: 100%;
+        max-width: 260px;
       }
       
       .store-badge-link {
-        width: 220px;
-        min-width: 220px;
-        height: 90px;
+        width: 100%;
+        min-width: 180px;
+        height: 110px;
         min-height: 72px;
       }
       
       .store-badge {
-        height: 58px;
-        width: 165px;
+        height: 72px;
+        max-width: 220px;
       }
       
       .google-play-badge {
@@ -817,7 +871,7 @@
     }
 
     .features {
-      padding: 4rem 2rem;
+      padding: 2.5rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
       position: relative;
@@ -828,7 +882,7 @@
       text-align: center;
       font-size: 2.8rem;
       font-weight: 800;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
       color: var(--text-primary);
       position: relative;
       letter-spacing: -1px;
@@ -889,7 +943,7 @@
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     /* ============================================
@@ -2147,48 +2201,41 @@
       </div>
     </div>
 
-    <div class="download-section">
-      <div class="cta" style="justify-content: center;">
-        <div class="store-badge-wrap">
-          <span class="store-badge-link" aria-disabled="true" title="قريباً">
-            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="تحميل من App Store" class="store-badge app-store-badge" loading="eager">
-          </span>
-          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
-        </div>
-        <div class="store-badge-wrap">
-          <span class="store-badge-link" aria-disabled="true" title="قريباً">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="احصل عليه من Google Play" class="store-badge google-play-badge" loading="eager">
-          </span>
-          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
-        </div>
-      </div>
-      <div class="qr-section">
-        <div class="qr-text" data-i18n="scanQR">امسح الباركود لتحميل التطبيق مباشرة</div>
-        <div class="qr-codes">
-          <div class="qr-item">
-            <span class="qr-code-link" aria-disabled="true" title="قريباً">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fparkinzi" alt="QR Code - App Store" class="qr-code-img">
+    <div class="download-section" data-has-available="false">
+      <!-- عند التوفر: غيّر data-available="true" على .store-option، غيّر data-has-available="true"، حوّل span.store-badge-link إلى <a href="رابط">، أضف src لـ .store-qr-img -->
+      <div class="download-row">
+        <p class="coming-soon-badge" data-i18n="comingSoon">قريباً</p>
+        <div class="store-options">
+          <div class="store-option" data-available="false" data-store="ios">
+            <span class="store-badge-wrap">
+              <span class="store-badge-link" aria-disabled="true">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="store-badge app-store-badge" loading="eager">
+              </span>
             </span>
-            <div class="qr-label">App Store</div>
-            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+            <span class="store-status store-coming" data-i18n="comingSoon">قريباً</span>
+            <span class="store-status store-available" style="display:none;" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
+            <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
           </div>
-          <div class="qr-item">
-            <span class="qr-code-link" aria-disabled="true" title="قريباً">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.parkinzi" alt="QR Code - Google Play" class="qr-code-img">
+          <div class="store-option" data-available="false" data-store="android">
+            <span class="store-badge-wrap">
+              <span class="store-badge-link" aria-disabled="true">
+                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play" class="store-badge google-play-badge" loading="eager">
+              </span>
             </span>
-            <div class="qr-label">Google Play</div>
-            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+            <span class="store-status store-coming" data-i18n="comingSoon">قريباً</span>
+            <span class="store-status store-available" style="display:none;" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
+            <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
           </div>
         </div>
-      </div>
-      <div class="waitlist-section">
-        <p class="waitlist-title" data-i18n="waitlistTitle">انضم لقائمة الانتظار</p>
-        <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لنخبرك عند إطلاق التطبيق</p>
-        <form class="waitlist-form" id="waitlistForm">
-          <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
-          <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
-        </form>
-        <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
+        <div class="waitlist-section">
+          <p class="waitlist-title" data-i18n="waitlistTitle">انضم لقائمة الانتظار</p>
+          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لنخبرك عند إطلاق التطبيق</p>
+          <form class="waitlist-form" id="waitlistForm">
+            <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
+            <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
+          </form>
+          <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -2302,7 +2349,8 @@
         waitlistSubmit: "سجّلني",
         waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق.",
         waitlistError: "حدث خطأ، حاول مرة أخرى.",
-        waitlistExists: "هذا البريد مسجّل مسبقاً."
+        waitlistExists: "هذا البريد مسجّل مسبقاً.",
+        availableNow: "متوفر حالياً · جرب الآن"
       },
       en: {
         tagline: "Smart parking solution · Save your time and effort",
@@ -2359,7 +2407,8 @@
         waitlistSubmit: "Join",
         waitlistSuccess: "You're signed up! We'll notify you at launch.",
         waitlistError: "Something went wrong. Please try again.",
-        waitlistExists: "This email is already registered."
+        waitlistExists: "This email is already registered.",
+        availableNow: "Available now · Try it"
       },
       fr: {
         tagline: "Stationnement intelligent · Gagnez du temps et de l'énergie",
@@ -2417,7 +2466,8 @@
         waitlistSubmit: "Rejoindre",
         waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement.",
         waitlistError: "Une erreur s'est produite. Réessayez.",
-        waitlistExists: "Cet email est déjà enregistré."
+        waitlistExists: "Cet email est déjà enregistré.",
+        availableNow: "Disponible · Essayez"
       },
       ur: {
         tagline: "ذہین پارکنگ · اپنا وقت اور توانائی بچائیں",
@@ -2474,7 +2524,8 @@
         waitlistSubmit: "شامل کریں",
         waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم رابطہ کریں گے۔",
         waitlistError: "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
-        waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔"
+        waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔",
+        availableNow: "دستیاب · آزمائیں"
       }
     };
 
