@@ -529,19 +529,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
-      width: 200px;
-      flex: 0 0 200px;
+      gap: 0.8rem;
+      width: 240px;
+      flex: 0 0 240px;
     }
     
     .store-badge-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 200px;
-      min-width: 200px;
-      height: 82px;
-      min-height: 82px;
+      width: 240px;
+      min-width: 240px;
+      height: 100px;
+      min-height: 100px;
       flex-shrink: 0;
       padding: 0;
       background: var(--glass);
@@ -569,15 +569,15 @@
     }
     
     .coming-soon {
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: var(--text-tertiary);
       font-weight: 500;
       letter-spacing: 0.5px;
     }
     
     .store-badge {
-      height: 54px;
-      width: 158px;
+      height: 64px;
+      width: 190px;
       object-fit: contain;
       object-position: center;
       display: block;
@@ -586,28 +586,44 @@
     
     
     .app-store-badge {
-      height: 54px;
-      width: 158px;
+      height: 64px;
+      width: 190px;
     }
     
     .google-play-badge {
-      height: 58px;
-      width: 170px;
+      height: 68px;
+      width: 200px;
     }
     
     [data-theme="dark"] .app-store-badge {
       filter: invert(1);
     }
     
-    /* QR Code Section */
-    .qr-section {
-      margin-top: 4rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--glass-border);
+    /* Download Section - أزرار التحميل + QR كجزء واحد */
+    .download-section {
+      margin-top: 2rem;
+      padding: 1.75rem 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
+      width: 100%;
+      background: var(--glass);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+    }
+    
+    .download-section .cta { margin-top: 0; gap: 1.75rem; }
+    
+    /* QR Code Section - داخل download-section */
+    .download-section .qr-section {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
       animation: fadeInUp 1s ease-out 0.5s backwards;
       width: 100%;
       max-width: 100%;
@@ -615,7 +631,7 @@
     
     .qr-text {
       color: var(--text-secondary);
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       font-weight: 500;
     }
     
@@ -631,14 +647,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
     }
     
     .qr-code-link {
       display: block;
-      padding: 10px;
+      padding: 14px;
       background: var(--white);
-      border-radius: 12px;
+      border-radius: 16px;
       box-shadow: 
         0 8px 24px rgba(0,0,0,0.15),
         inset 0 0 0 1px rgba(0,0,0,0.05);
@@ -649,29 +665,34 @@
     }
     
     .qr-code-img {
-      width: 130px;
-      height: 130px;
+      width: 160px;
+      height: 160px;
       display: block;
-      border-radius: 4px;
+      border-radius: 6px;
     }
     
     .qr-label {
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
     }
     
     .qr-item .coming-soon {
-      font-size: 0.8rem;
+      font-size: 0.95rem;
       margin-top: 0.25rem;
     }
     
     /* Hide QR codes on mobile, show store buttons prominently */
     @media (max-width: 768px) {
-      .qr-section {
+      .download-section {
+        padding: 1.5rem 1.25rem;
+        gap: 1.25rem;
+      }
+      .download-section .cta { gap: 1.25rem; }
+      .download-section .qr-section {
         display: none;
       }
-      
+
       .hero {
         overflow-y: auto;
         overflow-x: hidden;
@@ -708,19 +729,19 @@
       }
       
       .store-badge-wrap {
-        width: 175px;
+        width: 220px;
       }
       
       .store-badge-link {
-        width: 175px;
-        min-width: 175px;
-        height: 72px;
+        width: 220px;
+        min-width: 220px;
+        height: 90px;
         min-height: 72px;
       }
       
       .store-badge {
-        height: 48px;
-        width: 140px;
+        height: 58px;
+        width: 165px;
       }
       
       .google-play-badge {
@@ -766,6 +787,41 @@
     
     [data-theme="dark"] .section-title::before {
       box-shadow: 0 4px 20px rgba(0,160,210,0.6);
+    }
+
+    .why-brand-font {
+      font-family: 'Monoton', cursive;
+      font-size: 1.4em;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    [data-theme="dark"] .why-brand-font {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .why-suffix {
+      font-family: 'Monoton', cursive;
+      font-size: 1.4em;
+      font-weight: 400;
+      vertical-align: middle;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    [data-theme="dark"] .why-suffix {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .features-grid {
@@ -1987,63 +2043,17 @@
         <h1 class="logo-text">ARKINZI</h1>
       </div>
       <p class="tagline" data-i18n="tagline">مواقف ذكية · وفر وقتك وطاقتك</p>
-      <div class="cta">
-        <!-- App Store - قريباً -->
-        <div class="store-badge-wrap">
-          <span class="store-badge-link" aria-disabled="true" title="قريباً">
-            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
-                 alt="تحميل من App Store" 
-                 class="store-badge app-store-badge" loading="eager">
-          </span>
-          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
-        </div>
-        
-        <!-- Google Play - قريباً -->
-        <div class="store-badge-wrap">
-          <span class="store-badge-link" aria-disabled="true" title="قريباً">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
-                 alt="احصل عليه من Google Play" 
-                 class="store-badge google-play-badge" loading="eager">
-          </span>
-          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
-        </div>
-      </div>
-      
-      <!-- QR Codes - باركود حقيقي يوديك مباشرة للمتجر -->
-      <div class="qr-section">
-        <div class="qr-text" data-i18n="scanQR">امسح الباركود لتحميل التطبيق مباشرة</div>
-        <div class="qr-codes">
-          <div class="qr-item">
-            <span class="qr-code-link" aria-disabled="true" title="قريباً">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fparkinzi" 
-                   alt="QR Code - App Store" 
-                   class="qr-code-img">
-            </span>
-            <div class="qr-label">App Store</div>
-            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
-          </div>
-          <div class="qr-item">
-            <span class="qr-code-link" aria-disabled="true" title="قريباً">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.parkinzi" 
-                   alt="QR Code - Google Play" 
-                   class="qr-code-img">
-            </span>
-            <div class="qr-label">Google Play</div>
-            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
   <section class="features" id="features">
     <h2 class="section-title">
-      <span data-i18n="whyPrefix">لماذا </span>
+      <span class="why-brand-font" data-i18n="whyPrefix">لماذا </span>
       <span class="brand-logo brand-logo--sm">
         <img src="parkinzi-logo-dark.png" alt="P" class="brand-logo-img" data-brand-logo>
         <span class="brand-logo-text">ARKINZI</span>
       </span>
-      <span data-i18n="whySuffix">؟</span>
+      <span class="why-suffix" data-i18n="whySuffix">؟</span>
     </h2>
     <div class="features-grid">
       <div class="feature-card">
@@ -2072,6 +2082,42 @@
         </div>
         <h3 data-i18n="f3">دفع سهل</h3>
         <p data-i18n="f3p">ادفع بسهولة من خلال التطبيق</p>
+      </div>
+    </div>
+
+    <div class="download-section">
+      <div class="cta" style="justify-content: center;">
+        <div class="store-badge-wrap">
+          <span class="store-badge-link" aria-disabled="true" title="قريباً">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="تحميل من App Store" class="store-badge app-store-badge" loading="eager">
+          </span>
+          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+        </div>
+        <div class="store-badge-wrap">
+          <span class="store-badge-link" aria-disabled="true" title="قريباً">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="احصل عليه من Google Play" class="store-badge google-play-badge" loading="eager">
+          </span>
+          <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+        </div>
+      </div>
+      <div class="qr-section">
+        <div class="qr-text" data-i18n="scanQR">امسح الباركود لتحميل التطبيق مباشرة</div>
+        <div class="qr-codes">
+          <div class="qr-item">
+            <span class="qr-code-link" aria-disabled="true" title="قريباً">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fparkinzi" alt="QR Code - App Store" class="qr-code-img">
+            </span>
+            <div class="qr-label">App Store</div>
+            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+          </div>
+          <div class="qr-item">
+            <span class="qr-code-link" aria-disabled="true" title="قريباً">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.parkinzi" alt="QR Code - Google Play" class="qr-code-img">
+            </span>
+            <div class="qr-label">Google Play</div>
+            <span class="coming-soon" data-i18n="comingSoon">قريباً</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -2114,22 +2160,17 @@
   </div>
 
   <footer class="footer">
-    <p class="footer-copyright">
-      <span class="footer-copyright-line1">
-        <span class="brand-logo brand-logo--xs">
-          <img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" data-brand-logo-footer>
-          <span class="brand-logo-text">ARKINZI</span>
-        </span>
-        <span data-i18n="copyrightLine1"> © 2026</span>
-      </span>
-      <span class="footer-copyright-line2" data-i18n="copyrightLine2">جميع الحقوق محفوظة.</span>
-    </p>
     <p class="footer-links">
+      <a href="#features" data-i18n="aboutLink">من نحن</a>
       <a href="privacy.html" data-i18n="privacyLink">سياسة الخصوصية</a>
       <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
       <a href="refund.html" data-i18n="refundLink">سياسة الاسترجاع</a>
       <a href="#" id="footerContactLink" data-i18n="contactLink">تواصل معنا</a>
       <a href="mailto:support@parkinzi.com">support@parkinzi.com</a>
+    </p>
+    <p class="footer-copyright">
+      <span data-i18n="copyrightLine2">جميع الحقوق محفوظة.</span>
+      <span> <span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" data-brand-logo-footer><span class="brand-logo-text">ARKINZI</span></span> © 2026</span>
     </p>
   </footer>
 
@@ -2143,6 +2184,7 @@
         scanQR: "امسح الباركود لتحميل التطبيق مباشرة",
         comingSoon: "قريباً",
         about: "تعرف علينا",
+        aboutLink: "من نحن",
         whyPrefix: "لماذا ",
         whySuffix: "؟",
         f1: "اكتشف أماكن الوقوف",
@@ -2192,6 +2234,7 @@
         scanQR: "Scan the QR code to download the app directly",
         comingSoon: "Coming soon",
         about: "About Us",
+        aboutLink: "About Us",
         whyPrefix: "Why ",
         whySuffix: "?",
         f1: "Find Parking Spots",
@@ -2242,6 +2285,7 @@
         downloadAndroid: "Google Play",
         forAndroid: "pour Android",
         about: "À propos",
+        aboutLink: "À propos",
         whyPrefix: "Pourquoi ",
         whySuffix: " ?",
         f1: "Trouver des places",
@@ -2292,6 +2336,7 @@
         downloadAndroid: "Google Play",
         forAndroid: "اینڈرائیڈ کے لیے",
         about: "ہمارے بارے میں",
+        aboutLink: "ہمارے بارے میں",
         why: "PARKINZI کیوں؟",
         f1: "پارکنگ جگہیں تلاش کریں",
         f1p: "اپنے قریب ریل ٹائم میں دستیاب جگہیں دریافت کریں",

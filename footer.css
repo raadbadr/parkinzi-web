@@ -33,12 +33,20 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+.footer-logo-wrap {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
 .footer-copyright {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.95rem;
   line-height: 1.6;
   position: relative;
   z-index: 1;
+  opacity: 0.9;
 }
 
 .footer-copyright-line1 { display: block; direction: ltr; unicode-bidi: isolate; }
@@ -112,6 +120,7 @@
 
 [data-theme="light"] .footer-copyright { color: var(--text-primary); }
 [data-theme="light"] .footer .footer-copyright-line2 { color: var(--text-secondary); }
+[data-theme="light"] .footer .brand-logo-text { color: var(--primary); }
 
 [data-theme="light"] .footer .brand-logo-img {
   filter: brightness(0);
