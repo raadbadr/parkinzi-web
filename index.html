@@ -593,15 +593,10 @@
       transition: opacity 0.3s ease;
     }
     
-    
-    .app-store-badge {
+    .app-store-badge,
+    .google-play-badge {
       height: 88px;
       max-width: 260px;
-    }
-    
-    .google-play-badge {
-      height: 92px;
-      max-width: 270px;
     }
     
     [data-theme="dark"] .app-store-badge {
@@ -841,28 +836,27 @@
         text-align: center;
       }
       
-      .store-options { flex-wrap: wrap; justify-content: center; }
-      .store-option { min-width: 140px; max-width: none; }
+      .store-options { flex-wrap: wrap; justify-content: center; display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 340px; margin: 0 auto; }
+      .store-option { min-width: 0; max-width: none; width: 100%; }
       .store-badge-wrap {
         width: 100%;
-        max-width: 260px;
+        max-width: 100%;
       }
       
       .store-badge-link {
         width: 100%;
-        min-width: 180px;
+        min-width: 0;
         height: 110px;
         min-height: 72px;
       }
       
-      .store-badge {
-        height: 72px;
-        max-width: 220px;
-      }
-      
+      .store-badge,
+      .app-store-badge,
       .google-play-badge {
-        height: 52px;
-        width: 152px;
+        height: 72px;
+        max-width: 100%;
+        width: 100%;
+        object-fit: contain;
       }
       
       .coming-soon {
