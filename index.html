@@ -682,6 +682,68 @@
       margin-top: 0.25rem;
     }
     
+    /* Waitlist Section */
+    .waitlist-section {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+    .waitlist-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+    .waitlist-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .waitlist-form {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .waitlist-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    .waitlist-input::placeholder { color: var(--text-tertiary); }
+    .waitlist-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0,160,210,0.2);
+    }
+    .waitlist-btn {
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .waitlist-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .waitlist-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .waitlist-msg {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+    }
+    .waitlist-msg.success { color: var(--success); }
+    .waitlist-msg.error { color: var(--error); }
+    
     /* Hide QR codes on mobile, show store buttons prominently */
     @media (max-width: 768px) {
       .download-section {
@@ -2119,6 +2181,15 @@
           </div>
         </div>
       </div>
+      <div class="waitlist-section">
+        <p class="waitlist-title" data-i18n="waitlistTitle">انضم لقائمة الانتظار</p>
+        <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لنخبرك عند إطلاق التطبيق</p>
+        <form class="waitlist-form" id="waitlistForm">
+          <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
+          <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
+        </form>
+        <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
+      </div>
     </div>
   </section>
 
@@ -2224,7 +2295,14 @@
         language: "اللغة",
         appearance: "المظهر",
         light: "فاتح",
-        dark: "داكن"
+        dark: "داكن",
+        waitlistTitle: "انضم لقائمة الانتظار",
+        waitlistDesc: "سجّل بريدك لنخبرك عند إطلاق التطبيق",
+        waitlistPlaceholder: "بريدك الإلكتروني",
+        waitlistSubmit: "سجّلني",
+        waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق.",
+        waitlistError: "حدث خطأ، حاول مرة أخرى.",
+        waitlistExists: "هذا البريد مسجّل مسبقاً."
       },
       en: {
         tagline: "Smart parking solution · Save your time and effort",
@@ -2274,7 +2352,14 @@
         language: "Language",
         appearance: "Appearance",
         light: "Light",
-        dark: "Dark"
+        dark: "Dark",
+        waitlistTitle: "Join the Waitlist",
+        waitlistDesc: "Enter your email to be notified when we launch",
+        waitlistPlaceholder: "Your email",
+        waitlistSubmit: "Join",
+        waitlistSuccess: "You're signed up! We'll notify you at launch.",
+        waitlistError: "Something went wrong. Please try again.",
+        waitlistExists: "This email is already registered."
       },
       fr: {
         tagline: "Stationnement intelligent · Gagnez du temps et de l'énergie",
@@ -2325,7 +2410,14 @@
         language: "Langue",
         appearance: "Apparence",
         light: "Clair",
-        dark: "Sombre"
+        dark: "Sombre",
+        waitlistTitle: "Rejoignez la liste d'attente",
+        waitlistDesc: "Entrez votre email pour être notifié au lancement",
+        waitlistPlaceholder: "Votre email",
+        waitlistSubmit: "Rejoindre",
+        waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement.",
+        waitlistError: "Une erreur s'est produite. Réessayez.",
+        waitlistExists: "Cet email est déjà enregistré."
       },
       ur: {
         tagline: "ذہین پارکنگ · اپنا وقت اور توانائی بچائیں",
@@ -2375,7 +2467,14 @@
         language: "زبان",
         appearance: "ظہور",
         light: "روشن",
-        dark: "اندھیرا"
+        dark: "اندھیرا",
+        waitlistTitle: "ویٹ لسٹ میں شامل ہوں",
+        waitlistDesc: "لانچ پر مطلع ہونے کے لیے اپنا ای میل درج کریں",
+        waitlistPlaceholder: "آپ کا ای میل",
+        waitlistSubmit: "شامل کریں",
+        waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم رابطہ کریں گے۔",
+        waitlistError: "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
+        waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔"
       }
     };
 
@@ -2418,6 +2517,9 @@
       document.getElementById("currentThemeDisplay").textContent = themeText;
 
       document.title = langTitles[l] || "PARKINZI";
+
+      const wlInput = document.getElementById("waitlistEmail");
+      if (wlInput && translations[l]?.waitlistPlaceholder) wlInput.placeholder = translations[l].waitlistPlaceholder;
     }
 
     function setTheme(t) {
@@ -2690,6 +2792,54 @@
       setInputPlaceholder(t.chatTypeOrSelect);
     }
     
+    /* Waitlist - إرسال إلى جدول waitlist في Supabase. أنشئ الجدول أولاً:
+       CREATE TABLE waitlist (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), email text UNIQUE NOT NULL, created_at timestamptz DEFAULT now());
+       ALTER TABLE waitlist ENABLE ROW LEVEL SECURITY;
+       CREATE POLICY "Allow anonymous insert" ON waitlist FOR INSERT TO anon WITH CHECK (true);
+    */
+    const waitlistForm = document.getElementById("waitlistForm");
+    const waitlistEmail = document.getElementById("waitlistEmail");
+    const waitlistBtn = document.getElementById("waitlistBtn");
+    const waitlistMsg = document.getElementById("waitlistMsg");
+    if (waitlistForm && waitlistEmail && waitlistBtn && waitlistMsg) {
+      waitlistForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = waitlistEmail.value.trim().toLowerCase();
+        if (!email) return;
+        waitlistBtn.disabled = true;
+        waitlistMsg.style.display = "none";
+        const t = translations[lang()];
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_ANON_KEY,
+              "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+              "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({ email })
+          });
+          if (res.ok || res.status === 201) {
+            waitlistMsg.textContent = t.waitlistSuccess;
+            waitlistMsg.className = "waitlist-msg success";
+            waitlistMsg.style.display = "block";
+            waitlistEmail.value = "";
+          } else if (res.status === 409) {
+            waitlistMsg.textContent = t.waitlistExists;
+            waitlistMsg.className = "waitlist-msg success";
+            waitlistMsg.style.display = "block";
+          } else throw new Error("Failed");
+        } catch (err) {
+          waitlistMsg.textContent = t.waitlistError;
+          waitlistMsg.className = "waitlist-msg error";
+          waitlistMsg.style.display = "block";
+        } finally {
+          waitlistBtn.disabled = false;
+        }
+      });
+    }
+
     /* للتنبيه على support@parkinzi.com عند استخدام الدردشة: أضف Database Webhook في Supabase على contact_messages (INSERT) أو Edge Function يرسل بريداً */
     async function sendToSupabase() {
       chatSendBtn.disabled = true;
