@@ -54,27 +54,27 @@
     }
 
     [data-theme="light"] {
-      --primary: rgb(0, 104, 184);
-      --primary-light: rgb(25, 140, 220);
-      --primary-dark: rgb(0, 88, 160);
-      --secondary: rgb(40, 85, 170);
-      --accent: rgb(60, 110, 200);
-      --text-primary: rgb(26, 26, 38);
-      --text-secondary: rgb(77, 77, 89);
-      --text-tertiary: rgb(115, 115, 128);
-      --text-dim: rgb(140, 140, 153);
-      --bg-top: rgb(250, 252, 255);
-      --bg-mid: rgb(242, 247, 252);
-      --bg-bottom: rgb(237, 245, 250);
-      --glass: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(0, 0, 0, 0.08);
-      --glass-strong: rgba(255, 255, 255, 0.95);
-      --shadow-light: rgba(255, 255, 255, 0.3);
-      --shadow-dark: rgba(0, 0, 0, 0.08);
-      --hero-bg: rgb(250, 252, 255);
-      --hero-glow: rgba(0, 104, 184, 0.06);
-      --primary-shadow: rgba(0, 104, 184, 0.3);
-      --primary-glow: rgba(0, 104, 184, 0.15);
+      --primary: rgb(0, 130, 190);
+      --primary-light: rgb(35, 155, 210);
+      --primary-dark: rgb(0, 105, 165);
+      --secondary: rgb(0, 130, 190);
+      --accent: rgb(50, 150, 200);
+      --text-primary: rgb(22, 28, 40);
+      --text-secondary: rgb(70, 80, 95);
+      --text-tertiary: rgb(100, 112, 128);
+      --text-dim: rgb(125, 135, 150);
+      --bg-top: rgb(240, 244, 250);
+      --bg-mid: rgb(232, 238, 248);
+      --bg-bottom: rgb(224, 232, 244);
+      --glass: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(0, 100, 160, 0.1);
+      --glass-strong: rgba(255, 255, 255, 0.97);
+      --shadow-light: rgba(0, 80, 140, 0.06);
+      --shadow-dark: rgba(0, 50, 100, 0.1);
+      --hero-bg: rgb(240, 246, 252);
+      --hero-glow: rgba(0, 130, 190, 0.08);
+      --primary-shadow: rgba(0, 130, 190, 0.25);
+      --primary-glow: rgba(0, 130, 190, 0.12);
     }
 
     [data-theme="dark"] {
@@ -953,7 +953,29 @@
       margin-top: 2.5rem;
       margin-bottom: 1.25rem;
     }
+    [data-theme="light"] .provider-section-title {
+      color: var(--primary-dark);
+    }
+    [data-theme="light"] .provider-features .feature-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,252,255,0.9));
+      border-color: rgba(0, 130, 190, 0.12);
+      box-shadow: 0 8px 32px rgba(0, 100, 160, 0.08), 0 0 0 1px rgba(0, 130, 190, 0.06);
+    }
+    [data-theme="light"] .provider-features .feature-icon-wrapper {
+      background: linear-gradient(135deg, rgba(0, 130, 190, 0.08), rgba(35, 155, 210, 0.05));
+      border-color: rgba(0, 130, 190, 0.15);
+    }
     .provider-features { margin-top: 0; }
+    .feature-icon-riyal .riyal-symbol-mask {
+      display: block;
+      width: 42px;
+      height: 42px;
+      background-color: var(--primary);
+      -webkit-mask: url(rial-symbol.png) center/contain no-repeat;
+      mask: url(rial-symbol.png) center/contain no-repeat;
+      -webkit-mask-size: 42px 42px;
+      mask-size: 42px 42px;
+    }
 
     /* ============================================
        Feature Cards - Neumorphic Glass Cards
@@ -2216,10 +2238,8 @@
     <h3 class="provider-section-title" data-i18n="providerTitle">لمقدمي الخدمة</h3>
     <div class="features-grid provider-features">
       <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg class="feature-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05 1.01 1.79 2.92 1.79 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" fill="currentColor"/>
-          </svg>
+        <div class="feature-icon-wrapper feature-icon-riyal">
+          <span class="riyal-symbol-mask" role="img" aria-label="ريال"></span>
         </div>
         <h3 data-i18n="p1">دخل إضافي</h3>
         <p data-i18n="p1p">حوّل موقفك لمصدر ربح دائم</p>
