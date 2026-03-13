@@ -945,6 +945,15 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
     }
+    .provider-section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: center;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .provider-features { margin-top: 0; }
 
     /* ============================================
        Feature Cards - Neumorphic Glass Cards
@@ -2204,6 +2213,37 @@
       </div>
     </div>
 
+    <h3 class="provider-section-title" data-i18n="providerTitle">لمقدمي الخدمة</h3>
+    <div class="features-grid provider-features">
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg class="feature-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05 1.01 1.79 2.92 1.79 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 data-i18n="p1">دخل إضافي</h3>
+        <p data-i18n="p1p">حوّل موقفك لمصدر ربح دائم</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg class="feature-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 data-i18n="p2">دفعات آمنة</h3>
+        <p data-i18n="p2p">استلم أموالك مباشرة وبأمان</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg class="feature-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 data-i18n="p3">تحكم وأرباح</h3>
+        <p data-i18n="p3p">حدد أسعارك وأوقاتك واكسب أكثر</p>
+      </div>
+    </div>
+
     <div class="download-section" data-has-available="false">
       <!-- عند التوفر: غيّر data-available="true" على .store-option، غيّر data-has-available="true"، حوّل span.store-badge-link إلى <a href="رابط">، أضف src لـ .store-qr-img -->
       <div class="download-row">
@@ -2231,8 +2271,8 @@
           </div>
         </div>
         <div class="waitlist-section">
-          <p class="waitlist-title" data-i18n="waitlistTitle">انضم لقائمة الانتظار</p>
-          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لنخبرك عند إطلاق التطبيق</p>
+          <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجّل موقفك</p>
+          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لتبدأ بتحقيق الدخل من موقفك عند الإطلاق</p>
           <form class="waitlist-form" id="waitlistForm">
             <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
             <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
@@ -2287,7 +2327,7 @@
       <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
       <a href="refund.html" data-i18n="refundLink">سياسة الاسترجاع</a>
       <a href="#" id="footerContactLink" data-i18n="contactLink">تواصل معنا</a>
-      <a href="mailto:support@parkinzi.com">support@parkinzi.com</a>
+      <a href="mailto:support@parkinzi.com" class="footer-social-icon" aria-label="support@parkinzi.com"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
       <a href="https://www.instagram.com/parkinzi" target="_blank" rel="noopener noreferrer" aria-label="انستغرام" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.058 1.645-.07 4.849-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
       <a href="https://www.tiktok.com/@parkinzi" target="_blank" rel="noopener noreferrer" aria-label="تيك توك" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
     </p>
@@ -2316,6 +2356,13 @@
         f2p: "لا مزيد من البحث عن مواقف لفترات طويلة",
         f3: "دفع سهل",
         f3p: "ادفع بسهولة من خلال التطبيق",
+        providerTitle: "لمقدمي الخدمة",
+        p1: "دخل إضافي",
+        p1p: "حوّل موقفك لمصدر ربح دائم",
+        p2: "دفعات آمنة",
+        p2p: "استلم أموالك مباشرة وبأمان",
+        p3: "تحكم وأرباح",
+        p3p: "حدد أسعارك وأوقاتك واكسب أكثر",
         copyrightLine1: "© 2026",
         copyrightLine2: "جميع الحقوق محفوظة",
         privacyLink: "سياسة الخصوصية",
@@ -2348,11 +2395,11 @@
         appearance: "المظهر",
         light: "فاتح",
         dark: "داكن",
-        waitlistTitle: "انضم لقائمة الانتظار",
-        waitlistDesc: "سجّل بريدك لنخبرك عند إطلاق التطبيق",
+        waitlistTitle: "مقدم خدمة؟ سجّل موقفك",
+        waitlistDesc: "سجّل بريدك لتبدأ بتحقيق الدخل من موقفك عند الإطلاق",
         waitlistPlaceholder: "بريدك الإلكتروني",
         waitlistSubmit: "سجّلني",
-        waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق.",
+        waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق لتبدأ الربح.",
         waitlistError: "حدث خطأ، حاول مرة أخرى.",
         waitlistExists: "هذا البريد مسجّل مسبقاً.",
         availableNow: "متوفر حالياً · جرب الآن"
@@ -2374,6 +2421,13 @@
         f2p: "No more searching for parking for long periods",
         f3: "Easy Payment",
         f3p: "Pay easily through the app",
+        providerTitle: "For Providers",
+        p1: "Extra Income",
+        p1p: "Turn your parking spot into a steady source of income",
+        p2: "Secure Payments",
+        p2p: "Receive your money directly and securely",
+        p3: "Control & Earnings",
+        p3p: "Set your prices and schedule, earn more",
         copyrightLine1: "© 2026",
         copyrightLine2: "All rights reserved",
         privacyLink: "Privacy Policy",
@@ -2406,11 +2460,11 @@
         appearance: "Appearance",
         light: "Light",
         dark: "Dark",
-        waitlistTitle: "Join the Waitlist",
-        waitlistDesc: "Enter your email to be notified when we launch",
+        waitlistTitle: "A Provider? Register Your Spot",
+        waitlistDesc: "Enter your email to start earning from your parking when we launch",
         waitlistPlaceholder: "Your email",
         waitlistSubmit: "Join",
-        waitlistSuccess: "You're signed up! We'll notify you at launch.",
+        waitlistSuccess: "You're signed up! We'll contact you at launch to start earning.",
         waitlistError: "Something went wrong. Please try again.",
         waitlistExists: "This email is already registered.",
         availableNow: "Available now · Try it"
@@ -2433,6 +2487,13 @@
         f2p: "Fini la recherche de stationnement pendant des heures",
         f3: "Paiement facile",
         f3p: "Payez facilement via l'application",
+        providerTitle: "Pour les fournisseurs",
+        p1: "Revenus supplémentaires",
+        p1p: "Transformez votre place en source de revenus constante",
+        p2: "Paiements sécurisés",
+        p2p: "Recevez votre argent directement et en toute sécurité",
+        p3: "Contrôle et gains",
+        p3p: "Fixez vos tarifs et horaires, gagnez plus",
         copyrightLine1: "© 2026",
         copyrightLine2: "Tous droits réservés",
         privacyLink: "Politique de confidentialité",
@@ -2465,11 +2526,11 @@
         appearance: "Apparence",
         light: "Clair",
         dark: "Sombre",
-        waitlistTitle: "Rejoignez la liste d'attente",
-        waitlistDesc: "Entrez votre email pour être notifié au lancement",
+        waitlistTitle: "Fournisseur ? Enregistrez votre place",
+        waitlistDesc: "Entrez votre email pour commencer à gagner avec votre parking au lancement",
         waitlistPlaceholder: "Votre email",
         waitlistSubmit: "Rejoindre",
-        waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement.",
+        waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement pour commencer.",
         waitlistError: "Une erreur s'est produite. Réessayez.",
         waitlistExists: "Cet email est déjà enregistré.",
         availableNow: "Disponible · Essayez"
@@ -2491,6 +2552,13 @@
         f2p: "لمبے وقت تک پارکنگ کی تلاش ختم",
         f3: "آسان ادائیگی",
         f3p: "ایپ کے ذریعے آسانی سے ادا کریں",
+        providerTitle: "فراہم کرنے والوں کے لیے",
+        p1: "اضافی آمدنی",
+        p1p: "اپنی پارکنگ کو مستقل آمدنی کا ذریعہ بنائیں",
+        p2: "محفوظ ادائیگیاں",
+        p2p: "اپنا پیسہ براہ راست اور محفوظ طریقے سے وصول کریں",
+        p3: "کنٹرول اور کمائی",
+        p3p: "اپنی قیمتیں اور شیڈول طے کریں، زیادہ کمائیں",
         copyrightLine1: "© 2026 PARKINZI",
         copyrightLine2: "جملہ حقوق محفوظ ہیں",
         privacyLink: "رازداری کی پالیسی",
@@ -2523,11 +2591,11 @@
         appearance: "ظہور",
         light: "روشن",
         dark: "اندھیرا",
-        waitlistTitle: "ویٹ لسٹ میں شامل ہوں",
-        waitlistDesc: "لانچ پر مطلع ہونے کے لیے اپنا ای میل درج کریں",
+        waitlistTitle: "فراہم کرنے والے؟ اپنی جگہ رجسٹر کریں",
+        waitlistDesc: "لانچ پر اپنی پارکنگ سے کمائی شروع کرنے کے لیے ای میل درج کریں",
         waitlistPlaceholder: "آپ کا ای میل",
         waitlistSubmit: "شامل کریں",
-        waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم رابطہ کریں گے۔",
+        waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم کمائی شروع کرنے کے لیے رابطہ کریں گے۔",
         waitlistError: "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
         waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔",
         availableNow: "دستیاب · آزمائیں"
