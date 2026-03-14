@@ -966,6 +966,42 @@
       border-color: rgba(0, 130, 190, 0.15);
     }
     .provider-features { margin-top: 0; }
+    .about-block {
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+    .about-block .about-intro {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    .about-block .about-sub {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .about-block .about-sub strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .about-block .about-achievements {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .about-block .about-founder {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .about-block .about-founder a:hover {
+      text-decoration: underline !important;
+    }
     .feature-icon-riyal .riyal-symbol-mask {
       display: block;
       width: 42px;
@@ -2197,6 +2233,13 @@
   </section>
 
   <section class="features" id="features">
+    <div class="about-block">
+      <p class="about-intro" data-i18n="aboutIntro">تطبيق سعودي يهدف إلى تقديم حل تقني ذكي لتنظيم المواقف، وتأجيرها عبر منصة تربط بين ملاك المواقف والمستخدمين. نسعى لتحويل المساحات غير المستغلة إلى مصدر دخل مستدام.</p>
+      <p class="about-sub"><strong data-i18n="aboutVisionLabel">الرؤيا:</strong> <span data-i18n="aboutVision">أن نصبح المنصة الرائدة في المملكة العربية السعودية لحلول المواقف الذكية، بتحويل المساحات غير المستغلة إلى أصول مربحة قابلة للوصول.</span></p>
+      <p class="about-sub"><strong data-i18n="aboutGoalLabel">الهدف:</strong> <span data-i18n="aboutGoal">يهدف التطبيق إلى تقديم تجربة سلسة ومنظمة للمستخدمين والمالك على حد سواء.</span></p>
+      <p class="about-achievements" data-i18n="aboutAchievements">إنجازات: المركز الأول هاكاثون الرياض 2017، ثلاث جوائز هاكاثون الذكاء الصناعي جدة 2018، المركز الثاني هاكاثون الربوتات 2024. دورات تدريبية في جامعات سعودية. المؤسس: رعد بدر، مهندس مدني منذ توسعة الحرم المكي 2010، مطوّر معتمد Unity.</p>
+      <p class="about-founder"><a href="mailto:support@parkinzi.com" style="color:var(--primary);text-decoration:none;">support@parkinzi.com</a></p>
+    </div>
     <h2 class="section-title">
       <span class="why-brand-font" data-i18n="whyPrefix">لماذا </span>
       <span class="brand-logo brand-logo--sm">
@@ -2369,6 +2412,12 @@
         comingSoon: "قريباً",
         about: "تعرف علينا",
         aboutLink: "من نحن",
+        aboutIntro: "تطبيق سعودي يهدف إلى تقديم حل تقني ذكي لتنظيم المواقف، وتأجيرها عبر منصة تربط بين ملاك المواقف والمستخدمين. نسعى لتحويل المساحات غير المستغلة إلى مصدر دخل مستدام.",
+        aboutVisionLabel: "الرؤيا:",
+        aboutVision: "أن نصبح المنصة الرائدة في المملكة العربية السعودية لحلول المواقف الذكية، بتحويل المساحات غير المستغلة إلى أصول مربحة قابلة للوصول.",
+        aboutGoalLabel: "الهدف:",
+        aboutGoal: "يهدف التطبيق إلى تقديم تجربة سلسة ومنظمة للمستخدمين والمالك على حد سواء.",
+        aboutAchievements: "إنجازات: المركز الأول هاكاثون الرياض 2017، ثلاث جوائز هاكاثون الذكاء الصناعي جدة 2018، المركز الثاني هاكاثون الربوتات 2024. دورات تدريبية في جامعات سعودية. المؤسس: رعد بدر، مهندس مدني منذ توسعة الحرم المكي 2010، مطوّر معتمد Unity.",
         whyPrefix: "لماذا ",
         whySuffix: "؟",
         f1: "اكتشف أماكن الوقوف",
@@ -2434,6 +2483,12 @@
         comingSoon: "Coming soon",
         about: "About Us",
         aboutLink: "About Us",
+        aboutIntro: "A Saudi application that aims to provide a smart technical solution to organize parking and rent it through a platform connecting parking owners and users. We seek to transform unused spaces into a source of sustainable income.",
+        aboutVisionLabel: "Vision:",
+        aboutVision: "To become the leading platform in the Kingdom of Saudi Arabia for smart parking solutions, by transforming unused spaces into profitable, accessible assets.",
+        aboutGoalLabel: "Goal:",
+        aboutGoal: "The app aims to deliver a smooth and organized experience for both users and owners.",
+        aboutAchievements: "Achievements: 1st place Arabia Hackathon Riyadh 2017, three awards at AI Hackathon Jeddah 2018, 2nd place Robotics Hackathon 2024. Training courses at Saudi universities. Founder: Raad Badr, civil engineer since Haram expansion 2010, certified Unity developer.",
         whyPrefix: "Why ",
         whySuffix: "?",
         f1: "Find Parking Spots",
@@ -2500,6 +2555,12 @@
         forAndroid: "pour Android",
         about: "À propos",
         aboutLink: "À propos",
+        aboutIntro: "Application saoudienne visant à offrir une solution technique intelligente pour organiser le stationnement et le louer via une plateforme reliant propriétaires et utilisateurs. Nous visons à transformer les espaces inutilisés en source de revenus durables.",
+        aboutVisionLabel: "Vision :",
+        aboutVision: "Devenir la plateforme leader en Arabie saoudite pour les solutions de stationnement intelligent, en transformant les espaces inutilisés en actifs rentables et accessibles.",
+        aboutGoalLabel: "Objectif :",
+        aboutGoal: "L'application vise à offrir une expérience fluide et organisée aux utilisateurs et aux propriétaires.",
+        aboutAchievements: "Réalisations : 1er prix Arabia Hackathon Riyad 2017, trois prix au Hackathon IA Djeddah 2018, 2e prix Hackathon Robotique 2024. Formations dans des universités saoudiennes. Fondateur : Raad Badr, ingénieur civil depuis l'expansion du Haram 2010, développeur Unity certifié.",
         whyPrefix: "Pourquoi ",
         whySuffix: " ?",
         f1: "Trouver des places",
@@ -2566,6 +2627,12 @@
         forAndroid: "اینڈرائیڈ کے لیے",
         about: "ہمارے بارے میں",
         aboutLink: "ہمارے بارے میں",
+        aboutIntro: "سعودی ایپ جو پارکنگ کو منظم کرنے اور مالکان اور صارفین کو جوڑنے والے پلیٹ فارم کے ذریعے کرایہ پر دینے کے لیے ذہین تکنیکی حل فراہم کرنے کا مقصد رکھتی ہے۔ ہم غیر استعمال شدہ جگہوں کو پائیدار آمدنی کے ذریعہ میں بدلنا چاہتے ہیں۔",
+        aboutVisionLabel: "ویژن:",
+        aboutVision: "سعودی عرب میں اسمارٹ پارکنگ حل کے لیے سرکردہ پلیٹ فارم بننا، غیر استعمال شدہ جگہوں کو منافع بخش، قابل رسائی اثاثوں میں بدلنا۔",
+        aboutGoalLabel: "ہدف:",
+        aboutGoal: "ایپ دونوں صارفین اور مالکان کے لیے ہموار اور منظم تجربہ فراہم کرنے کا مقصد رکھتی ہے۔",
+        aboutAchievements: "کامیابیاں: پہلی پوزیشن عربیا ہیکاتھون ریاض 2017، AI ہیکاتھون جدہ 2018 میں تین انعامات، روبوٹکس ہیکاتھون 2024 میں دوسری پوزیشن۔ سعودی یونیورسٹیوں میں تربیتی کورسز۔ بانی: رعد بدر، سول انجینئر حرم توسیع 2010 سے، سرٹیفائیڈ Unity ڈویلپر۔",
         why: "PARKINZI کیوں؟",
         f1: "پارکنگ جگہیں تلاش کریں",
         f1p: "اپنے قریب ریل ٹائم میں دستیاب جگہیں دریافت کریں",
