@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
-  <title>من نحن | PARKINZI</title>
+  <title>سياسة الأسعار | PARKINZI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
@@ -96,6 +96,7 @@
     p { margin-bottom: 1rem; color: var(--text-secondary); }
     .content a { color: var(--primary); text-decoration: none; }
     .content a:hover { text-decoration: underline; }
+    .highlight { font-weight: 600; color: var(--primary); }
     .back-btn {
       display: inline-flex;
       align-items: center;
@@ -154,26 +155,18 @@
 
   <div class="container">
     <div class="header">
-      <h1 data-i18n="title">من نحن</h1>
+      <h1 data-i18n="title">سياسة الأسعار</h1>
     </div>
 
     <div class="content">
-      <p data-i18n="intro">تطبيق سعودي يهدف إلى تقديم حل تقني ذكي لتنظيم المواقف، وتأجيرها عبر منصة تربط بين ملاك المواقف والمستخدمين. نسعى لتحويل المساحات غير المستغلة إلى مصدر دخل مستدام.</p>
+      <h2 data-i18n="commissionLabel">عمولة المنصة</h2>
+      <p><span class="highlight" data-i18n="commissionText">عمولة المنصة 30% من قيمة الحجز.</span> <span data-i18n="commissionNote">يتحكم مقدم الخدمة في تحديد السعر النهائي للموقف. الأسعار المعروضة في التطبيق تشمل قيمة الحجز الكاملة قبل خصم العمولة.</span></p>
 
-      <h2 data-i18n="visionLabel">الرؤيا</h2>
-      <p data-i18n="vision">أن نصبح المنصة الرائدة في المملكة العربية السعودية لحلول المواقف الذكية، بتحويل المساحات غير المستغلة إلى أصول مربحة قابلة للوصول.</p>
+      <h2 data-i18n="pricingLabel">تحديد الأسعار</h2>
+      <p data-i18n="pricingText">مقدم الخدمة (مالك الموقف) هو من يحدد سعر الحجز بالساعة أو بالجلسة. المنصة لا تتدخل في تحديد الأسعار، وتلتزم بتحويل 70% من قيمة الحجز لمقدم الخدمة بعد خصم العمولة.</p>
 
-      <h2 data-i18n="goalLabel">الهدف</h2>
-      <p data-i18n="goal">يهدف التطبيق إلى تقديم تجربة سلسة ومنظمة للمستخدمين والمالك على حد سواء.</p>
-
-      <h2 data-i18n="achievementsLabel">إنجازات مهنية</h2>
-      <p data-i18n="achievements">المركز الأول هاكاثون الرياض 2017، ثلاث جوائز هاكاثون الذكاء الصناعي جدة 2018، المركز الثاني هاكاثون الربوتات 2024. دورات تدريبية في جامعات سعودية.</p>
-
-      <h2 data-i18n="founderLabel">المؤسس</h2>
-      <p data-i18n="founder">رعد بدر، مهندس مدني منذ توسعة الحرم المكي 2010، مطوّر معتمد Unity.</p>
-
-      <h2 data-i18n="contactLabel">التواصل</h2>
-      <p><a href="mailto:support@parkinzi.com">support@parkinzi.com</a> · <a href="tel:+966569601069">+966 56 960 1069</a></p>
+      <h2 data-i18n="serviceLabel">الخدمة والدفع</h2>
+      <p data-i18n="serviceText">يدفع المستخدم (السائق) المبلغ المعروض في التطبيق عند الحجز. يتم الدفع إلكترونياً عبر بوابة دفع آمنة. للاستفسارات: <a href="mailto:support@parkinzi.com">support@parkinzi.com</a></p>
     </div>
 
     <div style="text-align: center; padding: 2rem;">
@@ -211,17 +204,14 @@
   <script>
     const t = {
       ar: {
-        title: "من نحن",
-        intro: "تطبيق سعودي يهدف إلى تقديم حل تقني ذكي لتنظيم المواقف، وتأجيرها عبر منصة تربط بين ملاك المواقف والمستخدمين. نسعى لتحويل المساحات غير المستغلة إلى مصدر دخل مستدام.",
-        visionLabel: "الرؤيا",
-        vision: "أن نصبح المنصة الرائدة في المملكة العربية السعودية لحلول المواقف الذكية، بتحويل المساحات غير المستغلة إلى أصول مربحة قابلة للوصول.",
-        goalLabel: "الهدف",
-        goal: "يهدف التطبيق إلى تقديم تجربة سلسة ومنظمة للمستخدمين والمالك على حد سواء.",
-        achievementsLabel: "إنجازات مهنية",
-        achievements: "المركز الأول هاكاثون الرياض 2017، ثلاث جوائز هاكاثون الذكاء الصناعي جدة 2018، المركز الثاني هاكاثون الربوتات 2024. دورات تدريبية في جامعات سعودية.",
-        founderLabel: "المؤسس",
-        founder: "رعد بدر، مهندس مدني منذ توسعة الحرم المكي 2010، مطوّر معتمد Unity.",
-        contactLabel: "التواصل",
+        title: "سياسة الأسعار",
+        commissionLabel: "عمولة المنصة",
+        commissionText: "عمولة المنصة 30% من قيمة الحجز.",
+        commissionNote: "يتحكم مقدم الخدمة في تحديد السعر النهائي للموقف. الأسعار المعروضة في التطبيق تشمل قيمة الحجز الكاملة قبل خصم العمولة.",
+        pricingLabel: "تحديد الأسعار",
+        pricingText: "مقدم الخدمة (مالك الموقف) هو من يحدد سعر الحجز بالساعة أو بالجلسة. المنصة لا تتدخل في تحديد الأسعار، وتلتزم بتحويل 70% من قيمة الحجز لمقدم الخدمة بعد خصم العمولة.",
+        serviceLabel: "الخدمة والدفع",
+        serviceText: "يدفع المستخدم (السائق) المبلغ المعروض في التطبيق عند الحجز. يتم الدفع إلكترونياً عبر بوابة دفع آمنة. للاستفسارات:",
         backBtn: "العودة للرئيسية",
         copyright: "جميع الحقوق محفوظة",
         aboutLink: "من نحن",
@@ -237,17 +227,14 @@
         dark: "داكن"
       },
       en: {
-        title: "About Us",
-        intro: "A Saudi application that aims to provide a smart technical solution to organize parking and rent it through a platform connecting parking owners and users. We seek to transform unused spaces into a source of sustainable income.",
-        visionLabel: "Vision",
-        vision: "To become the leading platform in the Kingdom of Saudi Arabia for smart parking solutions, by transforming unused spaces into profitable, accessible assets.",
-        goalLabel: "Goal",
-        goal: "The app aims to deliver a smooth and organized experience for both users and owners.",
-        achievementsLabel: "Professional Achievements",
-        achievements: "1st place Arabia Hackathon Riyadh 2017, three awards at AI Hackathon Jeddah 2018, 2nd place Robotics Hackathon 2024. Training courses at Saudi universities.",
-        founderLabel: "Founder",
-        founder: "Raad Badr, civil engineer since Haram expansion 2010, certified Unity developer.",
-        contactLabel: "Contact",
+        title: "Pricing Policy",
+        commissionLabel: "Platform Commission",
+        commissionText: "Platform commission is 30% of the booking value.",
+        commissionNote: "The service provider controls the final price of the parking spot. Prices shown in the app include the full booking value before commission deduction.",
+        pricingLabel: "Price Setting",
+        pricingText: "The service provider (parking owner) sets the booking price per hour or per session. The platform does not set prices and transfers 70% of the booking value to the provider after deducting the commission.",
+        serviceLabel: "Service & Payment",
+        serviceText: "The user (driver) pays the amount displayed in the app at booking. Payment is made electronically via a secure payment gateway. For inquiries:",
         backBtn: "Back to Home",
         copyright: "All rights reserved",
         aboutLink: "About Us",
@@ -263,17 +250,14 @@
         dark: "Dark"
       },
       fr: {
-        title: "À propos",
-        intro: "Application saoudienne visant à offrir une solution technique intelligente pour organiser le stationnement et le louer via une plateforme reliant propriétaires et utilisateurs. Nous visons à transformer les espaces inutilisés en source de revenus durables.",
-        visionLabel: "Vision",
-        vision: "Devenir la plateforme leader en Arabie saoudite pour les solutions de stationnement intelligent, en transformant les espaces inutilisés en actifs rentables et accessibles.",
-        goalLabel: "Objectif",
-        goal: "L'application vise à offrir une expérience fluide et organisée aux utilisateurs et aux propriétaires.",
-        achievementsLabel: "Réalisations professionnelles",
-        achievements: "1er prix Arabia Hackathon Riyad 2017, trois prix au Hackathon IA Djeddah 2018, 2e prix Hackathon Robotique 2024. Formations dans des universités saoudiennes.",
-        founderLabel: "Fondateur",
-        founder: "Raad Badr, ingénieur civil depuis l'expansion du Haram 2010, développeur Unity certifié.",
-        contactLabel: "Contact",
+        title: "Politique tarifaire",
+        commissionLabel: "Commission de la plateforme",
+        commissionText: "La commission de la plateforme est de 30 % de la valeur de la réservation.",
+        commissionNote: "Le fournisseur de services détermine le prix final de la place. Les prix affichés incluent la valeur totale avant déduction de la commission.",
+        pricingLabel: "Fixation des prix",
+        pricingText: "Le fournisseur (propriétaire de la place) fixe le prix par heure ou par session. La plateforme transfère 70 % de la valeur au fournisseur après déduction de la commission.",
+        serviceLabel: "Service et paiement",
+        serviceText: "L'utilisateur paie le montant affiché lors de la réservation, par paiement électronique sécurisé. Pour les questions :",
         backBtn: "Retour à l'accueil",
         copyright: "Tous droits réservés",
         aboutLink: "À propos",
@@ -289,17 +273,14 @@
         dark: "Sombre"
       },
       ur: {
-        title: "ہمارے بارے میں",
-        intro: "سعودی ایپ جو پارکنگ کو منظم کرنے اور مالکان اور صارفین کو جوڑنے والے پلیٹ فارم کے ذریعے کرایہ پر دینے کے لیے ذہین تکنیکی حل فراہم کرنے کا مقصد رکھتی ہے۔ ہم غیر استعمال شدہ جگہوں کو پائیدار آمدنی کے ذریعہ میں بدلنا چاہتے ہیں۔",
-        visionLabel: "ویژن",
-        vision: "سعودی عرب میں اسمارٹ پارکنگ حل کے لیے سرکردہ پلیٹ فارم بننا، غیر استعمال شدہ جگہوں کو منافع بخش، قابل رسائی اثاثوں میں بدلنا۔",
-        goalLabel: "ہدف",
-        goal: "ایپ دونوں صارفین اور مالکان کے لیے ہموار اور منظم تجربہ فراہم کرنے کا مقصد رکھتی ہے۔",
-        achievementsLabel: "پیشہ ورانہ کامیابیاں",
-        achievements: "پہلی پوزیشن عربیا ہیکاتھون ریاض 2017، AI ہیکاتھون جدہ 2018 میں تین انعامات، روبوٹکس ہیکاتھون 2024 میں دوسری پوزیشن۔ سعودی یونیورسٹیوں میں تربیتی کورسز۔",
-        founderLabel: "بانی",
-        founder: "رعد بدر، سول انجینئر حرم توسیع 2010 سے، سرٹیفائیڈ Unity ڈویلپر۔",
-        contactLabel: "رابطہ",
+        title: "قیمتوں کی پالیسی",
+        commissionLabel: "پلیٹ فارم کمیشن",
+        commissionText: "پلیٹ فارم کمیشن بکنگ کی قیمت کا 30% ہے۔",
+        commissionNote: "سروس فراہم کرنے والا پارکنگ کی حتمی قیمت طے کرتا ہے۔ ایپ میں دکھائی گئی قیمتیں کمیشن کٹوتی سے پہلے مکمل بکنگ کی قیمت شامل ہیں۔",
+        pricingLabel: "قیمت کا تعین",
+        pricingText: "سروس فراہم کرنے والا (پارکنگ مالک) فی گھنٹہ یا فی سیشن بکنگ کی قیمت طے کرتا ہے۔ پلیٹ فارم کمیشن کٹوتی کے بعد 70% فراہم کرنے والے کو منتقل کرتا ہے۔",
+        serviceLabel: "سروس اور ادائیگی",
+        serviceText: "صارف (ڈرائیور) بکنگ پر ایپ میں دکھائی گئی رقم ادا کرتا ہے۔ ادائیگی محفوظ گیٹ وے کے ذریعے الیکٹرانک طور پر ہوتی ہے۔ استفسارات کے لیے:",
         backBtn: "واپس گھر",
         copyright: "جملہ حقوق محفوظ ہیں",
         aboutLink: "ہمارے بارے میں",
@@ -339,7 +320,7 @@
         const k = el.dataset.i18n;
         if (t[code] && t[code][k]) el.textContent = t[code][k];
       });
-      document.title = "PARKINZI | " + (t[code] && t[code].title ? t[code].title : "About Us");
+      document.title = "PARKINZI | " + (t[code] && t[code].title ? t[code].title : "Pricing Policy");
     }
 
     function setTheme(th) {
@@ -389,7 +370,7 @@
       const el = document.getElementById("check-" + c);
       if (el) el.style.display = l === c ? "inline" : "none";
     });
-    document.title = "PARKINZI | " + (t[l] && t[l].title ? t[l].title : "About Us");
+    document.title = "PARKINZI | " + (t[l] && t[l].title ? t[l].title : "Pricing Policy");
 
     (function() {
       const th = theme();
