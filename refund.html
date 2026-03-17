@@ -134,6 +134,40 @@
 
     li { margin-bottom: 0.5rem; }
 
+    .contact-info {
+      background: linear-gradient(135deg, rgba(0,160,210,0.15), rgba(40,180,220,0.08));
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      direction: rtl;
+    }
+    [data-theme="light"] .contact-info {
+      background: linear-gradient(135deg, rgba(0,104,184,0.08), rgba(25,140,220,0.05));
+    }
+    .contact-info p, .contact-info li {
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+    .contact-info a {
+      color: var(--primary-light);
+      text-decoration: none;
+      font-weight: 500;
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+    .contact-info a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    [data-theme="light"] .contact-info a {
+      color: var(--primary-dark);
+    }
+    .contact-info ul {
+      margin: 0.5rem 0 0 0;
+      padding-inline-start: 1.5rem;
+    }
+
     .info-box {
       background: linear-gradient(135deg, rgba(0,104,184,0.1), rgba(25,140,220,0.1));
       border-right: 4px solid var(--primary);
@@ -431,10 +465,19 @@
       </table>
 
       <h2>11. الاتصال بنا</h2>
-      <p>لأي استفسارات أو مساعدة في طلبات الاسترداد:</p>
+      <div class="contact-info">
+        <p>لأي استفسارات أو مساعدة في طلبات الاسترداد:</p>
+        <ul>
+          <li><strong>البريد الإلكتروني:</strong> <a href="mailto:support@parkinzi.com" dir="ltr">support@parkinzi.com</a></li>
+          <li><strong>الهاتف:</strong> <a href="tel:+966569601069" dir="ltr">+966 56 960 1069</a></li>
+        </ul>
+      </div>
+      <h3>الشكاوى وأوقات الرد</h3>
       <ul>
-        <li><strong>البريد الإلكتروني:</strong> support@parkinzi.com</li>
-        <li><strong>الهاتف:</strong> <a href="tel:+966569601069">+966 56 960 1069</a></li>
+        <li><strong>أوقات العمل:</strong> من 7 صباحاً إلى 3 مساءً (توقيت الرياض)</li>
+        <li><strong>وقت الرد على الشكوى:</strong> خلال 24 ساعة عمل</li>
+        <li><strong>وقت معالجة الشكوى:</strong> خلال 3–5 أيام عمل</li>
+        <li>يمكنك تقديم الشكوى عبر: الموقع (زر تواصل معنا)، البريد، الهاتف، أو منصاتنا على Instagram و TikTok و X و Snapchat</li>
       </ul>
 
       <h2>12. التعديلات على السياسة</h2>
@@ -459,6 +502,7 @@
   <footer class="footer">
     <p class="footer-links">
       <a href="about.html" data-i18n="aboutLink">من نحن</a>
+      <a href="terms.html" data-i18n="termsLink">شروط الاستخدام</a>
       <a href="pricing.html" data-i18n="pricingLink">سياسة الأسعار</a>
       <a href="privacy.html" data-i18n="privacyLink">سياسة الخصوصية</a>
       <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
@@ -499,6 +543,7 @@
         thImpoundFee: "المقابل المالي للحجز (ريال/يوم)",
         privacyLink: "سياسة الخصوصية",
         aboutLink: "من نحن",
+        termsLink: "شروط الاستخدام",
         pricingLink: "سياسة الأسعار",
         violationsLink: "دليل المخالفات",
         refundLink: "سياسة الاسترجاع",
@@ -522,6 +567,7 @@
         thImpoundFee: "Impound Fee (SAR/day)",
         privacyLink: "Privacy Policy",
         aboutLink: "About Us",
+        termsLink: "Terms of Use",
         pricingLink: "Pricing Policy",
         violationsLink: "Violations Guide",
         refundLink: "Refund Policy",
@@ -545,6 +591,7 @@
         thImpoundFee: "Frais de fourrière (SAR/jour)",
         privacyLink: "Politique de confidentialité",
         aboutLink: "À propos",
+        termsLink: "Conditions d'utilisation",
         pricingLink: "Politique tarifaire",
         violationsLink: "Guide des infractions",
         refundLink: "Politique de remboursement",
@@ -568,6 +615,7 @@
         thImpoundFee: "ضبطی فیس (ریال/دن)",
         privacyLink: "رازداری کی پالیسی",
         aboutLink: "ہمارے بارے میں",
+        termsLink: "استعمال کی شرائط",
         pricingLink: "قیمتوں کی پالیسی",
         violationsLink: "خلاف ورزیوں کی گائیڈ",
         refundLink: "واپسی کی پالیسی",
