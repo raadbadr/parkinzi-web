@@ -3767,6 +3767,15 @@
       map.on("zoom", updateParkinziMarkerZoomScales);
       map.on("zoomend", updateParkinziMarkerZoomScales);
 
+      function collapseGrowthMapAttribution() {
+        try {
+          const attrib = el.querySelector(".maplibregl-ctrl-attrib.maplibregl-compact");
+          if (!attrib) return;
+          attrib.classList.remove("maplibregl-compact-show");
+          attrib.removeAttribute("open");
+        } catch (e) {}
+      }
+
       map.on("load", () => {
         if (!useMapTiler) {
           try {
@@ -3784,6 +3793,9 @@
           duration: 0
         });
         requestAnimationFrame(() => updateParkinziMarkerZoomScales());
+        collapseGrowthMapAttribution();
+        requestAnimationFrame(() => requestAnimationFrame(collapseGrowthMapAttribution));
+        map.once("idle", collapseGrowthMapAttribution);
       });
 
       window.__parkinziGrowthMapRefresh = function () {
