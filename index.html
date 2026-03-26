@@ -1051,6 +1051,24 @@
       font-variant-numeric: tabular-nums;
       line-height: 1;
       letter-spacing: -0.02em;
+      display: inline-block;
+      transform-origin: center center;
+    }
+    @keyframes platformStatValuePulse {
+      0% {
+        transform: scale(1.08);
+        filter: brightness(1.2);
+      }
+      100% {
+        transform: scale(1);
+        filter: brightness(1);
+      }
+    }
+    .platform-stat-value.platform-stat-value--pulse {
+      animation: platformStatValuePulse 0.42s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+    }
+    .platform-stat-detail-val.platform-stat-value--pulse {
+      animation: platformStatValuePulse 0.38s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
     }
     [data-accent="users"] .platform-stat-value { color: rgb(51, 128, 230); }
     [data-accent="facilities"] .platform-stat-value { color: rgb(26, 166, 179); }
@@ -1094,6 +1112,7 @@
 
     /* شريط زمني — أسلوب Liquid Glass (ضبابية + طبقات زجاجية) */
     .growth-map-timeline {
+      --timeline-fill-pct: 100%;
       margin-top: 0;
       margin-bottom: 1.1rem;
       padding: 1rem 1.15rem 1.2rem;
@@ -1157,10 +1176,54 @@
     .growth-map-timeline[dir="ltr"] input[type="range"] {
       direction: ltr;
     }
+    .growth-map-timeline-range-wrap {
+      position: relative;
+      padding: 0.4rem 0;
+      z-index: 0;
+    }
+    .growth-map-timeline-range-wrap::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 11px;
+      border-radius: 999px;
+      width: var(--timeline-fill-pct, 100%);
+      max-width: 100%;
+      pointer-events: none;
+      z-index: 0;
+      transition: width 0.14s cubic-bezier(0.25, 0.8, 0.25, 1);
+      background: linear-gradient(
+        90deg,
+        rgba(0, 210, 255, 0.55) 0%,
+        rgba(100, 180, 255, 0.38) 55%,
+        rgba(160, 210, 255, 0.22) 100%
+      );
+      box-shadow:
+        0 0 20px rgba(0, 200, 255, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .growth-map-timeline[dir="rtl"] .growth-map-timeline-range-wrap::before {
+      left: auto;
+      right: 0;
+    }
+    [data-theme="light"] .growth-map-timeline-range-wrap::before {
+      background: linear-gradient(
+        90deg,
+        rgba(0, 140, 220, 0.35) 0%,
+        rgba(80, 160, 230, 0.22) 100%
+      );
+      box-shadow: 0 0 16px rgba(0, 120, 200, 0.15);
+    }
+    .growth-map-timeline-range-wrap input[type="range"] {
+      position: relative;
+      z-index: 1;
+    }
     .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
       height: 10px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow:
         inset 0 1px 2px rgba(0, 0, 0, 0.15),
@@ -1176,18 +1239,23 @@
     /* مقبض: مستطيل أبيض بزوايا مستديرة — عند الضغط/السحب يصبح شفافاً */
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
       appearance: none;
-      width: 36px;
-      height: 14px;
-      margin-top: -3px;
-      border-radius: 8px;
-      background: #ffffff;
+      width: 38px;
+      height: 16px;
+      margin-top: -4px;
+      border-radius: 9px;
+      background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
       border: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
-      transition: background 0.15s ease, box-shadow 0.15s ease;
+      box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb:active {
-      background: rgba(255, 255, 255, 0.38);
-      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow:
+        0 3px 18px rgba(0, 200, 255, 0.45),
+        0 0 0 1px rgba(0, 200, 255, 0.35);
+      transform: scale(1.06);
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
       box-shadow: 0 2px 10px rgba(0, 60, 100, 0.18);
@@ -1210,13 +1278,15 @@
       border: 1px solid rgba(255, 255, 255, 0.85);
     }
     .growth-map-timeline input[type="range"]::-moz-range-thumb {
-      width: 36px;
-      height: 14px;
+      width: 38px;
+      height: 16px;
       border: none;
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
-      transition: background 0.15s ease, box-shadow 0.15s ease;
+      border-radius: 9px;
+      background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
+      box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
       transform: translateY(-1px);
     }
     .growth-map-timeline input[type="range"]::-moz-range-thumb:active {
@@ -1231,6 +1301,9 @@
       background: rgba(255, 255, 255, 0.5);
     }
     /* أثناء السحب: إيقاف انتقالات المقبض + تخفيف الضبابية لتقليل تقطيع الـ repaint */
+    .growth-map-timeline.is-slider-dragging .growth-map-timeline-range-wrap::before {
+      transition-duration: 0.05s;
+    }
     .growth-map-timeline.is-slider-dragging {
       backdrop-filter: blur(14px) saturate(1.35);
       -webkit-backdrop-filter: blur(14px) saturate(1.35);
@@ -1241,7 +1314,12 @@
     }
     .growth-map-timeline.is-slider-dragging input[type="range"]::-webkit-slider-thumb,
     .growth-map-timeline.is-slider-dragging input[type="range"]::-moz-range-thumb {
-      transition: none;
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
+      box-shadow:
+        0 4px 22px rgba(0, 200, 255, 0.55),
+        0 0 28px rgba(0, 210, 255, 0.35),
+        0 0 0 2px rgba(255, 255, 255, 0.5) inset;
+      transform: scale(1.08);
     }
     .growth-map-timeline-ends {
       display: flex;
@@ -2814,7 +2892,9 @@
   <section class="growth-map-section" id="coverage" aria-labelledby="growthMapHeading">
     <h2 class="section-title" id="growthMapHeading" data-i18n="growthMapTitle">تطور تغطية التطبيق</h2>
     <div class="growth-map-timeline" id="growthMapTimeline" hidden>
-      <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
+      <div class="growth-map-timeline-range-wrap">
+        <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
+      </div>
       <div class="growth-map-timeline-ends">
         <span id="growthMapTimelineStartLabel"></span>
         <span id="growthMapTimelineEndLabel"></span>
@@ -3707,7 +3787,8 @@
       }
     }
 
-    function applyPlatformStatsToDom(data) {
+    function applyPlatformStatsToDom(data, opts) {
+      const flash = opts && opts.flash;
       const pairs = [
         ["statValueUsers", "users"],
         ["statValueFacilities", "facilities"],
@@ -3723,11 +3804,14 @@
       pairs.forEach(([id, key]) => {
         const el = document.getElementById(id);
         if (!el) return;
-        if (!data || data[key] == null) {
-          el.textContent = "0";
-          return;
+        const next =
+          !data || data[key] == null ? "0" : formatPlatformStatDisplay(data[key]);
+        if (flash && el.textContent !== next) {
+          el.classList.remove("platform-stat-value--pulse");
+          void el.offsetWidth;
+          el.classList.add("platform-stat-value--pulse");
         }
-        el.textContent = formatPlatformStatDisplay(data[key]);
+        el.textContent = next;
       });
     }
 
@@ -3739,9 +3823,9 @@
      * يحدّث بطاقات «أرقام المنصة» لتطابق التاريخ المختار على الشريط (تراكمي حتى نهاية اليوم).
      * عند أقصى الشريط تُعاد أرقام cachedPlatformStats الكاملة (بما فيها توزيع الوقود من الـ RPC).
      */
-    async function applyPlatformStatsForTimeline(cutoffMs, dayIndex, timelineDaySpan) {
+    async function applyPlatformStatsForTimeline(cutoffMs, sliderPosition, timelineSliderSteps, spanMs) {
       if (!cachedPlatformStats) return;
-      if (dayIndex === timelineDaySpan) {
+      if (spanMs <= 0 || sliderPosition >= timelineSliderSteps) {
         applyPlatformStatsToDom(cachedPlatformStats);
         return;
       }
@@ -3765,18 +3849,21 @@
       const carsTotal = safe(cars);
       const totalCarsBase = base.cars || 0;
       const ratio = totalCarsBase > 0 ? carsTotal / totalCarsBase : 0;
-      applyPlatformStatsToDom({
-        users: safe(u),
-        facilities: safe(fac),
-        spots: spotsTotal,
-        spotsRegular: Math.max(0, spotsTotal - spotsCh),
-        spotsCharger: spotsCh,
-        cars: carsTotal,
-        carsElectric: Math.round((base.carsElectric || 0) * ratio),
-        carsGasoline: Math.round((base.carsGasoline || 0) * ratio),
-        carsDiesel: Math.round((base.carsDiesel || 0) * ratio),
-        carsHybrid: Math.round((base.carsHybrid || 0) * ratio)
-      });
+      applyPlatformStatsToDom(
+        {
+          users: safe(u),
+          facilities: safe(fac),
+          spots: spotsTotal,
+          spotsRegular: Math.max(0, spotsTotal - spotsCh),
+          spotsCharger: spotsCh,
+          cars: carsTotal,
+          carsElectric: Math.round((base.carsElectric || 0) * ratio),
+          carsGasoline: Math.round((base.carsGasoline || 0) * ratio),
+          carsDiesel: Math.round((base.carsDiesel || 0) * ratio),
+          carsHybrid: Math.round((base.carsHybrid || 0) * ratio)
+        },
+        { flash: true }
+      );
     }
 
     async function loadPlatformStats() {
@@ -4112,10 +4199,22 @@
         return new Date(ms).toLocaleDateString(loc, { year: "numeric", month: "short", day: "numeric" });
       }
 
+      function formatGrowthMapTimelineDateTime(ms) {
+        const lo = lang();
+        const loc = lo === "ur" ? "ur-PK" : lo;
+        return new Date(ms).toLocaleString(loc, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+
       let growthTimelineAsyncGeneration = 0;
       let growthTimelineRafId = null;
-      let growthTimelinePendingIndex = null;
-      let lastTimelineDayIndex = null;
+      let growthTimelinePendingCutoffMs = null;
+      let lastTimelineCutoffMs = null;
 
       function setGrowthMapMarkerVisible(m, show) {
         const node = m.getElement && m.getElement();
@@ -4131,74 +4230,127 @@
         }
       }
 
-      function applyTimelineMarkersOnly(dayIndex, opts) {
-        const skipAria = opts && opts.skipAria;
-        const cutoff = growthMapTimelineDayEndMs(dayIndex);
-        const prevIdx = lastTimelineDayIndex;
+      /** أول فهرس في القائمة المرتبة حيث createdAtMs > cutoff (كل ما قبله يظهر). */
+      function growthMapIndexFirstAfterCutoff(cutoff) {
+        const arr = sortedMarkersByCreated;
+        let lo = 0;
+        let hi = arr.length;
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1;
+          const row = arr[mid]._parkinziDbRow;
+          const t = row && row.createdAtMs != null ? row.createdAtMs : 0;
+          if (t <= cutoff) lo = mid + 1;
+          else hi = mid;
+        }
+        return lo;
+      }
 
-        if (prevIdx !== null && dayIndex === prevIdx) {
-          if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDate(cutoff));
+      /** 0…N خطوة على الشريط → وقت حقيقي بسلاسة (بدون قفزات كبيرة لكل بكسل كما يحدث مع max بالدقائق) */
+      const TIMELINE_SLIDER_STEPS = 10000;
+      let timelineSpanMs = 0;
+      let minCutoffMs = 0;
+      let maxCutoffMs = 0;
+
+      function sliderPositionToCutoffMs(pos) {
+        if (timelineSpanMs <= 0) return maxCutoffMs;
+        const t = Number(pos);
+        if (!Number.isFinite(t) || t <= 0) return minCutoffMs;
+        if (t >= TIMELINE_SLIDER_STEPS) return maxCutoffMs;
+        const r = t / TIMELINE_SLIDER_STEPS;
+        return Math.min(minCutoffMs + r * timelineSpanMs, maxCutoffMs);
+      }
+
+      function applyTimelineMarkersOnly(cutoffMs, opts) {
+        const skipAria = opts && opts.skipAria;
+
+        if (lastTimelineCutoffMs !== null && Math.abs(cutoffMs - lastTimelineCutoffMs) < 1) {
+          if (!skipAria && sliderEl) {
+            sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoffMs));
+          }
           return;
         }
 
-        if (prevIdx === null || Math.abs(dayIndex - prevIdx) > 1 || !sortedMarkersByCreated.length) {
-          markers.forEach(function (m) {
-            const row = m._parkinziDbRow;
-            const show = !!(row && row.createdAtMs <= cutoff);
-            setGrowthMapMarkerVisible(m, show);
-          });
-        } else if (dayIndex > prevIdx) {
-          const prevCutoff = growthMapTimelineDayEndMs(prevIdx);
+        if (!sortedMarkersByCreated.length) {
+          lastTimelineCutoffMs = cutoffMs;
+          if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoffMs));
+          return;
+        }
+
+        const iNew = growthMapIndexFirstAfterCutoff(cutoffMs);
+
+        if (lastTimelineCutoffMs === null) {
           for (let i = 0; i < sortedMarkersByCreated.length; i++) {
-            const m = sortedMarkersByCreated[i];
-            const t = m._parkinziDbRow && m._parkinziDbRow.createdAtMs;
-            if (t == null) continue;
-            if (t <= prevCutoff) continue;
-            if (t > cutoff) break;
-            setGrowthMapMarkerVisible(m, true);
+            setGrowthMapMarkerVisible(sortedMarkersByCreated[i], i < iNew);
           }
         } else {
-          const prevCutoff = growthMapTimelineDayEndMs(prevIdx);
-          for (let i = 0; i < sortedMarkersByCreated.length; i++) {
-            const m = sortedMarkersByCreated[i];
-            const t = m._parkinziDbRow && m._parkinziDbRow.createdAtMs;
-            if (t == null) continue;
-            if (t <= cutoff) continue;
-            if (t > prevCutoff) break;
-            setGrowthMapMarkerVisible(m, false);
+          const prevCutoff = lastTimelineCutoffMs;
+          const iPrev = growthMapIndexFirstAfterCutoff(prevCutoff);
+          if (iNew > iPrev) {
+            for (let i = iPrev; i < iNew; i++) setGrowthMapMarkerVisible(sortedMarkersByCreated[i], true);
+          } else if (iNew < iPrev) {
+            for (let i = iNew; i < iPrev; i++) setGrowthMapMarkerVisible(sortedMarkersByCreated[i], false);
           }
         }
 
-        lastTimelineDayIndex = dayIndex;
+        lastTimelineCutoffMs = cutoffMs;
 
-        if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDate(cutoff));
+        if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoffMs));
       }
 
-      async function applyGrowthMapTimelineStatsOnly(dayIndex) {
+      async function applyGrowthMapTimelineStatsOnly(sliderPosition) {
         const gen = ++growthTimelineAsyncGeneration;
-        const cutoff = growthMapTimelineDayEndMs(dayIndex);
-        await applyPlatformStatsForTimeline(cutoff, dayIndex, timelineDaySpan);
+        const cutoff = sliderPositionToCutoffMs(sliderPosition);
+        await applyPlatformStatsForTimeline(cutoff, sliderPosition, TIMELINE_SLIDER_STEPS, timelineSpanMs);
         if (gen !== growthTimelineAsyncGeneration) return;
       }
 
-      /** أثناء السحب: علامات الخريطة فقط (بدون طلبات شبكة) — الإحصائيات تُحدَّث عند change لسلاسة الحركة */
-      function scheduleGrowthMapTimelineInput(dayIndex) {
-        growthTimelinePendingIndex = dayIndex;
+      /** أثناء السحب: علامات الخريطة فقط (بدون طلبات شبكة) — الإحصائيات عند change؛ موضع الشريط 0…10000 يطابق الوقت بسلاسة */
+      function scheduleGrowthMapTimelineInput(cutoffMs) {
+        growthTimelinePendingCutoffMs = cutoffMs;
         if (growthTimelineRafId == null) {
           growthTimelineRafId = requestAnimationFrame(function () {
             growthTimelineRafId = null;
-            applyTimelineMarkersOnly(growthTimelinePendingIndex, { skipAria: true });
+            applyTimelineMarkersOnly(growthTimelinePendingCutoffMs, { skipAria: true });
           });
         }
       }
 
-      async function applyGrowthMapTimelineFull(dayIndex) {
+      function setTimelineFillFromPosition(pos) {
+        if (!timelineEl) return;
+        const p = Math.max(0, Math.min(100, (Number(pos) / TIMELINE_SLIDER_STEPS) * 100));
+        timelineEl.style.setProperty("--timeline-fill-pct", p + "%");
+      }
+
+      /** تحديث أرقام المنصة أثناء السحب — مُقيّد بـ ~5 إطارات لتقليل ضغط الشبكة */
+      let growthStatsThrottleScheduled = false;
+      let growthStatsThrottlePendingPos = 0;
+      let growthStatsThrottleFrames = 0;
+
+      function scheduleGrowthMapTimelineStatsThrottled(pos) {
+        growthStatsThrottlePendingPos = pos;
+        if (growthStatsThrottleScheduled) return;
+        growthStatsThrottleScheduled = true;
+        growthStatsThrottleFrames = 0;
+        function tick() {
+          growthStatsThrottleFrames++;
+          if (growthStatsThrottleFrames < 5) {
+            requestAnimationFrame(tick);
+            return;
+          }
+          growthStatsThrottleScheduled = false;
+          void applyGrowthMapTimelineStatsOnly(growthStatsThrottlePendingPos);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      async function applyGrowthMapTimelineFull(sliderPosition) {
         if (growthTimelineRafId != null) {
           cancelAnimationFrame(growthTimelineRafId);
           growthTimelineRafId = null;
         }
-        applyTimelineMarkersOnly(dayIndex);
-        await applyGrowthMapTimelineStatsOnly(dayIndex);
+        const cutoff = sliderPositionToCutoffMs(sliderPosition);
+        applyTimelineMarkersOnly(cutoff);
+        await applyGrowthMapTimelineStatsOnly(sliderPosition);
       }
 
       if (useDb && hasCreatedAtColumn && timelineEl && sliderEl) {
@@ -4212,15 +4364,20 @@
         let timelineEndDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
+        minCutoffMs = growthMapTimelineDayEndMs(0);
+        maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
+        timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
         sliderEl.min = "0";
-        sliderEl.max = String(timelineDaySpan);
-        sliderEl.value = String(timelineDaySpan);
+        sliderEl.max = String(TIMELINE_SLIDER_STEPS);
+        sliderEl.step = "1";
+        sliderEl.value = String(TIMELINE_SLIDER_STEPS);
         sliderEl.setAttribute("aria-valuemin", "0");
-        sliderEl.setAttribute("aria-valuemax", String(timelineDaySpan));
-        sliderEl.setAttribute("aria-valuenow", String(timelineDaySpan));
-        if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(0));
-        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(timelineDaySpan));
+        sliderEl.setAttribute("aria-valuemax", String(TIMELINE_SLIDER_STEPS));
+        sliderEl.setAttribute("aria-valuenow", String(TIMELINE_SLIDER_STEPS));
+        if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
+        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
         timelineEl.hidden = false;
+        lastTimelineCutoffMs = null;
         const endSliderDrag = function () {
           timelineEl.classList.remove("is-slider-dragging");
         };
@@ -4234,17 +4391,25 @@
         sliderEl.addEventListener("pointercancel", endSliderDrag);
         sliderEl.addEventListener("blur", endSliderDrag);
         sliderEl.addEventListener("input", function () {
-          const v = Number(sliderEl.value);
-          sliderEl.setAttribute("aria-valuenow", String(v));
-          scheduleGrowthMapTimelineInput(v);
+          const pos = Number(sliderEl.value);
+          sliderEl.setAttribute("aria-valuenow", String(pos));
+          const cutoff = sliderPositionToCutoffMs(pos);
+          sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
+          setTimelineFillFromPosition(pos);
+          scheduleGrowthMapTimelineInput(cutoff);
+          scheduleGrowthMapTimelineStatsThrottled(pos);
         });
         sliderEl.addEventListener("change", function () {
           endSliderDrag();
-          const v = Number(sliderEl.value);
-          sliderEl.setAttribute("aria-valuenow", String(v));
-          void applyGrowthMapTimelineFull(v);
+          const pos = Number(sliderEl.value);
+          sliderEl.setAttribute("aria-valuenow", String(pos));
+          const cutoff = sliderPositionToCutoffMs(pos);
+          sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
+          setTimelineFillFromPosition(pos);
+          void applyGrowthMapTimelineFull(pos);
         });
-        void applyGrowthMapTimelineFull(timelineDaySpan);
+        setTimelineFillFromPosition(TIMELINE_SLIDER_STEPS);
+        void applyGrowthMapTimelineFull(TIMELINE_SLIDER_STEPS);
       } else if (timelineEl) {
         timelineEl.hidden = true;
       }
@@ -4303,9 +4468,10 @@
         map.resize();
         updateParkinziMarkerZoomScales();
         if (timelineEl && !timelineEl.hidden && sliderEl) {
+          lastTimelineCutoffMs = null;
           void applyGrowthMapTimelineFull(Number(sliderEl.value));
-          if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(0));
-          if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(timelineDaySpan));
+          if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
+          if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
         }
       };
       setTimeout(() => map.resize(), 400);
