@@ -1278,7 +1278,6 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
         inset 0 -1px 0 rgba(0, 60, 100, 0.06);
     }
-    /* بدون ضغط: لا سحب ولا تغيير — الحركة فقط مع pointerdown (انظر JS) */
     .growth-map-timeline input[type="range"] {
       width: 100%;
       height: 10px;
@@ -1290,17 +1289,16 @@
       touch-action: none;
       transform: translateZ(0);
       backface-visibility: hidden;
+      -webkit-user-select: none;
+      user-select: none;
+      -moz-user-select: none;
     }
     .growth-map-timeline.is-slider-dragging input[type="range"] {
       cursor: grabbing;
-      user-select: none;
     }
-    .growth-map-timeline input[type="range"]:focus {
-      outline: none;
-    }
+    .growth-map-timeline input[type="range"]:focus,
     .growth-map-timeline input[type="range"]:focus-visible {
-      outline: 2px solid rgba(0, 180, 230, 0.55);
-      outline-offset: 3px;
+      outline: none;
     }
     .growth-map-timeline[dir="rtl"] input[type="range"] {
       direction: rtl;
@@ -1312,6 +1310,9 @@
       position: relative;
       padding: 0.4rem 0;
       z-index: 0;
+      -webkit-user-select: none;
+      user-select: none;
+      -moz-user-select: none;
     }
     .growth-map-timeline-range-wrap::before {
       content: "";
@@ -1368,7 +1369,6 @@
         inset 0 1px 3px rgba(0, 0, 0, 0.08),
         inset 0 -1px 1px rgba(255, 255, 255, 0.9);
     }
-    /* مقبض: ثابت عند المرور — الشفافية والحركة فقط مع الضغط/السحب (ليس hover) */
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
       appearance: none;
       width: 38px;
@@ -1380,32 +1380,24 @@
       box-shadow:
         0 2px 12px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.4) inset;
-      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-      transform: none;
+      transition: background 0.15s ease;
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb:hover {
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
+    }
+    /* شفاف طالما زر الماوس الأيسر مضغوط (class من JS) — ليس :active لأنه يضيع لو خرج المؤشر عن السلايدر */
+    .growth-map-timeline.is-slider-dragging input[type="range"]::-webkit-slider-thumb {
+      background: rgba(255, 255, 255, 0.45);
       box-shadow:
         0 2px 12px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.4) inset;
-      transform: none;
-    }
-    .growth-map-timeline input[type="range"]::-webkit-slider-thumb:active,
-    .growth-map-timeline.is-slider-dragging input[type="range"]::-webkit-slider-thumb {
-      background: rgba(255, 255, 255, 0.38);
-      box-shadow:
-        0 4px 22px rgba(0, 200, 255, 0.5),
-        0 0 26px rgba(0, 210, 255, 0.32),
-        0 0 0 2px rgba(255, 255, 255, 0.45) inset;
-      transform: scale(1.06);
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
       box-shadow: 0 2px 10px rgba(0, 60, 100, 0.18);
       border: 1px solid rgba(0, 0, 0, 0.06);
     }
-    [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-thumb:active,
     [data-theme="light"] .growth-map-timeline.is-slider-dragging input[type="range"]::-webkit-slider-thumb {
-      background: rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.45);
     }
     .growth-map-timeline input[type="range"]::-moz-range-track {
       height: 10px;
@@ -1429,40 +1421,23 @@
       box-shadow:
         0 2px 12px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.4) inset;
-      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-      transform: none;
+      transition: background 0.15s ease;
     }
     .growth-map-timeline input[type="range"]::-moz-range-thumb:hover {
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
-      transform: none;
     }
-    .growth-map-timeline input[type="range"]::-moz-range-thumb:active,
     .growth-map-timeline.is-slider-dragging input[type="range"]::-moz-range-thumb {
-      background: rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.45);
       box-shadow:
-        0 4px 22px rgba(0, 200, 255, 0.5),
-        0 0 26px rgba(0, 210, 255, 0.32);
-      transform: scale(1.06);
+        0 2px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-thumb {
       box-shadow: 0 2px 10px rgba(0, 60, 100, 0.18);
       border: 1px solid rgba(0, 0, 0, 0.06);
     }
-    [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-thumb:active,
     [data-theme="light"] .growth-map-timeline.is-slider-dragging input[type="range"]::-moz-range-thumb {
-      background: rgba(255, 255, 255, 0.42);
-    }
-    /* أثناء السحب: إيقاف انتقالات المقبض + تخفيف الضبابية لتقليل تقطيع الـ repaint */
-    .growth-map-timeline.is-slider-dragging .growth-map-timeline-range-wrap::before {
-      transition-duration: 0.05s;
-    }
-    .growth-map-timeline.is-slider-dragging {
-      backdrop-filter: blur(14px) saturate(1.35);
-      -webkit-backdrop-filter: blur(14px) saturate(1.35);
-    }
-    [data-theme="light"] .growth-map-timeline.is-slider-dragging {
-      backdrop-filter: blur(18px) saturate(1.25);
-      -webkit-backdrop-filter: blur(18px) saturate(1.25);
+      background: rgba(255, 255, 255, 0.45);
     }
     .growth-map-timeline-ends {
       display: flex;
@@ -4678,8 +4653,9 @@
         const endSliderDrag = function () {
           timelineEl.classList.remove("is-slider-dragging");
         };
-        /** سحب بالماوس/اللمس: يتحرك الشريط فقط طالما الزر مضغوط؛ بدون ضغط لا يتغير الموضع (setPointerCapture كان يكسر السحب في المتصفحات). */
+        /** سحب يدوي: القيمة من clientX؛ pointer capture آمن هنا لأننا لا نعتمد على السحب الأصلي للـ range. */
         let growthMapSliderPointerActive = false;
+        let growthMapSliderCapturedId = null;
         function growthMapSliderValueFromClientX(clientX) {
           const rect = sliderEl.getBoundingClientRect();
           if (rect.width <= 0) return Number(sliderEl.value);
@@ -4714,11 +4690,25 @@
         function growthMapSliderDragEnd() {
           if (!growthMapSliderPointerActive) return;
           growthMapSliderPointerActive = false;
+          if (growthMapSliderCapturedId != null) {
+            try {
+              sliderEl.releasePointerCapture(growthMapSliderCapturedId);
+            } catch (err) {}
+            growthMapSliderCapturedId = null;
+          }
           window.removeEventListener("pointermove", growthMapSliderDragMove);
           window.removeEventListener("pointerup", growthMapSliderDragEnd);
           window.removeEventListener("pointercancel", growthMapSliderDragEnd);
           endSliderDrag();
           growthMapSliderCommitFromUi();
+        }
+        function growthMapSliderBlockSelect(e) {
+          e.preventDefault();
+        }
+        sliderEl.addEventListener("selectstart", growthMapSliderBlockSelect);
+        const growthMapRangeWrap = sliderEl.closest(".growth-map-timeline-range-wrap");
+        if (growthMapRangeWrap) {
+          growthMapRangeWrap.addEventListener("selectstart", growthMapSliderBlockSelect);
         }
         sliderEl.addEventListener("pointerdown", function (e) {
           if (e.button !== 0) return;
@@ -4728,6 +4718,11 @@
           } catch (err) {}
           growthMapSliderPointerActive = true;
           timelineEl.classList.add("is-slider-dragging");
+          growthMapSliderCapturedId = null;
+          try {
+            sliderEl.setPointerCapture(e.pointerId);
+            growthMapSliderCapturedId = e.pointerId;
+          } catch (err) {}
           growthMapSliderApplyValueIfChanged(growthMapSliderValueFromClientX(e.clientX));
           window.addEventListener("pointermove", growthMapSliderDragMove, { passive: false });
           window.addEventListener("pointerup", growthMapSliderDragEnd);
