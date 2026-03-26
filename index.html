@@ -1278,6 +1278,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
         inset 0 -1px 0 rgba(0, 60, 100, 0.06);
     }
+    /* بدون ضغط: لا سحب ولا تغيير — الحركة فقط مع pointerdown (انظر JS) */
     .growth-map-timeline input[type="range"] {
       width: 100%;
       height: 10px;
@@ -1292,6 +1293,7 @@
     }
     .growth-map-timeline.is-slider-dragging input[type="range"] {
       cursor: grabbing;
+      user-select: none;
     }
     .growth-map-timeline input[type="range"]:focus {
       outline: none;
@@ -4676,15 +4678,64 @@
         const endSliderDrag = function () {
           timelineEl.classList.remove("is-slider-dragging");
         };
+        /** سحب بالماوس/اللمس: يتحرك الشريط فقط طالما الزر مضغوط؛ بدون ضغط لا يتغير الموضع (setPointerCapture كان يكسر السحب في المتصفحات). */
+        let growthMapSliderPointerActive = false;
+        function growthMapSliderValueFromClientX(clientX) {
+          const rect = sliderEl.getBoundingClientRect();
+          if (rect.width <= 0) return Number(sliderEl.value);
+          const min = Number(sliderEl.min);
+          const max = Number(sliderEl.max);
+          let ratio = (clientX - rect.left) / rect.width;
+          ratio = Math.max(0, Math.min(1, ratio));
+          if (timelineEl.getAttribute("dir") === "rtl") {
+            ratio = 1 - ratio;
+          }
+          const value = Math.round(min + ratio * (max - min));
+          return Math.max(min, Math.min(max, value));
+        }
+        function growthMapSliderApplyValueIfChanged(v) {
+          if (Number(sliderEl.value) === v) return;
+          sliderEl.value = String(v);
+          sliderEl.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        function growthMapSliderCommitFromUi() {
+          const pos = Number(sliderEl.value);
+          sliderEl.setAttribute("aria-valuenow", String(pos));
+          const cutoff = sliderPositionToCutoffMs(pos);
+          sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
+          setTimelineFillFromPosition(pos);
+          void applyGrowthMapTimelineFull(pos);
+        }
+        function growthMapSliderDragMove(e) {
+          if (!growthMapSliderPointerActive) return;
+          e.preventDefault();
+          growthMapSliderApplyValueIfChanged(growthMapSliderValueFromClientX(e.clientX));
+        }
+        function growthMapSliderDragEnd() {
+          if (!growthMapSliderPointerActive) return;
+          growthMapSliderPointerActive = false;
+          window.removeEventListener("pointermove", growthMapSliderDragMove);
+          window.removeEventListener("pointerup", growthMapSliderDragEnd);
+          window.removeEventListener("pointercancel", growthMapSliderDragEnd);
+          endSliderDrag();
+          growthMapSliderCommitFromUi();
+        }
         sliderEl.addEventListener("pointerdown", function (e) {
-          timelineEl.classList.add("is-slider-dragging");
+          if (e.button !== 0) return;
+          e.preventDefault();
           try {
-            sliderEl.setPointerCapture(e.pointerId);
+            sliderEl.focus({ preventScroll: true });
           } catch (err) {}
+          growthMapSliderPointerActive = true;
+          timelineEl.classList.add("is-slider-dragging");
+          growthMapSliderApplyValueIfChanged(growthMapSliderValueFromClientX(e.clientX));
+          window.addEventListener("pointermove", growthMapSliderDragMove, { passive: false });
+          window.addEventListener("pointerup", growthMapSliderDragEnd);
+          window.addEventListener("pointercancel", growthMapSliderDragEnd);
         });
-        sliderEl.addEventListener("pointerup", endSliderDrag);
-        sliderEl.addEventListener("pointercancel", endSliderDrag);
-        sliderEl.addEventListener("blur", endSliderDrag);
+        sliderEl.addEventListener("blur", function () {
+          if (growthMapSliderPointerActive) growthMapSliderDragEnd();
+        });
         sliderEl.addEventListener("input", function () {
           const pos = Number(sliderEl.value);
           sliderEl.setAttribute("aria-valuenow", String(pos));
@@ -4696,12 +4747,7 @@
         });
         sliderEl.addEventListener("change", function () {
           endSliderDrag();
-          const pos = Number(sliderEl.value);
-          sliderEl.setAttribute("aria-valuenow", String(pos));
-          const cutoff = sliderPositionToCutoffMs(pos);
-          sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
-          setTimelineFillFromPosition(pos);
-          void applyGrowthMapTimelineFull(pos);
+          growthMapSliderCommitFromUi();
         });
         setTimelineFillFromPosition(TIMELINE_SLIDER_STEPS);
         void applyGrowthMapTimelineFull(TIMELINE_SLIDER_STEPS);
