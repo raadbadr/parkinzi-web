@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
   <title>من نحن | PARKINZI</title>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
@@ -210,7 +211,7 @@
   </footer>
 
   <script>
-    const t = {
+    const translations = {
       ar: {
         title: "من نحن",
         intro: "تطبيق سعودي يهدف إلى تقديم حل تقني ذكي لتنظيم المواقف، وتأجيرها عبر منصة تربط بين ملاك المواقف والمستخدمين. نسعى لتحويل المساحات غير المستغلة إلى مصدر دخل مستدام.",
@@ -324,27 +325,27 @@
     const lang = () => localStorage.getItem("parkinzi_lang") || "ar";
     const theme = () => localStorage.getItem("parkinzi_theme") || "dark";
     const langNames = { ar: "العربية", en: "English", fr: "Français", ur: "اردو" };
-    let l = lang();
-    document.documentElement.lang = l;
-    document.documentElement.dir = (l === "ar" || l === "ur") ? "rtl" : "ltr";
+    let currentLanguageCode = lang();
+    document.documentElement.lang = currentLanguageCode;
+    document.documentElement.dir = (currentLanguageCode === "ar" || currentLanguageCode === "ur") ? "rtl" : "ltr";
 
     function setLang(code) {
       localStorage.setItem("parkinzi_lang", code);
-      l = code;
+      currentLanguageCode = code;
       document.documentElement.lang = code;
       document.documentElement.dir = (code === "ar" || code === "ur") ? "rtl" : "ltr";
       document.getElementById("currentLangDisplay").textContent = langNames[code] || code;
-      ["ar","en","fr","ur"].forEach(c => {
-        const el = document.getElementById("check-" + c);
-        if (el) el.style.display = c === code ? "inline" : "none";
+      ["ar","en","fr","ur"].forEach(languageCode => {
+        const el = document.getElementById("check-" + languageCode);
+        if (el) el.style.display = languageCode === code ? "inline" : "none";
       });
       const th = theme();
-      document.getElementById("currentThemeDisplay").textContent = t[code][th === "dark" ? "dark" : "light"];
+      document.getElementById("currentThemeDisplay").textContent = translations[code][th === "dark" ? "dark" : "light"];
       document.querySelectorAll("[data-i18n]").forEach(el => {
-        const k = el.dataset.i18n;
-        if (t[code] && t[code][k]) el.textContent = t[code][k];
+        const i18nKey = el.dataset.i18n;
+        if (translations[code] && translations[code][i18nKey]) el.textContent = translations[code][i18nKey];
       });
-      document.title = "PARKINZI | " + (t[code] && t[code].title ? t[code].title : "About Us");
+      document.title = "PARKINZI | " + (translations[code] && translations[code].title ? translations[code].title : "About Us");
     }
 
     function setTheme(th) {
@@ -355,18 +356,18 @@
       const logo = document.getElementById("footerLogo");
       if (logo) logo.src = th === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
       document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️";
-      document.getElementById("currentThemeDisplay").textContent = t[l][th === "dark" ? "dark" : "light"];
+      document.getElementById("currentThemeDisplay").textContent = translations[currentLanguageCode][th === "dark" ? "dark" : "light"];
       document.getElementById("check-light").style.display = th === "light" ? "inline" : "none";
       document.getElementById("check-dark").style.display = th === "dark" ? "inline" : "none";
     }
 
-    document.getElementById("langMenuBtn").addEventListener("click", e => {
-      e.stopPropagation();
+    document.getElementById("langMenuBtn").addEventListener("click", event => {
+      event.stopPropagation();
       document.getElementById("langDropdown").classList.toggle("show");
       document.getElementById("themeDropdown").classList.remove("show");
     });
-    document.getElementById("themeMenuBtn").addEventListener("click", e => {
-      e.stopPropagation();
+    document.getElementById("themeMenuBtn").addEventListener("click", event => {
+      event.stopPropagation();
       document.getElementById("themeDropdown").classList.toggle("show");
       document.getElementById("langDropdown").classList.remove("show");
     });
@@ -386,15 +387,15 @@
     });
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
-      const k = el.dataset.i18n;
-      if (t[l] && t[l][k]) el.textContent = t[l][k];
+      const i18nKey = el.dataset.i18n;
+      if (translations[currentLanguageCode] && translations[currentLanguageCode][i18nKey]) el.textContent = translations[currentLanguageCode][i18nKey];
     });
-    document.getElementById("currentLangDisplay").textContent = langNames[l] || l;
-    ["ar","en","fr","ur"].forEach(c => {
-      const el = document.getElementById("check-" + c);
-      if (el) el.style.display = l === c ? "inline" : "none";
+    document.getElementById("currentLangDisplay").textContent = langNames[currentLanguageCode] || currentLanguageCode;
+    ["ar","en","fr","ur"].forEach(languageCode => {
+      const el = document.getElementById("check-" + languageCode);
+      if (el) el.style.display = currentLanguageCode === languageCode ? "inline" : "none";
     });
-    document.title = "PARKINZI | " + (t[l] && t[l].title ? t[l].title : "About Us");
+    document.title = "PARKINZI | " + (translations[currentLanguageCode] && translations[currentLanguageCode].title ? translations[currentLanguageCode].title : "About Us");
 
     (function() {
       const th = theme();
@@ -404,10 +405,17 @@
       const logo = document.getElementById("footerLogo");
       if (logo) logo.src = th === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
       document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️";
-      document.getElementById("currentThemeDisplay").textContent = t[l][th === "dark" ? "dark" : "light"];
+      document.getElementById("currentThemeDisplay").textContent = translations[currentLanguageCode][th === "dark" ? "dark" : "light"];
       document.getElementById("check-light").style.display = th === "light" ? "inline" : "none";
       document.getElementById("check-dark").style.display = th === "dark" ? "inline" : "none";
     })();
+  </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>

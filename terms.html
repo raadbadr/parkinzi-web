@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
   <title>شروط الاستخدام | PARKINZI</title>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
@@ -164,6 +165,13 @@
     ["ar","en","fr","ur"].forEach(x => { const e = document.getElementById("check-" + x); if (e) e.style.display = l === x ? "inline" : "none"; });
     document.title = "PARKINZI | " + (t[l]?.title || "Terms");
     (function(){ const th = theme(); document.documentElement.dataset.theme = th; document.getElementById("themeColorMeta").content = th === "dark" ? "#1a2933" : "#0068b8"; document.getElementById("footerLogo").src = th === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png"; document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️"; document.getElementById("currentThemeDisplay").textContent = t[l][th === "dark" ? "dark" : "light"]; document.getElementById("check-light").style.display = th === "light" ? "inline" : "none"; document.getElementById("check-dark").style.display = th === "dark" ? "inline" : "none"; })();
+  </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>

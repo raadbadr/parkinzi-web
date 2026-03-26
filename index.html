@@ -3,16 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://brqsvtobletrlkpkhooc.supabase.co https://*.supabase.co wss://brqsvtobletrlkpkhooc.supabase.co wss://*.supabase.co https://api.maptiler.com https://*.maptiler.com https://demotiles.maplibre.org https://unpkg.com https://esm.sh; worker-src 'self' blob:;">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
+  <link rel="dns-prefetch" href="https://brqsvtobletrlkpkhooc.supabase.co">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://esm.sh">
+  <link rel="dns-prefetch" href="https://api.maptiler.com">
+  <!-- نفس قيمة MAPTILER_API_KEY في Xcode → Info.plist (أو من MapTiler Cloud). انسخها هنا فقط — السكربت يقرأها تلقائياً. -->
+  <meta name="maptiler-api-key" content="iQUIaz3OVvXEwboJfBU9">
+  <!-- Supabase: URL + anon key (Settings → API). الإحصائيات: @supabase/supabase-js — profiles، facilities، parking_spots، user_cars -->
+  <meta name="supabase-url" content="https://brqsvtobletrlkpkhooc.supabase.co">
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ">
   <meta name="description" content="PARKINZI - مواقف ذكية في جيبك. تطبيق سعودي لحل الوقوف الذكي">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>PARKINZI | مواقف ذكية</title>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="">
   <style>
     /* Monoton Font - Local */
     @font-face {
@@ -878,6 +892,354 @@
       z-index: 1;
     }
 
+    /* إحصائيات المنصة — نفس تخطيط AdminStatCard (Qaff): أيقونة | تسمية | رقم */
+    .platform-stats {
+      padding: 0.5rem 2rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .platform-stats-heading {
+      margin-bottom: 1.5rem;
+    }
+    .platform-stats-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .platform-stat-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 1rem 1.15rem;
+      border-radius: 20px;
+      background: linear-gradient(145deg, var(--glass-strong), var(--glass));
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 28px var(--shadow-dark), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+    .platform-stat-card--expandable {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.85rem 1.15rem 1rem;
+    }
+    .platform-stat-main {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-align: inherit;
+    }
+    .platform-stat-main:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+      border-radius: 12px;
+    }
+    .platform-stat-expand-chevron {
+      flex-shrink: 0;
+      width: 0.65rem;
+      height: 0.65rem;
+      margin-inline-start: 0.25rem;
+      border-right: 2px solid var(--text-tertiary);
+      border-bottom: 2px solid var(--text-tertiary);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+    .platform-stat-card--expandable.is-expanded .platform-stat-expand-chevron {
+      transform: rotate(225deg);
+    }
+    .platform-stat-detail {
+      width: 100%;
+      padding-top: 0.85rem;
+      margin-top: 0.65rem;
+      border-top: 1px solid var(--glass-border);
+    }
+    .platform-stat-detail-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.4rem 0;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+    .platform-stat-detail-row span:first-child {
+      flex: 1;
+      text-align: start;
+    }
+    .platform-stat-detail-val {
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      min-width: 2ch;
+      text-align: end;
+    }
+    [data-theme="light"] .platform-stat-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 255, 0.92));
+    }
+    .platform-stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, var(--bg-top), var(--bg-mid));
+      box-shadow: 6px 6px 14px rgba(5, 10, 15, 0.25), -5px -5px 12px rgba(255, 255, 255, 0.06);
+    }
+    [data-theme="light"] .platform-stat-icon {
+      box-shadow: 6px 6px 14px rgba(0, 80, 140, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.95);
+    }
+    .platform-stat-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+    [data-accent="users"] .platform-stat-icon { color: rgb(51, 128, 230); }
+    [data-accent="facilities"] .platform-stat-icon { color: rgb(26, 166, 179); }
+    [data-accent="spots"] .platform-stat-icon { color: rgb(242, 140, 26); }
+    [data-accent="cars"] .platform-stat-icon { color: rgb(52, 199, 89); }
+    .platform-stat-label {
+      flex: 1;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+    .platform-stat-value-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, var(--bg-top), var(--bg-mid));
+      box-shadow: 5px 5px 12px rgba(5, 10, 15, 0.22), -4px -4px 10px rgba(255, 255, 255, 0.05);
+    }
+    [data-theme="light"] .platform-stat-value-circle {
+      box-shadow: 5px 5px 12px rgba(0, 80, 140, 0.07), -4px -4px 10px rgba(255, 255, 255, 0.9);
+    }
+    .platform-stat-value {
+      font-size: clamp(1.75rem, 5vw, 2.35rem);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    [data-accent="users"] .platform-stat-value { color: rgb(51, 128, 230); }
+    [data-accent="facilities"] .platform-stat-value { color: rgb(26, 166, 179); }
+    [data-accent="spots"] .platform-stat-value { color: rgb(242, 140, 26); }
+    [data-accent="cars"] .platform-stat-value { color: rgb(52, 199, 89); }
+
+    .growth-map-section {
+      padding: 0 2rem 2rem;
+      max-width: 1200px;
+      margin: clamp(2.75rem, 5vw, 3.5rem) auto 0;
+      position: relative;
+      z-index: 1;
+    }
+    .growth-map-section .section-title {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.5rem;
+    }
+    .growth-map-section .section-title::before {
+      width: min(200px, 52vw);
+      height: 6px;
+      bottom: 0.35rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 18px var(--primary);
+    }
+    [data-theme="dark"] .growth-map-section .section-title::before {
+      box-shadow: 0 5px 22px rgba(0, 160, 210, 0.55);
+    }
+    .growth-map-container {
+      width: 100%;
+      height: min(420px, 55vh);
+      min-height: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px var(--shadow-dark);
+      background: var(--glass);
+    }
+    .growth-map-container.maplibregl-map {
+      font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+    }
+
+    /* نافذة النقر على العلامة — نص وخلفية حسب الثيم (داكن: أبيض، فاتح: أسود) */
+    .growth-map-container .maplibregl-popup-content {
+      font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--text-primary);
+      background: var(--bg-mid);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-popup-content {
+      color: #fff;
+      background: rgba(26, 41, 51, 0.96);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-popup-content {
+      color: #161c28;
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    .growth-map-container .maplibregl-popup-close-button {
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      padding: 4px 8px;
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-popup-close-button {
+      color: #fff;
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-popup-close-button {
+      color: #161c28;
+    }
+    .growth-map-container .maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+      border-top-color: var(--bg-mid);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+      border-top-color: rgba(26, 41, 51, 0.96);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+      border-top-color: rgba(255, 255, 255, 0.98);
+    }
+    .growth-map-container .maplibregl-popup-anchor-top .maplibregl-popup-tip {
+      border-bottom-color: var(--bg-mid);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-popup-anchor-top .maplibregl-popup-tip {
+      border-bottom-color: rgba(26, 41, 51, 0.96);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-popup-anchor-top .maplibregl-popup-tip {
+      border-bottom-color: rgba(255, 255, 255, 0.98);
+    }
+    .growth-map-container .maplibregl-popup-anchor-left .maplibregl-popup-tip {
+      border-right-color: var(--bg-mid);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-popup-anchor-left .maplibregl-popup-tip {
+      border-right-color: rgba(26, 41, 51, 0.96);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-popup-anchor-left .maplibregl-popup-tip {
+      border-right-color: rgba(255, 255, 255, 0.98);
+    }
+    .growth-map-container .maplibregl-popup-anchor-right .maplibregl-popup-tip {
+      border-left-color: var(--bg-mid);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-popup-anchor-right .maplibregl-popup-tip {
+      border-left-color: rgba(26, 41, 51, 0.96);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-popup-anchor-right .maplibregl-popup-tip {
+      border-left-color: rgba(255, 255, 255, 0.98);
+    }
+
+    /* أزرار +/− — أيقونات MapLibre سوداء افتراضياً: داكن = خلفية داكنة + invert للأيقونة، فاتح = أبيض وبدون invert */
+    .growth-map-container .maplibregl-ctrl-group {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .growth-map-container .maplibregl-ctrl-group button {
+      background-color: var(--bg-mid);
+      border-color: var(--glass-border);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-ctrl-group button {
+      background-color: rgba(26, 41, 51, 0.94);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-ctrl-group button:hover {
+      background-color: rgba(34, 52, 64, 0.98);
+    }
+    [data-theme="dark"] .growth-map-container .maplibregl-ctrl-icon {
+      filter: invert(1);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-ctrl-group button {
+      background-color: rgba(255, 255, 255, 0.96);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-ctrl-group button:hover {
+      background-color: #fff;
+    }
+    [data-theme="light"] .growth-map-container .maplibregl-ctrl-icon {
+      filter: none;
+    }
+    /* إسناد MapLibre — الحبة بيضاء من المكتبة؛ النص يبقى داكن في كل ثيمات الموقع */
+    .growth-map-container .maplibregl-ctrl-attrib,
+    .growth-map-container .maplibregl-ctrl-attrib a,
+    .growth-map-container .maplibregl-ctrl-attrib button {
+      color: rgba(22, 28, 40, 0.88) !important;
+    }
+    .growth-map-container .maplibregl-ctrl-attrib a:hover,
+    .growth-map-container .maplibregl-ctrl-attrib a:focus {
+      color: #121620 !important;
+    }
+
+    /* الخارجي: MapLibre يضع transform للموضع — لا تضع scale هنا. الداخلي: scale فقط */
+    .growth-map-container .parkinzi-map-marker-anchor {
+      display: block;
+    }
+    .growth-map-container .parkinzi-map-marker {
+      cursor: pointer;
+      user-select: none;
+      transform-origin: bottom center;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.38));
+    }
+    .growth-map-container .parkinzi-map-marker-icon-wrap {
+      position: relative;
+      width: 26px;
+      height: 26px;
+      direction: ltr;
+    }
+    .growth-map-container .parkinzi-map-marker-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      vertical-align: middle;
+    }
+    .growth-map-container .parkinzi-map-marker-badge {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      min-width: 11px;
+      height: 11px;
+      padding: 0 3px;
+      border-radius: 999px;
+      background: rgb(52, 199, 89);
+      border: 1px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+      z-index: 2;
+    }
+    .growth-map-container .parkinzi-map-marker-count {
+      font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+      font-weight: 800;
+      font-size: 0.5rem;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
     .section-title {
       text-align: center;
       font-size: 2.8rem;
@@ -1485,6 +1847,15 @@
       .features {
         padding: 3rem 1.5rem;
       }
+
+      .growth-map-section {
+        padding: 0 1.5rem 2rem;
+        margin-top: 2.75rem;
+      }
+
+      .platform-stats {
+        padding: 0.5rem 1.5rem 1.75rem;
+      }
       
       .features-grid {
         grid-template-columns: 1fr;
@@ -1573,6 +1944,15 @@
       
       .features {
         padding: 2.5rem 1rem;
+      }
+
+      .growth-map-section {
+        padding: 0 1rem 1.5rem;
+        margin-top: 2.5rem;
+      }
+
+      .platform-stats {
+        padding: 0.25rem 1rem 1.5rem;
       }
       
       .feature-card {
@@ -2196,6 +2576,56 @@
     </div>
   </section>
 
+  <section class="platform-stats" id="platform-stats" aria-labelledby="platformStatsHeading">
+    <h2 class="section-title platform-stats-heading" id="platformStatsHeading" data-i18n="statsSectionTitle">أرقام المنصة</h2>
+    <div class="platform-stats-list">
+      <div class="platform-stat-card" data-accent="users">
+        <div class="platform-stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/></svg>
+        </div>
+        <span class="platform-stat-label" data-i18n="statUsers">المستخدمون</span>
+        <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueUsers">0</span></div>
+      </div>
+      <div class="platform-stat-card" data-accent="facilities">
+        <div class="platform-stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" fill="currentColor"/></svg>
+        </div>
+        <span class="platform-stat-label" data-i18n="statFacilities">المنشآت</span>
+        <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueFacilities">0</span></div>
+      </div>
+      <div class="platform-stat-card platform-stat-card--expandable" data-accent="spots" data-stat-expand="spots">
+        <button type="button" class="platform-stat-main" id="platformStatSpotsBtn" aria-expanded="false" aria-controls="platformStatDetailSpots">
+          <div class="platform-stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 8h-3V7h3c1.1 0 2 .9 2 2s-.9 2-2 2z" fill="currentColor"/></svg>
+          </div>
+          <span class="platform-stat-label" data-i18n="statSpots">المواقف</span>
+          <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueSpots">0</span></div>
+          <span class="platform-stat-expand-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="platform-stat-detail" id="platformStatDetailSpots" hidden>
+          <div class="platform-stat-detail-row"><span data-i18n="statSpotsCharger">مع شاحن كهربائي</span><span class="platform-stat-detail-val" id="statSpotsCharger">0</span></div>
+          <div class="platform-stat-detail-row"><span data-i18n="statSpotsRegular">عادية</span><span class="platform-stat-detail-val" id="statSpotsRegular">0</span></div>
+        </div>
+      </div>
+      <div class="platform-stat-card platform-stat-card--expandable" data-accent="cars" data-stat-expand="cars">
+        <button type="button" class="platform-stat-main" id="platformStatCarsBtn" aria-expanded="false" aria-controls="platformStatDetailCars">
+          <div class="platform-stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="currentColor"/></svg>
+          </div>
+          <span class="platform-stat-label" data-i18n="statCars">السيارات</span>
+          <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueCars">0</span></div>
+          <span class="platform-stat-expand-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="platform-stat-detail" id="platformStatDetailCars" hidden>
+          <div class="platform-stat-detail-row"><span data-i18n="statFuelElectric">كهرباء</span><span class="platform-stat-detail-val" id="statCarsElectric">0</span></div>
+          <div class="platform-stat-detail-row"><span data-i18n="statFuelGasoline">بنزين</span><span class="platform-stat-detail-val" id="statCarsGasoline">0</span></div>
+          <div class="platform-stat-detail-row"><span data-i18n="statFuelDiesel">ديزل</span><span class="platform-stat-detail-val" id="statCarsDiesel">0</span></div>
+          <div class="platform-stat-detail-row"><span data-i18n="statFuelHybrid">هجين</span><span class="platform-stat-detail-val" id="statCarsHybrid">0</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="features" id="features">
     <h2 class="section-title">
       <span class="why-brand-font" data-i18n="whyPrefix">لماذا </span>
@@ -2263,6 +2693,11 @@
         <p data-i18n="p3p">حدد أسعارك وأوقاتك واكسب أكثر</p>
       </div>
     </div>
+    <section class="growth-map-section" id="coverage" aria-labelledby="growthMapHeading">
+      <h2 class="section-title" id="growthMapHeading" data-i18n="growthMapTitle">تطور تغطية التطبيق</h2>
+      <div id="growthMap" class="growth-map-container" dir="ltr" role="application" data-i18n-aria-label="growthMapAria"></div>
+    </section>
+
     <p class="pricing-note" style="text-align:center;margin-top:1rem;font-size:0.95rem;color:var(--text-secondary);"><a href="pricing.html" style="color:var(--primary);text-decoration:none;" data-i18n="pricingNote">عمولة المنصة 30% من قيمة الحجز — يتحكم مقدم الخدمة في تحديد السعر</a></p>
 
     <div class="download-section" data-has-available="false">
@@ -2363,10 +2798,22 @@
     </p>
   </footer>
 
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin=""></script>
   <script>
     const translations = {
       ar: {
         tagline: "مواقف ذكية في جيبك",
+        statsSectionTitle: "أرقام المنصة",
+        statUsers: "المستخدمون",
+        statFacilities: "المنشآت",
+        statSpots: "المواقف",
+        statCars: "السيارات",
+        statSpotsRegular: "عادية",
+        statSpotsCharger: "مع شاحن كهربائي",
+        statFuelElectric: "كهرباء",
+        statFuelGasoline: "بنزين",
+        statFuelDiesel: "ديزل",
+        statFuelHybrid: "هجين",
         download: "حمّل التطبيق",
         downloadOn: "التحميل من",
         getItOn: "احصل عليه من",
@@ -2431,10 +2878,25 @@
         waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق لتبدأ الربح.",
         waitlistError: "حدث خطأ، حاول مرة أخرى.",
         waitlistExists: "هذا البريد مسجّل مسبقاً.",
-        availableNow: "متوفر حالياً · جرب الآن"
+        availableNow: "متوفر حالياً · جرب الآن",
+        growthMapTitle: "تطور تغطية التطبيق",
+        growthMapAria: "خريطة تفاعلية لمواقع التغطية",
+        growthMapPopupDb: "{count} مواقف",
+        growthMapPopupDbNamed: "{label} — {count} مواقف"
       },
       en: {
         tagline: "Smart parking in your pocket",
+        statsSectionTitle: "Platform numbers",
+        statUsers: "Users",
+        statFacilities: "Facilities",
+        statSpots: "Parking spots",
+        statCars: "Cars",
+        statSpotsRegular: "Standard",
+        statSpotsCharger: "With EV charger",
+        statFuelElectric: "Electric",
+        statFuelGasoline: "Gasoline",
+        statFuelDiesel: "Diesel",
+        statFuelHybrid: "Hybrid",
         download: "Download App",
         downloadOn: "Download on the",
         getItOn: "GET IT ON",
@@ -2499,10 +2961,25 @@
         waitlistSuccess: "You're signed up! We'll contact you at launch to start earning.",
         waitlistError: "Something went wrong. Please try again.",
         waitlistExists: "This email is already registered.",
-        availableNow: "Available now · Try it"
+        availableNow: "Available now · Try it",
+        growthMapTitle: "App coverage growth",
+        growthMapAria: "Interactive map of coverage locations",
+        growthMapPopupDb: "{count} spots",
+        growthMapPopupDbNamed: "{label} — {count} spots"
       },
       fr: {
         tagline: "Stationnement intelligent dans votre poche",
+        statsSectionTitle: "Chiffres de la plateforme",
+        statUsers: "Utilisateurs",
+        statFacilities: "Établissements",
+        statSpots: "Places",
+        statCars: "Véhicules",
+        statSpotsRegular: "Standard",
+        statSpotsCharger: "Avec borne électrique",
+        statFuelElectric: "Électrique",
+        statFuelGasoline: "Essence",
+        statFuelDiesel: "Diesel",
+        statFuelHybrid: "Hybride",
         download: "Télécharger l'app",
         comingSoon: "Bientôt disponible",
         downloadIOS: "App Store",
@@ -2568,10 +3045,25 @@
         waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement pour commencer.",
         waitlistError: "Une erreur s'est produite. Réessayez.",
         waitlistExists: "Cet email est déjà enregistré.",
-        availableNow: "Disponible · Essayez"
+        availableNow: "Disponible · Essayez",
+        growthMapTitle: "Évolution de la couverture de l’app",
+        growthMapAria: "Carte interactive des emplacements couverts",
+        growthMapPopupDb: "{count} places",
+        growthMapPopupDbNamed: "{label} — {count} places"
       },
       ur: {
         tagline: "ذہین پارکنگ آپ کی جیب میں",
+        statsSectionTitle: "پلیٹ فارم کے اعداد",
+        statUsers: "صارفین",
+        statFacilities: "ادارے",
+        statSpots: "پارکنگ کی جگہیں",
+        statCars: "گاڑیاں",
+        statSpotsRegular: "عام",
+        statSpotsCharger: "ای وی چارجر کے ساتھ",
+        statFuelElectric: "بجلی",
+        statFuelGasoline: "پٹرول",
+        statFuelDiesel: "ڈیزل",
+        statFuelHybrid: "ہائبرڈ",
         download: "ایپ ڈاؤن لوڈ کریں",
         comingSoon: "جلد آ رہا ہے",
         downloadIOS: "App Store",
@@ -2636,9 +3128,193 @@
         waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم کمائی شروع کرنے کے لیے رابطہ کریں گے۔",
         waitlistError: "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
         waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔",
-        availableNow: "دستیاب · آزمائیں"
+        availableNow: "دستیاب · آزمائیں",
+        growthMapTitle: "ایپ کی کوریج میں ترقی",
+        growthMapAria: "کوریج کی جگہوں کی انٹرایکٹو نقشہ",
+        growthMapPopupDb: "{count} مواقف",
+        growthMapPopupDbNamed: "{label} — {count} مواقف"
       }
     };
+
+    /** يُقرأ من meta[name="supabase-url"] و meta[name="supabase-anon-key"] أو من window قبل التحميل. نفس القيم في التطبيق (SupabaseClient). */
+    const SUPABASE_URL = (function () {
+      const meta = document.querySelector('meta[name="supabase-url"]');
+      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
+      if (fromMeta) return fromMeta.replace(/\/$/, "");
+      if (typeof window !== "undefined" && window.__PARKINZI_SUPABASE_URL__) {
+        return String(window.__PARKINZI_SUPABASE_URL__).trim().replace(/\/$/, "");
+      }
+      return "https://brqsvtobletrlkpkhooc.supabase.co";
+    })();
+
+    const SUPABASE_ANON_KEY = (function () {
+      const meta = document.querySelector('meta[name="supabase-anon-key"]');
+      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
+      if (fromMeta) return fromMeta;
+      if (typeof window !== "undefined" && window.__PARKINZI_SUPABASE_ANON_KEY__) {
+        return String(window.__PARKINZI_SUPABASE_ANON_KEY__).trim();
+      }
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
+    })();
+
+    /** PostgREST للنماذج/الخريطة (بدون جلسة). */
+    const supabaseRestHeaders = {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: "Bearer " + SUPABASE_ANON_KEY
+    };
+
+    let supabaseBrowserClient = null;
+    async function getSupabase() {
+      if (supabaseBrowserClient) return supabaseBrowserClient;
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+      try {
+        const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+        supabaseBrowserClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+        });
+        return supabaseBrowserClient;
+      } catch {
+        return null;
+      }
+    }
+
+    async function fetchTableCountExact(supabase, tableName) {
+      try {
+        const { count, error } = await supabase
+          .from(tableName)
+          .select("*", { count: "exact", head: true });
+        if (error) return null;
+        return typeof count === "number" ? count : 0;
+      } catch {
+        return null;
+      }
+    }
+
+    function parseContentRangeTotal(contentRange) {
+      if (!contentRange) return null;
+      const last = contentRange.trim().split("/").pop();
+      if (!last || last === "*") return null;
+      const n = Number(last);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    async function restTableCount(table) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=id`, {
+          headers: {
+            ...supabaseRestHeaders,
+            Prefer: "count=exact",
+            Range: "0-0"
+          }
+        });
+        if (!res.ok) return null;
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
+    }
+
+    /** عدد مواقف has_electric_charger = true — نفس عمود التطبيق */
+    async function fetchParkingSpotsChargerCount(supabase) {
+      try {
+        if (supabase) {
+          const { count, error } = await supabase
+            .from("parking_spots")
+            .select("*", { count: "exact", head: true })
+            .eq("has_electric_charger", true);
+          if (!error && typeof count === "number") return count;
+        }
+      } catch {}
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/parking_spots?select=id&has_electric_charger=eq.true`,
+          {
+            headers: {
+              ...supabaseRestHeaders,
+              Prefer: "count=exact",
+              Range: "0-0"
+            }
+          }
+        );
+        if (!res.ok) return null;
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
+    }
+
+    /** نتيجة RPC get_fuel_type_stats: [{ fuel_type, total_count }, ...] — نفس منطق التطبيق */
+    function fuelStatsFromRpcRows(rows) {
+      const out = { electric: 0, gasoline: 0, diesel: 0, hybrid: 0 };
+      const safe = (v) => {
+        const n = Number(v);
+        return Number.isFinite(n) && n >= 0 ? Math.floor(n) : 0;
+      };
+      if (!Array.isArray(rows)) return out;
+      rows.forEach((row) => {
+        const key = String(row.fuel_type || "").toLowerCase().trim();
+        const n = safe(row.total_count);
+        if (key === "electric" || key === "ev") out.electric += n;
+        else if (key === "gasoline" || key === "petrol") out.gasoline += n;
+        else if (key === "diesel") out.diesel += n;
+        else if (key === "hybrid" || key === "plug_in_hybrid" || key === "phev") out.hybrid += n;
+      });
+      return out;
+    }
+
+    async function fetchFuelTypeStats(supabase) {
+      try {
+        if (supabase) {
+          const { data, error } = await supabase.rpc("get_fuel_type_stats");
+          if (!error && Array.isArray(data)) return data;
+        }
+      } catch {}
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_fuel_type_stats`, {
+          method: "POST",
+          headers: {
+            ...supabaseRestHeaders,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: "{}"
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return Array.isArray(data) ? data : null;
+      } catch {
+        return null;
+      }
+    }
+
+    /** نفس مفتاح التطبيق؛ يُحمّل من meta[name="maptiler-api-key"] في أعلى الصفحة (أو window.__PARKINZI_MAPTILER_KEY__ قبل هذا السكربت). */
+    const MAPTILER_API_KEY = (function () {
+      const meta = document.querySelector('meta[name="maptiler-api-key"]');
+      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
+      if (fromMeta) return fromMeta;
+      if (typeof window !== "undefined" && window.__PARKINZI_MAPTILER_KEY__) {
+        return String(window.__PARKINZI_MAPTILER_KEY__).trim();
+      }
+      return "";
+    })();
+
+    const MAPLIBRE_DEMOTILES_STYLE = "https://demotiles.maplibre.org/style.json";
+
+    function hasMapTilerKey() {
+      return String(MAPTILER_API_KEY || "").trim().length > 0;
+    }
+
+    /** مع مفتاح MapTiler: نفس ثيم التطبيق. بدون مفتاح: نمط MapLibre الرسمي (demotiles) — بدون Carto؛ التكبير محدود حتى zoom 6. */
+    function getParkinziMapStyleUrl() {
+      const k = String(MAPTILER_API_KEY || "").trim();
+      const isDark = document.documentElement.dataset.theme !== "light";
+      if (k) {
+        return isDark
+          ? "https://api.maptiler.com/maps/basic-v2-dark/style.json?key=" + encodeURIComponent(k)
+          : "https://api.maptiler.com/maps/basic-v2/style.json?key=" + encodeURIComponent(k);
+      }
+      return MAPLIBRE_DEMOTILES_STYLE;
+    }
 
     const lang = () => localStorage.getItem("parkinzi_lang") || "ar";
     const theme = () => localStorage.getItem("parkinzi_theme") || "dark";
@@ -2668,6 +3344,11 @@
         }
       });
 
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(el => {
+        const k = el.getAttribute("data-i18n-aria-label");
+        if (k && translations[l] && translations[l][k]) el.setAttribute("aria-label", translations[l][k]);
+      });
+
       document.getElementById("currentLangDisplay").textContent = langNames[l] || l;
       ["ar", "en", "fr", "ur"].forEach(code => {
         const el = document.getElementById("check-" + code);
@@ -2682,6 +3363,9 @@
 
       const wlInput = document.getElementById("waitlistEmail");
       if (wlInput && translations[l]?.waitlistPlaceholder) wlInput.placeholder = translations[l].waitlistPlaceholder;
+
+      if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
+      if (typeof window.__parkinziPlatformStatsRefresh === "function") window.__parkinziPlatformStatsRefresh();
     }
 
     function setTheme(t) {
@@ -2714,6 +3398,9 @@
       // Footer & chat header: خلفية داكنة → شعار أبيض
       const footerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
       document.querySelectorAll("[data-brand-logo-footer], [data-brand-logo-header]").forEach(img => { img.src = footerLogoSrc; });
+
+      if (typeof window.__parkinziGrowthMapApplyTheme === "function") window.__parkinziGrowthMapApplyTheme();
+      if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
     }
 
     // Language Menu Toggle
@@ -2763,7 +3450,388 @@
     // Initialize
     setLang(lang());
     setTheme(theme());
-    
+
+    let cachedPlatformStats = null;
+
+    function formatPlatformStatDisplay(n) {
+      if (n == null || !Number.isFinite(Number(n)) || Number(n) < 0) return "0";
+      const v = Math.floor(Number(n));
+      const l = lang();
+      const loc = (l === "ar" || l === "ur") ? "ar-SA" : l === "fr" ? "fr-FR" : "en-US";
+      try {
+        return new Intl.NumberFormat(loc, { numberingSystem: "latn" }).format(v);
+      } catch {
+        return String(v);
+      }
+    }
+
+    function applyPlatformStatsToDom(data) {
+      const pairs = [
+        ["statValueUsers", "users"],
+        ["statValueFacilities", "facilities"],
+        ["statValueSpots", "spots"],
+        ["statSpotsRegular", "spotsRegular"],
+        ["statSpotsCharger", "spotsCharger"],
+        ["statValueCars", "cars"],
+        ["statCarsElectric", "carsElectric"],
+        ["statCarsGasoline", "carsGasoline"],
+        ["statCarsDiesel", "carsDiesel"],
+        ["statCarsHybrid", "carsHybrid"]
+      ];
+      pairs.forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (!data || data[key] == null) {
+          el.textContent = "0";
+          return;
+        }
+        el.textContent = formatPlatformStatDisplay(data[key]);
+      });
+    }
+
+    window.__parkinziPlatformStatsRefresh = function () {
+      applyPlatformStatsToDom(cachedPlatformStats);
+    };
+
+    async function loadPlatformStats() {
+      const zeroStats = {
+        users: 0,
+        facilities: 0,
+        spots: 0,
+        spotsRegular: 0,
+        spotsCharger: 0,
+        cars: 0,
+        carsElectric: 0,
+        carsGasoline: 0,
+        carsDiesel: 0,
+        carsHybrid: 0
+      };
+      const safeCount = (value) =>
+        value !== null && Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
+
+      try {
+        const supabase = await getSupabase();
+        if (!supabase) {
+          const [fuelRowsOnly, spotsTotalRest, spotsChargerRest] = await Promise.all([
+            fetchFuelTypeStats(null),
+            restTableCount("parking_spots"),
+            fetchParkingSpotsChargerCount(null)
+          ]);
+          const fuelOnly = fuelStatsFromRpcRows(fuelRowsOnly);
+          const totalSpots = safeCount(spotsTotalRest);
+          const ch = spotsChargerRest === null ? 0 : safeCount(spotsChargerRest);
+          cachedPlatformStats = {
+            ...zeroStats,
+            spots: totalSpots,
+            spotsCharger: ch,
+            spotsRegular: Math.max(0, totalSpots - ch),
+            carsElectric: fuelOnly.electric,
+            carsGasoline: fuelOnly.gasoline,
+            carsDiesel: fuelOnly.diesel,
+            carsHybrid: fuelOnly.hybrid
+          };
+          applyPlatformStatsToDom(cachedPlatformStats);
+          return;
+        }
+
+        const [usersCount, facilitiesCount, spotsCount, carsCount, fuelRows, spotsChargerRaw] =
+          await Promise.all([
+            fetchTableCountExact(supabase, "profiles"),
+            fetchTableCountExact(supabase, "facilities"),
+            fetchTableCountExact(supabase, "parking_spots"),
+            fetchTableCountExact(supabase, "user_cars"),
+            fetchFuelTypeStats(supabase),
+            fetchParkingSpotsChargerCount(supabase)
+          ]);
+
+        const fuel = fuelStatsFromRpcRows(fuelRows);
+        const totalSpots = safeCount(spotsCount);
+        const ch = spotsChargerRaw === null ? 0 : safeCount(spotsChargerRaw);
+
+        cachedPlatformStats = {
+          users: safeCount(usersCount),
+          facilities: safeCount(facilitiesCount),
+          spots: totalSpots,
+          spotsRegular: Math.max(0, totalSpots - ch),
+          spotsCharger: ch,
+          cars: safeCount(carsCount),
+          carsElectric: fuel.electric,
+          carsGasoline: fuel.gasoline,
+          carsDiesel: fuel.diesel,
+          carsHybrid: fuel.hybrid
+        };
+        applyPlatformStatsToDom(cachedPlatformStats);
+      } catch {
+        cachedPlatformStats = zeroStats;
+        applyPlatformStatsToDom(cachedPlatformStats);
+      }
+    }
+    loadPlatformStats();
+
+    (function initPlatformStatExpandToggles() {
+      function wire(btnId, detailId) {
+        const btn = document.getElementById(btnId);
+        const detail = document.getElementById(detailId);
+        const card = btn && btn.closest(".platform-stat-card");
+        if (!btn || !detail) return;
+        btn.addEventListener("click", () => {
+          detail.hidden = !detail.hidden;
+          const open = !detail.hidden;
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          if (card) card.classList.toggle("is-expanded", open);
+        });
+      }
+      wire("platformStatSpotsBtn", "platformStatDetailSpots");
+      wire("platformStatCarsBtn", "platformStatDetailCars");
+    })();
+
+    /** أعمدة من جدول parking_spots — أضف spot_count في النهاية إذا كان العمود موجوداً في Supabase */
+    const PARKING_MAP_SELECT = "latitude,longitude,spot_name,national_address,spot_number";
+
+    /** حدود المملكة العربية السعودية تقريباً: جنوب غرب، شمال شرق [lng, lat] */
+    const SAUDI_ARABIA_BOUNDS = [[34.5, 16.0], [55.7, 32.25]];
+
+    /**
+     * الرقم على الشارة: spot_count (عدد المواقف) إن وُجد في الصف؛
+     * وإلا رقم الموقف spot_number؛ وإلا 1.
+     */
+    function parkingSpotBadgeValue(row) {
+      const sc = row.spot_count != null ? Number(row.spot_count) : NaN;
+      if (Number.isFinite(sc) && sc > 0) return Math.floor(sc);
+
+      const cnt = row.count != null ? Number(row.count) : NaN;
+      if (Number.isFinite(cnt) && cnt > 0) return Math.floor(cnt);
+
+      if (row.spot_number != null && row.spot_number !== "") {
+        const s = String(row.spot_number).trim();
+        const asNum = Number(s);
+        if (Number.isFinite(asNum) && asNum > 0) return Math.floor(asNum);
+        const m = s.match(/\d+/);
+        if (m) {
+          const v = parseInt(m[0], 10);
+          if (Number.isFinite(v) && v > 0) return v;
+        }
+      }
+      return 1;
+    }
+
+    function normalizeParkingRow(row) {
+      const lat = row.lat != null ? row.lat : row.latitude;
+      const lng = row.lng != null ? row.lng : (row.longitude != null ? row.longitude : row.lon);
+      if (lat == null || lng == null || Number.isNaN(Number(lat)) || Number.isNaN(Number(lng))) return null;
+      const spot_count = parkingSpotBadgeValue(row);
+      const label = String(
+        row.label ?? row.spot_name ?? row.name ?? row.national_address ?? row.area_name ?? ""
+      ).trim();
+      return { lat: Number(lat), lng: Number(lng), spot_count, label };
+    }
+
+    function parkingPopupText(row, tr) {
+      if (!tr) return "";
+      const c = row.spot_count;
+      if (row.label) {
+        return (tr.growthMapPopupDbNamed || "")
+          .replace("{label}", row.label)
+          .replace("{count}", String(c));
+      }
+      return (tr.growthMapPopupDb || "").replace("{count}", String(c));
+    }
+
+    /** نفس منطق الـ hero: داكن → parkinzi-logo-dark (رمز فاتح)، فاتح → parkinzi-logo-light (رمز داكن) */
+    function parkinziMapMarkerLogoSrc() {
+      return document.documentElement.dataset.theme === "light"
+        ? "parkinzi-logo-light.png"
+        : "parkinzi-logo-dark.png";
+    }
+
+    function createParkinziMapMarkerElement(row) {
+      const anchor = document.createElement("div");
+      anchor.className = "parkinzi-map-marker-anchor";
+      anchor.setAttribute("aria-hidden", "true");
+
+      const wrap = document.createElement("div");
+      wrap.className = "parkinzi-map-marker parkinzi-map-marker-scale-inner";
+
+      const iconWrap = document.createElement("div");
+      iconWrap.className = "parkinzi-map-marker-icon-wrap";
+
+      const img = document.createElement("img");
+      img.className = "parkinzi-map-marker-img";
+      img.src = parkinziMapMarkerLogoSrc();
+      img.alt = "";
+      img.decoding = "async";
+      img.loading = "lazy";
+
+      const badge = document.createElement("div");
+      badge.className = "parkinzi-map-marker-badge";
+      const countEl = document.createElement("span");
+      countEl.className = "parkinzi-map-marker-count";
+      countEl.textContent = String(row.spot_count != null ? row.spot_count : 1);
+      badge.appendChild(countEl);
+
+      iconWrap.appendChild(img);
+      iconWrap.appendChild(badge);
+      wrap.appendChild(iconWrap);
+      anchor.appendChild(wrap);
+      return anchor;
+    }
+
+    async function fetchParkingMapRows() {
+      try {
+        const cols = PARKING_MAP_SELECT.split(",").map((c) => c.trim()).join(",");
+        const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(cols)}`;
+        const res = await fetch(url, {
+          headers: { ...supabaseRestHeaders, Accept: "application/json" }
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return Array.isArray(data) ? data : null;
+      } catch {
+        return null;
+      }
+    }
+
+    /** عند zoom out يصغر الرمز قليلاً؛ عند zoom in يقترب من الحجم الكامل (منطقي وليس بحجم ثابت يغطي الخريطة) */
+    function parkinziMapMarkerZoomScale(zoom, mapMaxZoom) {
+      const maxZ = Math.max(Number(mapMaxZoom) || 16, 4);
+      const z = Number(zoom) || 0;
+      const sMin = 0.78;
+      const sMax = 1;
+      const t = Math.max(0, Math.min(1, z / maxZ));
+      return sMin + (sMax - sMin) * t;
+    }
+
+    async function initGrowthMap() {
+      const el = document.getElementById("growthMap");
+      if (!el || typeof maplibregl === "undefined") return;
+
+      let dbRows = null;
+      try {
+        dbRows = await fetchParkingMapRows();
+      } catch (e) {
+        dbRows = null;
+      }
+      const normalized = dbRows
+        ? dbRows.map(normalizeParkingRow).filter(Boolean)
+        : [];
+      const useDb = normalized.length > 0;
+
+      const useMapTiler = hasMapTilerKey();
+      const map = new maplibregl.Map({
+        container: el,
+        style: getParkinziMapStyleUrl(),
+        bounds: SAUDI_ARABIA_BOUNDS,
+        fitBoundsOptions: { padding: 32, maxZoom: useMapTiler ? 8 : 6 },
+        minZoom: 0,
+        maxZoom: useMapTiler ? 22 : 6,
+        scrollZoom: false,
+        attributionControl: false
+      });
+      map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
+      map.addControl(
+        new maplibregl.NavigationControl({ showCompass: false, visualizePitch: false }),
+        "top-right"
+      );
+      const markers = [];
+      const t0 = translations[lang()] || {};
+
+      function updateParkinziMarkerZoomScales() {
+        if (!markers.length) return;
+        const z = map.getZoom();
+        const maxZ = map.getMaxZoom();
+        const s = parkinziMapMarkerZoomScale(z, maxZ);
+        markers.forEach((m) => {
+          const node = m.getElement && m.getElement();
+          const inner = node && node.querySelector(".parkinzi-map-marker-scale-inner");
+          if (inner) {
+            inner.style.transformOrigin = "bottom center";
+            inner.style.transform = `scale(${s})`;
+          }
+        });
+      }
+
+      if (useDb) {
+        normalized.forEach((row) => {
+          const popup = new maplibregl.Popup({ offset: 14 });
+          popup.setText(parkingPopupText(row, t0));
+          const markerEl = createParkinziMapMarkerElement(row);
+          const marker = new maplibregl.Marker({ element: markerEl, anchor: "bottom" })
+            .setLngLat([row.lng, row.lat])
+            .setPopup(popup)
+            .addTo(map);
+          marker._parkinziDbRow = row;
+          markers.push(marker);
+        });
+      }
+
+      map.on("zoom", updateParkinziMarkerZoomScales);
+      map.on("zoomend", updateParkinziMarkerZoomScales);
+
+      map.on("load", () => {
+        if (!useMapTiler) {
+          try {
+            if (map.getLayer("background")) {
+              map.setPaintProperty("background", "background-color", "#1a2933");
+            }
+          } catch (e) {}
+        }
+        /* افتراضي: إظهار كامل المملكة (نفس حدود SAUDI_ARABIA_BOUNDS)، وليس تكبيراً على المواقع فقط */
+        const saPadding = 48;
+        const saMaxZoom = useMapTiler ? 8 : 6;
+        map.fitBounds(SAUDI_ARABIA_BOUNDS, {
+          padding: saPadding,
+          maxZoom: saMaxZoom,
+          duration: 0
+        });
+        requestAnimationFrame(() => updateParkinziMarkerZoomScales());
+      });
+
+      window.__parkinziGrowthMapRefresh = function () {
+        const tr = translations[lang()] || {};
+        const logoSrc = parkinziMapMarkerLogoSrc();
+        markers.forEach((m) => {
+          const p = m.getPopup();
+          if (!p || !m._parkinziDbRow) return;
+          p.setText(parkingPopupText(m._parkinziDbRow, tr));
+          const el = m.getElement && m.getElement();
+          if (el) {
+            const markerImg = el.querySelector(".parkinzi-map-marker-img");
+            if (markerImg) markerImg.src = logoSrc;
+            const countEl = el.querySelector(".parkinzi-map-marker-count");
+            if (countEl && m._parkinziDbRow.spot_count != null) {
+              countEl.textContent = String(m._parkinziDbRow.spot_count);
+            }
+          }
+        });
+        map.resize();
+        updateParkinziMarkerZoomScales();
+      };
+      setTimeout(() => map.resize(), 400);
+      window.addEventListener("resize", () => map.resize());
+
+      let growthMapAppliedUiTheme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+      window.__parkinziGrowthMapApplyTheme = function () {
+        if (!hasMapTilerKey()) return;
+        const ui = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+        if (ui === growthMapAppliedUiTheme) return;
+        growthMapAppliedUiTheme = ui;
+        map.setStyle(getParkinziMapStyleUrl());
+        map.once("style.load", () => {
+          map.resize();
+          if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
+        });
+      };
+    }
+
+    /** عربي/عبرية على الخريطة: بدون هذا يظهر النص منفصلاً ومعكوساً (حروف “غبية”). */
+    if (typeof maplibregl !== "undefined" && maplibregl.setRTLTextPlugin) {
+      maplibregl.setRTLTextPlugin(
+        "https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.3.0/dist/mapbox-gl-rtl-text.js",
+        true
+      );
+    }
+    initGrowthMap();
+
     // Detect if device is mobile
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
     
@@ -2875,12 +3943,6 @@
       lastTouchEnd = now;
     }, false);
     
-    // ============================================
-    // Chat Bot - Supabase Integration
-    // ============================================
-    const SUPABASE_URL = "https://brqsvtobletrlkpkhooc.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
-    
     const chatMessages = document.getElementById("chatMessages");
     const chatInput = document.getElementById("chatInput");
     const chatSendBtn = document.getElementById("chatSendBtn");
@@ -2954,11 +4016,6 @@
       setInputPlaceholder(t.chatTypeOrSelect);
     }
     
-    /* Waitlist - إرسال إلى جدول waitlist في Supabase. أنشئ الجدول أولاً:
-       CREATE TABLE waitlist (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), email text UNIQUE NOT NULL, created_at timestamptz DEFAULT now());
-       ALTER TABLE waitlist ENABLE ROW LEVEL SECURITY;
-       CREATE POLICY "Allow anonymous insert" ON waitlist FOR INSERT TO anon WITH CHECK (true);
-    */
     const waitlistForm = document.getElementById("waitlistForm");
     const waitlistEmail = document.getElementById("waitlistEmail");
     const waitlistBtn = document.getElementById("waitlistBtn");
@@ -2976,9 +4033,8 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "apikey": SUPABASE_ANON_KEY,
-              "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-              "Prefer": "return=minimal"
+              ...supabaseRestHeaders,
+              Prefer: "return=minimal"
             },
             body: JSON.stringify({ email })
           });
@@ -2991,7 +4047,7 @@
             waitlistMsg.textContent = t.waitlistExists;
             waitlistMsg.className = "waitlist-msg success";
             waitlistMsg.style.display = "block";
-          } else throw new Error("Failed");
+          } else throw new Error("waitlist");
         } catch (err) {
           waitlistMsg.textContent = t.waitlistError;
           waitlistMsg.className = "waitlist-msg error";
@@ -3002,7 +4058,6 @@
       });
     }
 
-    /* للتنبيه على support@parkinzi.com عند استخدام الدردشة: أضف Database Webhook في Supabase على contact_messages (INSERT) أو Edge Function يرسل بريداً */
     async function sendToSupabase() {
       chatSendBtn.disabled = true;
       chatSendBtn.classList.add("sending");
@@ -3012,9 +4067,8 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-            "Prefer": "return=minimal"
+            ...supabaseRestHeaders,
+            Prefer: "return=minimal"
           },
           body: JSON.stringify(chatState.data)
         });
@@ -3025,7 +4079,7 @@
           chatState.step = "done";
           chatInput.placeholder = t.chatDone || "تم إرسال رسالتك";
           chatInput.disabled = true;
-        } else throw new Error("Failed");
+        } else throw new Error("contact");
       } catch (err) {
         const botMsgs = chatMessages.querySelectorAll(".chat-msg.bot");
         if (botMsgs.length) botMsgs[botMsgs.length - 1].remove();
@@ -3104,6 +4158,12 @@
         chatWidget.classList.remove("open");
       }
     });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
