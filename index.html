@@ -991,6 +991,8 @@
       color: var(--text-primary);
       min-width: 2ch;
       text-align: end;
+      display: inline-block;
+      transform-origin: center center;
     }
     [data-theme="light"] .platform-stat-card {
       background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 255, 0.92));
@@ -1069,6 +1071,14 @@
     }
     .platform-stat-detail-val.platform-stat-value--pulse {
       animation: platformStatValuePulse 0.38s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+    }
+    .platform-stat-value.platform-stat-value--counting,
+    .platform-stat-detail-val.platform-stat-value--counting {
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .platform-stat-value.platform-stat-value--counting,
+    [data-theme="light"] .platform-stat-detail-val.platform-stat-value--counting {
+      text-shadow: 0 0 16px rgba(0, 100, 180, 0.08);
     }
     [data-accent="users"] .platform-stat-value { color: rgb(51, 128, 230); }
     [data-accent="facilities"] .platform-stat-value { color: rgb(26, 166, 179); }
@@ -3787,8 +3797,87 @@
       }
     }
 
+    function parsePlatformStatNumberFromText(s) {
+      if (s == null || s === "") return 0;
+      const digits = String(s).replace(/\D/g, "");
+      if (!digits) return 0;
+      const n = parseInt(digits, 10);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    const platformStatAnimGeneration = new Map();
+
+    function animatePlatformStatElementToNumber(el, toNum) {
+      const id = el.id;
+      if (!id) {
+        el.textContent = formatPlatformStatDisplay(toNum);
+        return;
+      }
+      let gen = platformStatAnimGeneration.get(id) || 0;
+      gen += 1;
+      platformStatAnimGeneration.set(id, gen);
+
+      const fromNum = parsePlatformStatNumberFromText(el.textContent);
+      if (fromNum === toNum) {
+        el.textContent = formatPlatformStatDisplay(toNum);
+        el.classList.remove("platform-stat-value--counting");
+        return;
+      }
+
+      el.classList.add("platform-stat-value--counting");
+      const delta = Math.abs(toNum - fromNum);
+      const dir = toNum > fromNum ? 1 : -1;
+
+      /* فرق صغير: عدّاد خطوة بخطوة (إحساس سينمائي واضح) */
+      if (delta > 0 && delta <= 80) {
+        let cur = fromNum;
+        const msPerStep = Math.min(48, Math.max(22, Math.floor(560 / delta)));
+        function stepOnce() {
+          if (platformStatAnimGeneration.get(id) !== gen) return;
+          cur += dir;
+          el.textContent = formatPlatformStatDisplay(cur);
+          if (cur === toNum) {
+            if (platformStatAnimGeneration.get(id) === gen) {
+              el.classList.remove("platform-stat-value--counting");
+              platformStatAnimGeneration.delete(id);
+            }
+            return;
+          }
+          window.setTimeout(stepOnce, msPerStep);
+        }
+        window.setTimeout(stepOnce, msPerStep);
+        return;
+      }
+
+      const duration = Math.min(1200, Math.max(340, Math.pow(delta, 0.42) * 32));
+      const t0 = performance.now();
+
+      function easeOutQuint(t) {
+        return 1 - Math.pow(1 - t, 5);
+      }
+
+      function tick(now) {
+        if (platformStatAnimGeneration.get(id) !== gen) return;
+        const u = Math.min(1, (now - t0) / duration);
+        const e = easeOutQuint(u);
+        const cur = Math.round(fromNum + (toNum - fromNum) * e);
+        el.textContent = formatPlatformStatDisplay(cur);
+        if (u < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = formatPlatformStatDisplay(toNum);
+          if (platformStatAnimGeneration.get(id) === gen) {
+            el.classList.remove("platform-stat-value--counting");
+            platformStatAnimGeneration.delete(id);
+          }
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
     function applyPlatformStatsToDom(data, opts) {
       const flash = opts && opts.flash;
+      const animateNumbers = opts && opts.animateNumbers;
       const pairs = [
         ["statValueUsers", "users"],
         ["statValueFacilities", "facilities"],
@@ -3804,14 +3893,21 @@
       pairs.forEach(([id, key]) => {
         const el = document.getElementById(id);
         if (!el) return;
-        const next =
-          !data || data[key] == null ? "0" : formatPlatformStatDisplay(data[key]);
-        if (flash && el.textContent !== next) {
+        const toNum =
+          !data || data[key] == null ? 0 : Math.floor(Number(data[key]));
+        const safeTo = Number.isFinite(toNum) && toNum >= 0 ? toNum : 0;
+        const nextText = formatPlatformStatDisplay(safeTo);
+        if (flash && el.textContent !== nextText) {
           el.classList.remove("platform-stat-value--pulse");
           void el.offsetWidth;
           el.classList.add("platform-stat-value--pulse");
         }
-        el.textContent = next;
+        if (animateNumbers) {
+          animatePlatformStatElementToNumber(el, safeTo);
+        } else {
+          el.textContent = nextText;
+          el.classList.remove("platform-stat-value--counting");
+        }
       });
     }
 
@@ -3826,7 +3922,7 @@
     async function applyPlatformStatsForTimeline(cutoffMs, sliderPosition, timelineSliderSteps, spanMs) {
       if (!cachedPlatformStats) return;
       if (spanMs <= 0 || sliderPosition >= timelineSliderSteps) {
-        applyPlatformStatsToDom(cachedPlatformStats);
+        applyPlatformStatsToDom(cachedPlatformStats, { animateNumbers: true });
         return;
       }
       const [u, fac, spots, cars, ch] = await Promise.all([
@@ -3862,7 +3958,7 @@
           carsDiesel: Math.round((base.carsDiesel || 0) * ratio),
           carsHybrid: Math.round((base.carsHybrid || 0) * ratio)
         },
-        { flash: true }
+        { flash: true, animateNumbers: true }
       );
     }
 
@@ -4057,7 +4153,7 @@
       badge.className = "parkinzi-map-marker-badge";
       const countEl = document.createElement("span");
       countEl.className = "parkinzi-map-marker-count";
-      countEl.textContent = String(row.spot_count != null ? row.spot_count : 1);
+      countEl.textContent = "1";
       badge.appendChild(countEl);
 
       iconWrap.appendChild(img);
@@ -4216,14 +4312,74 @@
       let growthTimelinePendingCutoffMs = null;
       let lastTimelineCutoffMs = null;
 
+      const mapMarkerBadgeAnimGen = new WeakMap();
+
+      function bumpMapMarkerBadgeAnimGen(countEl) {
+        const n = (mapMarkerBadgeAnimGen.get(countEl) || 0) + 1;
+        mapMarkerBadgeAnimGen.set(countEl, n);
+        return n;
+      }
+
+      /** عند ظهور العلامة: الرقم يبدأ من 1 ويصل للهدف (مثل 3) — وليس قفزة فورية */
+      function animateMapMarkerBadgeCountTo(countEl, targetNum) {
+        const t = Math.max(1, Math.floor(Number(targetNum)) || 1);
+        const gen = bumpMapMarkerBadgeAnimGen(countEl);
+        if (t <= 1) {
+          countEl.textContent = "1";
+          return;
+        }
+        if (t <= 48) {
+          let cur = 1;
+          countEl.textContent = "1";
+          const ms = Math.min(44, Math.max(18, Math.floor(520 / t)));
+          function step() {
+            if (mapMarkerBadgeAnimGen.get(countEl) !== gen) return;
+            if (cur >= t) {
+              countEl.textContent = String(t);
+              return;
+            }
+            cur += 1;
+            countEl.textContent = String(cur);
+            if (cur < t) window.setTimeout(step, ms);
+          }
+          window.setTimeout(step, ms);
+          return;
+        }
+        const t0 = performance.now();
+        const dur = Math.min(950, 260 + Math.sqrt(t) * 20);
+        function easeOutCubic(x) {
+          return 1 - Math.pow(1 - x, 3);
+        }
+        function tick(now) {
+          if (mapMarkerBadgeAnimGen.get(countEl) !== gen) return;
+          const u = Math.min(1, (now - t0) / dur);
+          const cur = Math.max(1, Math.round(1 + (t - 1) * easeOutCubic(u)));
+          countEl.textContent = String(cur);
+          if (u < 1) requestAnimationFrame(tick);
+          else countEl.textContent = String(t);
+        }
+        countEl.textContent = "1";
+        requestAnimationFrame(tick);
+      }
+
       function setGrowthMapMarkerVisible(m, show) {
         const node = m.getElement && m.getElement();
         if (!node) return;
+        const countEl = node.querySelector(".parkinzi-map-marker-count");
         if (show) {
           node.style.opacity = "";
           node.style.visibility = "";
           node.style.pointerEvents = "";
+          const row = m._parkinziDbRow;
+          if (countEl && row) {
+            const target = parkingSpotBadgeValue(row);
+            animateMapMarkerBadgeCountTo(countEl, target);
+          }
         } else {
+          if (countEl) {
+            bumpMapMarkerBadgeAnimGen(countEl);
+            countEl.textContent = "1";
+          }
           node.style.opacity = "0";
           node.style.visibility = "hidden";
           node.style.pointerEvents = "none";
@@ -4460,8 +4616,9 @@
             const markerImg = el.querySelector(".parkinzi-map-marker-img");
             if (markerImg) markerImg.src = logoSrc;
             const countEl = el.querySelector(".parkinzi-map-marker-count");
-            if (countEl && m._parkinziDbRow.spot_count != null) {
-              countEl.textContent = String(m._parkinziDbRow.spot_count);
+            if (countEl && m._parkinziDbRow) {
+              bumpMapMarkerBadgeAnimGen(countEl);
+              countEl.textContent = String(parkingSpotBadgeValue(m._parkinziDbRow));
             }
           }
         });
