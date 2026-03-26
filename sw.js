@@ -1,5 +1,5 @@
 /* PARKINZI — تخزين مؤقت للتصفح دون اتصال (نفس أصل الموقع فقط) */
-const CACHE_NAME = "parkinzi-offline-v1";
+const CACHE_NAME = "parkinzi-offline-v2";
 
 const PRECACHE_URLS = [
   "./index.html",
@@ -18,6 +18,14 @@ const PRECACHE_URLS = [
 
 function scopeBase() {
   return self.registration.scope;
+}
+
+function isDocumentRequest(request, url) {
+  if (request.mode === "navigate") return true;
+  const p = url.pathname;
+  if (p.endsWith(".html")) return true;
+  if (p === "/" || p.endsWith("/")) return true;
+  return false;
 }
 
 self.addEventListener("install", (event) => {
@@ -53,6 +61,27 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
+  /* صفحات HTML: الشبكة أولاً حتى تظهر التحديثات فوراً (سفاري + Service Worker) */
+  if (isDocumentRequest(request, url)) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() =>
+          caches.match(request).then((cached) => {
+            if (cached) return cached;
+            return caches.match(new URL("./index.html", scopeBase()).href);
+          })
+        )
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;
@@ -64,12 +93,7 @@ self.addEventListener("fetch", (event) => {
           }
           return response;
         })
-        .catch(() => {
-          if (request.mode === "navigate") {
-            return caches.match(new URL("./index.html", scopeBase()).href);
-          }
-          return Promise.resolve();
-        });
+        .catch(() => Promise.resolve());
     })
   );
 });
