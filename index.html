@@ -602,6 +602,7 @@
       margin: 0;
       letter-spacing: 0.5px;
       flex-shrink: 0;
+      align-self: flex-end;
     }
     
     .store-badge {
@@ -634,7 +635,7 @@
     .download-row {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
       gap: 1.5rem;
       width: 100%;
@@ -648,6 +649,7 @@
       justify-items: stretch;
       width: 100%;
       max-width: 520px;
+      align-self: flex-end;
     }
     .store-option {
       display: flex;
@@ -748,7 +750,7 @@
       margin-top: 0.25rem;
     }
     
-    /* Waitlist Section */
+    /* Waitlist — محاذاة قاع النموذج مع قاع مربعات المتاجر (بدون تغيير شعارات المتاجر) */
     .waitlist-section {
       flex: 1;
       min-width: 280px;
@@ -756,6 +758,8 @@
       text-align: center;
       padding: 0;
       margin: 0;
+      display: flex;
+      flex-direction: column;
     }
     .waitlist-title {
       font-size: 1.15rem;
@@ -766,13 +770,14 @@
     .waitlist-desc {
       font-size: 0.95rem;
       color: var(--text-secondary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
     .waitlist-form {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: auto;
     }
     .waitlist-input {
       flex: 1;
@@ -815,7 +820,21 @@
     /* Hide QR codes on mobile, show store buttons prominently */
     @media (max-width: 768px) {
       .download-section { padding: 1rem 1.25rem; }
-      .download-row { flex-direction: column; gap: 1rem; }
+      .download-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      .store-options,
+      .coming-soon-badge {
+        align-self: stretch;
+      }
+      .waitlist-form {
+        margin-top: 0;
+      }
+      .waitlist-desc {
+        margin-bottom: 1rem;
+      }
       .waitlist-section { min-width: 100%; max-width: 100%; }
       .download-section .qr-section {
         display: none;
@@ -908,6 +927,7 @@
     .platform-stats-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
       gap: 1.25rem;
       max-width: 820px;
       margin: 0 auto;
@@ -916,6 +936,12 @@
       .platform-stats-list {
         grid-template-columns: 1fr;
         max-width: 420px;
+      }
+    }
+    @media (min-width: 561px) {
+      .platform-stats-list .platform-stat-card:nth-child(3),
+      .platform-stats-list .platform-stat-card:nth-child(4) {
+        grid-column: 1 / -1;
       }
     }
     .platform-stat-card {
@@ -1141,7 +1167,7 @@
       transition: transform 0.5s ease;
     }
     .platform-stat-card:hover .platform-stat-icon svg {
-      transform: scale(1.1) rotate(5deg);
+      transform: scale(1.1);
     }
     .platform-stat-icon svg path {
       fill: currentColor;
@@ -1856,7 +1882,7 @@
     
     .feature-card:hover .feature-icon-svg {
       color: white;
-      transform: scale(1.1) rotate(5deg);
+      transform: scale(1.1);
       filter: drop-shadow(0 8px 20px rgba(255,255,255,0.5));
     }
     
