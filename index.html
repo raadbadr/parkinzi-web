@@ -7,6 +7,7 @@
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://brqsvtobletrlkpkhooc.supabase.co https://*.supabase.co wss://brqsvtobletrlkpkhooc.supabase.co wss://*.supabase.co https://api.maptiler.com https://*.maptiler.com https://demotiles.maplibre.org https://unpkg.com https://esm.sh; worker-src 'self' blob:;">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
+  <!-- أيقونات «أرقام المنصة»: Bootstrap Icons (MIT، يتطلب الإبقاء على إشعار الترخيص عند إعادة التوزيع) — https://github.com/twbs/icons/blob/main/LICENSE -->
   <link rel="dns-prefetch" href="https://brqsvtobletrlkpkhooc.supabase.co">
   <link rel="dns-prefetch" href="https://unpkg.com">
   <link rel="dns-prefetch" href="https://esm.sh">
@@ -948,18 +949,21 @@
       outline-offset: 3px;
       border-radius: 12px;
     }
-    .platform-stat-expand-chevron {
+    /* ellipsis (مثل SF Symbols) بدل chevron — مطابق سياسة المشروع */
+    .platform-stat-expand-ellipsis {
       flex-shrink: 0;
-      width: 0.65rem;
-      height: 0.65rem;
-      margin-inline-start: 0.25rem;
-      border-right: 2px solid var(--text-tertiary);
-      border-bottom: 2px solid var(--text-tertiary);
-      transform: rotate(45deg);
-      transition: transform 0.2s ease;
+      margin-inline-start: 0.2rem;
+      font-size: 1.35rem;
+      line-height: 1;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      user-select: none;
     }
-    .platform-stat-card--expandable.is-expanded .platform-stat-expand-chevron {
-      transform: rotate(225deg);
+    .platform-stat-card--expandable.is-expanded .platform-stat-expand-ellipsis {
+      opacity: 0.85;
+      transform: scale(1.08);
     }
     .platform-stat-detail {
       width: 100%;
@@ -1008,6 +1012,12 @@
     .platform-stat-icon svg {
       width: 28px;
       height: 28px;
+      flex-shrink: 0;
+      display: block;
+      overflow: visible;
+    }
+    .platform-stat-icon svg path {
+      fill: currentColor;
     }
     [data-accent="users"] .platform-stat-icon { color: rgb(51, 128, 230); }
     [data-accent="facilities"] .platform-stat-icon { color: rgb(26, 166, 179); }
@@ -1080,6 +1090,167 @@
     }
     .growth-map-container.maplibregl-map {
       font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+    }
+
+    /* شريط زمني — أسلوب Liquid Glass (ضبابية + طبقات زجاجية) */
+    .growth-map-timeline {
+      margin-top: 0;
+      margin-bottom: 1.1rem;
+      padding: 1rem 1.15rem 1.2rem;
+      border-radius: 20px;
+      position: relative;
+      isolation: isolate;
+      backdrop-filter: blur(22px) saturate(1.65);
+      -webkit-backdrop-filter: blur(22px) saturate(1.65);
+      background: linear-gradient(
+        165deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.07) 42%,
+        rgba(255, 255, 255, 0.04) 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    }
+    [data-theme="light"] .growth-map-timeline {
+      backdrop-filter: blur(28px) saturate(1.45);
+      -webkit-backdrop-filter: blur(28px) saturate(1.45);
+      background: linear-gradient(
+        165deg,
+        rgba(255, 255, 255, 0.78) 0%,
+        rgba(255, 255, 255, 0.48) 45%,
+        rgba(255, 255, 255, 0.38) 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      box-shadow:
+        0 12px 40px rgba(0, 80, 140, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(0, 60, 100, 0.06);
+    }
+    .growth-map-timeline input[type="range"] {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      appearance: none;
+      cursor: grab;
+      background: transparent;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: none;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .growth-map-timeline input[type="range"]:active {
+      cursor: grabbing;
+    }
+    .growth-map-timeline input[type="range"]:focus {
+      outline: none;
+    }
+    .growth-map-timeline input[type="range"]:focus-visible {
+      outline: 2px solid rgba(0, 180, 230, 0.55);
+      outline-offset: 3px;
+    }
+    .growth-map-timeline[dir="rtl"] input[type="range"] {
+      direction: rtl;
+    }
+    .growth-map-timeline[dir="ltr"] input[type="range"] {
+      direction: ltr;
+    }
+    .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
+      background: rgba(0, 60, 100, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.9);
+    }
+    /* مقبض: مستطيل أبيض بزوايا مستديرة — عند الضغط/السحب يصبح شفافاً */
+    .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 36px;
+      height: 14px;
+      margin-top: -3px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: none;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .growth-map-timeline input[type="range"]::-webkit-slider-thumb:active {
+      background: rgba(255, 255, 255, 0.38);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
+      box-shadow: 0 2px 10px rgba(0, 60, 100, 0.18);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-thumb:active {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    .growth-map-timeline input[type="range"]::-moz-range-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-track {
+      background: rgba(0, 60, 100, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+    }
+    .growth-map-timeline input[type="range"]::-moz-range-thumb {
+      width: 36px;
+      height: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+      transform: translateY(-1px);
+    }
+    .growth-map-timeline input[type="range"]::-moz-range-thumb:active {
+      background: rgba(255, 255, 255, 0.38);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-thumb {
+      box-shadow: 0 2px 10px rgba(0, 60, 100, 0.18);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-thumb:active {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    /* أثناء السحب: إيقاف انتقالات المقبض + تخفيف الضبابية لتقليل تقطيع الـ repaint */
+    .growth-map-timeline.is-slider-dragging {
+      backdrop-filter: blur(14px) saturate(1.35);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
+    }
+    [data-theme="light"] .growth-map-timeline.is-slider-dragging {
+      backdrop-filter: blur(18px) saturate(1.25);
+      -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    }
+    .growth-map-timeline.is-slider-dragging input[type="range"]::-webkit-slider-thumb,
+    .growth-map-timeline.is-slider-dragging input[type="range"]::-moz-range-thumb {
+      transition: none;
+    }
+    .growth-map-timeline-ends {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.55rem;
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      letter-spacing: 0.02em;
     }
 
     /* نافذة النقر على العلامة — نص وخلفية حسب الثيم (داكن: أبيض، فاتح: أسود) */
@@ -1853,6 +2024,10 @@
         margin-top: 2.75rem;
       }
 
+      .growth-map-timeline {
+        padding: 0.9rem 1rem 1rem;
+      }
+
       .platform-stats {
         padding: 0.5rem 1.5rem 1.75rem;
       }
@@ -1951,6 +2126,10 @@
         margin-top: 2.5rem;
       }
 
+      .growth-map-timeline {
+        padding: 0.85rem 0.9rem 0.95rem;
+      }
+
       .platform-stats {
         padding: 0.25rem 1rem 1.5rem;
       }
@@ -1998,17 +2177,17 @@
       }
       
       .menu-btn {
-        padding: 0.3rem;
-        border-radius: 12px;
+        padding: 0.15rem;
+        border-radius: 999px;
       }
       
       .menu-btn .icon-circle {
-        width: 28px;
-        height: 28px;
+        width: 36px;
+        height: 36px;
       }
       
       .menu-btn .icon-circle .icon {
-        font-size: 13px;
+        font-size: 15px;
       }
       
       .menu-btn .menu-label {
@@ -2073,7 +2252,7 @@
       }
       
       .menu-btn {
-        padding: 0.65rem;
+        padding: 0.35rem;
       }
     }
     
@@ -2581,14 +2760,14 @@
     <div class="platform-stats-list">
       <div class="platform-stat-card" data-accent="users">
         <div class="platform-stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/><path fill="currentColor" d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/></svg>
         </div>
         <span class="platform-stat-label" data-i18n="statUsers">المستخدمون</span>
         <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueUsers">0</span></div>
       </div>
       <div class="platform-stat-card" data-accent="facilities">
         <div class="platform-stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" fill="currentColor"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/><path fill="currentColor" d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"/></svg>
         </div>
         <span class="platform-stat-label" data-i18n="statFacilities">المنشآت</span>
         <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueFacilities">0</span></div>
@@ -2596,11 +2775,11 @@
       <div class="platform-stat-card platform-stat-card--expandable" data-accent="spots" data-stat-expand="spots">
         <button type="button" class="platform-stat-main" id="platformStatSpotsBtn" aria-expanded="false" aria-controls="platformStatDetailSpots">
           <div class="platform-stat-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 8h-3V7h3c1.1 0 2 .9 2 2s-.9 2-2 2z" fill="currentColor"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8z"/><path fill="currentColor" fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/></svg>
           </div>
           <span class="platform-stat-label" data-i18n="statSpots">المواقف</span>
           <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueSpots">0</span></div>
-          <span class="platform-stat-expand-chevron" aria-hidden="true"></span>
+          <span class="platform-stat-expand-ellipsis" aria-hidden="true">⋯</span>
         </button>
         <div class="platform-stat-detail" id="platformStatDetailSpots" hidden>
           <div class="platform-stat-detail-row"><span data-i18n="statSpotsCharger">مع شاحن كهربائي</span><span class="platform-stat-detail-val" id="statSpotsCharger">0</span></div>
@@ -2610,11 +2789,11 @@
       <div class="platform-stat-card platform-stat-card--expandable" data-accent="cars" data-stat-expand="cars">
         <button type="button" class="platform-stat-main" id="platformStatCarsBtn" aria-expanded="false" aria-controls="platformStatDetailCars">
           <div class="platform-stat-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="currentColor"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/></svg>
           </div>
           <span class="platform-stat-label" data-i18n="statCars">السيارات</span>
           <div class="platform-stat-value-circle"><span class="platform-stat-value" id="statValueCars">0</span></div>
-          <span class="platform-stat-expand-chevron" aria-hidden="true"></span>
+          <span class="platform-stat-expand-ellipsis" aria-hidden="true">⋯</span>
         </button>
         <div class="platform-stat-detail" id="platformStatDetailCars" hidden>
           <div class="platform-stat-detail-row"><span data-i18n="statFuelElectric">كهرباء</span><span class="platform-stat-detail-val" id="statCarsElectric">0</span></div>
@@ -2628,6 +2807,13 @@
 
   <section class="growth-map-section" id="coverage" aria-labelledby="growthMapHeading">
     <h2 class="section-title" id="growthMapHeading" data-i18n="growthMapTitle">تطور تغطية التطبيق</h2>
+    <div class="growth-map-timeline" id="growthMapTimeline" hidden>
+      <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
+      <div class="growth-map-timeline-ends">
+        <span id="growthMapTimelineStartLabel"></span>
+        <span id="growthMapTimelineEndLabel"></span>
+      </div>
+    </div>
     <div id="growthMap" class="growth-map-container" dir="ltr" role="application" data-i18n-aria-label="growthMapAria"></div>
   </section>
 
@@ -2883,7 +3069,8 @@
         growthMapTitle: "تطور تغطية التطبيق",
         growthMapAria: "خريطة تفاعلية لمواقع التغطية",
         growthMapPopupDb: "{count} مواقف",
-        growthMapPopupDbNamed: "{label} — {count} مواقف"
+        growthMapPopupDbNamed: "{label} — {count} مواقف",
+        growthMapTimelineSliderAria: "خط زمني للتغطية"
       },
       en: {
         tagline: "Smart parking in your pocket",
@@ -2966,7 +3153,8 @@
         growthMapTitle: "App coverage growth",
         growthMapAria: "Interactive map of coverage locations",
         growthMapPopupDb: "{count} spots",
-        growthMapPopupDbNamed: "{label} — {count} spots"
+        growthMapPopupDbNamed: "{label} — {count} spots",
+        growthMapTimelineSliderAria: "Coverage timeline"
       },
       fr: {
         tagline: "Stationnement intelligent dans votre poche",
@@ -3050,7 +3238,8 @@
         growthMapTitle: "Évolution de la couverture de l’app",
         growthMapAria: "Carte interactive des emplacements couverts",
         growthMapPopupDb: "{count} places",
-        growthMapPopupDbNamed: "{label} — {count} places"
+        growthMapPopupDbNamed: "{label} — {count} places",
+        growthMapTimelineSliderAria: "Chronologie de la couverture"
       },
       ur: {
         tagline: "ذہین پارکنگ آپ کی جیب میں",
@@ -3133,7 +3322,8 @@
         growthMapTitle: "ایپ کی کوریج میں ترقی",
         growthMapAria: "کوریج کی جگہوں کی انٹرایکٹو نقشہ",
         growthMapPopupDb: "{count} مواقف",
-        growthMapPopupDbNamed: "{label} — {count} مواقف"
+        growthMapPopupDbNamed: "{label} — {count} مواقف",
+        growthMapTimelineSliderAria: "کوریج ٹائم لائن"
       }
     };
 
@@ -3202,6 +3392,46 @@
     async function restTableCount(table) {
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=id`, {
+          headers: {
+            ...supabaseRestHeaders,
+            Prefer: "count=exact",
+            Range: "0-0"
+          }
+        });
+        if (!res.ok) return null;
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
+    }
+
+    /** عدد صفوف بـ created_at <= endMs (PostgREST: created_at=lte.iso) — يحتاج عمود created_at وصلاحية قراءة anon. */
+    async function restCountCreatedAtLte(table, endMs) {
+      try {
+        const iso = new Date(endMs).toISOString();
+        const filterVal = `lte.${iso}`;
+        const url = `${SUPABASE_URL}/rest/v1/${table}?select=id&created_at=${encodeURIComponent(filterVal)}`;
+        const res = await fetch(url, {
+          headers: {
+            ...supabaseRestHeaders,
+            Prefer: "count=exact",
+            Range: "0-0"
+          }
+        });
+        if (!res.ok) return null;
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
+    }
+
+    /** عدد مواقف has_electric_charger = true و created_at <= endMs */
+    async function restCountParkingSpotsChargerUpTo(endMs) {
+      try {
+        const iso = new Date(endMs).toISOString();
+        const filterVal = `lte.${iso}`;
+        const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=id&has_electric_charger=eq.true&created_at=${encodeURIComponent(filterVal)}`;
+        const res = await fetch(url, {
           headers: {
             ...supabaseRestHeaders,
             Prefer: "count=exact",
@@ -3333,6 +3563,11 @@
       document.documentElement.lang = l;
       document.documentElement.dir = (l === "ar" || l === "ur") ? "rtl" : "ltr";
 
+      const growthMapTimelineEl = document.getElementById("growthMapTimeline");
+      if (growthMapTimelineEl) {
+        growthMapTimelineEl.setAttribute("dir", l === "ar" || l === "ur" ? "rtl" : "ltr");
+      }
+
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const k = el.dataset.i18n;
         if (translations[l] && translations[l][k]) {
@@ -3365,8 +3600,8 @@
       const wlInput = document.getElementById("waitlistEmail");
       if (wlInput && translations[l]?.waitlistPlaceholder) wlInput.placeholder = translations[l].waitlistPlaceholder;
 
-      if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
       if (typeof window.__parkinziPlatformStatsRefresh === "function") window.__parkinziPlatformStatsRefresh();
+      if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
     }
 
     function setTheme(t) {
@@ -3494,6 +3729,50 @@
       applyPlatformStatsToDom(cachedPlatformStats);
     };
 
+    /**
+     * يحدّث بطاقات «أرقام المنصة» لتطابق التاريخ المختار على الشريط (تراكمي حتى نهاية اليوم).
+     * عند أقصى الشريط تُعاد أرقام cachedPlatformStats الكاملة (بما فيها توزيع الوقود من الـ RPC).
+     */
+    async function applyPlatformStatsForTimeline(cutoffMs, dayIndex, timelineDaySpan) {
+      if (!cachedPlatformStats) return;
+      if (dayIndex === timelineDaySpan) {
+        applyPlatformStatsToDom(cachedPlatformStats);
+        return;
+      }
+      const [u, fac, spots, cars, ch] = await Promise.all([
+        restCountCreatedAtLte("profiles", cutoffMs),
+        restCountCreatedAtLte("facilities", cutoffMs),
+        restCountCreatedAtLte("parking_spots", cutoffMs),
+        restCountCreatedAtLte("user_cars", cutoffMs),
+        restCountParkingSpotsChargerUpTo(cutoffMs)
+      ]);
+      const safe = (v) =>
+        v !== null && Number.isFinite(Number(v)) && Number(v) >= 0 ? Math.floor(Number(v)) : 0;
+      const spotsTotal = safe(spots);
+      let spotsCh = ch == null ? null : safe(ch);
+      const base = cachedPlatformStats;
+      if (spotsCh === null) {
+        const denom = base.spots || 0;
+        spotsCh = denom > 0 ? Math.round(spotsTotal * (base.spotsCharger / denom)) : 0;
+      }
+      spotsCh = Math.min(spotsCh, spotsTotal);
+      const carsTotal = safe(cars);
+      const totalCarsBase = base.cars || 0;
+      const ratio = totalCarsBase > 0 ? carsTotal / totalCarsBase : 0;
+      applyPlatformStatsToDom({
+        users: safe(u),
+        facilities: safe(fac),
+        spots: spotsTotal,
+        spotsRegular: Math.max(0, spotsTotal - spotsCh),
+        spotsCharger: spotsCh,
+        cars: carsTotal,
+        carsElectric: Math.round((base.carsElectric || 0) * ratio),
+        carsGasoline: Math.round((base.carsGasoline || 0) * ratio),
+        carsDiesel: Math.round((base.carsDiesel || 0) * ratio),
+        carsHybrid: Math.round((base.carsHybrid || 0) * ratio)
+      });
+    }
+
     async function loadPlatformStats() {
       const zeroStats = {
         users: 0,
@@ -3532,6 +3811,9 @@
             carsHybrid: fuelOnly.hybrid
           };
           applyPlatformStatsToDom(cachedPlatformStats);
+          if (typeof window.__parkinziApplyTimelinePlatformStats === "function") {
+            void window.__parkinziApplyTimelinePlatformStats();
+          }
           return;
         }
 
@@ -3566,6 +3848,9 @@
         cachedPlatformStats = zeroStats;
         applyPlatformStatsToDom(cachedPlatformStats);
       }
+      if (typeof window.__parkinziApplyTimelinePlatformStats === "function") {
+        void window.__parkinziApplyTimelinePlatformStats();
+      }
     }
     loadPlatformStats();
 
@@ -3586,8 +3871,15 @@
       wire("platformStatCarsBtn", "platformStatDetailCars");
     })();
 
-    /** أعمدة من جدول parking_spots — أضف spot_count في النهاية إذا كان العمود موجوداً في Supabase */
-    const PARKING_MAP_SELECT = "latitude,longitude,spot_name,national_address,spot_number";
+    /** بداية الشريط الزمني للخريطة: ١٥ مارس ٢٠٢٦ (محلياً) — لتفادي أيام بلا بيانات يظهر فيها الشريط أصفاراً. */
+    const GROWTH_MAP_TIMELINE_START = new Date(2026, 2, 15);
+
+    /** أعمدة جدول parking_spots — يُجرّب عدة قوائم حتى ينجح الطلب (created_at اختياري في القاعدة). */
+    const PARKING_MAP_SELECT_ATTEMPTS = [
+      "latitude,longitude,spot_name,national_address,spot_number,spot_count,created_at",
+      "latitude,longitude,spot_name,national_address,spot_number,created_at",
+      "latitude,longitude,spot_name,national_address,spot_number"
+    ];
 
     /** حدود المملكة العربية السعودية تقريباً: جنوب غرب، شمال شرق [lng, lat] */
     const SAUDI_ARABIA_BOUNDS = [[34.5, 16.0], [55.7, 32.25]];
@@ -3624,7 +3916,12 @@
       const label = String(
         row.label ?? row.spot_name ?? row.name ?? row.national_address ?? row.area_name ?? ""
       ).trim();
-      return { lat: Number(lat), lng: Number(lng), spot_count, label };
+      let createdAtMs = GROWTH_MAP_TIMELINE_START.getTime();
+      if (row.created_at != null && row.created_at !== "") {
+        const d = new Date(String(row.created_at));
+        if (!Number.isNaN(d.getTime())) createdAtMs = d.getTime();
+      }
+      return { lat: Number(lat), lng: Number(lng), spot_count, label, createdAtMs };
     }
 
     function parkingPopupText(row, tr) {
@@ -3678,18 +3975,23 @@
     }
 
     async function fetchParkingMapRows() {
-      try {
-        const cols = PARKING_MAP_SELECT.split(",").map((c) => c.trim()).join(",");
-        const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(cols)}`;
-        const res = await fetch(url, {
-          headers: { ...supabaseRestHeaders, Accept: "application/json" }
-        });
-        if (!res.ok) return null;
-        const data = await res.json();
-        return Array.isArray(data) ? data : null;
-      } catch {
-        return null;
+      for (let i = 0; i < PARKING_MAP_SELECT_ATTEMPTS.length; i++) {
+        const cols = PARKING_MAP_SELECT_ATTEMPTS[i];
+        try {
+          const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(cols)}`;
+          const res = await fetch(url, {
+            headers: { ...supabaseRestHeaders, Accept: "application/json" }
+          });
+          if (!res.ok) continue;
+          const data = await res.json();
+          const rows = Array.isArray(data) ? data : [];
+          const hasCreatedAt = /(^|,)created_at($|,)/.test(cols);
+          return { rows, hasCreatedAt };
+        } catch {
+          continue;
+        }
       }
+      return { rows: [], hasCreatedAt: false };
     }
 
     /** عند zoom out يصغر الرمز قليلاً؛ عند zoom in يقترب من الحجم الكامل (منطقي وليس بحجم ثابت يغطي الخريطة) */
@@ -3702,19 +4004,33 @@
       return sMin + (sMax - sMin) * t;
     }
 
+    function growthMapEndOfLocalDay(d) {
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime();
+    }
+
+    function growthMapTimelineDayEndMs(dayIndex) {
+      const d = new Date(
+        GROWTH_MAP_TIMELINE_START.getFullYear(),
+        GROWTH_MAP_TIMELINE_START.getMonth(),
+        GROWTH_MAP_TIMELINE_START.getDate()
+      );
+      d.setDate(d.getDate() + dayIndex);
+      return growthMapEndOfLocalDay(d);
+    }
+
     async function initGrowthMap() {
       const el = document.getElementById("growthMap");
       if (!el || typeof maplibregl === "undefined") return;
 
-      let dbRows = null;
+      let fetchResult = { rows: [], hasCreatedAt: false };
       try {
-        dbRows = await fetchParkingMapRows();
+        fetchResult = await fetchParkingMapRows();
       } catch (e) {
-        dbRows = null;
+        fetchResult = { rows: [], hasCreatedAt: false };
       }
-      const normalized = dbRows
-        ? dbRows.map(normalizeParkingRow).filter(Boolean)
-        : [];
+      const dbRows = fetchResult.rows;
+      const hasCreatedAtColumn = fetchResult.hasCreatedAt;
+      const normalized = dbRows.length ? dbRows.map(normalizeParkingRow).filter(Boolean) : [];
       const useDb = normalized.length > 0;
 
       const useMapTiler = hasMapTilerKey();
@@ -3763,6 +4079,168 @@
           marker._parkinziDbRow = row;
           markers.push(marker);
         });
+      }
+
+      let sortedMarkersByCreated = [];
+      if (markers.length) {
+        sortedMarkersByCreated = markers.slice().sort(function (a, b) {
+          const ta = a._parkinziDbRow && a._parkinziDbRow.createdAtMs != null ? a._parkinziDbRow.createdAtMs : 0;
+          const tb = b._parkinziDbRow && b._parkinziDbRow.createdAtMs != null ? b._parkinziDbRow.createdAtMs : 0;
+          return ta - tb;
+        });
+      }
+
+      let timelineDaySpan = 0;
+      const timelineEl = document.getElementById("growthMapTimeline");
+      const sliderEl = document.getElementById("growthMapTimelineSlider");
+      if (timelineEl) {
+        const l0 = lang();
+        timelineEl.setAttribute("dir", l0 === "ar" || l0 === "ur" ? "rtl" : "ltr");
+      }
+      const startLabelEl = document.getElementById("growthMapTimelineStartLabel");
+      const endLabelEl = document.getElementById("growthMapTimelineEndLabel");
+
+      function formatGrowthMapTimelineDate(ms) {
+        const lo = lang();
+        const loc = lo === "ur" ? "ur-PK" : lo;
+        return new Date(ms).toLocaleDateString(loc, { year: "numeric", month: "short", day: "numeric" });
+      }
+
+      let growthTimelineAsyncGeneration = 0;
+      let growthTimelineRafId = null;
+      let growthTimelinePendingIndex = null;
+      let lastTimelineDayIndex = null;
+
+      function setGrowthMapMarkerVisible(m, show) {
+        const node = m.getElement && m.getElement();
+        if (!node) return;
+        if (show) {
+          node.style.opacity = "";
+          node.style.visibility = "";
+          node.style.pointerEvents = "";
+        } else {
+          node.style.opacity = "0";
+          node.style.visibility = "hidden";
+          node.style.pointerEvents = "none";
+        }
+      }
+
+      function applyTimelineMarkersOnly(dayIndex, opts) {
+        const skipAria = opts && opts.skipAria;
+        const cutoff = growthMapTimelineDayEndMs(dayIndex);
+        const prevIdx = lastTimelineDayIndex;
+
+        if (prevIdx !== null && dayIndex === prevIdx) {
+          if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDate(cutoff));
+          return;
+        }
+
+        if (prevIdx === null || Math.abs(dayIndex - prevIdx) > 1 || !sortedMarkersByCreated.length) {
+          markers.forEach(function (m) {
+            const row = m._parkinziDbRow;
+            const show = !!(row && row.createdAtMs <= cutoff);
+            setGrowthMapMarkerVisible(m, show);
+          });
+        } else if (dayIndex > prevIdx) {
+          const prevCutoff = growthMapTimelineDayEndMs(prevIdx);
+          for (let i = 0; i < sortedMarkersByCreated.length; i++) {
+            const m = sortedMarkersByCreated[i];
+            const t = m._parkinziDbRow && m._parkinziDbRow.createdAtMs;
+            if (t == null) continue;
+            if (t <= prevCutoff) continue;
+            if (t > cutoff) break;
+            setGrowthMapMarkerVisible(m, true);
+          }
+        } else {
+          const prevCutoff = growthMapTimelineDayEndMs(prevIdx);
+          for (let i = 0; i < sortedMarkersByCreated.length; i++) {
+            const m = sortedMarkersByCreated[i];
+            const t = m._parkinziDbRow && m._parkinziDbRow.createdAtMs;
+            if (t == null) continue;
+            if (t <= cutoff) continue;
+            if (t > prevCutoff) break;
+            setGrowthMapMarkerVisible(m, false);
+          }
+        }
+
+        lastTimelineDayIndex = dayIndex;
+
+        if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDate(cutoff));
+      }
+
+      async function applyGrowthMapTimelineStatsOnly(dayIndex) {
+        const gen = ++growthTimelineAsyncGeneration;
+        const cutoff = growthMapTimelineDayEndMs(dayIndex);
+        await applyPlatformStatsForTimeline(cutoff, dayIndex, timelineDaySpan);
+        if (gen !== growthTimelineAsyncGeneration) return;
+      }
+
+      /** أثناء السحب: علامات الخريطة فقط (بدون طلبات شبكة) — الإحصائيات تُحدَّث عند change لسلاسة الحركة */
+      function scheduleGrowthMapTimelineInput(dayIndex) {
+        growthTimelinePendingIndex = dayIndex;
+        if (growthTimelineRafId == null) {
+          growthTimelineRafId = requestAnimationFrame(function () {
+            growthTimelineRafId = null;
+            applyTimelineMarkersOnly(growthTimelinePendingIndex, { skipAria: true });
+          });
+        }
+      }
+
+      async function applyGrowthMapTimelineFull(dayIndex) {
+        if (growthTimelineRafId != null) {
+          cancelAnimationFrame(growthTimelineRafId);
+          growthTimelineRafId = null;
+        }
+        applyTimelineMarkersOnly(dayIndex);
+        await applyGrowthMapTimelineStatsOnly(dayIndex);
+      }
+
+      if (useDb && hasCreatedAtColumn && timelineEl && sliderEl) {
+        const timelineStartDay = new Date(
+          GROWTH_MAP_TIMELINE_START.getFullYear(),
+          GROWTH_MAP_TIMELINE_START.getMonth(),
+          GROWTH_MAP_TIMELINE_START.getDate()
+        );
+        const now = new Date();
+        /* نهاية النطاق: نفس يوم اليوم فقط — لا يمتد الشريط إلى تواريخ مستقبلية */
+        let timelineEndDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
+        timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
+        sliderEl.min = "0";
+        sliderEl.max = String(timelineDaySpan);
+        sliderEl.value = String(timelineDaySpan);
+        sliderEl.setAttribute("aria-valuemin", "0");
+        sliderEl.setAttribute("aria-valuemax", String(timelineDaySpan));
+        sliderEl.setAttribute("aria-valuenow", String(timelineDaySpan));
+        if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(0));
+        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(timelineDaySpan));
+        timelineEl.hidden = false;
+        const endSliderDrag = function () {
+          timelineEl.classList.remove("is-slider-dragging");
+        };
+        sliderEl.addEventListener("pointerdown", function (e) {
+          timelineEl.classList.add("is-slider-dragging");
+          try {
+            sliderEl.setPointerCapture(e.pointerId);
+          } catch (err) {}
+        });
+        sliderEl.addEventListener("pointerup", endSliderDrag);
+        sliderEl.addEventListener("pointercancel", endSliderDrag);
+        sliderEl.addEventListener("blur", endSliderDrag);
+        sliderEl.addEventListener("input", function () {
+          const v = Number(sliderEl.value);
+          sliderEl.setAttribute("aria-valuenow", String(v));
+          scheduleGrowthMapTimelineInput(v);
+        });
+        sliderEl.addEventListener("change", function () {
+          endSliderDrag();
+          const v = Number(sliderEl.value);
+          sliderEl.setAttribute("aria-valuenow", String(v));
+          void applyGrowthMapTimelineFull(v);
+        });
+        void applyGrowthMapTimelineFull(timelineDaySpan);
+      } else if (timelineEl) {
+        timelineEl.hidden = true;
       }
 
       map.on("zoom", updateParkinziMarkerZoomScales);
@@ -3818,6 +4296,11 @@
         });
         map.resize();
         updateParkinziMarkerZoomScales();
+        if (timelineEl && !timelineEl.hidden && sliderEl) {
+          void applyGrowthMapTimelineFull(Number(sliderEl.value));
+          if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(0));
+          if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(growthMapTimelineDayEndMs(timelineDaySpan));
+        }
       };
       setTimeout(() => map.resize(), 400);
       window.addEventListener("resize", () => map.resize());
@@ -3833,6 +4316,13 @@
           map.resize();
           if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
         });
+      };
+
+      window.__parkinziApplyTimelinePlatformStats = function () {
+        const s = document.getElementById("growthMapTimelineSlider");
+        const t = document.getElementById("growthMapTimeline");
+        if (!s || !t || t.hidden) return;
+        void applyGrowthMapTimelineFull(Number(s.value));
       };
     }
 
