@@ -98,6 +98,22 @@
     p { margin-bottom: 1rem; color: var(--text-secondary); }
     ul, ol { margin: 1rem 0 1rem 2rem; color: var(--text-secondary); }
     li { margin-bottom: 0.5rem; }
+    .content a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 0.2em;
+    }
+    .content a:hover {
+      color: var(--primary-light);
+    }
+    [data-theme="dark"] .content a {
+      color: #5ce1ff;
+    }
+    [data-theme="dark"] .content a:hover {
+      color: #9aedff;
+    }
     .back-btn {
       display: inline-flex;
       align-items: center;
@@ -188,10 +204,8 @@
       <h2 data-i18n="h6">6. حقوق صاحب البيانات</h2>
       <ul>
         <li data-i18n="li6a">الحق في الإعلام (الغرض والأساس القانوني)</li>
-        <li data-i18n="li6b">الحق في الوصول: طلب نسخة من بياناتك عبر البريد أدناه، نقدمها مجاناً خلال 7 أيام عمل</li>
-        <li data-i18n="li6c">الحق في التصحيح: طلب تصحيح البيانات غير الدقيقة عبر البريد أدناه، نراجعها خلال 7 أيام عمل</li>
-        <li data-i18n="li6d">الحق في الإتلاف: طلب حذف بياناتك في حالات معينة ما لم يقتضِ القانون خلاف ذلك</li>
-        <li data-i18n="li6e">الحق في سحب الموافقة في أي وقت ما لم توجد أغراض مشروعة أخرى</li>
+        <li data-i18n="li6b">الحق في التصحيح: طلب تصحيح البيانات غير الدقيقة عبر البريد أدناه، نراجعها خلال 7 أيام عمل</li>
+        <li data-i18n="li6c">الحق في سحب الموافقة في أي وقت ما لم توجد أغراض مشروعة أخرى</li>
       </ul>
 
       <h2 data-i18n="h7">7. مشاركة البيانات مع أطراف ثالثة</h2>
@@ -201,7 +215,7 @@
       <p data-i18n="p8">الموقع قد يحتوي روابط لمواقع أخرى. PARKINZI غير مسؤول عن محتواها أو استخدامها.</p>
 
       <h2 data-i18n="h9">9. ممارسة الحقوق والاتصال</h2>
-      <p data-i18n="p9">لممارسة حقوقك (الوصول، التصحيح، الحذف، سحب الموافقة) تواصل معنا عبر:</p>
+      <p data-i18n="p9">لطلبات أو استفسارات تتعلق ببياناتك الشخصية، يمكنك التواصل معنا عبر:</p>
       <ul>
         <li><span data-i18n="li9label">البريد الإلكتروني:</span> <a href="mailto:support@parkinzi.com" dir="ltr">support@parkinzi.com</a></li>
         <li><span data-i18n="phoneLabel">الهاتف:</span> <a href="tel:+966569601069" dir="ltr">+966 56 960 1069</a></li>
@@ -269,13 +283,11 @@
         p4: "التسجيل والاشتراك، التواصل مع الدعم (هاتف/بريد)، نموذج \"تواصل معنا\" (الاسم، البريد، تفاصيل الاستفسار).",
         p5: "نحتفظ بالبيانات طالما لزمت لأغراضها أو للالتزامات القانونية. نضمن حذف البيانات عند انتهاء الحاجة.",
         li6a: "الحق في الإعلام (الغرض والأساس القانوني)",
-        li6b: "الحق في الوصول: طلب نسخة من بياناتك عبر البريد أدناه، نقدمها مجاناً خلال 7 أيام عمل",
-        li6c: "الحق في التصحيح: طلب تصحيح البيانات غير الدقيقة عبر البريد أدناه، نراجعها خلال 7 أيام عمل",
-        li6d: "الحق في الإتلاف: طلب حذف بياناتك في حالات معينة ما لم يقتضِ القانون خلاف ذلك",
-        li6e: "الحق في سحب الموافقة في أي وقت ما لم توجد أغراض مشروعة أخرى",
+        li6b: "الحق في التصحيح: طلب تصحيح البيانات غير الدقيقة عبر البريد أدناه، نراجعها خلال 7 أيام عمل",
+        li6c: "الحق في سحب الموافقة في أي وقت ما لم توجد أغراض مشروعة أخرى",
         p7: "لا نبيع أو نؤجر بياناتك. قد نشارك مع شركاء لتنفيذ الخدمات (تسويق، تحليلات) بموافقتك. نشارك مع الجهات التنظيمية عند الطلب. البيانات تُعالج داخل المملكة؛ عند النقل خارجها نضمن الحماية وفق القوانين.",
         p8: "الموقع قد يحتوي روابط لمواقع أخرى. PARKINZI غير مسؤول عن محتواها أو استخدامها.",
-        p9: "لممارسة حقوقك (الوصول، التصحيح، الحذف، سحب الموافقة) تواصل معنا عبر:",
+        p9: "لطلبات أو استفسارات تتعلق ببياناتك الشخصية، يمكنك التواصل معنا عبر:",
         li9label: "البريد الإلكتروني:",
         phoneLabel: "الهاتف:",
         p10: "إذا امتنعت عن تقديم البيانات المطلوبة قانوناً أو تعاقدياً، قد لا نتمكن من تقديم الخدمة أو الوفاء بالتزاماتنا.",
@@ -314,13 +326,11 @@
         p4: "Registration and subscription, support contact (phone/email), \"Contact Us\" form (name, email, inquiry details).",
         p5: "We retain data only as long as necessary for its purposes or legal obligations. We ensure data deletion when no longer needed.",
         li6a: "Right to be informed (purpose and legal basis)",
-        li6b: "Right of access: Request a copy of your data via the email below; we provide it free within 7 working days",
-        li6c: "Right to rectification: Request correction of inaccurate data via the email below; we review within 7 working days",
-        li6d: "Right to destruction: Request deletion of your data in certain circumstances unless law requires otherwise",
-        li6e: "Right to withdraw consent at any time unless other legitimate purposes apply",
+        li6b: "Right to rectification: Request correction of inaccurate data via the email below; we review within 7 working days",
+        li6c: "Right to withdraw consent at any time unless other legitimate purposes apply",
         p7: "We do not sell or rent your data. We may share with partners for service delivery (marketing, analytics) with your consent. We share with regulators when required. Data is processed within the Kingdom; when transferred abroad we ensure protection per applicable laws.",
         p8: "The site may contain links to other websites. PARKINZI is not responsible for their content or use.",
-        p9: "To exercise your rights (access, rectification, deletion, withdrawal of consent) contact us at:",
+        p9: "For requests or inquiries about your personal data, contact us at:",
         li9label: "Email:",
         phoneLabel: "Phone:",
         p10: "If you fail to provide data required by law or contract, we may not be able to provide the service or meet our obligations.",
@@ -358,14 +368,12 @@
         p3: "Base juridique : contractuelle, consentement, obligation légale. Nous utilisons les données pour fournir et développer les services PARKINZI, facturation, comprendre vos besoins, vous notifier des changements importants, résoudre les demandes.",
         p4: "Inscription, contact support (téléphone/e-mail), formulaire « Contactez-nous ».",
         p5: "Nous conservons les données uniquement le temps nécessaire. Nous assurons leur suppression lorsque ce n'est plus nécessaire.",
-        li6a: "Droit à l'information",
-        li6b: "Droit d'accès : demandez une copie via l'e-mail ci-dessous ; fournie gratuitement sous 7 jours ouvrables",
-        li6c: "Droit de rectification : demandez la correction via l'e-mail ci-dessous ; révision sous 7 jours ouvrables",
-        li6d: "Droit à l'effacement dans certains cas",
-        li6e: "Droit de retirer le consentement à tout moment",
+        li6a: "Droit à l'information (finalité et base juridique)",
+        li6b: "Droit de rectification : demandez la correction des données inexactes via l'e-mail ci-dessous ; révision sous 7 jours ouvrables",
+        li6c: "Droit de retirer le consentement à tout moment sauf s'il existe d'autres finalités légitimes",
         p7: "Nous ne vendons ni ne louons vos données. Partage possible avec des partenaires (avec consentement). Partage avec les autorités si requis. Données traitées au Royaume ; transfert à l'étranger conforme aux lois.",
         p8: "Le site peut contenir des liens externes. PARKINZI n'est pas responsable de leur contenu.",
-        p9: "Pour exercer vos droits, contactez-nous à :",
+        p9: "Pour toute demande ou question concernant vos données personnelles, contactez-nous à :",
         li9label: "E-mail :",
         phoneLabel: "Téléphone :",
         p10: "Si vous ne fournissez pas les données requises, nous pourrions ne pas pouvoir fournir le service.",
@@ -403,14 +411,12 @@
         p3: "قانونی بنیاد: معاہداتی، رضامندی، قانونی ذمہ داری۔ ہم ڈیٹا PARKINZI خدمات، بلنگ، آپ کی ضروریات سمجھنے، تبدیلیوں کی اطلاع، استفسارات حل کرنے کے لیے استعمال کرتے ہیں۔",
         p4: "رجسٹریشن، سپورٹ رابطہ، \"ہم سے رابطہ کریں\" فارم۔",
         p5: "ہم ڈیٹا صرف ضرورت کے مطابق رکھتے ہیں۔ حذف یقینی بناتے ہیں۔",
-        li6a: "معلومات کا حق",
-        li6b: "رسائی کا حق: نیچے ای میل کے ذریعے کاپی مانگیں؛ 7 کام کے دنوں میں مفت فراہم",
-        li6c: "تصحیح کا حق: غلط ڈیٹا کی تصحیح؛ 7 کام کے دنوں میں جائزہ",
-        li6d: "تباہی کا حق: مخصوص حالات میں حذف کی درخواست",
-        li6e: "رضامندی واپس لینے کا حق کسی بھی وقت",
+        li6a: "معلومات کا حق (مقصد اور قانونی بنیاد)",
+        li6b: "تصحیح کا حق: غلط ڈیٹا کی تصحیح کی درخواست؛ نیچے دی گئی ای میل؛ 7 کام کے دنوں میں جائزہ",
+        li6c: "رضامندی واپس لینے کا حق کسی بھی وقت جب تک دوسری جائز وجوہات نہ ہوں",
         p7: "ہم آپ کا ڈیٹا نہیں بیچتے یا کرایے پر نہیں دیتے۔ شراکت داروں کے ساتھ رضامندی سے شیئرنگ۔ ریگولیٹرز کے ساتھ ضرورت پر۔ ڈیٹا مملکت میں پروسیس؛ بیرون ملک منتقلی پر قوانین کے مطابق تحفظ۔",
         p8: "سائٹ میں بیرونی لنکس ہو سکتے ہیں۔ PARKINZI ان کے مواد کا ذمہ دار نہیں۔",
-        p9: "اپنے حقوق استعمال کرنے کے لیے رابطہ کریں:",
+        p9: "ذاتی ڈیٹا سے متعلق درخواستوں یا استفسارات کے لیے رابطہ کریں:",
         li9label: "ای میل:",
         phoneLabel: "فون:",
         p10: "اگر آپ قانوناً یا معاہداتی طور پر مطلوبہ ڈیٹا نہیں دیتے، ہم سروس فراہم نہیں کر سکتے۔",
