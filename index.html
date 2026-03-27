@@ -4240,70 +4240,124 @@
     const SAUDI_ARABIA_BOUNDS = [[34.5, 16.0], [55.7, 32.25]];
 
     /**
-     * الرقم على الشارة: عدد المواقف من أي عمود معروف في القاعدة؛
-     * وإلا spot_number كرقم؛ وإلا 1.
+     * الرقم على الشارة: أعمدة صريحة، أو spots كمصفوفة/JSON، أو حقول metadata/jsonb.
      */
     function parkingSpotBadgeValue(row) {
       if (!row || typeof row !== "object") return 1;
-      /* صف طبيعي من الـ API: نفس أسماء الأعمدة — بدون "count" العام قد يكون 1 خطأً من علاقة/تجميع */
+
+      function numFrom(v) {
+        if (v == null || v === "") return 0;
+        const n = Number(v);
+        return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
+      }
+
+      function scanNested(obj) {
+        if (!obj || typeof obj !== "object") return 0;
+        const keys = [
+          "spot_count",
+          "spotCount",
+          "spots_count",
+          "total_spots",
+          "num_spots",
+          "number_of_spots",
+          "parking_count",
+          "capacity",
+          "available_spots",
+          "spots_available",
+          "total_slots",
+          "count"
+        ];
+        if (Array.isArray(obj.spots)) return obj.spots.length > 0 ? obj.spots.length : 0;
+        for (let i = 0; i < keys.length; i++) {
+          const k = keys[i];
+          if (k === "spots") continue;
+          const v = obj[k];
+          if (v != null && v !== "" && typeof v !== "object") {
+            const n = numFrom(v);
+            if (n > 0) return n;
+          }
+        }
+        return 0;
+      }
+
+      function lengthFromSpotsField(raw) {
+        if (raw == null || raw === "") return 0;
+        if (Array.isArray(raw)) return raw.length > 0 ? raw.length : 0;
+        if (typeof raw === "object" && raw !== null) {
+          const nested = scanNested(raw);
+          if (nested > 0) return nested;
+        }
+        if (typeof raw === "string") {
+          const t = raw.trim();
+          if (t.startsWith("[") || t.startsWith("{")) {
+            try {
+              const p = JSON.parse(t);
+              if (Array.isArray(p)) return p.length > 0 ? p.length : 0;
+              if (p && typeof p === "object") {
+                if (Array.isArray(p.spots)) return p.spots.length;
+                const inner =
+                  numFrom(p.spot_count) ||
+                  numFrom(p.total_spots) ||
+                  numFrom(p.spots) ||
+                  numFrom(p.count);
+                if (inner > 0) return inner;
+              }
+            } catch (e) {}
+          }
+        }
+        return numFrom(raw);
+      }
+
+      if (row.spots != null) {
+        const fromSpots = lengthFromSpotsField(row.spots);
+        if (fromSpots > 0) return fromSpots;
+      }
+
       const countKeys = [
         "spot_count",
+        "spotCount",
         "spots_count",
+        "spotsCount",
         "total_spots",
+        "totalSpots",
         "num_spots",
+        "numSpots",
         "number_of_spots",
+        "numberOfSpots",
         "parking_count",
-        "spots",
+        "parkingCount",
         "capacity",
         "available_spots",
+        "availableSpots",
         "spots_available",
+        "spotsAvailable",
         "total_slots",
-        "spotCount",
-        "totalSpots",
-        "spotsCount",
-        "count"
+        "totalSlots"
       ];
       for (let i = 0; i < countKeys.length; i++) {
-        const key = countKeys[i];
-        const raw = row[key];
-        if (raw == null || raw === "") continue;
-        if (key === "spots" && typeof raw === "object") continue;
-        const n = Number(raw);
-        if (Number.isFinite(n) && n > 0) return Math.floor(n);
+        const n = numFrom(row[countKeys[i]]);
+        if (n > 0) return n;
       }
 
-      /* لا نستخدم spot_number كعدد مواقف — غالباً رقم الموقف/الجلسة (مثل 1) فيُعرض 1 بدل 3 */
+      const jsonbKeys = ["metadata", "meta", "extras", "properties", "data", "config", "details", "json"];
+      for (let j = 0; j < jsonbKeys.length; j++) {
+        let v = row[jsonbKeys[j]];
+        if (v == null || v === "") continue;
+        if (typeof v === "string") {
+          try {
+            v = JSON.parse(v);
+          } catch (e) {
+            continue;
+          }
+        }
+        const n = scanNested(v);
+        if (n > 0) return n;
+      }
+
+      const c = numFrom(row.count);
+      if (c > 0) return c;
+
       return 1;
-    }
-
-    /** هل الصف يحتوي عمود عدّ مواقف صريح (لاختيار استعلام REST أغنى من غيره) */
-    function parkingSpotBadgeValueUsesExplicitCount(row) {
-      if (!row || typeof row !== "object") return false;
-      const explicit = [
-        "spot_count",
-        "spots_count",
-        "total_spots",
-        "num_spots",
-        "number_of_spots",
-        "parking_count",
-        "spots",
-        "capacity",
-        "available_spots",
-        "spots_available",
-        "total_slots",
-        "spotCount",
-        "totalSpots",
-        "spotsCount",
-        "count"
-      ];
-      for (let i = 0; i < explicit.length; i++) {
-        const k = explicit[i];
-        if (row[k] == null || row[k] === "") continue;
-        if (k === "spots" && typeof row[k] === "object") continue;
-        const n = Number(row[k]);
-        if (Number.isFinite(n) && n > 0) return true;
-      }
-      return false;
     }
 
     function normalizeParkingRow(row) {
@@ -4336,6 +4390,53 @@
           .replace("{count}", String(c));
       }
       return (tr.growthMapPopupDb || "").replace("{count}", String(c));
+    }
+
+    /**
+     * أرقام المنصة تعدّ صفوف parking_spots (كل صف غالباً = موقف واحد).
+     * نفس الإحداثيات كانت تُنشئ عدة علامات كلّها بـ 1 — ندمجها ونُظهر مجموع المواقف على شارة واحدة.
+     */
+    function mergeParkingRowsByLocation(rows) {
+      if (!rows || !rows.length) return [];
+      const byKey = new Map();
+      for (let i = 0; i < rows.length; i++) {
+        const r = rows[i];
+        const key = r.lat.toFixed(6) + "," + r.lng.toFixed(6);
+        if (!byKey.has(key)) byKey.set(key, []);
+        byKey.get(key).push(r);
+      }
+      const out = [];
+      byKey.forEach(function (group) {
+        if (group.length === 1) {
+          out.push(group[0]);
+          return;
+        }
+        const spot_count = group.reduce(function (s, x) {
+          return s + Math.max(1, Number(x.spot_count) || 1);
+        }, 0);
+        const labels = [];
+        const seen = {};
+        for (let j = 0; j < group.length; j++) {
+          const lab = group[j].label;
+          if (lab && !seen[lab]) {
+            seen[lab] = true;
+            labels.push(lab);
+          }
+        }
+        let createdAtMs = 0;
+        for (let k = 0; k < group.length; k++) {
+          const t = group[k].createdAtMs || 0;
+          if (t > createdAtMs) createdAtMs = t;
+        }
+        out.push({
+          lat: group[0].lat,
+          lng: group[0].lng,
+          spot_count: spot_count,
+          label: labels.join(" · ") || group[0].label,
+          createdAtMs: createdAtMs
+        });
+      });
+      return out;
     }
 
     /** نفس منطق الـ hero: داكن → parkinzi-logo-dark (رمز فاتح)، فاتح → parkinzi-logo-light (رمز داكن) */
@@ -4379,7 +4480,8 @@
     }
 
     async function fetchParkingMapRows() {
-      let lastOk = { rows: [], hasCreatedAt: false };
+      let best = { rows: [], hasCreatedAt: false };
+      let bestScore = -1;
       for (let i = 0; i < PARKING_MAP_SELECT_ATTEMPTS.length; i++) {
         const cols = PARKING_MAP_SELECT_ATTEMPTS[i];
         try {
@@ -4390,23 +4492,25 @@
           if (!res.ok) continue;
           const data = await res.json();
           const rows = Array.isArray(data) ? data : [];
+          if (rows.length === 0) continue;
           const hasCreatedAt = cols === "*" || /(^|,)created_at($|,)/.test(cols);
-          lastOk = { rows, hasCreatedAt };
-          /* أول استعلام ناجح قد يكون ناقصاً أعمدة العدد — نفضّل نتيجة فيها صفوف وأعمدة كافية، أو * */
-          if (rows.length === 0 && i + 1 < PARKING_MAP_SELECT_ATTEMPTS.length) continue;
-          if (cols === "*") return lastOk;
-          if (rows.length > 0) {
-            const sample = rows[0];
-            const v = parkingSpotBadgeValue(sample);
-            if (v > 1 || parkingSpotBadgeValueUsesExplicitCount(sample)) return lastOk;
-            if (i + 1 < PARKING_MAP_SELECT_ATTEMPTS.length) continue;
+          const nk = Object.keys(rows[0]).length;
+          let maxBadge = 1;
+          for (let r = 0; r < rows.length; r++) {
+            const b = parkingSpotBadgeValue(rows[r]);
+            if (b > maxBadge) maxBadge = b;
           }
-          return lastOk;
-        } catch {
+          const score = nk * 100 + maxBadge;
+          if (score > bestScore) {
+            bestScore = score;
+            best = { rows, hasCreatedAt };
+          }
+          if (cols === "*" && rows.length > 0) break;
+        } catch (e) {
           continue;
         }
       }
-      return lastOk.rows.length ? lastOk : { rows: [], hasCreatedAt: false };
+      return best;
     }
 
     /** عند zoom out يصغر الرمز قليلاً؛ عند zoom in يقترب من الحجم الكامل (منطقي وليس بحجم ثابت يغطي الخريطة) */
@@ -4445,7 +4549,8 @@
       }
       const dbRows = fetchResult.rows;
       const normalized = dbRows.length ? dbRows.map(normalizeParkingRow).filter(Boolean) : [];
-      const useDb = normalized.length > 0;
+      const mapRows = mergeParkingRowsByLocation(normalized);
+      const useDb = mapRows.length > 0;
 
       const useMapTiler = hasMapTilerKey();
       const map = new maplibregl.Map({
@@ -4482,7 +4587,7 @@
       }
 
       if (useDb) {
-        normalized.forEach((row) => {
+        mapRows.forEach((row) => {
           const popup = new maplibregl.Popup({ offset: 14 });
           popup.setText(parkingPopupText(row, t0));
           const markerEl = createParkinziMapMarkerElement(row);
