@@ -1269,10 +1269,11 @@
     /* شريط زمني — أسلوب Liquid Glass (ضبابية + طبقات زجاجية) */
     .growth-map-timeline {
       --timeline-fill-pct: 100%;
-      margin-top: 0;
-      margin-bottom: 1.1rem;
-      padding: 1rem 1.15rem 1.2rem;
-      border-radius: 20px;
+      margin-top: 1.1rem;
+      margin-bottom: 0;
+      padding: 1.35rem 1.35rem 1.5rem;
+      border-radius: 22px;
+      min-height: 5.5rem;
       position: relative;
       isolation: isolate;
       backdrop-filter: blur(22px) saturate(1.65);
@@ -1306,7 +1307,7 @@
     }
     .growth-map-timeline input[type="range"] {
       width: 100%;
-      height: 10px;
+      height: 28px;
       border-radius: 999px;
       appearance: none;
       cursor: default;
@@ -1334,7 +1335,7 @@
     }
     .growth-map-timeline-range-wrap {
       position: relative;
-      padding: 0.4rem 0;
+      padding: 0.65rem 0;
       z-index: 0;
       -webkit-user-select: none;
       user-select: none;
@@ -1346,7 +1347,7 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      height: 11px;
+      height: 20px;
       border-radius: 999px;
       width: var(--timeline-fill-pct, 100%);
       max-width: 100%;
@@ -1380,7 +1381,7 @@
       z-index: 1;
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
-      height: 10px;
+      height: 20px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.22);
@@ -1397,10 +1398,10 @@
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
       appearance: none;
-      width: 38px;
-      height: 16px;
-      margin-top: -4px;
-      border-radius: 9px;
+      width: 52px;
+      height: 26px;
+      margin-top: -3px;
+      border-radius: 13px;
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
       border: none;
       box-shadow:
@@ -1426,7 +1427,7 @@
       background: rgba(255, 255, 255, 0.45);
     }
     .growth-map-timeline input[type="range"]::-moz-range-track {
-      height: 10px;
+      height: 20px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.22);
@@ -1439,10 +1440,10 @@
       border: 1px solid rgba(255, 255, 255, 0.85);
     }
     .growth-map-timeline input[type="range"]::-moz-range-thumb {
-      width: 38px;
-      height: 16px;
+      width: 52px;
+      height: 26px;
       border: none;
-      border-radius: 9px;
+      border-radius: 13px;
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
       box-shadow:
         0 2px 12px rgba(0, 0, 0, 0.3),
@@ -1468,10 +1469,10 @@
     .growth-map-timeline-ends {
       display: flex;
       justify-content: space-between;
-      margin-top: 0.55rem;
-      font-size: 0.78rem;
-      color: var(--text-tertiary);
-      font-weight: 500;
+      margin-top: 0.85rem;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      font-weight: 600;
       letter-spacing: 0.02em;
     }
 
@@ -2255,7 +2256,8 @@
       }
 
       .growth-map-timeline {
-        padding: 0.9rem 1rem 1rem;
+        padding: 1.15rem 1.2rem 1.3rem;
+        min-height: 5rem;
       }
 
       .platform-stats {
@@ -2357,7 +2359,8 @@
       }
 
       .growth-map-timeline {
-        padding: 0.85rem 0.9rem 0.95rem;
+        padding: 1.05rem 1rem 1.2rem;
+        min-height: 4.75rem;
       }
 
       .platform-stats {
@@ -3043,7 +3046,8 @@
 
   <section class="growth-map-section" id="coverage" aria-labelledby="growthMapHeading">
     <h2 class="section-title" id="growthMapHeading" data-i18n="growthMapTitle">تطور تغطية التطبيق</h2>
-    <div class="growth-map-timeline" id="growthMapTimeline" hidden>
+    <div id="growthMap" class="growth-map-container" dir="ltr" role="application" data-i18n-aria-label="growthMapAria"></div>
+    <div class="growth-map-timeline" id="growthMapTimeline">
       <div class="growth-map-timeline-range-wrap">
         <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
       </div>
@@ -3052,7 +3056,6 @@
         <span id="growthMapTimelineEndLabel"></span>
       </div>
     </div>
-    <div id="growthMap" class="growth-map-container" dir="ltr" role="application" data-i18n-aria-label="growthMapAria"></div>
   </section>
 
   <section class="features" id="features">
@@ -4205,38 +4208,102 @@
     /** بداية الشريط الزمني للخريطة: ١٥ مارس ٢٠٢٦ (محلياً) — لتفادي أيام بلا بيانات يظهر فيها الشريط أصفاراً. */
     const GROWTH_MAP_TIMELINE_START = new Date(2026, 2, 15);
 
-    /** أعمدة جدول parking_spots — يُجرّب عدة قوائم حتى ينجح الطلب (created_at اختياري في القاعدة). */
+    /**
+     * أعمدة جدول parking_spots — يُجرّب عدة قوائم حتى ينجح الطلب.
+     * لو الأعمدة lat/lng بدل latitude/longitude، المحاولات القديمة كانت تفشل كلها فلا تظهر أي علامة.
+     */
     const PARKING_MAP_SELECT_ATTEMPTS = [
+      "*",
       "latitude,longitude,spot_name,national_address,spot_number,spot_count,created_at",
+      "latitude,longitude,spot_name,national_address,spot_number,spots,created_at",
       "latitude,longitude,spot_name,national_address,spot_number,created_at",
-      "latitude,longitude,spot_name,national_address,spot_number"
+      "latitude,longitude,spot_name,national_address,spot_number",
+      "lat,lng,spot_name,national_address,spot_number,spot_count,created_at",
+      "lat,lng,spot_name,national_address,spot_number,spots,created_at",
+      "lat,lng,spot_name,national_address,spot_number,created_at",
+      "lat,lng,spot_name,national_address,spot_number",
+      "latitude,longitude,spot_number,spot_count,created_at",
+      "lat,lng,spot_number,spot_count,created_at",
+      "latitude,longitude,spot_number,spots,created_at",
+      "lat,lng,spot_number,spots,created_at",
+      "latitude,longitude,created_at",
+      "lat,lng,created_at",
+      "latitude,longitude,spot_count",
+      "lat,lng,spot_count",
+      "latitude,longitude,spots",
+      "lat,lng,spots",
+      "latitude,longitude",
+      "lat,lng"
     ];
 
     /** حدود المملكة العربية السعودية تقريباً: جنوب غرب، شمال شرق [lng, lat] */
     const SAUDI_ARABIA_BOUNDS = [[34.5, 16.0], [55.7, 32.25]];
 
     /**
-     * الرقم على الشارة: spot_count (عدد المواقف) إن وُجد في الصف؛
-     * وإلا رقم الموقف spot_number؛ وإلا 1.
+     * الرقم على الشارة: عدد المواقف من أي عمود معروف في القاعدة؛
+     * وإلا spot_number كرقم؛ وإلا 1.
      */
     function parkingSpotBadgeValue(row) {
-      const sc = row.spot_count != null ? Number(row.spot_count) : NaN;
-      if (Number.isFinite(sc) && sc > 0) return Math.floor(sc);
-
-      const cnt = row.count != null ? Number(row.count) : NaN;
-      if (Number.isFinite(cnt) && cnt > 0) return Math.floor(cnt);
-
-      if (row.spot_number != null && row.spot_number !== "") {
-        const s = String(row.spot_number).trim();
-        const asNum = Number(s);
-        if (Number.isFinite(asNum) && asNum > 0) return Math.floor(asNum);
-        const m = s.match(/\d+/);
-        if (m) {
-          const v = parseInt(m[0], 10);
-          if (Number.isFinite(v) && v > 0) return v;
-        }
+      if (!row || typeof row !== "object") return 1;
+      /* صف طبيعي من الـ API: نفس أسماء الأعمدة — بدون "count" العام قد يكون 1 خطأً من علاقة/تجميع */
+      const countKeys = [
+        "spot_count",
+        "spots_count",
+        "total_spots",
+        "num_spots",
+        "number_of_spots",
+        "parking_count",
+        "spots",
+        "capacity",
+        "available_spots",
+        "spots_available",
+        "total_slots",
+        "spotCount",
+        "totalSpots",
+        "spotsCount",
+        "count"
+      ];
+      for (let i = 0; i < countKeys.length; i++) {
+        const key = countKeys[i];
+        const raw = row[key];
+        if (raw == null || raw === "") continue;
+        if (key === "spots" && typeof raw === "object") continue;
+        const n = Number(raw);
+        if (Number.isFinite(n) && n > 0) return Math.floor(n);
       }
+
+      /* لا نستخدم spot_number كعدد مواقف — غالباً رقم الموقف/الجلسة (مثل 1) فيُعرض 1 بدل 3 */
       return 1;
+    }
+
+    /** هل الصف يحتوي عمود عدّ مواقف صريح (لاختيار استعلام REST أغنى من غيره) */
+    function parkingSpotBadgeValueUsesExplicitCount(row) {
+      if (!row || typeof row !== "object") return false;
+      const explicit = [
+        "spot_count",
+        "spots_count",
+        "total_spots",
+        "num_spots",
+        "number_of_spots",
+        "parking_count",
+        "spots",
+        "capacity",
+        "available_spots",
+        "spots_available",
+        "total_slots",
+        "spotCount",
+        "totalSpots",
+        "spotsCount",
+        "count"
+      ];
+      for (let i = 0; i < explicit.length; i++) {
+        const k = explicit[i];
+        if (row[k] == null || row[k] === "") continue;
+        if (k === "spots" && typeof row[k] === "object") continue;
+        const n = Number(row[k]);
+        if (Number.isFinite(n) && n > 0) return true;
+      }
+      return false;
     }
 
     function normalizeParkingRow(row) {
@@ -4251,6 +4318,11 @@
       if (row.created_at != null && row.created_at !== "") {
         const d = new Date(String(row.created_at));
         if (!Number.isNaN(d.getTime())) createdAtMs = d.getTime();
+      } else {
+        /* بدون created_at: لا تضع تاريخاً بعد «اليوم» وإلا يُعتبر الموقف في المستقبل ويختفي من الخريطة عند أقصى الشريط */
+        const startMs = GROWTH_MAP_TIMELINE_START.getTime();
+        const nowMs = Date.now();
+        createdAtMs = startMs > nowMs ? nowMs : startMs;
       }
       return { lat: Number(lat), lng: Number(lng), spot_count, label, createdAtMs };
     }
@@ -4295,7 +4367,8 @@
       badge.className = "parkinzi-map-marker-badge";
       const countEl = document.createElement("span");
       countEl.className = "parkinzi-map-marker-count";
-      countEl.textContent = "1";
+      const badgeVal = Math.max(1, Math.floor(Number(parkingSpotBadgeValue(row))) || 1);
+      countEl.textContent = String(badgeVal);
       badge.appendChild(countEl);
 
       iconWrap.appendChild(img);
@@ -4306,6 +4379,7 @@
     }
 
     async function fetchParkingMapRows() {
+      let lastOk = { rows: [], hasCreatedAt: false };
       for (let i = 0; i < PARKING_MAP_SELECT_ATTEMPTS.length; i++) {
         const cols = PARKING_MAP_SELECT_ATTEMPTS[i];
         try {
@@ -4316,13 +4390,23 @@
           if (!res.ok) continue;
           const data = await res.json();
           const rows = Array.isArray(data) ? data : [];
-          const hasCreatedAt = /(^|,)created_at($|,)/.test(cols);
-          return { rows, hasCreatedAt };
+          const hasCreatedAt = cols === "*" || /(^|,)created_at($|,)/.test(cols);
+          lastOk = { rows, hasCreatedAt };
+          /* أول استعلام ناجح قد يكون ناقصاً أعمدة العدد — نفضّل نتيجة فيها صفوف وأعمدة كافية، أو * */
+          if (rows.length === 0 && i + 1 < PARKING_MAP_SELECT_ATTEMPTS.length) continue;
+          if (cols === "*") return lastOk;
+          if (rows.length > 0) {
+            const sample = rows[0];
+            const v = parkingSpotBadgeValue(sample);
+            if (v > 1 || parkingSpotBadgeValueUsesExplicitCount(sample)) return lastOk;
+            if (i + 1 < PARKING_MAP_SELECT_ATTEMPTS.length) continue;
+          }
+          return lastOk;
         } catch {
           continue;
         }
       }
-      return { rows: [], hasCreatedAt: false };
+      return lastOk.rows.length ? lastOk : { rows: [], hasCreatedAt: false };
     }
 
     /** عند zoom out يصغر الرمز قليلاً؛ عند zoom in يقترب من الحجم الكامل (منطقي وليس بحجم ثابت يغطي الخريطة) */
@@ -4360,7 +4444,6 @@
         fetchResult = { rows: [], hasCreatedAt: false };
       }
       const dbRows = fetchResult.rows;
-      const hasCreatedAtColumn = fetchResult.hasCreatedAt;
       const normalized = dbRows.length ? dbRows.map(normalizeParkingRow).filter(Boolean) : [];
       const useDb = normalized.length > 0;
 
@@ -4651,7 +4734,7 @@
         await applyGrowthMapTimelineStatsOnly(sliderPosition);
       }
 
-      if (useDb && hasCreatedAtColumn && timelineEl && sliderEl) {
+      if (timelineEl && sliderEl) {
         const timelineStartDay = new Date(
           GROWTH_MAP_TIMELINE_START.getFullYear(),
           GROWTH_MAP_TIMELINE_START.getMonth(),
@@ -4772,8 +4855,6 @@
         });
         setTimelineFillFromPosition(TIMELINE_SLIDER_STEPS);
         void applyGrowthMapTimelineFull(TIMELINE_SLIDER_STEPS);
-      } else if (timelineEl) {
-        timelineEl.hidden = true;
       }
 
       map.on("zoom", updateParkinziMarkerZoomScales);
