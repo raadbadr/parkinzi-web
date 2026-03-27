@@ -4360,7 +4360,6 @@
         fetchResult = { rows: [], hasCreatedAt: false };
       }
       const dbRows = fetchResult.rows;
-      const hasCreatedAtColumn = fetchResult.hasCreatedAt;
       const normalized = dbRows.length ? dbRows.map(normalizeParkingRow).filter(Boolean) : [];
       const useDb = normalized.length > 0;
 
@@ -4651,7 +4650,8 @@
         await applyGrowthMapTimelineStatsOnly(sliderPosition);
       }
 
-      if (useDb && hasCreatedAtColumn && timelineEl && sliderEl) {
+      /* يظهر الشريط مع أي بيانات خريطة: حتى بدون عمود created_at في الجدول يُستخدم createdAtMs الافتراضي في normalizeParkingRow */
+      if (useDb && timelineEl && sliderEl) {
         const timelineStartDay = new Date(
           GROWTH_MAP_TIMELINE_START.getFullYear(),
           GROWTH_MAP_TIMELINE_START.getMonth(),
