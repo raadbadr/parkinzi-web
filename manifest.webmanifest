@@ -1,7 +1,7 @@
 {
   "name": "PARKINZI",
   "short_name": "PARKINZI",
-  "description": "مواقف ذكية في جيبك",
+  "description": "موقفك في جيبك",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
