@@ -5084,22 +5084,22 @@
         timelineEl.hidden = false;
         lastTimelineCutoffMs = null;
 
+        /* thumb = 36px — المتصفح يحط مركزه عند: 18px + ratio * (width - 36px)
+           نستخدم نفس المعادلة للعلامات عشان تتطابق مع الـ thumb */
+        var THUMB_W = 36;
+        function milestoneLeft(ratio, isRtl) {
+          var r = isRtl ? 1 - ratio : ratio;
+          return "calc(" + (THUMB_W / 2) + "px + (100% - " + THUMB_W + "px) * " + r + ")";
+        }
+
         const launchMilestoneEl = document.getElementById("growthMapTimelineLaunch");
         updateGrowthMapLaunchMilestone = function () {
           if (!launchMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) {
-            launchMilestoneEl.hidden = true;
-            return;
-          }
+          if (timelineSpanMs <= 0) { launchMilestoneEl.hidden = true; return; }
           const launchDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 1));
-          if (launchDayEnd < minCutoffMs || launchDayEnd > maxCutoffMs) {
-            launchMilestoneEl.hidden = true;
-            return;
-          }
+          if (launchDayEnd < minCutoffMs || launchDayEnd > maxCutoffMs) { launchMilestoneEl.hidden = true; return; }
           const r = (launchDayEnd - minCutoffMs) / timelineSpanMs;
-          const rtl = timelineEl.getAttribute("dir") === "rtl";
-          const pctFromLeft = Math.max(0, Math.min(100, (rtl ? 1 - r : r) * 100));
-          launchMilestoneEl.style.left = pctFromLeft + "%";
+          launchMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
           launchMilestoneEl.hidden = false;
         };
         updateGrowthMapLaunchMilestone();
@@ -5107,29 +5107,20 @@
         const releaseMilestoneEl = document.getElementById("growthMapTimelineRelease");
         updateGrowthMapReleaseMilestone = function () {
           if (!releaseMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) {
-            releaseMilestoneEl.hidden = true;
-            return;
-          }
+          if (timelineSpanMs <= 0) { releaseMilestoneEl.hidden = true; return; }
           const releaseDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
-          if (releaseDayEnd < minCutoffMs || releaseDayEnd > maxCutoffMs) {
-            releaseMilestoneEl.hidden = true;
-            return;
-          }
+          if (releaseDayEnd < minCutoffMs || releaseDayEnd > maxCutoffMs) { releaseMilestoneEl.hidden = true; return; }
           const r = (releaseDayEnd - minCutoffMs) / timelineSpanMs;
-          const rtl = timelineEl.getAttribute("dir") === "rtl";
-          const pctFromLeft = Math.max(0, Math.min(100, (rtl ? 1 - r : r) * 100));
-          releaseMilestoneEl.style.left = pctFromLeft + "%";
+          releaseMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
           releaseMilestoneEl.hidden = false;
         };
         updateGrowthMapReleaseMilestone();
 
         /* علامة "اليوم" تحت السلايدر */
         const todayMarkerEl = document.getElementById("growthMapTimelineToday");
-        const todayPctOnTimeline = timelineSpanMs > 0 ? ((todayMaxMs - minCutoffMs) / timelineSpanMs) * 100 : 100;
         if (todayMarkerEl && timelineSpanMs > 0) {
-          const rtl0 = timelineEl.getAttribute("dir") === "rtl";
-          todayMarkerEl.style.left = (rtl0 ? 100 - todayPctOnTimeline : todayPctOnTimeline) + "%";
+          const todayR = (todayMaxMs - minCutoffMs) / timelineSpanMs;
+          todayMarkerEl.style.left = milestoneLeft(todayR, timelineEl.getAttribute("dir") === "rtl");
           todayMarkerEl.hidden = false;
         }
 
