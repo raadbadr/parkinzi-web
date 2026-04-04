@@ -1535,6 +1535,34 @@
       letter-spacing: 0.02em;
     }
 
+    /* علامة "اليوم" تحت السلايدر */
+    .growth-map-timeline-today {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .growth-map-timeline-today-label {
+      position: absolute;
+      top: calc(50% + 13px);
+      white-space: nowrap;
+      font-size: 0.55rem;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.02em;
+    }
+    [data-theme="light"] .growth-map-timeline-today-label {
+      color: rgba(0, 0, 0, 0.45);
+    }
+
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline:has(.growth-map-timeline-launch:not([hidden])) {
       padding-top: 0.85rem;
@@ -3202,6 +3230,9 @@
           <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
         </div>
         <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
+        <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
+          <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">اليوم</span>
+        </div>
       </div>
       <div class="growth-map-timeline-ends">
         <span id="growthMapTimelineStartLabel"></span>
@@ -3467,7 +3498,8 @@
         growthMapLaunchLabel: "نسخة تجريبية 1.1",
         growthMapLaunchDate: "1 أبريل",
         growthMapReleaseLabel: "الإطلاق الرسمي",
-        growthMapReleaseDate: "10 أبريل"
+        growthMapReleaseDate: "10 أبريل",
+        growthMapTodayLabel: "اليوم"
       },
       en: {
         tagline: "Your parking spot in your pocket",
@@ -3555,7 +3587,8 @@
         growthMapLaunchLabel: "Beta 1.1 (Build 1)",
         growthMapLaunchDate: "Apr 1",
         growthMapReleaseLabel: "Official Launch",
-        growthMapReleaseDate: "Apr 10"
+        growthMapReleaseDate: "Apr 10",
+        growthMapTodayLabel: "Today"
       },
       fr: {
         tagline: "Votre place dans votre poche",
@@ -3644,7 +3677,8 @@
         growthMapLaunchLabel: "Bêta 1.1 (Build 1)",
         growthMapLaunchDate: "1 avr.",
         growthMapReleaseLabel: "Lancement officiel",
-        growthMapReleaseDate: "10 avr."
+        growthMapReleaseDate: "10 avr.",
+        growthMapTodayLabel: "Aujourd'hui"
       },
       ur: {
         tagline: "آپ کی جیب میں پارکنگ",
@@ -3732,7 +3766,8 @@
         growthMapLaunchLabel: "بیٹا 1.1 (بلڈ 1)",
         growthMapLaunchDate: "1 اپریل",
         growthMapReleaseLabel: "آفیشل لانچ",
-        growthMapReleaseDate: "10 اپریل"
+        growthMapReleaseDate: "10 اپریل",
+        growthMapTodayLabel: "آج"
       }
     };
 
@@ -5045,7 +5080,7 @@
         sliderEl.setAttribute("aria-valuemax", String(TIMELINE_SLIDER_STEPS));
         sliderEl.setAttribute("aria-valuenow", String(SLIDER_MAX_TODAY));
         if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
-        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(todayMaxMs);
+        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
         timelineEl.hidden = false;
         lastTimelineCutoffMs = null;
 
@@ -5088,6 +5123,35 @@
           releaseMilestoneEl.hidden = false;
         };
         updateGrowthMapReleaseMilestone();
+
+        /* علامة "اليوم" تحت السلايدر */
+        const todayMarkerEl = document.getElementById("growthMapTimelineToday");
+        const todayPctOnTimeline = timelineSpanMs > 0 ? ((todayMaxMs - minCutoffMs) / timelineSpanMs) * 100 : 100;
+        if (todayMarkerEl && timelineSpanMs > 0) {
+          const rtl0 = timelineEl.getAttribute("dir") === "rtl";
+          todayMarkerEl.style.left = (rtl0 ? 100 - todayPctOnTimeline : todayPctOnTimeline) + "%";
+          todayMarkerEl.hidden = false;
+        }
+
+        /* Snap: مواقع المايلستونز كـ slider steps */
+        const milestoneSteps = [];
+        var betaDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 1));
+        if (betaDayEnd >= minCutoffMs && betaDayEnd <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(((betaDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
+        var relDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
+        if (relDayEnd >= minCutoffMs && relDayEnd <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(((relDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
+        milestoneSteps.push(SLIDER_MAX_TODAY);
+        const SNAP_THRESHOLD = Math.round(TIMELINE_SLIDER_STEPS * 0.015);
+        function snapToMilestone(v) {
+          for (var i = 0; i < milestoneSteps.length; i++) {
+            if (Math.abs(v - milestoneSteps[i]) <= SNAP_THRESHOLD) return milestoneSteps[i];
+          }
+          return v;
+        }
+
         window.addEventListener(
           "resize",
           function () {
@@ -5099,7 +5163,6 @@
         const endSliderDrag = function () {
           timelineEl.classList.remove("is-slider-dragging");
         };
-        /** سحب يدوي: القيمة من clientX؛ pointer capture آمن هنا لأننا لا نعتمد على السحب الأصلي للـ range. */
         let growthMapSliderPointerActive = false;
         let growthMapSliderCapturedId = null;
         function growthMapSliderValueFromClientX(clientX) {
@@ -5113,10 +5176,10 @@
             ratio = 1 - ratio;
           }
           const value = Math.round(min + ratio * (max - min));
-          return Math.max(min, Math.min(max, value));
+          return snapToMilestone(Math.max(min, Math.min(SLIDER_MAX_TODAY, value)));
         }
         function growthMapSliderApplyValueIfChanged(v) {
-          var clamped = Math.min(v, SLIDER_MAX_TODAY);
+          var clamped = snapToMilestone(Math.min(v, SLIDER_MAX_TODAY));
           if (Number(sliderEl.value) === clamped) return;
           sliderEl.value = String(clamped);
           sliderEl.dispatchEvent(new Event("input", { bubbles: true }));
