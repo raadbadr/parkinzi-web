@@ -1476,29 +1476,32 @@
       letter-spacing: 0.02em;
     }
 
-    /* يوم إطلاق التطبيق — 1 أبريل 2026 */
+    /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline:has(.growth-map-timeline-launch:not([hidden])) {
-      padding-top: 1.5rem;
+      padding-top: 0.85rem;
     }
     .growth-map-timeline-launch {
       position: absolute;
       left: 0;
-      bottom: calc(100% - 2px);
+      top: 0;
+      bottom: 0;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       pointer-events: none;
       z-index: 2;
-      max-width: min(140px, 42vw);
     }
     .growth-map-timeline-launch-label {
-      font-size: 0.68rem;
+      position: absolute;
+      bottom: calc(50% + 11px);
+      white-space: nowrap;
+      font-size: 0.58rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1;
       text-align: center;
       color: #ffb347;
-      margin-bottom: 3px;
       letter-spacing: 0.03em;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
     }
@@ -1507,18 +1510,37 @@
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
     }
     .growth-map-timeline-launch-tick {
-      width: 4px;
-      height: 20px;
-      border-radius: 3px;
+      width: 3px;
+      height: 18px;
+      border-radius: 2px;
       background: linear-gradient(180deg, #ffd180 0%, #ff9100 45%, #e65100 100%);
       box-shadow:
-        0 0 12px rgba(255, 145, 0, 0.55),
-        0 0 4px rgba(255, 180, 80, 0.9),
+        0 0 10px rgba(255, 145, 0, 0.5),
+        0 0 3px rgba(255, 180, 80, 0.8),
         inset 0 1px 0 rgba(255, 255, 255, 0.45);
     }
     [data-theme="light"] .growth-map-timeline-launch-tick {
       box-shadow:
-        0 0 10px rgba(230, 100, 0, 0.35),
+        0 0 8px rgba(230, 100, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    /* الإطلاق الرسمي — لون أخضر مميز */
+    .growth-map-timeline-release .growth-map-timeline-launch-label {
+      color: #69f0ae;
+    }
+    [data-theme="light"] .growth-map-timeline-release .growth-map-timeline-launch-label {
+      color: #2e7d32;
+    }
+    .growth-map-timeline-release .growth-map-timeline-launch-tick {
+      background: linear-gradient(180deg, #b9f6ca 0%, #69f0ae 45%, #2e7d32 100%);
+      box-shadow:
+        0 0 10px rgba(105, 240, 174, 0.5),
+        0 0 3px rgba(185, 246, 202, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    [data-theme="light"] .growth-map-timeline-release .growth-map-timeline-launch-tick {
+      box-shadow:
+        0 0 8px rgba(46, 125, 50, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
@@ -3095,7 +3117,11 @@
     <div class="growth-map-timeline" id="growthMapTimeline">
       <div class="growth-map-timeline-range-wrap">
         <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
-          <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">إطلاق التطبيق</span>
+          <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">نسخة تجريبية 1.1</span>
+          <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+        </div>
+        <div class="growth-map-timeline-launch growth-map-timeline-release" id="growthMapTimelineRelease" hidden>
+          <span class="growth-map-timeline-launch-label" data-i18n="growthMapReleaseLabel">الإطلاق الرسمي</span>
           <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
         </div>
         <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
@@ -3361,7 +3387,8 @@
         growthMapPopupDb: "{count} مواقف",
         growthMapPopupDbNamed: "{label} — {count} مواقف",
         growthMapTimelineSliderAria: "خط زمني للتغطية",
-        growthMapLaunchLabel: "إطلاق التطبيق"
+        growthMapLaunchLabel: "نسخة تجريبية 1.1",
+        growthMapReleaseLabel: "الإطلاق الرسمي"
       },
       en: {
         tagline: "Your parking spot in your pocket",
@@ -3446,7 +3473,8 @@
         growthMapPopupDb: "{count} spots",
         growthMapPopupDbNamed: "{label} — {count} spots",
         growthMapTimelineSliderAria: "Coverage timeline",
-        growthMapLaunchLabel: "App launch"
+        growthMapLaunchLabel: "Beta 1.1 (Build 1)",
+        growthMapReleaseLabel: "Official Launch"
       },
       fr: {
         tagline: "Votre place dans votre poche",
@@ -3532,7 +3560,8 @@
         growthMapPopupDb: "{count} places",
         growthMapPopupDbNamed: "{label} — {count} places",
         growthMapTimelineSliderAria: "Chronologie de la couverture",
-        growthMapLaunchLabel: "Lancement de l’app"
+        growthMapLaunchLabel: "Bêta 1.1 (Build 1)",
+        growthMapReleaseLabel: "Lancement officiel"
       },
       ur: {
         tagline: "آپ کی جیب میں پارکنگ",
@@ -3617,7 +3646,8 @@
         growthMapPopupDb: "{count} مواقف",
         growthMapPopupDbNamed: "{label} — {count} مواقف",
         growthMapTimelineSliderAria: "کوریج ٹائم لائن",
-        growthMapLaunchLabel: "ایپ لانچ"
+        growthMapLaunchLabel: "بیٹا 1.1 (بلڈ 1)",
+        growthMapReleaseLabel: "آفیشل لانچ"
       }
     };
 
@@ -4672,6 +4702,7 @@
       const startLabelEl = document.getElementById("growthMapTimelineStartLabel");
       const endLabelEl = document.getElementById("growthMapTimelineEndLabel");
       let updateGrowthMapLaunchMilestone = function () {};
+      let updateGrowthMapReleaseMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
         const lo = lang();
@@ -4906,8 +4937,10 @@
           GROWTH_MAP_TIMELINE_START.getDate()
         );
         const now = new Date();
-        /* نهاية النطاق: نفس يوم اليوم فقط — لا يمتد الشريط إلى تواريخ مستقبلية */
-        let timelineEndDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        /* نهاية النطاق: يمتد حتى يوم الإطلاق الرسمي (10 أبريل 2026) أو اليوم — أيهما أبعد */
+        const releaseDayRef = new Date(2026, 3, 10);
+        const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let timelineEndDay = todayDay > releaseDayRef ? todayDay : releaseDayRef;
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
         minCutoffMs = growthMapTimelineDayEndMs(0);
@@ -4944,10 +4977,31 @@
           launchMilestoneEl.hidden = false;
         };
         updateGrowthMapLaunchMilestone();
+
+        const releaseMilestoneEl = document.getElementById("growthMapTimelineRelease");
+        updateGrowthMapReleaseMilestone = function () {
+          if (!releaseMilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) {
+            releaseMilestoneEl.hidden = true;
+            return;
+          }
+          const releaseDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
+          if (releaseDayEnd < minCutoffMs || releaseDayEnd > maxCutoffMs) {
+            releaseMilestoneEl.hidden = true;
+            return;
+          }
+          const r = (releaseDayEnd - minCutoffMs) / timelineSpanMs;
+          const rtl = timelineEl.getAttribute("dir") === "rtl";
+          const pctFromLeft = Math.max(0, Math.min(100, (rtl ? 1 - r : r) * 100));
+          releaseMilestoneEl.style.left = pctFromLeft + "%";
+          releaseMilestoneEl.hidden = false;
+        };
+        updateGrowthMapReleaseMilestone();
         window.addEventListener(
           "resize",
           function () {
             requestAnimationFrame(updateGrowthMapLaunchMilestone);
+            requestAnimationFrame(updateGrowthMapReleaseMilestone);
           },
           { passive: true }
         );
@@ -5109,6 +5163,7 @@
           if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
           if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
           updateGrowthMapLaunchMilestone();
+          updateGrowthMapReleaseMilestone();
         }
       };
       setTimeout(() => map.resize(), 400);
