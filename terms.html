@@ -12,6 +12,34 @@
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
   <style>
+    /* Cross-browser reset + font enforcement */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    html {
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    button, input, select, textarea, optgroup {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+      margin: 0;
+    }
+    button, [type="button"], [type="reset"], [type="submit"] {
+      -webkit-appearance: button;
+      appearance: button;
+    }
+    img, svg, video, canvas {
+      display: block;
+      max-width: 100%;
+    }
+    a { color: inherit; }
+
     :root, [data-theme="light"] {
       --primary: rgb(0, 104, 184);
       --primary-light: rgb(25, 140, 220);

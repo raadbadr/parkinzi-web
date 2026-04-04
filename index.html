@@ -29,6 +29,37 @@
   <link rel="stylesheet" href="footer.css">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="">
   <style>
+    /* ============================================
+       Cross-browser reset + font enforcement
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    html {
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    button, input, select, textarea, optgroup {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+      margin: 0;
+    }
+    button, [type="button"], [type="reset"], [type="submit"] {
+      -webkit-appearance: button;
+      appearance: button;
+    }
+    img, svg, video, canvas {
+      display: block;
+      max-width: 100%;
+    }
+    a { color: inherit; }
+    /* ============================================ */
+
     /* Monoton Font - Local */
     @font-face {
       font-family: 'Monoton';
@@ -144,6 +175,8 @@
     
     img {
       -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
       user-select: none;
     }
     
@@ -1078,6 +1111,8 @@
       font-weight: 700;
       letter-spacing: 0.02em;
       transition: opacity 0.2s ease, transform 0.2s ease;
+      -webkit-user-select: none;
+      -moz-user-select: none;
       user-select: none;
       z-index: 2;
     }
@@ -1309,6 +1344,8 @@
       width: 100%;
       height: 20px;
       border-radius: 999px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
       appearance: none;
       cursor: default;
       background: transparent;
@@ -1335,11 +1372,11 @@
     }
     .growth-map-timeline-range-wrap {
       position: relative;
-      padding: 0.4rem 0;
+      height: 20px;
       z-index: 0;
       -webkit-user-select: none;
-      user-select: none;
       -moz-user-select: none;
+      user-select: none;
     }
     .growth-map-timeline-range-wrap::before {
       content: "";
@@ -1356,13 +1393,35 @@
       transition: width 0.14s cubic-bezier(0.25, 0.8, 0.25, 1);
       background: linear-gradient(
         90deg,
-        rgba(0, 210, 255, 0.55) 0%,
-        rgba(100, 180, 255, 0.38) 55%,
-        rgba(160, 210, 255, 0.22) 100%
+        rgba(0, 160, 220, 0.45) 0%,
+        rgba(80, 160, 230, 0.3) 55%,
+        rgba(130, 190, 240, 0.18) 100%
       );
+      box-shadow: none;
+    }
+    .growth-map-timeline-range-wrap::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 14px;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: -1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow:
-        0 0 20px rgba(0, 200, 255, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        inset 0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .growth-map-timeline-range-wrap::after {
+      background: rgba(0, 60, 100, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.9);
     }
     .growth-map-timeline[dir="rtl"] .growth-map-timeline-range-wrap::before {
       left: auto;
@@ -1371,36 +1430,38 @@
     [data-theme="light"] .growth-map-timeline-range-wrap::before {
       background: linear-gradient(
         90deg,
-        rgba(0, 140, 220, 0.35) 0%,
-        rgba(80, 160, 230, 0.22) 100%
+        rgba(0, 140, 220, 0.3) 0%,
+        rgba(80, 160, 230, 0.18) 100%
       );
-      box-shadow: 0 0 16px rgba(0, 120, 200, 0.15);
+      box-shadow: none;
     }
     .growth-map-timeline-range-wrap input[type="range"] {
       position: relative;
       z-index: 1;
+      width: 100%;
+      height: 20px;
+      margin: 0;
+      padding: 0;
+      display: block;
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
-      height: 14px;
+      height: 20px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        inset 0 1px 2px rgba(0, 0, 0, 0.15),
-        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
-      background: rgba(0, 60, 100, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow:
-        inset 0 1px 3px rgba(0, 0, 0, 0.08),
-        inset 0 -1px 1px rgba(255, 255, 255, 0.9);
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
       appearance: none;
       width: 36px;
       height: 20px;
-      margin-top: -3px;
+      margin-top: 0;
       border-radius: 10px;
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
       border: none;
@@ -1427,17 +1488,15 @@
       background: rgba(255, 255, 255, 0.45);
     }
     .growth-map-timeline input[type="range"]::-moz-range-track {
-      height: 14px;
+      height: 20px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        inset 0 1px 2px rgba(0, 0, 0, 0.15),
-        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-track {
-      background: rgba(0, 60, 100, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.85);
+      background: transparent;
+      border: none;
     }
     .growth-map-timeline input[type="range"]::-moz-range-thumb {
       width: 36px;
@@ -1508,6 +1567,20 @@
     [data-theme="light"] .growth-map-timeline-launch-label {
       color: #c2410c;
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .growth-map-timeline-launch-date {
+      position: absolute;
+      top: calc(50% + 11px);
+      white-space: nowrap;
+      font-size: 0.52rem;
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      color: rgba(255, 179, 71, 0.7);
+      letter-spacing: 0.02em;
+    }
+    [data-theme="light"] .growth-map-timeline-launch-date {
+      color: rgba(194, 65, 12, 0.65);
     }
     .growth-map-timeline-launch-tick {
       width: 3px;
@@ -1659,6 +1732,8 @@
     }
     .growth-map-container .parkinzi-map-marker {
       cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
       user-select: none;
       transform-origin: bottom center;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.38));
@@ -3118,10 +3193,12 @@
       <div class="growth-map-timeline-range-wrap">
         <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
           <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">نسخة تجريبية 1.1</span>
+          <span class="growth-map-timeline-launch-date" data-i18n="growthMapLaunchDate">1 أبريل</span>
           <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
         </div>
         <div class="growth-map-timeline-launch growth-map-timeline-release" id="growthMapTimelineRelease" hidden>
           <span class="growth-map-timeline-launch-label" data-i18n="growthMapReleaseLabel">الإطلاق الرسمي</span>
+          <span class="growth-map-timeline-launch-date" data-i18n="growthMapReleaseDate">10 أبريل</span>
           <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
         </div>
         <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
@@ -3388,7 +3465,9 @@
         growthMapPopupDbNamed: "{label} — {count} مواقف",
         growthMapTimelineSliderAria: "خط زمني للتغطية",
         growthMapLaunchLabel: "نسخة تجريبية 1.1",
-        growthMapReleaseLabel: "الإطلاق الرسمي"
+        growthMapLaunchDate: "1 أبريل",
+        growthMapReleaseLabel: "الإطلاق الرسمي",
+        growthMapReleaseDate: "10 أبريل"
       },
       en: {
         tagline: "Your parking spot in your pocket",
@@ -3474,7 +3553,9 @@
         growthMapPopupDbNamed: "{label} — {count} spots",
         growthMapTimelineSliderAria: "Coverage timeline",
         growthMapLaunchLabel: "Beta 1.1 (Build 1)",
-        growthMapReleaseLabel: "Official Launch"
+        growthMapLaunchDate: "Apr 1",
+        growthMapReleaseLabel: "Official Launch",
+        growthMapReleaseDate: "Apr 10"
       },
       fr: {
         tagline: "Votre place dans votre poche",
@@ -3561,7 +3642,9 @@
         growthMapPopupDbNamed: "{label} — {count} places",
         growthMapTimelineSliderAria: "Chronologie de la couverture",
         growthMapLaunchLabel: "Bêta 1.1 (Build 1)",
-        growthMapReleaseLabel: "Lancement officiel"
+        growthMapLaunchDate: "1 avr.",
+        growthMapReleaseLabel: "Lancement officiel",
+        growthMapReleaseDate: "10 avr."
       },
       ur: {
         tagline: "آپ کی جیب میں پارکنگ",
@@ -3647,7 +3730,9 @@
         growthMapPopupDbNamed: "{label} — {count} مواقف",
         growthMapTimelineSliderAria: "کوریج ٹائم لائن",
         growthMapLaunchLabel: "بیٹا 1.1 (بلڈ 1)",
-        growthMapReleaseLabel: "آفیشل لانچ"
+        growthMapLaunchDate: "1 اپریل",
+        growthMapReleaseLabel: "آفیشل لانچ",
+        growthMapReleaseDate: "10 اپریل"
       }
     };
 
@@ -4894,7 +4979,13 @@
 
       function setTimelineFillFromPosition(pos) {
         if (!timelineEl) return;
-        const p = Math.max(0, Math.min(100, (Number(pos) / TIMELINE_SLIDER_STEPS) * 100));
+        /* Fill نسبي للنطاق الكامل (يشمل المستقبل)، مو نسبي للسلايدر */
+        const sliderMax = Number(sliderEl ? sliderEl.max : TIMELINE_SLIDER_STEPS);
+        const sliderRatio = sliderMax > 0 ? Number(pos) / sliderMax : 1;
+        const todayPct = timelineSpanMs > 0
+          ? ((growthMapTimelineDayEndMs(Math.max(0, Math.round(((new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) - new Date(GROWTH_MAP_TIMELINE_START.getFullYear(), GROWTH_MAP_TIMELINE_START.getMonth(), GROWTH_MAP_TIMELINE_START.getDate())) / 86400000))) - minCutoffMs) / timelineSpanMs) * 100
+          : 100;
+        const p = Math.max(0, Math.min(100, sliderRatio * todayPct));
         timelineEl.style.setProperty("--timeline-fill-pct", p + "%");
       }
 
@@ -4937,24 +5028,29 @@
           GROWTH_MAP_TIMELINE_START.getDate()
         );
         const now = new Date();
-        /* نهاية النطاق: يمتد حتى يوم الإطلاق الرسمي (10 أبريل 2026) أو اليوم — أيهما أبعد */
-        const releaseDayRef = new Date(2026, 3, 10);
         const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        let timelineEndDay = todayDay > releaseDayRef ? todayDay : releaseDayRef;
+        /* النطاق المرئي: يمتد لآخر milestone عشان تظهر كل العلامات */
+        const lastMilestoneDay = new Date(2026, 3, 10);
+        let timelineEndDay = todayDay > lastMilestoneDay ? todayDay : lastMilestoneDay;
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
+        /* السلايدر يوقف عند اليوم — لا يتعدى للمستقبل */
+        const todaySpan = Math.max(0, Math.round((todayDay - timelineStartDay) / 86400000));
+        const todayMaxMs = growthMapTimelineDayEndMs(todaySpan);
+        const todayRatio = timelineSpanMs > 0 ? (todayMaxMs - minCutoffMs) / timelineSpanMs : 1;
+        const todaySteps = Math.max(1, Math.round(todayRatio * TIMELINE_SLIDER_STEPS));
         sliderEl.min = "0";
-        sliderEl.max = String(TIMELINE_SLIDER_STEPS);
+        sliderEl.max = String(todaySteps);
         sliderEl.step = "1";
-        sliderEl.value = String(TIMELINE_SLIDER_STEPS);
+        sliderEl.value = String(todaySteps);
         sliderEl.setAttribute("aria-valuemin", "0");
-        sliderEl.setAttribute("aria-valuemax", String(TIMELINE_SLIDER_STEPS));
-        sliderEl.setAttribute("aria-valuenow", String(TIMELINE_SLIDER_STEPS));
+        sliderEl.setAttribute("aria-valuemax", String(todaySteps));
+        sliderEl.setAttribute("aria-valuenow", String(todaySteps));
         if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
-        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
+        if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(todayMaxMs);
         timelineEl.hidden = false;
         lastTimelineCutoffMs = null;
 
