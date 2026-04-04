@@ -4978,14 +4978,12 @@
       }
 
       function setTimelineFillFromPosition(pos) {
-        if (!timelineEl) return;
-        /* Fill نسبي للنطاق الكامل (يشمل المستقبل)، مو نسبي للسلايدر */
-        const sliderMax = Number(sliderEl ? sliderEl.max : TIMELINE_SLIDER_STEPS);
-        const sliderRatio = sliderMax > 0 ? Number(pos) / sliderMax : 1;
-        const todayPct = timelineSpanMs > 0
-          ? ((growthMapTimelineDayEndMs(Math.max(0, Math.round(((new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) - new Date(GROWTH_MAP_TIMELINE_START.getFullYear(), GROWTH_MAP_TIMELINE_START.getMonth(), GROWTH_MAP_TIMELINE_START.getDate())) / 86400000))) - minCutoffMs) / timelineSpanMs) * 100
-          : 100;
-        const p = Math.max(0, Math.min(100, sliderRatio * todayPct));
+        if (!timelineEl || !sliderEl) return;
+        /* النسبة من السلايدر × نسبة اليوم في النطاق الكامل = fill صحيح */
+        const sliderMax = Number(sliderEl.max) || 1;
+        const sliderRatio = Number(pos) / sliderMax;
+        const todayFullPct = timelineSpanMs > 0 ? ((growthMapTimelineDayEndMs(Math.max(0, Math.round(((new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) - new Date(GROWTH_MAP_TIMELINE_START.getFullYear(), GROWTH_MAP_TIMELINE_START.getMonth(), GROWTH_MAP_TIMELINE_START.getDate())) / 86400000))) - minCutoffMs) / timelineSpanMs) * 100 : 100;
+        const p = Math.max(0, Math.min(100, sliderRatio * todayFullPct));
         timelineEl.style.setProperty("--timeline-fill-pct", p + "%");
       }
 
@@ -5029,19 +5027,19 @@
         );
         const now = new Date();
         const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        /* النطاق المرئي: يمتد لآخر milestone عشان تظهر كل العلامات */
-        const lastMilestoneDay = new Date(2026, 3, 10);
-        let timelineEndDay = todayDay > lastMilestoneDay ? todayDay : lastMilestoneDay;
+        /* النطاق المرئي الكامل: لنهاية أبريل 2026 */
+        let timelineEndDay = new Date(2026, 3, 30);
+        if (todayDay > timelineEndDay) timelineEndDay = todayDay;
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
-        /* السلايدر يوقف عند اليوم — لا يتعدى للمستقبل */
+        /* السلايدر: من البداية لغاية اليوم بس (نسبي للنطاق الكامل) */
         const todaySpan = Math.max(0, Math.round((todayDay - timelineStartDay) / 86400000));
         const todayMaxMs = growthMapTimelineDayEndMs(todaySpan);
-        const todayRatio = timelineSpanMs > 0 ? (todayMaxMs - minCutoffMs) / timelineSpanMs : 1;
-        const todaySteps = Math.max(1, Math.round(todayRatio * TIMELINE_SLIDER_STEPS));
+        const todayPct = timelineSpanMs > 0 ? (todayMaxMs - minCutoffMs) / timelineSpanMs : 1;
+        const todaySteps = Math.max(1, Math.round(todayPct * TIMELINE_SLIDER_STEPS));
         sliderEl.min = "0";
         sliderEl.max = String(todaySteps);
         sliderEl.step = "1";
