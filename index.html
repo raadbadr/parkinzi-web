@@ -573,304 +573,123 @@
       transform: translateY(-2px) scale(1.02);
     }
     
-    /* Official Store Badges - رموز Apple و Google الرسمية */
-    .store-badge-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      width: 100%;
-      min-width: 0;
-      flex: 1;
-      min-height: 0;
-    }
-    
-    .store-badge-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-width: 0;
-      height: 100px;
-      min-height: 100px;
-      max-height: 100px;
-      flex-shrink: 0;
-      padding: 0;
-      box-sizing: border-box;
-      overflow: hidden;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 14px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 
-        0 4px 16px var(--shadow-dark),
-        0 0 0 1px rgba(0,0,0,0.04),
-        inset 0 1px 0 rgba(255,255,255,0.5);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: not-allowed;
-      pointer-events: none;
-      opacity: 0.9;
-    }
-    
-    
-    [data-theme="dark"] .store-badge-link {
-      background: var(--glass);
-      border-color: var(--glass-border);
-      box-shadow: 
-        0 4px 20px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-    
-    .coming-soon {
-      font-size: 1.05rem;
-      color: var(--text-tertiary);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    .coming-soon-badge {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      font-weight: 600;
-      margin: 0;
-      letter-spacing: 0.5px;
-      flex-shrink: 0;
-      align-self: flex-end;
-    }
-    
+    /* Store Badges */
     .store-badge {
-      height: 70px;
-      max-height: 70px;
-      width: 100%;
       max-width: 100%;
       object-fit: contain;
-      object-position: center;
       display: block;
-      transition: opacity 0.3s ease;
     }
-    
-    .app-store-badge { height: 70px; max-height: 70px; max-width: 100%; }
-    .google-play-badge { height: 88px; max-height: 88px; max-width: 100%; }
-    
     [data-theme="dark"] .app-store-badge {
       filter: invert(1);
     }
     
-    /* Download Section - أزرار التحميل + قائمة الانتظار في سطر واحد */
-    .download-section {
-      margin-top: 0.75rem;
-      padding: 1.25rem 1.5rem;
-      width: 100%;
-      background: var(--glass);
-      border-radius: 20px;
-      border: 1px solid var(--glass-border);
-    }
-    .download-row {
+    /* ============================================
+       Download Blocks — كل بلوك منفصل
+       ============================================ */
+    .download-blocks {
       display: flex;
-      flex-wrap: wrap;
-      align-items: stretch;
-      justify-content: center;
-      gap: 1.5rem;
-      width: 100%;
-    }
-    
-    .store-options {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 1rem;
-      align-items: stretch;
-      justify-items: stretch;
+      margin-top: 0.75rem;
       width: 100%;
-      max-width: 520px;
-      align-self: flex-end;
-    }
-    .store-option {
-      display: flex;
-      flex-direction: column;
       align-items: stretch;
-      gap: 0.5rem;
-      width: 100%;
-      min-width: 0;
-      min-height: 0;
     }
-    .store-option .store-badge-wrap { margin: 0; }
-    .store-status {
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-    .store-status.store-coming { color: var(--text-tertiary); }
-    .store-status.store-available { color: var(--success); font-weight: 600; }
-    .store-qr {
-      margin-top: 0.5rem;
-      padding: 12px;
-      background: var(--white);
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-    .store-qr-img { width: 120px; height: 120px; display: block; border-radius: 6px; }
-    .download-section[data-has-available="true"] .coming-soon-badge { display: none; }
-    .download-section[data-has-available="false"] .store-option .store-coming { display: none !important; }
-    .store-option[data-available="true"] .store-coming { display: none !important; }
-    .store-option[data-available="true"] .store-available { display: inline !important; }
-    .store-option[data-available="true"] .store-qr { display: block !important; }
-    .store-option[data-available="true"] .store-badge-link { cursor: pointer; pointer-events: auto; opacity: 1; }
-    .store-option[data-available="true"] .store-badge-link[href] { text-decoration: none; }
-    
-    /* QR Code Section - داخل download-section */
-    .download-section .qr-section {
-      margin-top: 0;
-      padding-top: 0;
-      border-top: none;
+    .download-block {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      animation: fadeInUp 1s ease-out 0.5s backwards;
-      width: 100%;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1.25rem 1rem;
+      border-radius: 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .download-block--ios {
+      cursor: pointer;
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(0, 160, 210, 0.12);
+    }
+    .download-block--ios:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0, 160, 210, 0.2);
+    }
+    .download-block--android {
+      opacity: 0.55;
+    }
+    .download-block .store-badge {
+      display: block;
       max-width: 100%;
     }
-    
-    .qr-text {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      font-weight: 500;
+    .download-block .app-store-badge { height: 52px; }
+    .download-block .google-play-badge { height: 68px; }
+    .download-block-status {
+      font-size: 0.82rem;
+      font-weight: 600;
     }
-    
-    .qr-codes {
-      display: flex;
-      gap: 2.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 0.5rem;
+    .download-block-status--live { color: var(--success); }
+    .download-block-status--soon { color: var(--text-tertiary); }
+    /* Waitlist block */
+    .download-block--waitlist {
+      gap: 0.5rem;
     }
-    
-    .qr-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    
-    .qr-code-link {
-      display: block;
-      padding: 14px;
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 
-        0 8px 24px rgba(0,0,0,0.15),
-        inset 0 0 0 1px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      cursor: not-allowed;
-      pointer-events: none;
-      opacity: 0.9;
-    }
-    
-    .qr-code-img {
-      width: 160px;
-      height: 160px;
-      display: block;
-      border-radius: 6px;
-    }
-    
-    .qr-label {
+    .download-block--waitlist .waitlist-title {
       font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-    }
-    
-    .qr-item .coming-soon {
-      font-size: 0.95rem;
-      margin-top: 0.25rem;
-    }
-    
-    /* Waitlist — محاذاة قاع النموذج مع قاع مربعات المتاجر (بدون تغيير شعارات المتاجر) */
-    .waitlist-section {
-      flex: 1;
-      min-width: 280px;
-      max-width: 420px;
-      text-align: center;
-      padding: 0;
       margin: 0;
-      display: flex;
-      flex-direction: column;
     }
-    .waitlist-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.35rem;
-    }
-    .waitlist-desc {
-      font-size: 0.95rem;
+    .download-block--waitlist .waitlist-desc {
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      margin-bottom: 0.5rem;
+      margin: 0;
     }
     .waitlist-form {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: auto;
+      width: 100%;
     }
     .waitlist-input {
       flex: 1;
-      min-width: 200px;
-      padding: 0.85rem 1rem;
-      border-radius: 12px;
+      min-width: 140px;
+      padding: 0.7rem 0.85rem;
+      border-radius: 10px;
       border: 1px solid var(--glass-border);
       background: var(--glass);
       color: var(--text-primary);
-      font-size: 1rem;
-      font-family: inherit;
+      font-size: 0.9rem;
     }
     .waitlist-input::placeholder { color: var(--text-tertiary); }
     .waitlist-input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0,160,210,0.2);
+      box-shadow: 0 0 0 2px rgba(0, 160, 210, 0.2);
     }
     .waitlist-btn {
-      padding: 0.85rem 1.5rem;
-      border-radius: 12px;
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
       border: none;
       background: var(--primary);
       color: white;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      font-family: inherit;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
     .waitlist-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
     .waitlist-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-    .waitlist-msg {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
-    }
+    .waitlist-msg { margin-top: 0.5rem; font-size: 0.85rem; }
     .waitlist-msg.success { color: var(--success); }
     .waitlist-msg.error { color: var(--error); }
     
-    /* Hide QR codes on mobile, show store buttons prominently */
     @media (max-width: 768px) {
-      .download-section { padding: 1rem 1.25rem; }
-      .download-row {
+      .download-blocks {
         flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-      }
-      .store-options,
-      .coming-soon-badge {
-        align-self: stretch;
-      }
-      .waitlist-form {
-        margin-top: 0;
-      }
-      .waitlist-desc {
-        margin-bottom: 1rem;
-      }
-      .waitlist-section { min-width: 100%; max-width: 100%; }
-      .download-section .qr-section {
-        display: none;
       }
 
       .hero {
@@ -911,31 +730,8 @@
         text-align: center;
       }
       
-      .store-options { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; max-width: 340px; margin: 0 auto; gap: 0.75rem; align-items: stretch; }
-      .store-option { min-width: 0; width: 100%; align-items: stretch; }
-      .store-badge-wrap {
-        width: 100%;
-        max-width: 100%;
-      }
-      
-      .store-badge-link {
-        width: 100%;
-        min-width: 0;
-        height: 100px;
-        min-height: 100px;
-        max-height: 100px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        overflow: hidden;
-      }
-      
-      .store-badge,
-      .app-store-badge { height: 70px; max-height: 70px; max-width: 100%; width: 100%; object-fit: contain; object-position: center; }
-      .google-play-badge { height: 88px; max-height: 88px; max-width: 100%; width: 100%; object-fit: contain; }
-      
-      .coming-soon {
-        font-size: 0.95rem;
-      }
+      .download-block .app-store-badge { height: 44px; }
+      .download-block .google-play-badge { height: 58px; }
     }
 
     .features {
@@ -1642,6 +1438,31 @@
     [data-theme="light"] .growth-map-timeline-release .growth-map-timeline-launch-tick {
       box-shadow:
         0 0 8px rgba(46, 125, 50, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    /* إطلاق iOS — لون أزرق (App Store) */
+    .growth-map-timeline-ios .growth-map-timeline-launch-label {
+      color: #64b5f6;
+    }
+    [data-theme="light"] .growth-map-timeline-ios .growth-map-timeline-launch-label {
+      color: #1565c0;
+    }
+    .growth-map-timeline-ios .growth-map-timeline-launch-date {
+      color: rgba(100, 181, 246, 0.7);
+    }
+    [data-theme="light"] .growth-map-timeline-ios .growth-map-timeline-launch-date {
+      color: rgba(21, 101, 192, 0.65);
+    }
+    .growth-map-timeline-ios .growth-map-timeline-launch-tick {
+      background: linear-gradient(180deg, #bbdefb 0%, #42a5f5 45%, #1565c0 100%);
+      box-shadow:
+        0 0 10px rgba(66, 165, 245, 0.5),
+        0 0 3px rgba(187, 222, 251, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    [data-theme="light"] .growth-map-timeline-ios .growth-map-timeline-launch-tick {
+      box-shadow:
+        0 0 8px rgba(21, 101, 192, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
@@ -3229,6 +3050,11 @@
           <span class="growth-map-timeline-launch-date" data-i18n="growthMapReleaseDate">10 أبريل</span>
           <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
         </div>
+        <div class="growth-map-timeline-launch growth-map-timeline-ios" id="growthMapTimelineIos" hidden>
+          <span class="growth-map-timeline-launch-label" data-i18n="growthMapIosLabel">إطلاق iOS</span>
+          <span class="growth-map-timeline-launch-date" data-i18n="growthMapIosDate">7 أبريل</span>
+          <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+        </div>
         <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
         <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
           <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">اليوم</span>
@@ -3312,40 +3138,23 @@
 
     <p class="pricing-note" style="text-align:center;margin-top:1rem;font-size:0.95rem;color:var(--text-secondary);"><a href="pricing.html" style="color:var(--primary);text-decoration:none;" data-i18n="pricingNote">عمولة المنصة 30% من قيمة الحجز — يتحكم مقدم الخدمة في تحديد السعر بالساعة</a></p>
 
-    <div class="download-section" data-has-available="true">
-      <div class="download-row">
-        <p class="coming-soon-badge" data-i18n="comingSoon">قريباً</p>
-        <div class="store-options">
-          <div class="store-option" data-available="true" data-store="ios">
-            <span class="store-badge-wrap">
-              <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="store-badge-link" target="_blank" rel="noopener noreferrer">
-                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="store-badge app-store-badge" loading="eager">
-              </a>
-            </span>
-            <span class="store-status store-coming" data-i18n="comingSoon" style="display:none;">قريباً</span>
-            <span class="store-status store-available" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
-            <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
-          </div>
-          <div class="store-option" data-available="false" data-store="android">
-            <span class="store-badge-wrap">
-              <span class="store-badge-link" aria-disabled="true">
-                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play" class="store-badge google-play-badge" loading="eager">
-              </span>
-            </span>
-            <span class="store-status store-coming" data-i18n="comingSoon">قريباً</span>
-            <span class="store-status store-available" style="display:none;" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
-            <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
-          </div>
-        </div>
-        <div class="waitlist-section">
-          <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجّل موقفك</p>
-          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لتبدأ بتحقيق الدخل من موقفك</p>
-          <form class="waitlist-form" id="waitlistForm">
-            <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
-            <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
-          </form>
-          <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
-        </div>
+    <div class="download-blocks">
+      <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="download-block download-block--ios" target="_blank" rel="noopener noreferrer">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="store-badge app-store-badge" loading="eager">
+        <span class="download-block-status download-block-status--live" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
+      </a>
+      <div class="download-block download-block--android">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play" class="store-badge google-play-badge" loading="eager">
+        <span class="download-block-status download-block-status--soon" data-i18n="comingSoon">قريباً</span>
+      </div>
+      <div class="download-block download-block--waitlist">
+        <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجّل موقفك</p>
+        <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لتبدأ بتحقيق الدخل من موقفك</p>
+        <form class="waitlist-form" id="waitlistForm">
+          <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
+          <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
+        </form>
+        <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
       </div>
     </div>
   </section>
@@ -3498,6 +3307,8 @@
         growthMapLaunchDate: "1 أبريل",
         growthMapReleaseLabel: "الإطلاق الرسمي",
         growthMapReleaseDate: "10 أبريل",
+        growthMapIosLabel: "إطلاق iOS",
+        growthMapIosDate: "7 أبريل",
         growthMapTodayLabel: "اليوم"
       },
       en: {
@@ -3587,6 +3398,8 @@
         growthMapLaunchDate: "Apr 1",
         growthMapReleaseLabel: "Official Launch",
         growthMapReleaseDate: "Apr 10",
+        growthMapIosLabel: "iOS Launch",
+        growthMapIosDate: "Apr 7",
         growthMapTodayLabel: "Today"
       },
       fr: {
@@ -3677,6 +3490,8 @@
         growthMapLaunchDate: "1 avr.",
         growthMapReleaseLabel: "Lancement officiel",
         growthMapReleaseDate: "10 avr.",
+        growthMapIosLabel: "Lancement iOS",
+        growthMapIosDate: "7 avr.",
         growthMapTodayLabel: "Aujourd'hui"
       },
       ur: {
@@ -3766,6 +3581,8 @@
         growthMapLaunchDate: "1 اپریل",
         growthMapReleaseLabel: "آفیشل لانچ",
         growthMapReleaseDate: "10 اپریل",
+        growthMapIosLabel: "iOS لانچ",
+        growthMapIosDate: "7 اپریل",
         growthMapTodayLabel: "آج"
       }
     };
@@ -4822,6 +4639,7 @@
       const endLabelEl = document.getElementById("growthMapTimelineEndLabel");
       let updateGrowthMapLaunchMilestone = function () {};
       let updateGrowthMapReleaseMilestone = function () {};
+      let updateGrowthMapIosMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
         const lo = lang();
@@ -5115,6 +4933,18 @@
         };
         updateGrowthMapReleaseMilestone();
 
+        const iosMilestoneEl = document.getElementById("growthMapTimelineIos");
+        updateGrowthMapIosMilestone = function () {
+          if (!iosMilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { iosMilestoneEl.hidden = true; return; }
+          const iosDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 7));
+          if (iosDayEnd < minCutoffMs || iosDayEnd > maxCutoffMs) { iosMilestoneEl.hidden = true; return; }
+          const r = (iosDayEnd - minCutoffMs) / timelineSpanMs;
+          iosMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          iosMilestoneEl.hidden = false;
+        };
+        updateGrowthMapIosMilestone();
+
         /* علامة "اليوم" تحت السلايدر */
         const todayMarkerEl = document.getElementById("growthMapTimelineToday");
         if (todayMarkerEl && timelineSpanMs > 0) {
@@ -5133,6 +4963,10 @@
         if (relDayEnd >= minCutoffMs && relDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(((relDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
+        var iosDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 7));
+        if (iosDayEnd >= minCutoffMs && iosDayEnd <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(((iosDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
         milestoneSteps.push(SLIDER_MAX_TODAY);
         const SNAP_THRESHOLD = Math.round(TIMELINE_SLIDER_STEPS * 0.015);
         function snapToMilestone(v) {
@@ -5147,6 +4981,7 @@
           function () {
             requestAnimationFrame(updateGrowthMapLaunchMilestone);
             requestAnimationFrame(updateGrowthMapReleaseMilestone);
+            requestAnimationFrame(updateGrowthMapIosMilestone);
           },
           { passive: true }
         );
@@ -5310,6 +5145,7 @@
           if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
           updateGrowthMapLaunchMilestone();
           updateGrowthMapReleaseMilestone();
+          updateGrowthMapIosMilestone();
         }
       };
       setTimeout(() => map.resize(), 400);
