@@ -4902,7 +4902,7 @@
           var m2 = growthMapEndOfLocalDay(new Date(2026, 3, 10));
           var t1 = Math.max(0, Math.min(1, (m1 - minCutoffMs) / timelineSpanMs));
           var t2 = Math.max(t1 + 0.01, Math.min(1, (m2 - minCutoffMs) / timelineSpanMs));
-          var v1 = 0.12, v2 = 0.52;
+          var v1 = 0.18, v2 = 0.42;
           _tlWarpToVisual = function (r) {
             if (r <= 0) return 0; if (r >= 1) return 1;
             if (r <= t1) return (r / t1) * v1;
@@ -4934,6 +4934,7 @@
         sliderEl.setAttribute("aria-valuenow", String(SLIDER_MAX_TODAY));
         if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
         if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
+        setTimelineFillFromPosition(SLIDER_MAX_TODAY);
         timelineEl.hidden = false;
         lastTimelineCutoffMs = null;
 
