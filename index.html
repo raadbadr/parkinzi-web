@@ -1102,7 +1102,7 @@
       --timeline-fill-pct: 100%;
       margin-top: 0;
       margin-bottom: 0.85rem;
-      padding: 0.75rem 1rem 0.9rem;
+      padding: 1.8rem 1.2rem 2.4rem;
       border-radius: 16px;
       min-height: 0;
       position: relative;
@@ -1346,9 +1346,9 @@
     }
     .growth-map-timeline-today-label {
       position: absolute;
-      top: calc(50% + 13px);
+      top: calc(50% + 32px);
       white-space: nowrap;
-      font-size: 0.55rem;
+      font-size: 0.62rem;
       font-weight: 700;
       line-height: 1;
       text-align: center;
@@ -1361,7 +1361,7 @@
 
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline:has(.growth-map-timeline-launch:not([hidden])) {
-      padding-top: 0.85rem;
+      padding-top: 1.6rem;
     }
     .growth-map-timeline-launch {
       position: absolute;
@@ -1378,9 +1378,9 @@
     }
     .growth-map-timeline-launch-label {
       position: absolute;
-      bottom: calc(50% + 11px);
+      bottom: calc(50% + 16px);
       white-space: nowrap;
-      font-size: 0.58rem;
+      font-size: 0.72rem;
       font-weight: 700;
       line-height: 1;
       text-align: center;
@@ -1394,9 +1394,9 @@
     }
     .growth-map-timeline-launch-date {
       position: absolute;
-      top: calc(50% + 11px);
+      top: calc(50% + 16px);
       white-space: nowrap;
-      font-size: 0.52rem;
+      font-size: 0.65rem;
       font-weight: 600;
       line-height: 1;
       text-align: center;
@@ -1408,7 +1408,7 @@
     }
     .growth-map-timeline-launch-tick {
       width: 3px;
-      height: 18px;
+      height: 26px;
       border-radius: 2px;
       background: linear-gradient(180deg, #ffd180 0%, #ff9100 45%, #e65100 100%);
       box-shadow:
@@ -4764,13 +4764,17 @@
       let timelineSpanMs = 0;
       let minCutoffMs = 0;
       let maxCutoffMs = 0;
+      /* Warp: تحويل غير خطي — يضغط الفترة الفاضية قبل المايلستونز ويوسع منطقة الأحداث */
+      var _tlWarpToTime = null;
+      var _tlWarpToVisual = null;
 
       function sliderPositionToCutoffMs(pos) {
         if (timelineSpanMs <= 0) return maxCutoffMs;
         const t = Number(pos);
         if (!Number.isFinite(t) || t <= 0) return minCutoffMs;
         if (t >= TIMELINE_SLIDER_STEPS) return maxCutoffMs;
-        const r = t / TIMELINE_SLIDER_STEPS;
+        var r = t / TIMELINE_SLIDER_STEPS;
+        if (_tlWarpToTime) r = _tlWarpToTime(r);
         return Math.min(minCutoffMs + r * timelineSpanMs, maxCutoffMs);
       }
 
@@ -4883,11 +4887,35 @@
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
+        /* Warp: ضغط الفترة قبل أول milestone وتوسيع منطقة الأحداث — ديناميكي حسب التواريخ */
+        (function buildTimelineWarp() {
+          if (timelineSpanMs <= 0) return;
+          var m1 = growthMapEndOfLocalDay(new Date(2026, 3, 1));
+          var m2 = growthMapEndOfLocalDay(new Date(2026, 3, 10));
+          var t1 = Math.max(0, Math.min(1, (m1 - minCutoffMs) / timelineSpanMs));
+          var t2 = Math.max(t1 + 0.01, Math.min(1, (m2 - minCutoffMs) / timelineSpanMs));
+          var v1 = 0.12, v2 = 0.52;
+          _tlWarpToVisual = function (r) {
+            if (r <= 0) return 0; if (r >= 1) return 1;
+            if (r <= t1) return (r / t1) * v1;
+            if (r <= t2) return v1 + ((r - t1) / (t2 - t1)) * (v2 - v1);
+            return v2 + ((r - t2) / (1 - t2)) * (1 - v2);
+          };
+          _tlWarpToTime = function (v) {
+            if (v <= 0) return 0; if (v >= 1) return 1;
+            if (v <= v1) return (v / v1) * t1;
+            if (v <= v2) return t1 + ((v - v1) / (v2 - v1)) * (t2 - t1);
+            return t2 + ((v - v2) / (1 - v2)) * (1 - t2);
+          };
+        })();
+
         /* حد أقصى للسلايدر = اليوم (ما يتعدى المستقبل) */
         const todaySpan = Math.max(0, Math.round((todayDay - timelineStartDay) / 86400000));
         const todayMaxMs = growthMapTimelineDayEndMs(todaySpan);
+        var todayTimeR = timelineSpanMs > 0 ? (todayMaxMs - minCutoffMs) / timelineSpanMs : 1;
+        var todayVisualR = _tlWarpToVisual ? _tlWarpToVisual(todayTimeR) : todayTimeR;
         const SLIDER_MAX_TODAY = timelineSpanMs > 0
-          ? Math.max(1, Math.round(((todayMaxMs - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS))
+          ? Math.max(1, Math.round(todayVisualR * TIMELINE_SLIDER_STEPS))
           : TIMELINE_SLIDER_STEPS;
         sliderEl.min = "0";
         sliderEl.max = String(TIMELINE_SLIDER_STEPS);
@@ -4909,13 +4937,15 @@
           return "calc(" + (THUMB_W / 2) + "px + (100% - " + THUMB_W + "px) * " + r + ")";
         }
 
+        function warpR(r) { return _tlWarpToVisual ? _tlWarpToVisual(r) : r; }
+
         const launchMilestoneEl = document.getElementById("growthMapTimelineLaunch");
         updateGrowthMapLaunchMilestone = function () {
           if (!launchMilestoneEl || !timelineEl) return;
           if (timelineSpanMs <= 0) { launchMilestoneEl.hidden = true; return; }
           const launchDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 1));
           if (launchDayEnd < minCutoffMs || launchDayEnd > maxCutoffMs) { launchMilestoneEl.hidden = true; return; }
-          const r = (launchDayEnd - minCutoffMs) / timelineSpanMs;
+          const r = warpR((launchDayEnd - minCutoffMs) / timelineSpanMs);
           launchMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
           launchMilestoneEl.hidden = false;
         };
@@ -4927,7 +4957,7 @@
           if (timelineSpanMs <= 0) { releaseMilestoneEl.hidden = true; return; }
           const releaseDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
           if (releaseDayEnd < minCutoffMs || releaseDayEnd > maxCutoffMs) { releaseMilestoneEl.hidden = true; return; }
-          const r = (releaseDayEnd - minCutoffMs) / timelineSpanMs;
+          const r = warpR((releaseDayEnd - minCutoffMs) / timelineSpanMs);
           releaseMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
           releaseMilestoneEl.hidden = false;
         };
@@ -4939,7 +4969,7 @@
           if (timelineSpanMs <= 0) { iosMilestoneEl.hidden = true; return; }
           const iosDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 7));
           if (iosDayEnd < minCutoffMs || iosDayEnd > maxCutoffMs) { iosMilestoneEl.hidden = true; return; }
-          const r = (iosDayEnd - minCutoffMs) / timelineSpanMs;
+          const r = warpR((iosDayEnd - minCutoffMs) / timelineSpanMs);
           iosMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
           iosMilestoneEl.hidden = false;
         };
@@ -4948,24 +4978,23 @@
         /* علامة "اليوم" تحت السلايدر */
         const todayMarkerEl = document.getElementById("growthMapTimelineToday");
         if (todayMarkerEl && timelineSpanMs > 0) {
-          const todayR = (todayMaxMs - minCutoffMs) / timelineSpanMs;
-          todayMarkerEl.style.left = milestoneLeft(todayR, timelineEl.getAttribute("dir") === "rtl");
+          todayMarkerEl.style.left = milestoneLeft(todayVisualR, timelineEl.getAttribute("dir") === "rtl");
           todayMarkerEl.hidden = false;
         }
 
-        /* Snap: مواقع المايلستونز كـ slider steps */
+        /* Snap: مواقع الـ milestones كـ slider steps (warped) */
         const milestoneSteps = [];
         var betaDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 1));
         if (betaDayEnd >= minCutoffMs && betaDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(((betaDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+          milestoneSteps.push(Math.round(warpR((betaDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
         var relDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
         if (relDayEnd >= minCutoffMs && relDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(((relDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+          milestoneSteps.push(Math.round(warpR((relDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
         var iosDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 7));
         if (iosDayEnd >= minCutoffMs && iosDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(((iosDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+          milestoneSteps.push(Math.round(warpR((iosDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
         milestoneSteps.push(SLIDER_MAX_TODAY);
         const SNAP_THRESHOLD = Math.round(TIMELINE_SLIDER_STEPS * 0.015);
