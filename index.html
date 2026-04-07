@@ -3312,19 +3312,18 @@
 
     <p class="pricing-note" style="text-align:center;margin-top:1rem;font-size:0.95rem;color:var(--text-secondary);"><a href="pricing.html" style="color:var(--primary);text-decoration:none;" data-i18n="pricingNote">عمولة المنصة 30% من قيمة الحجز — يتحكم مقدم الخدمة في تحديد السعر بالساعة</a></p>
 
-    <div class="download-section" data-has-available="false">
-      <!-- عند التوفر: غيّر data-available="true" على .store-option، غيّر data-has-available="true"، حوّل span.store-badge-link إلى <a href="رابط">، أضف src لـ .store-qr-img -->
+    <div class="download-section" data-has-available="true">
       <div class="download-row">
         <p class="coming-soon-badge" data-i18n="comingSoon">قريباً</p>
         <div class="store-options">
-          <div class="store-option" data-available="false" data-store="ios">
+          <div class="store-option" data-available="true" data-store="ios">
             <span class="store-badge-wrap">
-              <span class="store-badge-link" aria-disabled="true">
+              <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="store-badge-link" target="_blank" rel="noopener noreferrer">
                 <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="store-badge app-store-badge" loading="eager">
-              </span>
+              </a>
             </span>
-            <span class="store-status store-coming" data-i18n="comingSoon">قريباً</span>
-            <span class="store-status store-available" style="display:none;" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
+            <span class="store-status store-coming" data-i18n="comingSoon" style="display:none;">قريباً</span>
+            <span class="store-status store-available" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
             <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
           </div>
           <div class="store-option" data-available="false" data-store="android">
@@ -3340,7 +3339,7 @@
         </div>
         <div class="waitlist-section">
           <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجّل موقفك</p>
-          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لتبدأ بتحقيق الدخل من موقفك عند الإطلاق</p>
+          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لتبدأ بتحقيق الدخل من موقفك</p>
           <form class="waitlist-form" id="waitlistForm">
             <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
             <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
@@ -3483,10 +3482,10 @@
         light: "فاتح",
         dark: "داكن",
         waitlistTitle: "مقدم خدمة؟ سجّل موقفك",
-        waitlistDesc: "سجّل بريدك لتبدأ بتحقيق الدخل من موقفك عند الإطلاق",
+        waitlistDesc: "سجّل بريدك لتبدأ بتحقيق الدخل من موقفك",
         waitlistPlaceholder: "بريدك الإلكتروني",
         waitlistSubmit: "سجّلني",
-        waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق لتبدأ الربح.",
+        waitlistSuccess: "تم التسجيل! سنتواصل معك لتبدأ الربح.",
         waitlistError: "حدث خطأ، حاول مرة أخرى.",
         waitlistExists: "هذا البريد مسجّل مسبقاً.",
         availableNow: "متوفر حالياً · جرب الآن",
@@ -3572,10 +3571,10 @@
         light: "Light",
         dark: "Dark",
         waitlistTitle: "A Provider? Register Your Spot",
-        waitlistDesc: "Enter your email to start earning from your parking when we launch",
+        waitlistDesc: "Enter your email to start earning from your parking",
         waitlistPlaceholder: "Your email",
         waitlistSubmit: "Join",
-        waitlistSuccess: "You're signed up! We'll contact you at launch to start earning.",
+        waitlistSuccess: "You're signed up! We'll contact you to start earning.",
         waitlistError: "Something went wrong. Please try again.",
         waitlistExists: "This email is already registered.",
         availableNow: "Available now · Try it",
@@ -3662,10 +3661,10 @@
         light: "Clair",
         dark: "Sombre",
         waitlistTitle: "Fournisseur ? Enregistrez votre place",
-        waitlistDesc: "Entrez votre email pour commencer à gagner avec votre parking au lancement",
+        waitlistDesc: "Entrez votre email pour commencer à gagner avec votre parking",
         waitlistPlaceholder: "Votre email",
         waitlistSubmit: "Rejoindre",
-        waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement pour commencer.",
+        waitlistSuccess: "Inscription réussie ! Nous vous contacterons pour commencer.",
         waitlistError: "Une erreur s'est produite. Réessayez.",
         waitlistExists: "Cet email est déjà enregistré.",
         availableNow: "Disponible · Essayez",
@@ -3751,10 +3750,10 @@
         light: "روشن",
         dark: "اندھیرا",
         waitlistTitle: "فراہم کرنے والے؟ اپنی جگہ رجسٹر کریں",
-        waitlistDesc: "لانچ پر اپنی پارکنگ سے کمائی شروع کرنے کے لیے ای میل درج کریں",
+        waitlistDesc: "اپنی پارکنگ سے کمائی شروع کرنے کے لیے ای میل درج کریں",
         waitlistPlaceholder: "آپ کا ای میل",
         waitlistSubmit: "شامل کریں",
-        waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم کمائی شروع کرنے کے لیے رابطہ کریں گے۔",
+        waitlistSuccess: "سائن اپ ہو گیا! ہم کمائی شروع کرنے کے لیے رابطہ کریں گے۔",
         waitlistError: "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
         waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔",
         availableNow: "دستیاب · آزمائیں",
