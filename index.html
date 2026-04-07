@@ -1169,6 +1169,7 @@
     .growth-map-timeline-range-wrap {
       position: relative;
       height: 20px;
+      margin-top: 0;
       z-index: 0;
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -1362,9 +1363,9 @@
     }
 
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
-    .growth-map-timeline:has(.growth-map-timeline-launch:not([hidden])) {
+    .growth-map-timeline--has-milestones {
       padding-top: 2.8rem;
-      padding-bottom: 2.2rem;
+      padding-bottom: 3.2rem;
     }
     .growth-map-timeline-launch {
       position: absolute;
@@ -4981,6 +4982,11 @@
           iosMilestoneEl.hidden = false;
         };
         updateGrowthMapIosMilestone();
+
+        /* إضافة كلاس الـ milestones (بديل :has للتوافق مع كل المتصفحات) */
+        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden) {
+          timelineEl.classList.add("growth-map-timeline--has-milestones");
+        }
 
         /* علامة "اليوم" تحت السلايدر */
         const todayMarkerEl = document.getElementById("growthMapTimelineToday");
