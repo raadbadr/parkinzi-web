@@ -1102,7 +1102,7 @@
       --timeline-fill-pct: 100%;
       margin-top: 0;
       margin-bottom: 0.85rem;
-      padding: 1.8rem 1.2rem 2.4rem;
+      padding: 1.2rem 1.2rem 1.2rem;
       border-radius: 16px;
       min-height: 0;
       position: relative;
@@ -1347,6 +1347,8 @@
     .growth-map-timeline-today-label {
       position: absolute;
       top: calc(50% + 32px);
+      left: 50%;
+      transform: translateX(-50%);
       white-space: nowrap;
       font-size: 0.62rem;
       font-weight: 700;
@@ -1361,7 +1363,8 @@
 
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline:has(.growth-map-timeline-launch:not([hidden])) {
-      padding-top: 1.6rem;
+      padding-top: 2.8rem;
+      padding-bottom: 2.2rem;
     }
     .growth-map-timeline-launch {
       position: absolute;
@@ -1379,6 +1382,8 @@
     .growth-map-timeline-launch-label {
       position: absolute;
       bottom: calc(50% + 16px);
+      left: 50%;
+      transform: translateX(-50%);
       white-space: nowrap;
       font-size: 0.72rem;
       font-weight: 700;
@@ -1395,6 +1400,8 @@
     .growth-map-timeline-launch-date {
       position: absolute;
       top: calc(50% + 16px);
+      left: 50%;
+      transform: translateX(-50%);
       white-space: nowrap;
       font-size: 0.65rem;
       font-weight: 600;
