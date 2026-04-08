@@ -3700,7 +3700,6 @@
     async function fetchFuelTypeStats() {
       try {
         const res = await fetch("/api/fuel-stats");
-        });
         if (!res.ok) return null;
         const data = await res.json();
         return Array.isArray(data) ? data : null;
