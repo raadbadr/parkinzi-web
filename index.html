@@ -1513,6 +1513,85 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
+    /* Responsive: timeline milestones — stagger labels to avoid overlap */
+    @media (max-width: 600px) {
+      .growth-map-timeline--has-milestones {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+      .growth-map-timeline {
+        padding: 0.8rem 0.5rem;
+      }
+      .growth-map-timeline-launch-tick {
+        height: 18px;
+      }
+      .growth-map-timeline-ends {
+        font-size: 0.65rem;
+      }
+      /* All labels: smaller */
+      .growth-map-timeline-launch-label {
+        font-size: 0.52rem !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+      }
+      .growth-map-timeline-launch-date {
+        display: none !important;
+      }
+      .growth-map-timeline-today-label {
+        font-size: 0.48rem;
+      }
+      /* Stagger: odd milestones above, even below */
+      /* Beta 1.1 (first) — far above */
+      #growthMapTimelineLaunch .growth-map-timeline-launch-label {
+        bottom: calc(50% + 28px) !important;
+      }
+      /* iOS launch (middle) — close above */
+      #growthMapTimelineIos .growth-map-timeline-launch-label {
+        bottom: calc(50% + 14px) !important;
+      }
+      /* Official release — below the bar */
+      #growthMapTimelineRelease .growth-map-timeline-launch-label {
+        bottom: auto !important;
+        top: calc(50% + 14px) !important;
+      }
+      /* Today label — further below */
+      .growth-map-timeline-today-label {
+        top: calc(50% + 28px) !important;
+      }
+    }
+    @media (max-width: 600px) {
+      /* Smaller thumb on mobile — easier to tap, less overlap */
+      .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
+        width: 26px;
+        height: 16px;
+        border-radius: 8px;
+      }
+      .growth-map-timeline input[type="range"]::-moz-range-thumb {
+        width: 26px;
+        height: 16px;
+        border-radius: 8px;
+      }
+      .growth-map-timeline input[type="range"]::-moz-range-track {
+        height: 16px;
+      }
+      .growth-map-timeline-range-wrap::after {
+        height: 16px;
+        border-radius: 8px;
+      }
+      .growth-map-timeline-range-wrap::before {
+        height: 16px;
+        border-radius: 8px;
+      }
+    }
+    @media (max-width: 380px) {
+      .growth-map-timeline-launch-label {
+        font-size: 0.46rem !important;
+      }
+      .growth-map-timeline-ends {
+        font-size: 0.58rem;
+      }
+    }
+
     /* نافذة النقر على العلامة — نص وخلفية حسب الثيم (داكن: أبيض، فاتح: أسود) */
     .growth-map-container .maplibregl-popup-content {
       font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
