@@ -1382,29 +1382,49 @@
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      z-index: 3;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .growth-map-timeline-today.is-at-today {
+      opacity: 1;
     }
     .growth-map-timeline-today-label {
       position: absolute;
-      top: calc(50% + 32px);
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       white-space: nowrap;
-      font-size: 0.62rem;
-      font-weight: 700;
+      font-size: 0.46rem;
+      font-weight: 800;
       line-height: 1;
       text-align: center;
-      color: rgba(255, 255, 255, 0.6);
-      letter-spacing: 0.02em;
+      color: rgba(0, 100, 180, 0.9);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
     [data-theme="light"] .growth-map-timeline-today-label {
-      color: rgba(0, 0, 0, 0.45);
+      color: rgba(0, 80, 150, 0.95);
     }
 
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline--has-milestones {
-      padding-top: 2.8rem;
-      padding-bottom: 3.2rem;
+      padding-top: 3rem;
+      padding-bottom: 3.4rem;
+    }
+    /* Hide dates for Beta & Release (above-bar) — avoids overlap */
+    #growthMapTimelineLaunch .growth-map-timeline-launch-date,
+    #growthMapTimelineRelease .growth-map-timeline-launch-date {
+      display: none;
+    }
+    /* Alternate: iOS below bar, Beta & Release above */
+    #growthMapTimelineIos .growth-map-timeline-launch-label {
+      bottom: auto;
+      top: calc(50% + 14px);
+    }
+    /* iOS date under its label */
+    #growthMapTimelineIos .growth-map-timeline-launch-date {
+      top: calc(50% + 26px);
     }
     .growth-map-timeline-launch {
       position: absolute;
@@ -1421,7 +1441,7 @@
     }
     .growth-map-timeline-launch-label {
       position: absolute;
-      bottom: calc(50% + 16px);
+      bottom: calc(50% + 26px);
       left: 50%;
       transform: translateX(-50%);
       white-space: nowrap;
@@ -1439,11 +1459,11 @@
     }
     .growth-map-timeline-launch-date {
       position: absolute;
-      top: calc(50% + 16px);
+      top: calc(50% + 26px);
       left: 50%;
       transform: translateX(-50%);
       white-space: nowrap;
-      font-size: 0.65rem;
+      font-size: 0.58rem;
       font-weight: 600;
       line-height: 1;
       text-align: center;
@@ -1540,23 +1560,17 @@
       .growth-map-timeline-today-label {
         font-size: 0.48rem;
       }
-      /* Stagger: odd milestones above, even below */
-      /* Beta 1.1 (first) — far above */
+      /* Alternate: Beta above, iOS below, Release above */
       #growthMapTimelineLaunch .growth-map-timeline-launch-label {
-        bottom: calc(50% + 28px) !important;
+        bottom: calc(50% + 22px) !important;
       }
-      /* iOS launch (middle) — close above */
       #growthMapTimelineIos .growth-map-timeline-launch-label {
-        bottom: calc(50% + 14px) !important;
-      }
-      /* Official release — below the bar */
-      #growthMapTimelineRelease .growth-map-timeline-launch-label {
         bottom: auto !important;
         top: calc(50% + 14px) !important;
       }
-      /* Today label — further below */
-      .growth-map-timeline-today-label {
-        top: calc(50% + 28px) !important;
+      #growthMapTimelineRelease .growth-map-timeline-launch-label {
+        bottom: calc(50% + 22px) !important;
+        top: auto !important;
       }
     }
     @media (max-width: 600px) {
@@ -3183,7 +3197,7 @@
         </div>
         <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
         <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
-          <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">اليوم</span>
+          <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
         </div>
       </div>
       <div class="growth-map-timeline-ends">
@@ -3435,7 +3449,7 @@
         growthMapReleaseDate: "10 أبريل",
         growthMapIosLabel: "إطلاق iOS",
         growthMapIosDate: "7 أبريل",
-        growthMapTodayLabel: "اليوم"
+        growthMapTodayLabel: "الان"
       },
       en: {
         tagline: "Your parking spot in your pocket",
@@ -3526,7 +3540,7 @@
         growthMapReleaseDate: "Apr 10",
         growthMapIosLabel: "iOS Launch",
         growthMapIosDate: "Apr 7",
-        growthMapTodayLabel: "Today"
+        growthMapTodayLabel: "Now"
       },
       fr: {
         tagline: "Votre place dans votre poche",
@@ -3618,7 +3632,7 @@
         growthMapReleaseDate: "10 avr.",
         growthMapIosLabel: "Lancement iOS",
         growthMapIosDate: "7 avr.",
-        growthMapTodayLabel: "Aujourd'hui"
+        growthMapTodayLabel: "Maint."
       },
       ur: {
         tagline: "آپ کی جیب میں پارکنگ",
@@ -3709,7 +3723,7 @@
         growthMapReleaseDate: "10 اپریل",
         growthMapIosLabel: "iOS لانچ",
         growthMapIosDate: "7 اپریل",
-        growthMapTodayLabel: "آج"
+        growthMapTodayLabel: "ابھی"
       }
     };
 
@@ -4961,12 +4975,19 @@
           timelineEl.classList.add("growth-map-timeline--has-milestones");
         }
 
-        /* علامة "اليوم" تحت السلايدر */
+        /* علامة "الان" على الثامب — تظهر فقط لما السلايدر عند اليوم */
         const todayMarkerEl = document.getElementById("growthMapTimelineToday");
-        if (todayMarkerEl && timelineSpanMs > 0) {
+        function updateThumbNowLabel(pos) {
+          if (!todayMarkerEl) return;
           todayMarkerEl.style.left = milestoneLeft(todayVisualR, timelineEl.getAttribute("dir") === "rtl");
           todayMarkerEl.hidden = false;
+          if (Number(pos) === SLIDER_MAX_TODAY) {
+            todayMarkerEl.classList.add("is-at-today");
+          } else {
+            todayMarkerEl.classList.remove("is-at-today");
+          }
         }
+        updateThumbNowLabel(SLIDER_MAX_TODAY);
 
         /* Snap: مواقع الـ milestones كـ slider steps (warped) */
         const milestoneSteps = [];
@@ -5088,6 +5109,7 @@
           const cutoff = sliderPositionToCutoffMs(pos);
           sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
           setTimelineFillFromPosition(pos);
+          updateThumbNowLabel(pos);
           scheduleGrowthMapTimelineInput(cutoff);
           scheduleGrowthMapTimelineStatsThrottled(pos);
         });
