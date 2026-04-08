@@ -5,18 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://brqsvtobletrlkpkhooc.supabase.co https://*.supabase.co wss://brqsvtobletrlkpkhooc.supabase.co wss://*.supabase.co https://api.maptiler.com https://*.maptiler.com https://demotiles.maplibre.org https://unpkg.com https://esm.sh; worker-src 'self' blob:;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.maptiler.com https://*.maptiler.com https://demotiles.maplibre.org https://unpkg.com; worker-src 'self' blob:;">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
   <!-- أيقونات «أرقام المنصة»: Bootstrap Icons (MIT، يتطلب الإبقاء على إشعار الترخيص عند إعادة التوزيع) — https://github.com/twbs/icons/blob/main/LICENSE -->
-  <link rel="dns-prefetch" href="https://brqsvtobletrlkpkhooc.supabase.co">
   <link rel="dns-prefetch" href="https://unpkg.com">
-  <link rel="dns-prefetch" href="https://esm.sh">
   <link rel="dns-prefetch" href="https://api.maptiler.com">
-  <!-- نفس قيمة MAPTILER_API_KEY في Xcode → Info.plist (أو من MapTiler Cloud). انسخها هنا فقط — السكربت يقرأها تلقائياً. -->
   <meta name="maptiler-api-key" content="iQUIaz3OVvXEwboJfBU9">
-  <!-- Supabase: URL + anon key (Settings → API). الإحصائيات: @supabase/supabase-js — profiles، facilities، parking_spots، user_cars -->
-  <meta name="supabase-url" content="https://brqsvtobletrlkpkhooc.supabase.co">
-  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ">
   <meta name="description" content="PARKINZI - موقفك في جيبك. تطبيق سعودي لحل الوقوف الذكي">
   <link rel="canonical" href="https://parkinzi.com/">
   <!-- Open Graph -->
@@ -3640,58 +3634,16 @@
       }
     };
 
-    /** يُقرأ من meta[name="supabase-url"] و meta[name="supabase-anon-key"] أو من window قبل التحميل. نفس القيم في التطبيق (SupabaseClient). */
-    const SUPABASE_URL = (function () {
-      const meta = document.querySelector('meta[name="supabase-url"]');
-      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
-      if (fromMeta) return fromMeta.replace(/\/$/, "");
-      if (typeof window !== "undefined" && window.__PARKINZI_SUPABASE_URL__) {
-        return String(window.__PARKINZI_SUPABASE_URL__).trim().replace(/\/$/, "");
-      }
-      return "https://brqsvtobletrlkpkhooc.supabase.co";
-    })();
-
-    const SUPABASE_ANON_KEY = (function () {
-      const meta = document.querySelector('meta[name="supabase-anon-key"]');
-      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
-      if (fromMeta) return fromMeta;
-      if (typeof window !== "undefined" && window.__PARKINZI_SUPABASE_ANON_KEY__) {
-        return String(window.__PARKINZI_SUPABASE_ANON_KEY__).trim();
-      }
-      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
-    })();
-
-    /** PostgREST للنماذج/الخريطة (بدون جلسة). */
-    const supabaseRestHeaders = {
-      apikey: SUPABASE_ANON_KEY,
-      Authorization: "Bearer " + SUPABASE_ANON_KEY
-    };
-
-    let supabaseBrowserClient = null;
-    async function getSupabase() {
-      if (supabaseBrowserClient) return supabaseBrowserClient;
-      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+    /** API proxy — المفاتيح على السيرفر فقط، المتصفح يكلم /api/ */
+    async function apiCount(table, before) {
       try {
-        const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
-        supabaseBrowserClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-          auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
-        });
-        return supabaseBrowserClient;
-      } catch {
-        return null;
-      }
-    }
-
-    async function fetchTableCountExact(supabase, tableName) {
-      try {
-        const { count, error } = await supabase
-          .from(tableName)
-          .select("*", { count: "exact", head: true });
-        if (error) return null;
-        return typeof count === "number" ? count : 0;
-      } catch {
-        return null;
-      }
+        let url = `/api/count?table=${table}`;
+        if (before) url += `&before=${encodeURIComponent(before)}`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const { count } = await res.json();
+        return typeof count === "number" ? count : null;
+      } catch { return null; }
     }
 
     function parseContentRangeTotal(contentRange) {
@@ -3702,89 +3654,28 @@
       return Number.isFinite(n) ? n : null;
     }
 
-    async function restTableCount(table) {
-      try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=id`, {
-          headers: {
-            ...supabaseRestHeaders,
-            Prefer: "count=exact",
-            Range: "0-0"
-          }
-        });
-        if (!res.ok) return null;
-        return parseContentRangeTotal(res.headers.get("content-range"));
-      } catch {
-        return null;
-      }
-    }
+    async function restTableCount(table) { return apiCount(table); }
 
-    /** عدد صفوف بـ created_at <= endMs (PostgREST: created_at=lte.iso) — يحتاج عمود created_at وصلاحية قراءة anon. */
     async function restCountCreatedAtLte(table, endMs) {
-      try {
-        const iso = new Date(endMs).toISOString();
-        const filterVal = `lte.${iso}`;
-        const url = `${SUPABASE_URL}/rest/v1/${table}?select=id&created_at=${encodeURIComponent(filterVal)}`;
-        const res = await fetch(url, {
-          headers: {
-            ...supabaseRestHeaders,
-            Prefer: "count=exact",
-            Range: "0-0"
-          }
-        });
-        if (!res.ok) return null;
-        return parseContentRangeTotal(res.headers.get("content-range"));
-      } catch {
-        return null;
-      }
+      return apiCount(table, new Date(endMs).toISOString());
     }
 
-    /** عدد مواقف has_electric_charger = true و created_at <= endMs */
     async function restCountParkingSpotsChargerUpTo(endMs) {
       try {
-        const iso = new Date(endMs).toISOString();
-        const filterVal = `lte.${iso}`;
-        const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=id&has_electric_charger=eq.true&created_at=${encodeURIComponent(filterVal)}`;
-        const res = await fetch(url, {
-          headers: {
-            ...supabaseRestHeaders,
-            Prefer: "count=exact",
-            Range: "0-0"
-          }
-        });
+        const res = await fetch(`/api/charger-count?before=${encodeURIComponent(new Date(endMs).toISOString())}`);
         if (!res.ok) return null;
-        return parseContentRangeTotal(res.headers.get("content-range"));
-      } catch {
-        return null;
-      }
+        const { count } = await res.json();
+        return typeof count === "number" ? count : null;
+      } catch { return null; }
     }
 
-    /** عدد مواقف has_electric_charger = true — نفس عمود التطبيق */
-    async function fetchParkingSpotsChargerCount(supabase) {
+    async function fetchParkingSpotsChargerCount() {
       try {
-        if (supabase) {
-          const { count, error } = await supabase
-            .from("parking_spots")
-            .select("*", { count: "exact", head: true })
-            .eq("has_electric_charger", true);
-          if (!error && typeof count === "number") return count;
-        }
-      } catch {}
-      try {
-        const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/parking_spots?select=id&has_electric_charger=eq.true`,
-          {
-            headers: {
-              ...supabaseRestHeaders,
-              Prefer: "count=exact",
-              Range: "0-0"
-            }
-          }
-        );
+        const res = await fetch("/api/charger-count");
         if (!res.ok) return null;
-        return parseContentRangeTotal(res.headers.get("content-range"));
-      } catch {
-        return null;
-      }
+        const { count } = await res.json();
+        return typeof count === "number" ? count : null;
+      } catch { return null; }
     }
 
     /** نتيجة RPC get_fuel_type_stats: [{ fuel_type, total_count }, ...] — نفس منطق التطبيق */
@@ -3806,22 +3697,9 @@
       return out;
     }
 
-    async function fetchFuelTypeStats(supabase) {
+    async function fetchFuelTypeStats() {
       try {
-        if (supabase) {
-          const { data, error } = await supabase.rpc("get_fuel_type_stats");
-          if (!error && Array.isArray(data)) return data;
-        }
-      } catch {}
-      try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_fuel_type_stats`, {
-          method: "POST",
-          headers: {
-            ...supabaseRestHeaders,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: "{}"
+        const res = await fetch("/api/fuel-stats");
         });
         if (!res.ok) return null;
         const data = await res.json();
@@ -4196,41 +4074,14 @@
         value !== null && Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
 
       try {
-        const supabase = await getSupabase();
-        if (!supabase) {
-          const [fuelRowsOnly, spotsTotalRest, spotsChargerRest] = await Promise.all([
-            fetchFuelTypeStats(null),
-            restTableCount("parking_spots"),
-            fetchParkingSpotsChargerCount(null)
-          ]);
-          const fuelOnly = fuelStatsFromRpcRows(fuelRowsOnly);
-          const totalSpots = safeCount(spotsTotalRest);
-          const ch = spotsChargerRest === null ? 0 : safeCount(spotsChargerRest);
-          cachedPlatformStats = {
-            ...zeroStats,
-            spots: totalSpots,
-            spotsCharger: ch,
-            spotsRegular: Math.max(0, totalSpots - ch),
-            carsElectric: fuelOnly.electric,
-            carsGasoline: fuelOnly.gasoline,
-            carsDiesel: fuelOnly.diesel,
-            carsHybrid: fuelOnly.hybrid
-          };
-          applyPlatformStatsToDom(cachedPlatformStats);
-          if (typeof window.__parkinziApplyTimelinePlatformStats === "function") {
-            void window.__parkinziApplyTimelinePlatformStats();
-          }
-          return;
-        }
-
         const [usersCount, facilitiesCount, spotsCount, carsCount, fuelRows, spotsChargerRaw] =
           await Promise.all([
-            fetchTableCountExact(supabase, "profiles"),
-            fetchTableCountExact(supabase, "facilities"),
-            fetchTableCountExact(supabase, "parking_spots"),
-            fetchTableCountExact(supabase, "user_cars"),
-            fetchFuelTypeStats(supabase),
-            fetchParkingSpotsChargerCount(supabase)
+            apiCount("profiles"),
+            apiCount("facilities"),
+            apiCount("parking_spots"),
+            apiCount("user_cars"),
+            fetchFuelTypeStats(),
+            fetchParkingSpotsChargerCount()
           ]);
 
         const fuel = fuelStatsFromRpcRows(fuelRows);
@@ -4557,10 +4408,8 @@
       for (let i = 0; i < PARKING_MAP_SELECT_ATTEMPTS.length; i++) {
         const cols = PARKING_MAP_SELECT_ATTEMPTS[i];
         try {
-          const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(cols)}`;
-          const res = await fetch(url, {
-            headers: { ...supabaseRestHeaders, Accept: "application/json" }
-          });
+          const url = `/api/parking-spots?select=${encodeURIComponent(cols)}`;
+          const res = await fetch(url);
           if (!res.ok) continue;
           const data = await res.json();
           const rows = Array.isArray(data) ? data : [];
@@ -5481,13 +5330,9 @@
         waitlistMsg.style.display = "none";
         const t = translations[lang()];
         try {
-          const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+          const res = await fetch("/api/waitlist", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              ...supabaseRestHeaders,
-              Prefer: "return=minimal"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email })
           });
           if (res.ok || res.status === 201) {
@@ -5515,13 +5360,9 @@
       chatSendBtn.classList.add("sending");
       const t = translations[lang()];
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+        const res = await fetch("/api/contact", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...supabaseRestHeaders,
-            Prefer: "return=minimal"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(chatState.data)
         });
         if (res.ok || res.status === 201) {
