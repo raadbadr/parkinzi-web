@@ -1,5 +1,5 @@
 /* PARKINZI — تخزين مؤقت للتصفح دون اتصال (نفس أصل الموقع فقط) */
-const CACHE_NAME = "parkinzi-offline-v2";
+const CACHE_NAME = "parkinzi-offline-v3";
 
 const PRECACHE_URLS = [
   "./index.html",
@@ -13,7 +13,10 @@ const PRECACHE_URLS = [
   "./rial-symbol.png",
   "./Monoton-Regular.ttf",
   "./parkinzi-logo-dark.png",
-  "./parkinzi-logo-light.png"
+  "./parkinzi-logo-light.png",
+  "./robots.txt",
+  "./sitemap.xml",
+  "./logo.png"
 ];
 
 function scopeBase() {
