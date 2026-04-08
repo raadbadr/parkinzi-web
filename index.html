@@ -3150,6 +3150,33 @@
   </section>
 
   <div class="growth-data-area">
+  <div class="growth-map-timeline growth-map-timeline--sticky" id="growthMapTimeline">
+    <div class="growth-map-timeline-range-wrap">
+      <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">نسخة تجريبية 1.1</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapLaunchDate">1 أبريل</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-release" id="growthMapTimelineRelease" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapReleaseLabel">الإطلاق الرسمي</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapReleaseDate">10 أبريل</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-ios" id="growthMapTimelineIos" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapIosLabel">إطلاق iOS</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapIosDate">7 أبريل</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
+      <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
+      <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
+        <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
+      </div>
+    </div>
+    <div class="growth-map-timeline-ends">
+      <span id="growthMapTimelineStartLabel"></span>
+      <span id="growthMapTimelineEndLabel"></span>
+    </div>
+  </div>
   <section class="platform-stats" id="platform-stats" aria-labelledby="platformStatsHeading">
     <h2 class="section-title platform-stats-heading" id="platformStatsHeading" data-i18n="statsSectionTitle">أرقام المنصة</h2>
     <div class="platform-stats-list">
@@ -3206,35 +3233,7 @@
     </div>
   </section>
 
-  <div class="growth-map-timeline growth-map-timeline--sticky" id="growthMapTimeline">
-    <div class="growth-map-timeline-range-wrap">
-      <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">نسخة تجريبية 1.1</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapLaunchDate">1 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-release" id="growthMapTimelineRelease" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapReleaseLabel">الإطلاق الرسمي</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapReleaseDate">10 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-ios" id="growthMapTimelineIos" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapIosLabel">إطلاق iOS</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapIosDate">7 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
-      <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
-        <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
-      </div>
-    </div>
-    <div class="growth-map-timeline-ends">
-      <span id="growthMapTimelineStartLabel"></span>
-      <span id="growthMapTimelineEndLabel"></span>
-    </div>
-  </div>
-  <section class="growth-map-section" id="coverage" aria-labelledby="growthMapHeading">
-    <h2 class="section-title" id="growthMapHeading" data-i18n="growthMapTitle">تطور تغطية التطبيق</h2>
+  <section class="growth-map-section" id="coverage">
     <div id="growthMap" class="growth-map-container" dir="ltr" role="application" data-i18n-aria-label="growthMapAria"></div>
   </section>
   </div>
