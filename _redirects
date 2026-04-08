@@ -1,2 +1,0 @@
-# Force www to root domain
-https://www.parkinzi.com/* https://parkinzi.com/:splat 301
