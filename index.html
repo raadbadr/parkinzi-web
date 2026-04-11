@@ -3777,11 +3777,19 @@
     };
 
     /** API proxy — المفاتيح على السيرفر فقط، المتصفح يكلم /api/ */
+    /* Defense-in-depth: server already sets Cache-Control: no-store, but
+       we also pass cache:'no-store' + a per-request cache buster so no
+       intermediate (browser HTTP cache, service worker, etc.) can serve
+       a stale count. */
+    function apiNoCacheUrl(path) {
+      return path + (path.includes("?") ? "&" : "?") + "_=" + Date.now();
+    }
+
     async function apiCount(table, before) {
       try {
         let url = `/api/count?table=${table}`;
         if (before) url += `&before=${encodeURIComponent(before)}`;
-        const res = await fetch(url);
+        const res = await fetch(apiNoCacheUrl(url), { cache: "no-store" });
         if (!res.ok) return null;
         const { count } = await res.json();
         return typeof count === "number" ? count : null;
@@ -3804,7 +3812,10 @@
 
     async function restCountParkingSpotsChargerUpTo(endMs) {
       try {
-        const res = await fetch(`/api/charger-count?before=${encodeURIComponent(new Date(endMs).toISOString())}`);
+        const res = await fetch(
+          apiNoCacheUrl(`/api/charger-count?before=${encodeURIComponent(new Date(endMs).toISOString())}`),
+          { cache: "no-store" }
+        );
         if (!res.ok) return null;
         const { count } = await res.json();
         return typeof count === "number" ? count : null;
@@ -3813,7 +3824,7 @@
 
     async function fetchParkingSpotsChargerCount() {
       try {
-        const res = await fetch("/api/charger-count");
+        const res = await fetch(apiNoCacheUrl("/api/charger-count"), { cache: "no-store" });
         if (!res.ok) return null;
         const { count } = await res.json();
         return typeof count === "number" ? count : null;
@@ -3841,7 +3852,7 @@
 
     async function fetchFuelTypeStats() {
       try {
-        const res = await fetch("/api/fuel-stats");
+        const res = await fetch(apiNoCacheUrl("/api/fuel-stats"), { cache: "no-store" });
         if (!res.ok) return null;
         const data = await res.json();
         return Array.isArray(data) ? data : null;
