@@ -41,6 +41,11 @@ function parseCount(res) {
 
 // --- Route handlers ---
 
+// Cloudflare Workers cache fetch() responses by default at the edge.
+// Pass this to every Supabase call so the worker always asks Supabase
+// directly and never serves a stale cached count.
+const NO_CACHE = { cacheTtl: 0, cacheEverything: false };
+
 async function handleCount(url, env) {
   const table = url.searchParams.get("table");
   const before = url.searchParams.get("before");
@@ -51,6 +56,7 @@ async function handleCount(url, env) {
 
   const res = await fetch(endpoint, {
     headers: { ...supaHeaders(env), Prefer: "count=exact", Range: "0-0" },
+    cf: NO_CACHE,
   });
   return json({ count: res.ok ? parseCount(res) : null });
 }
@@ -62,6 +68,7 @@ async function handleChargerCount(url, env) {
 
   const res = await fetch(endpoint, {
     headers: { ...supaHeaders(env), Prefer: "count=exact", Range: "0-0" },
+    cf: NO_CACHE,
   });
   return json({ count: res.ok ? parseCount(res) : null });
 }
@@ -71,6 +78,7 @@ async function handleFuelStats(env) {
     method: "POST",
     headers: { ...supaHeaders(env), Accept: "application/json", "Content-Type": "application/json" },
     body: "{}",
+    cf: NO_CACHE,
   });
   return json(res.ok ? await res.json() : []);
 }
@@ -83,6 +91,7 @@ async function handleParkingSpots(url, env) {
   const endpoint = `${env.SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(select)}`;
   const res = await fetch(endpoint, {
     headers: { ...supaHeaders(env), Accept: "application/json" },
+    cf: NO_CACHE,
   });
   return json(res.ok ? await res.json() : []);
 }
