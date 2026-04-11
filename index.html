@@ -4252,6 +4252,33 @@
     }
     loadPlatformStats();
 
+    /* Auto-refresh platform stats every 60s while page is visible,
+       and immediately when the tab regains focus. */
+    (function initPlatformStatsAutoRefresh() {
+      const REFRESH_MS = 60000;
+      let timer = null;
+      function start() {
+        if (timer) return;
+        timer = window.setInterval(() => {
+          if (document.visibilityState === "visible") loadPlatformStats();
+        }, REFRESH_MS);
+      }
+      function stop() {
+        if (!timer) return;
+        window.clearInterval(timer);
+        timer = null;
+      }
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          loadPlatformStats();
+          start();
+        } else {
+          stop();
+        }
+      });
+      start();
+    })();
+
     (function initPlatformStatExpandToggles() {
       function wire(btnId, detailId) {
         const btn = document.getElementById(btnId);
