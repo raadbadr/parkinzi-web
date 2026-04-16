@@ -446,6 +446,16 @@
     .brand-logo--sm .brand-logo-text { font-size: 1.4em; }
     .brand-logo--xs .brand-logo-img { height: 1em; }
     .brand-logo--xs .brand-logo-text { font-size: 1em; }
+    .brand-logo-inline {
+      height: 1.6em;
+      width: auto;
+      display: inline-block;
+      vertical-align: -0.45em;
+    }
+    .brand-logo-inline--xs {
+      height: 1.3em;
+      vertical-align: -0.35em;
+    }
     
     /* Smooth logo transition on theme change */
     picture {
@@ -3273,10 +3283,7 @@
   <section class="features" id="features">
     <h2 class="section-title">
       <span class="why-brand-font" data-i18n="whyPrefix">لماذا </span>
-      <span class="brand-logo brand-logo--sm">
-        <img src="parkinzi-logo-dark.png" alt="PARKINZI" class="brand-logo-img" data-brand-logo>
-        <span class="brand-logo-text">ARKINZI</span>
-      </span>
+      <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline" data-brand-logo>
       <span class="why-suffix" data-i18n="whySuffix">؟</span>
     </h2>
     <div class="features-grid">
@@ -3374,10 +3381,7 @@
           <div>
             <div class="chat-header-title">
               <span data-i18n="chatPrefix">مساعد </span>
-              <span class="brand-logo brand-logo--sm">
-                <img src="parkinzi-logo-light.png" alt="PARKINZI" class="brand-logo-img" data-brand-logo-header>
-                <span class="brand-logo-text">ARKINZI</span>
-              </span>
+              <img src="parkinzi-logo-full-light.png" alt="PARKINZI" class="brand-logo-inline" data-brand-logo-header>
             </div>
             <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
             <a href="mailto:support@parkinzi.com" class="chat-support-email">support@parkinzi.com</a>
@@ -3414,7 +3418,7 @@
     </p>
     <p class="footer-copyright">
       <span data-i18n="copyrightLine2">جميع الحقوق محفوظة</span>
-      <span> <span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="PARKINZI" class="brand-logo-img" data-brand-logo-footer><span class="brand-logo-text">ARKINZI</span></span> © 2026</span>
+      <span> <img src="parkinzi-logo-full-light.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs" data-brand-logo-footer> © 2026</span>
     </p>
   </footer>
 
@@ -3982,13 +3986,12 @@
       document.getElementById("check-dark").style.display = t === "dark" ? "inline" : "none";
       
       // Update all logos based on theme
-      const logoSrc = t === "dark" ? "parkinzi-logo-dark.png" : "parkinzi-logo-light.png";
       const heroLogoSrc = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       const heroLogo = document.getElementById("heroLogo");
       if (heroLogo) heroLogo.src = heroLogoSrc;
-      document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = logoSrc; });
+      document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = heroLogoSrc; });
       // Footer & chat header: خلفية داكنة → شعار أبيض
-      const footerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
+      const footerLogoSrc = t === "dark" ? "parkinzi-logo-full-light.png" : "parkinzi-logo-full-dark.png";
       document.querySelectorAll("[data-brand-logo-footer], [data-brand-logo-header]").forEach(img => { img.src = footerLogoSrc; });
 
       if (typeof window.__parkinziGrowthMapApplyTheme === "function") window.__parkinziGrowthMapApplyTheme();
@@ -5470,7 +5473,7 @@
       div.className = "chat-msg " + (isBot ? "bot" : "user");
       const content = document.createElement("div");
       if (text.includes("PARKINZI")) {
-        const logoHtml = '<span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="PARKINZI" class="brand-logo-img"><span class="brand-logo-text">ARKINZI</span></span>';
+        const logoHtml = '<img src="parkinzi-logo-full-light.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs">';
         const parts = text.split("PARKINZI");
         content.innerHTML = parts.map((p, i) => p + (i < parts.length - 1 ? logoHtml : "")).join("");
       } else {
