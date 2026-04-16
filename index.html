@@ -353,6 +353,19 @@
       position: relative;
       z-index: 10;
     }
+    .hero-logo-full {
+      height: 8rem;
+      width: auto;
+      max-width: 100%;
+      display: block;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 8px 20px rgba(0,160,210,0.25));
+      animation: logoFloat 6s ease-in-out infinite;
+    }
+    .hero-logo-full:hover {
+      transform: translateY(-6px) scale(1.02);
+      filter: drop-shadow(0 20px 40px rgba(0,160,210,0.35));
+    }
     
     .logo-text {
       font-family: 'Monoton', cursive;
@@ -3161,8 +3174,8 @@
     <div class="hero-content">
       <!-- Parkinzi Logo with Text -->
       <div class="logo-with-text">
-        <img src="parkinzi-logo-dark.png" alt="PARKINZI - شعار التطبيق" class="hero-logo-img" id="heroLogo">
-        <h1 class="logo-text"><span class="sr-only">P</span>ARKINZI</h1>
+        <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="hero-logo-full" id="heroLogo">
+        <h1 class="sr-only">PARKINZI</h1>
       </div>
       <p class="tagline" data-i18n="tagline">موقفك في جيبك</p>
     </div>
@@ -3970,8 +3983,9 @@
       
       // Update all logos based on theme
       const logoSrc = t === "dark" ? "parkinzi-logo-dark.png" : "parkinzi-logo-light.png";
+      const heroLogoSrc = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       const heroLogo = document.getElementById("heroLogo");
-      if (heroLogo) heroLogo.src = logoSrc;
+      if (heroLogo) heroLogo.src = heroLogoSrc;
       document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = logoSrc; });
       // Footer & chat header: خلفية داكنة → شعار أبيض
       const footerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
