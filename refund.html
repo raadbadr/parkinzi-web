@@ -571,7 +571,7 @@
     </p>
     <p class="footer-copyright">
       <span>جميع الحقوق محفوظة</span>
-      <span> <img src="parkinzi-logo-full-light.png" alt="PARKINZI" id="footerLogo" style="height:1.3em;width:auto;vertical-align:-0.35em;"> © 2026</span>
+      <span> <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" id="footerLogo" style="height:1.3em;width:auto;vertical-align:-0.35em;"> © 2026</span>
     </p>
   </footer>
 
@@ -692,7 +692,7 @@
       const meta = document.getElementById("themeColorMeta");
       if (meta) meta.content = th === "dark" ? "#1a2933" : "#0068b8";
       const logo = document.getElementById("footerLogo");
-      if (logo) logo.src = th === "dark" ? "parkinzi-logo-full-light.png" : "parkinzi-logo-full-dark.png";
+      if (logo) logo.src = th === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️";
       document.getElementById("currentThemeDisplay").textContent = themeLabels[l][th];
       document.getElementById("check-light").style.display = th === "light" ? "inline" : "none";
@@ -740,7 +740,7 @@
       const meta = document.getElementById("themeColorMeta");
       if (meta) meta.content = t === "dark" ? "#1a2933" : "#0068b8";
       const logo = document.getElementById("footerLogo");
-      if (logo) logo.src = t === "dark" ? "parkinzi-logo-full-light.png" : "parkinzi-logo-full-dark.png";
+      if (logo) logo.src = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       document.getElementById("themeIcon").textContent = t === "dark" ? "🌙" : "☀️";
       document.getElementById("currentThemeDisplay").textContent = themeLabels[l][t];
       document.getElementById("check-light").style.display = t === "light" ? "inline" : "none";

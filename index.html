@@ -3381,7 +3381,7 @@
           <div>
             <div class="chat-header-title">
               <span data-i18n="chatPrefix">مساعد </span>
-              <img src="parkinzi-logo-full-light.png" alt="PARKINZI" class="brand-logo-inline" data-brand-logo-header>
+              <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline" data-brand-logo-header>
             </div>
             <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
             <a href="mailto:support@parkinzi.com" class="chat-support-email">support@parkinzi.com</a>
@@ -3418,7 +3418,7 @@
     </p>
     <p class="footer-copyright">
       <span data-i18n="copyrightLine2">جميع الحقوق محفوظة</span>
-      <span> <img src="parkinzi-logo-full-light.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs" data-brand-logo-footer> © 2026</span>
+      <span> <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs" data-brand-logo-footer> © 2026</span>
     </p>
   </footer>
 
@@ -3991,7 +3991,7 @@
       if (heroLogo) heroLogo.src = heroLogoSrc;
       document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = heroLogoSrc; });
       // Footer & chat header: خلفية داكنة → شعار أبيض
-      const footerLogoSrc = t === "dark" ? "parkinzi-logo-full-light.png" : "parkinzi-logo-full-dark.png";
+      const footerLogoSrc = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       document.querySelectorAll("[data-brand-logo-footer], [data-brand-logo-header]").forEach(img => { img.src = footerLogoSrc; });
 
       if (typeof window.__parkinziGrowthMapApplyTheme === "function") window.__parkinziGrowthMapApplyTheme();
@@ -5473,7 +5473,7 @@
       div.className = "chat-msg " + (isBot ? "bot" : "user");
       const content = document.createElement("div");
       if (text.includes("PARKINZI")) {
-        const logoHtml = '<img src="parkinzi-logo-full-light.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs">';
+        const logoHtml = '<img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs">';
         const parts = text.split("PARKINZI");
         content.innerHTML = parts.map((p, i) => p + (i < parts.length - 1 ? logoHtml : "")).join("");
       } else {
