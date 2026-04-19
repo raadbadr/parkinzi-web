@@ -44,6 +44,17 @@
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
   <style>
+    /* Saudi Riyal symbol (SAMA official 2024 mark) */
+    .sar-symbol {
+      display: inline-block;
+      width: 0.95em;
+      height: 0.95em;
+      vertical-align: -0.1em;
+      background-color: currentColor;
+      -webkit-mask: url(rial-symbol.png) center/contain no-repeat;
+      mask: url(rial-symbol.png) center/contain no-repeat;
+      margin: 0 0.12em;
+    }
     /* Cross-browser reset + font enforcement */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -493,7 +504,7 @@
       
       <h3 data-i18n="violationsGroup1">مخالفات المجموعة الأولى</h3>
       <table>
-        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (<span class="sar-symbol" aria-label="ريال سعودي"></span>)</th><th data-i18n="thPenalty">العقوبة</th></tr>
         <tr><td>1/1</td><td>استخدام الموقف من غير دفع أجرة</td><td>200</td><td>سحب المركبة وحجزها</td></tr>
         <tr><td>2/1</td><td>انتهاء مدة الوقوف المدفوعة دون إخلاء الموقف</td><td>100</td><td>دفع الأجرة الإضافية</td></tr>
         <tr><td>3/1</td><td>تجاوز المدة الزمنية القصوى المسموح بها للموقوف</td><td>100</td><td>سحب المركبة وحجزها</td></tr>
@@ -502,27 +513,27 @@
 
       <h3 data-i18n="violationsGroup2">مخالفات المجموعة الثانية</h3>
       <table>
-        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (<span class="sar-symbol" aria-label="ريال سعودي"></span>)</th><th data-i18n="thPenalty">العقوبة</th></tr>
         <tr><td>2/1</td><td>الوقوف في مكان موقف محجوز لاستخدام معين</td><td>300</td><td>سحب المركبة وحجزها</td></tr>
         <tr><td>2/2</td><td>الوقوف في موقف محظور</td><td>300</td><td>سحب المركبة وحجزها</td></tr>
       </table>
 
       <h3 data-i18n="violationsGroup3">مخالفات المجموعة الثالثة</h3>
       <table>
-        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (<span class="sar-symbol" aria-label="ريال سعودي"></span>)</th><th data-i18n="thPenalty">العقوبة</th></tr>
         <tr><td>3/1</td><td>وضع حواجز أو معوقات أو تسوير أو إغلاق موقف دون تصريح</td><td>400</td><td>تحمل تكلفة إزالة الإحداث</td></tr>
       </table>
 
       <h3 data-i18n="violationsGroup4">مخالفات المجموعة الرابعة</h3>
       <table>
-        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (<span class="sar-symbol" aria-label="ريال سعودي"></span>)</th><th data-i18n="thPenalty">العقوبة</th></tr>
         <tr><td>4/1</td><td>الوقوف في المنطقة المخصصة لخدمة أبواب الطوارئ</td><td>900</td><td>سحب المركبة وحجزها</td></tr>
         <tr><td>4/2</td><td>وقوف المركبة عند مداخل ومخارج مباني مواقف السيارات</td><td>500</td><td>سحب المركبة وحجزها</td></tr>
       </table>
 
       <h3 data-i18n="towFees">مقابل السحب والحجز</h3>
       <table>
-        <tr><th data-i18n="thVehicleWeight">وزن المركبة</th><th data-i18n="thTowFee">المقابل المادي للسحب (ريال/يوم)</th><th data-i18n="thImpoundFee">المقابل المالي للحجز (ريال/يوم)</th></tr>
+        <tr><th data-i18n="thVehicleWeight">وزن المركبة</th><th data-i18n="thTowFee">المقابل المادي للسحب (<span class="sar-symbol" aria-label="ريال سعودي"></span>/يوم)</th><th data-i18n="thImpoundFee">المقابل المالي للحجز (<span class="sar-symbol" aria-label="ريال سعودي"></span>/يوم)</th></tr>
         <tr><td>المركبات الخفيفة (إلى 3 طن)</td><td>250</td><td>20</td></tr>
         <tr><td>المركبات الثقيلة (إلى 5 طن)</td><td>1,250</td><td>50</td></tr>
       </table>
@@ -589,11 +600,11 @@
         towFees: "مقابل السحب والحجز",
         thArticle: "المادة",
         thViolationType: "نوع المخالفة",
-        thFine: "الغرامة (ريال)",
+        thFine: "الغرامة (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
         thPenalty: "العقوبة",
         thVehicleWeight: "وزن المركبة",
-        thTowFee: "المقابل المادي للسحب (ريال/يوم)",
-        thImpoundFee: "المقابل المالي للحجز (ريال/يوم)",
+        thTowFee: "المقابل المادي للسحب (<span class="sar-symbol" aria-label="ريال سعودي"></span>/يوم)",
+        thImpoundFee: "المقابل المالي للحجز (<span class="sar-symbol" aria-label="ريال سعودي"></span>/يوم)",
         privacyLink: "سياسة الخصوصية",
         aboutLink: "من نحن",
         termsLink: "شروط الاستخدام",
@@ -613,11 +624,11 @@
         towFees: "Tow and Impound Fees",
         thArticle: "Article",
         thViolationType: "Violation Type",
-        thFine: "Fine (SAR)",
+        thFine: "Fine (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
         thPenalty: "Penalty",
         thVehicleWeight: "Vehicle Weight",
-        thTowFee: "Tow Fee (SAR/day)",
-        thImpoundFee: "Impound Fee (SAR/day)",
+        thTowFee: "Tow Fee (<span class="sar-symbol" aria-label="ريال سعودي"></span>/day)",
+        thImpoundFee: "Impound Fee (<span class="sar-symbol" aria-label="ريال سعودي"></span>/day)",
         privacyLink: "Privacy Policy",
         aboutLink: "About Us",
         termsLink: "Terms of Use",
@@ -637,11 +648,11 @@
         towFees: "Frais de remorquage et mise en fourrière",
         thArticle: "Article",
         thViolationType: "Type d'infraction",
-        thFine: "Amende (SAR)",
+        thFine: "Amende (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
         thPenalty: "Sanction",
         thVehicleWeight: "Poids du véhicule",
-        thTowFee: "Frais de remorquage (SAR/jour)",
-        thImpoundFee: "Frais de fourrière (SAR/jour)",
+        thTowFee: "Frais de remorquage (<span class="sar-symbol" aria-label="ريال سعودي"></span>/jour)",
+        thImpoundFee: "Frais de fourrière (<span class="sar-symbol" aria-label="ريال سعودي"></span>/jour)",
         privacyLink: "Politique de confidentialité",
         aboutLink: "À propos",
         termsLink: "Conditions d'utilisation",
@@ -661,11 +672,11 @@
         towFees: "ٹو اور ضبطی فیس",
         thArticle: "دفعہ",
         thViolationType: "خلاف ورزی کی قسم",
-        thFine: "جرمانہ (ریال)",
+        thFine: "جرمانہ (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
         thPenalty: "سزا",
         thVehicleWeight: "گاڑی کا وزن",
-        thTowFee: "ٹو فیس (ریال/دن)",
-        thImpoundFee: "ضبطی فیس (ریال/دن)",
+        thTowFee: "ٹو فیس (<span class="sar-symbol" aria-label="ريال سعودي"></span>/دن)",
+        thImpoundFee: "ضبطی فیس (<span class="sar-symbol" aria-label="ريال سعودي"></span>/دن)",
         privacyLink: "رازداری کی پالیسی",
         aboutLink: "ہمارے بارے میں",
         termsLink: "استعمال کی شرائط",
@@ -731,7 +742,7 @@
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
       const k = el.dataset.i18n;
-      if (translations[l] && translations[l][k]) el.textContent = translations[l][k];
+      if (translations[l] && translations[l][k]) el.innerHTML = translations[l][k];
     });
 
     (function() {

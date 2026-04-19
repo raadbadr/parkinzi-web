@@ -45,6 +45,17 @@
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
   <style>
+    /* Saudi Riyal symbol (SAMA official 2024 mark, rendered from local asset) */
+    .sar-symbol {
+      display: inline-block;
+      width: 0.95em;
+      height: 0.95em;
+      vertical-align: -0.1em;
+      background-color: currentColor;
+      -webkit-mask: url(rial-symbol.png) center/contain no-repeat;
+      mask: url(rial-symbol.png) center/contain no-repeat;
+      margin: 0 0.12em;
+    }
     /* Cross-browser reset + font enforcement */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -228,10 +239,10 @@
 
       <h2 data-i18n="commissionLabel">2. عمولة المنصة</h2>
       <p><span class="highlight" data-i18n="commissionText">تبلغ عمولة المنصة 30% من قيمة الحجز الإجمالية.</span> <span data-i18n="commissionNote">يحصل مقدم الخدمة على 70% من قيمة كل حجز بعد خصم العمولة. الأسعار المعروضة في التطبيق تمثل قيمة الحجز الكاملة قبل أي خصومات.</span></p>
-      <p data-i18n="commissionExample">مثال: إذا حدد مقدم الخدمة سعر الساعة بمبلغ 20 ر.س، يدفع السائق 20 ر.س، ويحصل مقدم الخدمة على 14 ر.س بعد خصم عمولة المنصة (6 ر.س).</p>
+      <p data-i18n="commissionExample">مثال: إذا حدد مقدم الخدمة سعر الساعة بمبلغ 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>، يدفع السائق 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>، ويحصل مقدم الخدمة على 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> بعد خصم عمولة المنصة (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>).</p>
 
       <h2 data-i18n="pricingLabel">3. تحديد الأسعار</h2>
-      <p data-i18n="pricingText">مقدم الخدمة هو من يحدد سعر الحجز بشكل مستقل. العملة المعتمدة هي الريال السعودي (ر.س).</p>
+      <p data-i18n="pricingText">مقدم الخدمة هو من يحدد سعر الحجز بشكل مستقل. العملة المعتمدة هي الريال السعودي (<span class="sar-symbol" aria-label="ريال سعودي"></span>).</p>
 
       <h2 data-i18n="paymentLabel">4. طرق الدفع</h2>
       <p data-i18n="paymentText">يقبل الدفع عبر وسيلتين: (1) الدفع الإلكتروني من خلال التطبيق، أو (2) الدفع المباشر عبر جهاز الدفع (POS) المتوفر في موقع المنشأة. يختار السائق الوسيلة المناسبة له عند الحجز أو عند الوصول إلى الموقع.</p>
@@ -295,9 +306,9 @@
         commissionLabel: "2. عمولة المنصة",
         commissionText: "تبلغ عمولة المنصة 30% من قيمة الحجز الإجمالية.",
         commissionNote: "يحصل مقدم الخدمة على 70% من قيمة كل حجز بعد خصم العمولة. الأسعار المعروضة في التطبيق تمثل قيمة الحجز الكاملة قبل أي خصومات.",
-        commissionExample: "مثال: إذا حدد مقدم الخدمة سعر الساعة بمبلغ 20 ر.س، يدفع السائق 20 ر.س، ويحصل مقدم الخدمة على 14 ر.س بعد خصم عمولة المنصة (6 ر.س).",
+        commissionExample: "مثال: إذا حدد مقدم الخدمة سعر الساعة بمبلغ 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>، يدفع السائق 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>، ويحصل مقدم الخدمة على 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> بعد خصم عمولة المنصة (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>).",
         pricingLabel: "3. تحديد الأسعار",
-        pricingText: "مقدم الخدمة هو من يحدد سعر الحجز بشكل مستقل. العملة المعتمدة هي الريال السعودي (ر.س).",
+        pricingText: "مقدم الخدمة هو من يحدد سعر الحجز بشكل مستقل. العملة المعتمدة هي الريال السعودي (<span class="sar-symbol" aria-label="ريال سعودي"></span>).",
         paymentLabel: "4. طرق الدفع",
         paymentText: "يقبل الدفع عبر وسيلتين: (1) الدفع الإلكتروني من خلال التطبيق، أو (2) الدفع المباشر عبر جهاز الدفع (POS) المتوفر في موقع المنشأة. يختار السائق الوسيلة المناسبة له عند الحجز أو عند الوصول إلى الموقع.",
         vatLabel: "5. ضريبة القيمة المضافة",
@@ -333,9 +344,9 @@
         commissionLabel: "2. Platform Commission",
         commissionText: "The platform commission is 30% of the total booking value.",
         commissionNote: "The service provider receives 70% of each booking value after commission deduction. Prices displayed in the app represent the full booking value before any deductions.",
-        commissionExample: "Example: If the service provider sets the hourly rate at 20 SAR, the driver pays 20 SAR, and the provider receives 14 SAR after the platform commission (6 SAR) is deducted.",
+        commissionExample: "Example: If the service provider sets the hourly rate at 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>, the driver pays 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>, and the provider receives 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> after the platform commission (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>) is deducted.",
         pricingLabel: "3. Price Setting",
-        pricingText: "The service provider independently sets the booking price. The accepted currency is the Saudi Riyal (SAR).",
+        pricingText: "The service provider independently sets the booking price. The accepted currency is the Saudi Riyal (<span class="sar-symbol" aria-label="ريال سعودي"></span>).",
         paymentLabel: "4. Payment Methods",
         paymentText: "Payment is accepted via two methods: (1) electronic payment through the app, or (2) direct on-site payment using the point-of-sale (POS) terminal available at the facility. The driver chooses the method at booking or upon arrival at the location.",
         vatLabel: "5. Value Added Tax",
@@ -371,9 +382,9 @@
         commissionLabel: "2. Commission de la plateforme",
         commissionText: "La commission de la plateforme est de 30% de la valeur totale de la reservation.",
         commissionNote: "Le prestataire recoit 70% de la valeur de chaque reservation apres deduction de la commission. Les prix affiches dans l'application representent la valeur totale avant toute deduction.",
-        commissionExample: "Exemple : si le prestataire fixe le tarif horaire a 20 SAR, le conducteur paie 20 SAR et le prestataire recoit 14 SAR apres deduction de la commission (6 SAR).",
+        commissionExample: "Exemple : si le prestataire fixe le tarif horaire a 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>, le conducteur paie 20 <span class="sar-symbol" aria-label="ريال سعودي"></span> et le prestataire recoit 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> apres deduction de la commission (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>).",
         pricingLabel: "3. Fixation des prix",
-        pricingText: "Le prestataire fixe independamment le prix de la reservation. La devise acceptee est le Riyal saoudien (SAR).",
+        pricingText: "Le prestataire fixe independamment le prix de la reservation. La devise acceptee est le Riyal saoudien (<span class="sar-symbol" aria-label="ريال سعودي"></span>).",
         paymentLabel: "4. Modes de paiement",
         paymentText: "Le paiement est accepte par deux moyens : (1) paiement electronique via l'application, ou (2) paiement direct sur place via le terminal de paiement (TPE) disponible sur le site de l'etablissement. Le conducteur choisit le moyen qui lui convient lors de la reservation ou a son arrivee sur place.",
         vatLabel: "5. Taxe sur la valeur ajoutee",
@@ -409,9 +420,9 @@
         commissionLabel: "2. پلیٹ فارم کمیشن",
         commissionText: "پلیٹ فارم کمیشن بکنگ کی کل قیمت کا 30% ہے۔",
         commissionNote: "خدمت فراہم کنندہ کو کمیشن کٹوتی کے بعد ہر بکنگ کی قیمت کا 70% ملتا ہے۔ ایپ میں دکھائی گئی قیمتیں کسی بھی کٹوتی سے پہلے مکمل بکنگ کی قیمت ہیں۔",
-        commissionExample: "مثال: اگر خدمت فراہم کنندہ فی گھنٹہ شرح 20 SAR مقرر کرتا ہے، تو ڈرائیور 20 SAR ادا کرتا ہے، اور فراہم کنندہ کو پلیٹ فارم کمیشن (6 SAR) کٹوتی کے بعد 14 SAR ملتے ہیں۔",
+        commissionExample: "مثال: اگر خدمت فراہم کنندہ فی گھنٹہ شرح 20 <span class="sar-symbol" aria-label="ريال سعودي"></span> مقرر کرتا ہے، تو ڈرائیور 20 <span class="sar-symbol" aria-label="ريال سعودي"></span> ادا کرتا ہے، اور فراہم کنندہ کو پلیٹ فارم کمیشن (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>) کٹوتی کے بعد 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> ملتے ہیں۔",
         pricingLabel: "3. قیمت کا تعین",
-        pricingText: "خدمت فراہم کنندہ آزادانہ طور پر بکنگ کی قیمت طے کرتا ہے۔ قبول شدہ کرنسی سعودی ریال (SAR) ہے۔",
+        pricingText: "خدمت فراہم کنندہ آزادانہ طور پر بکنگ کی قیمت طے کرتا ہے۔ قبول شدہ کرنسی سعودی ریال (<span class="sar-symbol" aria-label="ريال سعودي"></span>) ہے۔",
         paymentLabel: "4. ادائیگی کے طریقے",
         paymentText: "ادائیگی دو طریقوں سے قبول کی جاتی ہے: (1) ایپ کے ذریعے الیکٹرانک ادائیگی، یا (2) موقع پر موجود ادائیگی ڈیوائس (POS) کے ذریعے براہ راست ادائیگی۔ ڈرائیور بکنگ کے وقت یا موقع پر پہنچنے پر مناسب طریقہ منتخب کرتا ہے۔",
         vatLabel: "5. ویلیو ایڈڈ ٹیکس",
@@ -463,7 +474,7 @@
       document.getElementById("currentThemeDisplay").textContent = t[code][th === "dark" ? "dark" : "light"];
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const k = el.dataset.i18n;
-        if (t[code] && t[code][k]) el.textContent = t[code][k];
+        if (t[code] && t[code][k]) el.innerHTML = t[code][k];
       });
       document.title = "PARKINZI | " + (t[code] && t[code].title ? t[code].title : "Pricing Policy");
     }
