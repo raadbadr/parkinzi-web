@@ -2,82 +2,25 @@
 <html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGDPERQEF4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TGDPERQEF4');
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://unpkg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.maptiler.com https://*.maptiler.com https://demotiles.maplibre.org https://unpkg.com https://www.google-analytics.com https://www.googletagmanager.com; worker-src 'self' blob:;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://brqsvtobletrlkpkhooc.supabase.co https://*.supabase.co wss://brqsvtobletrlkpkhooc.supabase.co wss://*.supabase.co https://api.maptiler.com https://*.maptiler.com https://demotiles.maplibre.org https://unpkg.com https://esm.sh; worker-src 'self' blob:;">
   <meta name="theme-color" content="#1a2933" id="themeColorMeta">
-  <meta name="robots" content="index, follow">
-  <meta name="apple-itunes-app" content="app-id=6751274124">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- أيقونات «أرقام المنصة»: Bootstrap Icons (MIT، يتطلب الإبقاء على إشعار الترخيص عند إعادة التوزيع) — https://github.com/twbs/icons/blob/main/LICENSE -->
+  <link rel="dns-prefetch" href="https://brqsvtobletrlkpkhooc.supabase.co">
   <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://esm.sh">
   <link rel="dns-prefetch" href="https://api.maptiler.com">
+  <!-- نفس قيمة MAPTILER_API_KEY في Xcode → Info.plist (أو من MapTiler Cloud). انسخها هنا فقط — السكربت يقرأها تلقائياً. -->
   <meta name="maptiler-api-key" content="iQUIaz3OVvXEwboJfBU9">
-  <meta name="description" content="PARKINZI - موقفك في جيبك. تطبيق سعودي لحل الوقوف الذكي">
-  <link rel="canonical" href="https://parkinzi.com/">
-  <link rel="alternate" hreflang="ar" href="https://parkinzi.com/">
-  <link rel="alternate" hreflang="en" href="https://parkinzi.com/">
-  <link rel="alternate" hreflang="fr" href="https://parkinzi.com/">
-  <link rel="alternate" hreflang="ur" href="https://parkinzi.com/">
-  <link rel="alternate" hreflang="x-default" href="https://parkinzi.com/">
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://parkinzi.com/">
-  <meta property="og:title" content="PARKINZI | موقفك في جيبك">
-  <meta property="og:description" content="تطبيق سعودي لحل الوقوف الذكي. احجز موقفك، ادفع اونلاين، وفر وقتك.">
-  <meta property="og:image" content="https://parkinzi.com/logo.png">
-  <meta property="og:image:width" content="1000">
-  <meta property="og:image:height" content="1000">
-  <meta property="og:locale" content="ar_SA">
-  <meta property="og:site_name" content="PARKINZI">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="PARKINZI | موقفك في جيبك">
-  <meta name="twitter:description" content="تطبيق سعودي لحل الوقوف الذكي. احجز موقفك، ادفع اونلاين، وفر وقتك.">
-  <meta name="twitter:image" content="https://parkinzi.com/logo.png">
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MobileApplication",
-    "name": "PARKINZI",
-    "description": "تطبيق سعودي لحل الوقوف الذكي. احجز موقفك، ادفع اونلاين، وفر وقتك.",
-    "url": "https://parkinzi.com",
-    "image": "https://parkinzi.com/logo.png",
-    "applicationCategory": "LifestyleApplication",
-    "operatingSystem": "iOS",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "SAR"
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "PARKINZI",
-      "url": "https://parkinzi.com"
-    },
-    "inLanguage": ["ar", "en", "fr", "ur"],
-    "availableLanguage": ["ar", "en", "fr", "ur"],
-    "countryOfOrigin": {
-      "@type": "Country",
-      "name": "SA"
-    }
-  }
-  </script>
+  <!-- Supabase: URL + anon key (Settings → API). الإحصائيات: @supabase/supabase-js — profiles، facilities، parking_spots، user_cars -->
+  <meta name="supabase-url" content="https://brqsvtobletrlkpkhooc.supabase.co">
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ">
+  <meta name="description" content="PARKINZI - مواقف ذكية في جيبك. تطبيق سعودي لحل الوقوف الذكي">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>PARKINZI | موقفك في جيبك</title>
+  <title>PARKINZI | مواقف ذكية</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,37 +29,6 @@
   <link rel="stylesheet" href="footer.css">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="">
   <style>
-    /* ============================================
-       Cross-browser reset + font enforcement
-       ============================================ */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    html {
-      -webkit-text-size-adjust: 100%;
-      -moz-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-    button, input, select, textarea, optgroup {
-      font-family: inherit;
-      font-size: inherit;
-      line-height: inherit;
-      color: inherit;
-      margin: 0;
-    }
-    button, [type="button"], [type="reset"], [type="submit"] {
-      -webkit-appearance: button;
-      appearance: button;
-    }
-    img, svg, video, canvas {
-      display: block;
-      max-width: 100%;
-    }
-    a { color: inherit; }
-    /* ============================================ */
-
     /* Monoton Font - Local */
     @font-face {
       font-family: 'Monoton';
@@ -223,8 +135,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-
+    
     /* Performance optimizations */
     * {
       -webkit-tap-highlight-color: transparent;
@@ -233,8 +144,6 @@
     
     img {
       -webkit-user-drag: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
       user-select: none;
     }
     
@@ -353,19 +262,6 @@
       position: relative;
       z-index: 10;
     }
-    .hero-logo-full {
-      height: 8rem;
-      width: auto;
-      max-width: 100%;
-      display: block;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 8px 20px rgba(0,160,210,0.25));
-      animation: logoFloat 6s ease-in-out infinite;
-    }
-    .hero-logo-full:hover {
-      transform: translateY(-6px) scale(1.02);
-      filter: drop-shadow(0 20px 40px rgba(0,160,210,0.35));
-    }
     
     .logo-text {
       font-family: 'Monoton', cursive;
@@ -446,16 +342,6 @@
     .brand-logo--sm .brand-logo-text { font-size: 1.4em; }
     .brand-logo--xs .brand-logo-img { height: 1em; }
     .brand-logo--xs .brand-logo-text { font-size: 1em; }
-    .brand-logo-inline {
-      height: 1.6em;
-      width: auto;
-      display: inline-block;
-      vertical-align: -0.45em;
-    }
-    .brand-logo-inline--xs {
-      height: 1.3em;
-      vertical-align: -0.35em;
-    }
     
     /* Smooth logo transition on theme change */
     picture {
@@ -654,123 +540,304 @@
       transform: translateY(-2px) scale(1.02);
     }
     
-    /* Store Badges */
-    .store-badge {
-      max-width: 100%;
-      object-fit: contain;
-      display: block;
-    }
-    [data-theme="dark"] .app-store-badge {
-      filter: none;
+    /* Official Store Badges - رموز Apple و Google الرسمية */
+    .store-badge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+      flex: 1;
+      min-height: 0;
     }
     
-    /* ============================================
-       Download Blocks — كل بلوك منفصل
-       ============================================ */
-    .download-blocks {
+    .store-badge-link {
       display: flex;
-      gap: 1rem;
-      margin-top: 0.75rem;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      align-items: stretch;
+      min-width: 0;
+      height: 100px;
+      min-height: 100px;
+      max-height: 100px;
+      flex-shrink: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 
+        0 4px 16px var(--shadow-dark),
+        0 0 0 1px rgba(0,0,0,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.9;
     }
-    .download-block {
-      flex: 1;
+    
+    
+    [data-theme="dark"] .store-badge-link {
+      background: var(--glass);
+      border-color: var(--glass-border);
+      box-shadow: 
+        0 4px 20px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    
+    .coming-soon {
+      font-size: 1.05rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .coming-soon-badge {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    
+    .store-badge {
+      height: 70px;
+      max-height: 70px;
+      width: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    
+    .app-store-badge { height: 70px; max-height: 70px; max-width: 100%; }
+    .google-play-badge { height: 88px; max-height: 88px; max-width: 100%; }
+    
+    [data-theme="dark"] .app-store-badge {
+      filter: invert(1);
+    }
+    
+    /* Download Section - أزرار التحميل + قائمة الانتظار في سطر واحد */
+    .download-section {
+      margin-top: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      background: var(--glass);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+    }
+    .download-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: center;
+      gap: 1.5rem;
+      width: 100%;
+    }
+    
+    .store-options {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1rem;
+      align-items: stretch;
+      justify-items: stretch;
+      width: 100%;
+      max-width: 520px;
+      align-self: flex-end;
+    }
+    .store-option {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+      width: 100%;
+      min-width: 0;
+      min-height: 0;
+    }
+    .store-option .store-badge-wrap { margin: 0; }
+    .store-status {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .store-status.store-coming { color: var(--text-tertiary); }
+    .store-status.store-available { color: var(--success); font-weight: 600; }
+    .store-qr {
+      margin-top: 0.5rem;
+      padding: 12px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .store-qr-img { width: 120px; height: 120px; display: block; border-radius: 6px; }
+    .download-section[data-has-available="true"] .coming-soon-badge { display: none; }
+    .download-section[data-has-available="false"] .store-option .store-coming { display: none !important; }
+    .store-option[data-available="true"] .store-coming { display: none !important; }
+    .store-option[data-available="true"] .store-available { display: inline !important; }
+    .store-option[data-available="true"] .store-qr { display: block !important; }
+    .store-option[data-available="true"] .store-badge-link { cursor: pointer; pointer-events: auto; opacity: 1; }
+    .store-option[data-available="true"] .store-badge-link[href] { text-decoration: none; }
+    
+    /* QR Code Section - داخل download-section */
+    .download-section .qr-section {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 1.25rem 1rem;
-      border-radius: 16px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      text-align: center;
-      text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .download-block--ios {
-      cursor: pointer;
-      border-color: var(--primary);
-      box-shadow: 0 0 20px rgba(0, 160, 210, 0.12);
-    }
-    .download-block--ios:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(0, 160, 210, 0.2);
-    }
-    .download-block--android {
-      opacity: 0.55;
-    }
-    .download-block .store-badge {
-      display: block;
+      gap: 1rem;
+      animation: fadeInUp 1s ease-out 0.5s backwards;
+      width: 100%;
       max-width: 100%;
     }
-    .download-block .app-store-badge { height: 65px; }
-    .download-block .google-play-badge { height: 85px; }
-    .download-block-status {
-      font-size: 0.82rem;
-      font-weight: 600;
+    
+    .qr-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      font-weight: 500;
     }
-    .download-block-status--live { color: var(--success); }
-    .download-block-status--soon { color: var(--text-tertiary); }
-    /* Waitlist block */
-    .download-block--waitlist {
-      gap: 0.5rem;
+    
+    .qr-codes {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
     }
-    .download-block--waitlist .waitlist-title {
+    
+    .qr-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .qr-code-link {
+      display: block;
+      padding: 14px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 
+        0 8px 24px rgba(0,0,0,0.15),
+        inset 0 0 0 1px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    
+    .qr-code-img {
+      width: 160px;
+      height: 160px;
+      display: block;
+      border-radius: 6px;
+    }
+    
+    .qr-label {
       font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin: 0;
     }
-    .download-block--waitlist .waitlist-desc {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
+    
+    .qr-item .coming-soon {
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+    
+    /* Waitlist — محاذاة قاع النموذج مع قاع مربعات المتاجر (بدون تغيير شعارات المتاجر) */
+    .waitlist-section {
+      flex: 1;
+      min-width: 280px;
+      max-width: 420px;
+      text-align: center;
+      padding: 0;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .waitlist-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+    .waitlist-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
     }
     .waitlist-form {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
       justify-content: center;
-      width: 100%;
+      margin-top: auto;
     }
     .waitlist-input {
       flex: 1;
-      min-width: 140px;
-      padding: 0.7rem 0.85rem;
-      border-radius: 10px;
+      min-width: 200px;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
       border: 1px solid var(--glass-border);
       background: var(--glass);
       color: var(--text-primary);
-      font-size: 0.9rem;
+      font-size: 1rem;
+      font-family: inherit;
     }
     .waitlist-input::placeholder { color: var(--text-tertiary); }
     .waitlist-input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0, 160, 210, 0.2);
+      box-shadow: 0 0 0 2px rgba(0,160,210,0.2);
     }
     .waitlist-btn {
-      padding: 0.7rem 1.2rem;
-      border-radius: 10px;
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
       border: none;
       background: var(--primary);
       color: white;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
     }
     .waitlist-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
     .waitlist-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-    .waitlist-msg { margin-top: 0.5rem; font-size: 0.85rem; }
+    .waitlist-msg {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+    }
     .waitlist-msg.success { color: var(--success); }
     .waitlist-msg.error { color: var(--error); }
     
+    /* Hide QR codes on mobile, show store buttons prominently */
     @media (max-width: 768px) {
-      .download-blocks {
+      .download-section { padding: 1rem 1.25rem; }
+      .download-row {
         flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      .store-options,
+      .coming-soon-badge {
+        align-self: stretch;
+      }
+      .waitlist-form {
+        margin-top: 0;
+      }
+      .waitlist-desc {
+        margin-bottom: 1rem;
+      }
+      .waitlist-section { min-width: 100%; max-width: 100%; }
+      .download-section .qr-section {
+        display: none;
       }
 
       .hero {
@@ -811,8 +878,31 @@
         text-align: center;
       }
       
-      .download-block .app-store-badge { height: 55px; }
-      .download-block .google-play-badge { height: 73px; }
+      .store-options { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; max-width: 340px; margin: 0 auto; gap: 0.75rem; align-items: stretch; }
+      .store-option { min-width: 0; width: 100%; align-items: stretch; }
+      .store-badge-wrap {
+        width: 100%;
+        max-width: 100%;
+      }
+      
+      .store-badge-link {
+        width: 100%;
+        min-width: 0;
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      
+      .store-badge,
+      .app-store-badge { height: 70px; max-height: 70px; max-width: 100%; width: 100%; object-fit: contain; object-position: center; }
+      .google-play-badge { height: 88px; max-height: 88px; max-width: 100%; width: 100%; object-fit: contain; }
+      
+      .coming-soon {
+        font-size: 0.95rem;
+      }
     }
 
     .features {
@@ -988,8 +1078,6 @@
       font-weight: 700;
       letter-spacing: 0.02em;
       transition: opacity 0.2s ease, transform 0.2s ease;
-      -webkit-user-select: none;
-      -moz-user-select: none;
       user-select: none;
       z-index: 2;
     }
@@ -1143,23 +1231,10 @@
     [data-accent="spots"] .platform-stat-value { color: rgb(242, 140, 26); }
     [data-accent="cars"] .platform-stat-value { color: rgb(52, 199, 89); }
 
-    .growth-data-area {
-      position: relative;
-    }
-    .growth-map-timeline.growth-map-timeline--sticky {
-      position: sticky;
-      top: 70px;
-      z-index: 20;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
     .growth-map-section {
       padding: 0 2rem 2rem;
       max-width: 1200px;
-      margin: 1rem auto 0;
+      margin: clamp(2.75rem, 5vw, 3.5rem) auto 0;
       position: relative;
       z-index: 1;
     }
@@ -1195,10 +1270,9 @@
     .growth-map-timeline {
       --timeline-fill-pct: 100%;
       margin-top: 0;
-      margin-bottom: 0.85rem;
-      padding: 1.2rem 1.2rem 1.2rem;
-      border-radius: 16px;
-      min-height: 0;
+      margin-bottom: 1.1rem;
+      padding: 1rem 1.15rem 1.2rem;
+      border-radius: 20px;
       position: relative;
       isolation: isolate;
       backdrop-filter: blur(22px) saturate(1.65);
@@ -1232,10 +1306,8 @@
     }
     .growth-map-timeline input[type="range"] {
       width: 100%;
-      height: 20px;
+      height: 10px;
       border-radius: 999px;
-      -webkit-appearance: none;
-      -moz-appearance: none;
       appearance: none;
       cursor: default;
       background: transparent;
@@ -1262,12 +1334,11 @@
     }
     .growth-map-timeline-range-wrap {
       position: relative;
-      height: 20px;
-      margin-top: 0;
+      padding: 0.4rem 0;
       z-index: 0;
       -webkit-user-select: none;
-      -moz-user-select: none;
       user-select: none;
+      -moz-user-select: none;
     }
     .growth-map-timeline-range-wrap::before {
       content: "";
@@ -1275,7 +1346,7 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      height: 14px;
+      height: 11px;
       border-radius: 999px;
       width: var(--timeline-fill-pct, 100%);
       max-width: 100%;
@@ -1284,35 +1355,13 @@
       transition: width 0.14s cubic-bezier(0.25, 0.8, 0.25, 1);
       background: linear-gradient(
         90deg,
-        rgba(0, 160, 220, 0.45) 0%,
-        rgba(80, 160, 230, 0.3) 55%,
-        rgba(130, 190, 240, 0.18) 100%
+        rgba(0, 210, 255, 0.55) 0%,
+        rgba(100, 180, 255, 0.38) 55%,
+        rgba(160, 210, 255, 0.22) 100%
       );
-      box-shadow: none;
-    }
-    .growth-map-timeline-range-wrap::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 14px;
-      border-radius: 999px;
-      pointer-events: none;
-      z-index: -1;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow:
-        inset 0 1px 2px rgba(0, 0, 0, 0.15),
-        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
-    }
-    [data-theme="light"] .growth-map-timeline-range-wrap::after {
-      background: rgba(0, 60, 100, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow:
-        inset 0 1px 3px rgba(0, 0, 0, 0.08),
-        inset 0 -1px 1px rgba(255, 255, 255, 0.9);
+        0 0 20px rgba(0, 200, 255, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
     }
     .growth-map-timeline[dir="rtl"] .growth-map-timeline-range-wrap::before {
       left: auto;
@@ -1321,39 +1370,37 @@
     [data-theme="light"] .growth-map-timeline-range-wrap::before {
       background: linear-gradient(
         90deg,
-        rgba(0, 140, 220, 0.3) 0%,
-        rgba(80, 160, 230, 0.18) 100%
+        rgba(0, 140, 220, 0.35) 0%,
+        rgba(80, 160, 230, 0.22) 100%
       );
-      box-shadow: none;
+      box-shadow: 0 0 16px rgba(0, 120, 200, 0.15);
     }
     .growth-map-timeline-range-wrap input[type="range"] {
       position: relative;
       z-index: 1;
-      width: 100%;
-      height: 20px;
-      margin: 0;
-      padding: 0;
-      display: block;
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
-      height: 20px;
+      height: 10px;
       border-radius: 999px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-webkit-slider-runnable-track {
-      background: transparent;
-      border: none;
-      box-shadow: none;
+      background: rgba(0, 60, 100, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.9);
     }
     .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
       appearance: none;
-      width: 36px;
-      height: 20px;
-      margin-top: 0;
-      border-radius: 10px;
+      width: 38px;
+      height: 16px;
+      margin-top: -4px;
+      border-radius: 9px;
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
       border: none;
       box-shadow:
@@ -1379,21 +1426,23 @@
       background: rgba(255, 255, 255, 0.45);
     }
     .growth-map-timeline input[type="range"]::-moz-range-track {
-      height: 20px;
+      height: 10px;
       border-radius: 999px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.12);
     }
     [data-theme="light"] .growth-map-timeline input[type="range"]::-moz-range-track {
-      background: transparent;
-      border: none;
+      background: rgba(0, 60, 100, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.85);
     }
     .growth-map-timeline input[type="range"]::-moz-range-thumb {
-      width: 36px;
-      height: 20px;
+      width: 38px;
+      height: 16px;
       border: none;
-      border-radius: 10px;
+      border-radius: 9px;
       background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
       box-shadow:
         0 2px 12px rgba(0, 0, 0, 0.3),
@@ -1419,280 +1468,11 @@
     .growth-map-timeline-ends {
       display: flex;
       justify-content: space-between;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      font-weight: 600;
+      margin-top: 0.55rem;
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
       letter-spacing: 0.02em;
-    }
-
-    /* علامة "اليوم" تحت السلايدر */
-    .growth-map-timeline-today {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.18s ease;
-    }
-    .growth-map-timeline-today.is-at-today {
-      opacity: 1;
-    }
-    .growth-map-timeline-today-label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      font-size: 0.46rem;
-      font-weight: 800;
-      line-height: 1;
-      text-align: center;
-      color: rgba(0, 100, 180, 0.9);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    [data-theme="light"] .growth-map-timeline-today-label {
-      color: rgba(0, 80, 150, 0.95);
-    }
-
-    /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
-    .growth-map-timeline--has-milestones {
-      padding-top: 3.2rem;
-      padding-bottom: 1.8rem;
-    }
-    /* Hide dates for Beta & Release (above-bar) — avoids overlap */
-    #growthMapTimelineLaunch .growth-map-timeline-launch-date,
-    #growthMapTimelineRelease .growth-map-timeline-launch-date {
-      display: none;
-    }
-    /* Alternate: iOS below bar, Beta & Release above */
-    #growthMapTimelineIos .growth-map-timeline-launch-label {
-      bottom: auto;
-      top: calc(50% + 14px);
-    }
-    /* iOS date under its label */
-    #growthMapTimelineIos .growth-map-timeline-launch-date {
-      top: calc(50% + 26px);
-    }
-    .growth-map-timeline-launch {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .growth-map-timeline-launch-label {
-      position: absolute;
-      bottom: calc(50% + 18px);
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1;
-      text-align: center;
-      color: #ffb347;
-      letter-spacing: 0.03em;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
-    }
-    [data-theme="light"] .growth-map-timeline-launch-label {
-      color: #c2410c;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-    }
-    .growth-map-timeline-launch-date {
-      position: absolute;
-      top: calc(50% + 26px);
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      font-size: 0.58rem;
-      font-weight: 600;
-      line-height: 1;
-      text-align: center;
-      color: rgba(255, 179, 71, 0.7);
-      letter-spacing: 0.02em;
-    }
-    [data-theme="light"] .growth-map-timeline-launch-date {
-      color: rgba(194, 65, 12, 0.65);
-    }
-    .growth-map-timeline-launch-tick {
-      width: 3px;
-      height: 26px;
-      border-radius: 2px;
-      background: linear-gradient(180deg, #ffd180 0%, #ff9100 45%, #e65100 100%);
-      box-shadow:
-        0 0 10px rgba(255, 145, 0, 0.5),
-        0 0 3px rgba(255, 180, 80, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    }
-    [data-theme="light"] .growth-map-timeline-launch-tick {
-      box-shadow:
-        0 0 8px rgba(230, 100, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-    /* الإطلاق الرسمي — لون أخضر مميز */
-    .growth-map-timeline-release .growth-map-timeline-launch-label {
-      color: #69f0ae;
-    }
-    [data-theme="light"] .growth-map-timeline-release .growth-map-timeline-launch-label {
-      color: #2e7d32;
-    }
-    .growth-map-timeline-release .growth-map-timeline-launch-tick {
-      background: linear-gradient(180deg, #b9f6ca 0%, #69f0ae 45%, #2e7d32 100%);
-      box-shadow:
-        0 0 10px rgba(105, 240, 174, 0.5),
-        0 0 3px rgba(185, 246, 202, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    }
-    [data-theme="light"] .growth-map-timeline-release .growth-map-timeline-launch-tick {
-      box-shadow:
-        0 0 8px rgba(46, 125, 50, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-    /* إطلاق iOS — لون أزرق (App Store) */
-    .growth-map-timeline-ios .growth-map-timeline-launch-label {
-      color: #64b5f6;
-    }
-    [data-theme="light"] .growth-map-timeline-ios .growth-map-timeline-launch-label {
-      color: #1565c0;
-    }
-    .growth-map-timeline-ios .growth-map-timeline-launch-date {
-      color: rgba(100, 181, 246, 0.7);
-    }
-    [data-theme="light"] .growth-map-timeline-ios .growth-map-timeline-launch-date {
-      color: rgba(21, 101, 192, 0.65);
-    }
-    .growth-map-timeline-ios .growth-map-timeline-launch-tick {
-      background: linear-gradient(180deg, #bbdefb 0%, #42a5f5 45%, #1565c0 100%);
-      box-shadow:
-        0 0 10px rgba(66, 165, 245, 0.5),
-        0 0 3px rgba(187, 222, 251, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    }
-    [data-theme="light"] .growth-map-timeline-ios .growth-map-timeline-launch-tick {
-      box-shadow:
-        0 0 8px rgba(21, 101, 192, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-    /* iOS 1.3 — نفس لون iOS بس درجة أفتح */
-    .growth-map-timeline-ios13 .growth-map-timeline-launch-label { color: #90caf9; }
-    [data-theme="light"] .growth-map-timeline-ios13 .growth-map-timeline-launch-label { color: #1976d2; }
-    .growth-map-timeline-ios13 .growth-map-timeline-launch-date { color: rgba(144, 202, 249, 0.7); }
-    [data-theme="light"] .growth-map-timeline-ios13 .growth-map-timeline-launch-date { color: rgba(25, 118, 210, 0.65); }
-    .growth-map-timeline-ios13 .growth-map-timeline-launch-tick {
-      background: linear-gradient(180deg, #e3f2fd 0%, #64b5f6 45%, #1976d2 100%);
-      box-shadow:
-        0 0 10px rgba(100, 181, 246, 0.5),
-        0 0 3px rgba(227, 242, 253, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    }
-    [data-theme="light"] .growth-map-timeline-ios13 .growth-map-timeline-launch-tick {
-      box-shadow:
-        0 0 8px rgba(25, 118, 210, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-    /* Android — لون أخضر */
-    .growth-map-timeline-android .growth-map-timeline-launch-label { color: #a5d6a7; }
-    [data-theme="light"] .growth-map-timeline-android .growth-map-timeline-launch-label { color: #2e7d32; }
-    .growth-map-timeline-android .growth-map-timeline-launch-date { color: rgba(165, 214, 167, 0.7); }
-    [data-theme="light"] .growth-map-timeline-android .growth-map-timeline-launch-date { color: rgba(46, 125, 50, 0.65); }
-    .growth-map-timeline-android .growth-map-timeline-launch-tick {
-      background: linear-gradient(180deg, #c8e6c9 0%, #66bb6a 45%, #2e7d32 100%);
-      box-shadow:
-        0 0 10px rgba(102, 187, 106, 0.5),
-        0 0 3px rgba(200, 230, 201, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    }
-    [data-theme="light"] .growth-map-timeline-android .growth-map-timeline-launch-tick {
-      box-shadow:
-        0 0 8px rgba(46, 125, 50, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-
-    /* Responsive: timeline milestones — stagger labels to avoid overlap */
-    @media (max-width: 600px) {
-      .growth-map-timeline--has-milestones {
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-      }
-      .growth-map-timeline {
-        padding: 0.8rem 0.5rem;
-      }
-      .growth-map-timeline-launch-tick {
-        height: 18px;
-      }
-      .growth-map-timeline-ends {
-        font-size: 0.65rem;
-      }
-      /* All labels: smaller */
-      .growth-map-timeline-launch-label {
-        font-size: 0.52rem !important;
-        line-height: 1.15 !important;
-        white-space: nowrap !important;
-      }
-      .growth-map-timeline-launch-date {
-        display: none !important;
-      }
-      .growth-map-timeline-today-label {
-        font-size: 0.48rem;
-      }
-      /* Alternate: Beta above, iOS below, Release above */
-      #growthMapTimelineLaunch .growth-map-timeline-launch-label {
-        bottom: calc(50% + 22px) !important;
-      }
-      #growthMapTimelineIos .growth-map-timeline-launch-label {
-        bottom: auto !important;
-        top: calc(50% + 14px) !important;
-      }
-      #growthMapTimelineRelease .growth-map-timeline-launch-label {
-        bottom: calc(50% + 22px) !important;
-        top: auto !important;
-      }
-    }
-    @media (max-width: 600px) {
-      /* Smaller thumb on mobile — easier to tap, less overlap */
-      .growth-map-timeline input[type="range"]::-webkit-slider-thumb {
-        width: 26px;
-        height: 16px;
-        border-radius: 8px;
-      }
-      .growth-map-timeline input[type="range"]::-moz-range-thumb {
-        width: 26px;
-        height: 16px;
-        border-radius: 8px;
-      }
-      .growth-map-timeline input[type="range"]::-moz-range-track {
-        height: 16px;
-      }
-      .growth-map-timeline-range-wrap::after {
-        height: 16px;
-        border-radius: 8px;
-      }
-      .growth-map-timeline-range-wrap::before {
-        height: 16px;
-        border-radius: 8px;
-      }
-    }
-    @media (max-width: 380px) {
-      .growth-map-timeline-launch-label {
-        font-size: 0.46rem !important;
-      }
-      .growth-map-timeline-ends {
-        font-size: 0.58rem;
-      }
     }
 
     /* نافذة النقر على العلامة — نص وخلفية حسب الثيم (داكن: أبيض، فاتح: أسود) */
@@ -1765,7 +1545,7 @@
       border-left-color: rgba(255, 255, 255, 0.98);
     }
 
-    /* أزرار +/− — أيقونات MapLibre سوداء افتراضيا: داكن = خلفية داكنة + invert للأيقونة، فاتح = أبيض وبدون invert */
+    /* أزرار +/− — أيقونات MapLibre سوداء افتراضياً: داكن = خلفية داكنة + invert للأيقونة، فاتح = أبيض وبدون invert */
     .growth-map-container .maplibregl-ctrl-group {
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
@@ -1810,8 +1590,6 @@
     }
     .growth-map-container .parkinzi-map-marker {
       cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
       user-select: none;
       transform-origin: bottom center;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.38));
@@ -2471,22 +2249,13 @@
         padding: 3rem 1.5rem;
       }
 
-      .growth-map-timeline--sticky {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-      }
       .growth-map-section {
         padding: 0 1.5rem 2rem;
-        margin-top: 1rem;
+        margin-top: 2.75rem;
       }
 
       .growth-map-timeline {
-        padding: 1.15rem 1.2rem 1.3rem;
-        min-height: 5rem;
-      }
-      .growth-map-timeline--has-milestones {
-        padding-top: 3rem;
-        padding-bottom: 1.6rem;
+        padding: 0.9rem 1rem 1rem;
       }
 
       .platform-stats {
@@ -2582,22 +2351,13 @@
         padding: 2.5rem 1rem;
       }
 
-      .growth-map-timeline--sticky {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
       .growth-map-section {
         padding: 0 1rem 1.5rem;
-        margin-top: 0.75rem;
+        margin-top: 2.5rem;
       }
 
       .growth-map-timeline {
-        padding: 1.05rem 1rem 1.2rem;
-        min-height: 4.75rem;
-      }
-      .growth-map-timeline--has-milestones {
-        padding-top: 2.8rem;
-        padding-bottom: 1.4rem;
+        padding: 0.85rem 0.9rem 0.95rem;
       }
 
       .platform-stats {
@@ -3218,51 +2978,13 @@
     <div class="hero-content">
       <!-- Parkinzi Logo with Text -->
       <div class="logo-with-text">
-        <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="hero-logo-full" id="heroLogo">
-        <h1 class="sr-only">PARKINZI</h1>
+        <img src="parkinzi-logo-dark.png" alt="P" class="hero-logo-img" id="heroLogo">
+        <h1 class="logo-text">ARKINZI</h1>
       </div>
-      <p class="tagline" data-i18n="tagline">موقفك في جيبك</p>
+      <p class="tagline" data-i18n="tagline">مواقف ذكية في جيبك</p>
     </div>
   </section>
 
-  <div class="growth-data-area">
-  <div class="growth-map-timeline growth-map-timeline--sticky" id="growthMapTimeline">
-    <div class="growth-map-timeline-range-wrap">
-      <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">نسخة تجريبية 1.1</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapLaunchDate">1 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-release" id="growthMapTimelineRelease" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapReleaseLabel">الإطلاق الرسمي</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapReleaseDate">10 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-ios" id="growthMapTimelineIos" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapIosLabel">إطلاق iOS</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapIosDate">7 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-ios13" id="growthMapTimelineIos13" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapIos13Label">iOS 1.3</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapIos13Date">18 أبريل</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-android" id="growthMapTimelineAndroid" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapAndroidLabel">إطلاق Android</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapAndroidDate">1 مايو</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
-      <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
-      <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
-        <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
-      </div>
-    </div>
-    <div class="growth-map-timeline-ends">
-      <span id="growthMapTimelineStartLabel"></span>
-      <span id="growthMapTimelineEndLabel"></span>
-    </div>
-  </div>
   <section class="platform-stats" id="platform-stats" aria-labelledby="platformStatsHeading">
     <h2 class="section-title platform-stats-heading" id="platformStatsHeading" data-i18n="statsSectionTitle">أرقام المنصة</h2>
     <div class="platform-stats-list">
@@ -3319,15 +3041,27 @@
     </div>
   </section>
 
-  <section class="growth-map-section" id="coverage">
+  <section class="growth-map-section" id="coverage" aria-labelledby="growthMapHeading">
+    <h2 class="section-title" id="growthMapHeading" data-i18n="growthMapTitle">تطور تغطية التطبيق</h2>
+    <div class="growth-map-timeline" id="growthMapTimeline" hidden>
+      <div class="growth-map-timeline-range-wrap">
+        <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
+      </div>
+      <div class="growth-map-timeline-ends">
+        <span id="growthMapTimelineStartLabel"></span>
+        <span id="growthMapTimelineEndLabel"></span>
+      </div>
+    </div>
     <div id="growthMap" class="growth-map-container" dir="ltr" role="application" data-i18n-aria-label="growthMapAria"></div>
   </section>
-  </div>
 
   <section class="features" id="features">
     <h2 class="section-title">
       <span class="why-brand-font" data-i18n="whyPrefix">لماذا </span>
-      <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline" data-brand-logo>
+      <span class="brand-logo brand-logo--sm">
+        <img src="parkinzi-logo-dark.png" alt="P" class="brand-logo-img" data-brand-logo>
+        <span class="brand-logo-text">ARKINZI</span>
+      </span>
       <span class="why-suffix" data-i18n="whySuffix">؟</span>
     </h2>
     <div class="features-grid">
@@ -3367,7 +3101,7 @@
           <span class="riyal-symbol-mask" role="img" aria-label="ريال"></span>
         </div>
         <h3 data-i18n="p1">دخل إضافي</h3>
-        <p data-i18n="p1p">حول موقفك لمصدر ربح دائم</p>
+        <p data-i18n="p1p">حوّل موقفك لمصدر ربح دائم</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon-wrapper">
@@ -3391,22 +3125,41 @@
 
     <p class="pricing-note" style="text-align:center;margin-top:1rem;font-size:0.95rem;color:var(--text-secondary);"><a href="pricing.html" style="color:var(--primary);text-decoration:none;" data-i18n="pricingNote">عمولة المنصة 30% من قيمة الحجز — يتحكم مقدم الخدمة في تحديد السعر بالساعة</a></p>
 
-    <div class="download-blocks">
-      <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="download-block download-block--ios" target="_blank" rel="noopener noreferrer">
-        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="حمل PARKINZI من App Store" class="store-badge app-store-badge" loading="eager">
-      </a>
-      <div class="download-block download-block--android">
-        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="حمل PARKINZI من Google Play" class="store-badge google-play-badge" loading="eager">
-        <span class="download-block-status download-block-status--soon" data-i18n="comingSoon">قريبا</span>
-      </div>
-      <div class="download-block download-block--waitlist">
-        <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجل موقفك</p>
-        <p class="waitlist-desc" data-i18n="waitlistDesc">سجل بريدك لتبدأ بتحقيق الدخل من موقفك</p>
-        <form class="waitlist-form" id="waitlistForm">
-          <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
-          <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجلني</button>
-        </form>
-        <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
+    <div class="download-section" data-has-available="false">
+      <!-- عند التوفر: غيّر data-available="true" على .store-option، غيّر data-has-available="true"، حوّل span.store-badge-link إلى <a href="رابط">، أضف src لـ .store-qr-img -->
+      <div class="download-row">
+        <p class="coming-soon-badge" data-i18n="comingSoon">قريباً</p>
+        <div class="store-options">
+          <div class="store-option" data-available="false" data-store="ios">
+            <span class="store-badge-wrap">
+              <span class="store-badge-link" aria-disabled="true">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="store-badge app-store-badge" loading="eager">
+              </span>
+            </span>
+            <span class="store-status store-coming" data-i18n="comingSoon">قريباً</span>
+            <span class="store-status store-available" style="display:none;" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
+            <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
+          </div>
+          <div class="store-option" data-available="false" data-store="android">
+            <span class="store-badge-wrap">
+              <span class="store-badge-link" aria-disabled="true">
+                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play" class="store-badge google-play-badge" loading="eager">
+              </span>
+            </span>
+            <span class="store-status store-coming" data-i18n="comingSoon">قريباً</span>
+            <span class="store-status store-available" style="display:none;" data-i18n="availableNow">متوفر حالياً · جرب الآن</span>
+            <div class="store-qr" style="display:none;"><img class="store-qr-img" src="" alt="QR"></div>
+          </div>
+        </div>
+        <div class="waitlist-section">
+          <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجّل موقفك</p>
+          <p class="waitlist-desc" data-i18n="waitlistDesc">سجّل بريدك لتبدأ بتحقيق الدخل من موقفك عند الإطلاق</p>
+          <form class="waitlist-form" id="waitlistForm">
+            <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="" required autocomplete="email">
+            <button type="submit" class="waitlist-btn" id="waitlistBtn" data-i18n="waitlistSubmit">سجّلني</button>
+          </form>
+          <p class="waitlist-msg" id="waitlistMsg" style="display:none;"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -3425,7 +3178,10 @@
           <div>
             <div class="chat-header-title">
               <span data-i18n="chatPrefix">مساعد </span>
-              <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline" data-brand-logo-header>
+              <span class="brand-logo brand-logo--sm">
+                <img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" data-brand-logo-header>
+                <span class="brand-logo-text">ARKINZI</span>
+              </span>
             </div>
             <div class="chat-header-status" data-i18n="chatBotStatus">متصل · يرد عادة خلال دقائق</div>
             <a href="mailto:support@parkinzi.com" class="chat-support-email">support@parkinzi.com</a>
@@ -3451,9 +3207,11 @@
       <a href="terms.html" data-i18n="termsLink">شروط الاستخدام</a>
       <a href="pricing.html" data-i18n="pricingLink">سياسة الأسعار</a>
       <a href="privacy.html" data-i18n="privacyLink">سياسة الخصوصية</a>
+      <a href="disclaimer.html" data-i18n="disclaimerLink">إخلاء المسؤولية</a>
       <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
       <a href="refund.html" data-i18n="refundLink">سياسة الاسترجاع</a>
       <a href="#" id="footerContactLink" data-i18n="contactLink">تواصل معنا</a>
+      <a href="tel:+966569601069" class="footer-social-icon" aria-label="هاتف"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
       <a href="mailto:support@parkinzi.com" class="footer-social-icon" aria-label="support@parkinzi.com"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
       <a href="https://www.instagram.com/parkinzi" target="_blank" rel="noopener noreferrer" aria-label="انستغرام" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.058 1.645-.07 4.849-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
       <a href="https://www.tiktok.com/@parkinzi" target="_blank" rel="noopener noreferrer" aria-label="تيك توك" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
@@ -3462,7 +3220,7 @@
     </p>
     <p class="footer-copyright">
       <span data-i18n="copyrightLine2">جميع الحقوق محفوظة</span>
-      <span> <img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs" data-brand-logo-footer> © 2026</span>
+      <span> <span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" data-brand-logo-footer><span class="brand-logo-text">ARKINZI</span></span> © 2026</span>
     </p>
   </footer>
 
@@ -3470,7 +3228,7 @@
   <script>
     const translations = {
       ar: {
-        tagline: "موقفك في جيبك",
+        tagline: "مواقف ذكية في جيبك",
         statsSectionTitle: "أرقام المنصة",
         statUsers: "المستخدمون",
         statFacilities: "المنشآت",
@@ -3482,11 +3240,11 @@
         statFuelGasoline: "بنزين",
         statFuelDiesel: "ديزل",
         statFuelHybrid: "هجين",
-        download: "حمل التطبيق",
+        download: "حمّل التطبيق",
         downloadOn: "التحميل من",
         getItOn: "احصل عليه من",
         scanQR: "امسح الباركود لتحميل التطبيق مباشرة",
-        comingSoon: "قريبا",
+        comingSoon: "قريباً",
         about: "تعرف علينا",
         aboutLink: "من نحن",
         termsLink: "شروط الاستخدام",
@@ -3500,7 +3258,7 @@
         f3p: "ادفع بسهولة من خلال التطبيق",
         providerTitle: "لمقدمي الخدمة",
         p1: "دخل إضافي",
-        p1p: "حول موقفك لمصدر ربح دائم",
+        p1p: "حوّل موقفك لمصدر ربح دائم",
         p2: "دفعات آمنة",
         p2p: "استلم أموالك مباشرة وبأمان",
         p3: "تحكم واربح",
@@ -3528,7 +3286,7 @@
         contactLink: "تواصل معنا",
         chatPrefix: "مساعد ",
         chatBotStatus: "متصل · يرد عادة خلال دقائق",
-        chatWelcome: "مرحبا! أنا مساعد PARKINZI<br>اختر الموضوع أو اكتب رسالتك:",
+        chatWelcome: "مرحباً! أنا مساعد PARKINZI<br>اختر الموضوع أو اكتب رسالتك:",
         chatTypeOrSelect: "اختر أو اكتب...",
         chatAskName: "ما اسمك؟",
         chatAskEmail: "ما بريدك الإلكتروني؟",
@@ -3539,33 +3297,22 @@
         appearance: "المظهر",
         light: "فاتح",
         dark: "داكن",
-        waitlistTitle: "مقدم خدمة؟ سجل موقفك",
-        waitlistDesc: "سجل بريدك لتبدأ بتحقيق الدخل من موقفك",
+        waitlistTitle: "مقدم خدمة؟ سجّل موقفك",
+        waitlistDesc: "سجّل بريدك لتبدأ بتحقيق الدخل من موقفك عند الإطلاق",
         waitlistPlaceholder: "بريدك الإلكتروني",
-        waitlistSubmit: "سجلني",
-        waitlistSuccess: "تم التسجيل! سنتواصل معك لتبدأ الربح.",
+        waitlistSubmit: "سجّلني",
+        waitlistSuccess: "تم التسجيل! سنتواصل معك عند الإطلاق لتبدأ الربح.",
         waitlistError: "حدث خطأ، حاول مرة أخرى.",
-        waitlistExists: "هذا البريد مسجل مسبقا.",
-        availableNow: "",
+        waitlistExists: "هذا البريد مسجّل مسبقاً.",
+        availableNow: "متوفر حالياً · جرب الآن",
         growthMapTitle: "تطور تغطية التطبيق",
         growthMapAria: "خريطة تفاعلية لمواقع التغطية",
         growthMapPopupDb: "{count} مواقف",
         growthMapPopupDbNamed: "{label} — {count} مواقف",
-        growthMapTimelineSliderAria: "خط زمني للتغطية",
-        growthMapLaunchLabel: "نسخة تجريبية 1.1",
-        growthMapLaunchDate: "1 أبريل",
-        growthMapReleaseLabel: "الإطلاق الرسمي",
-        growthMapReleaseDate: "10 أبريل",
-        growthMapIosLabel: "إطلاق iOS",
-        growthMapIosDate: "7 أبريل",
-        growthMapIos13Label: "iOS 1.3",
-        growthMapIos13Date: "18 أبريل",
-        growthMapAndroidLabel: "إطلاق Android",
-        growthMapAndroidDate: "1 مايو",
-        growthMapTodayLabel: "الان"
+        growthMapTimelineSliderAria: "خط زمني للتغطية"
       },
       en: {
-        tagline: "Your parking spot in your pocket",
+        tagline: "Smart parking in your pocket",
         statsSectionTitle: "Platform numbers",
         statUsers: "Users",
         statFacilities: "Facilities",
@@ -3635,32 +3382,21 @@
         light: "Light",
         dark: "Dark",
         waitlistTitle: "A Provider? Register Your Spot",
-        waitlistDesc: "Enter your email to start earning from your parking",
+        waitlistDesc: "Enter your email to start earning from your parking when we launch",
         waitlistPlaceholder: "Your email",
         waitlistSubmit: "Join",
-        waitlistSuccess: "You're signed up! We'll contact you to start earning.",
+        waitlistSuccess: "You're signed up! We'll contact you at launch to start earning.",
         waitlistError: "Something went wrong. Please try again.",
         waitlistExists: "This email is already registered.",
-        availableNow: "",
+        availableNow: "Available now · Try it",
         growthMapTitle: "App coverage growth",
         growthMapAria: "Interactive map of coverage locations",
         growthMapPopupDb: "{count} spots",
         growthMapPopupDbNamed: "{label} — {count} spots",
-        growthMapTimelineSliderAria: "Coverage timeline",
-        growthMapLaunchLabel: "Beta 1.1 (Build 1)",
-        growthMapLaunchDate: "Apr 1",
-        growthMapReleaseLabel: "Official Launch",
-        growthMapReleaseDate: "Apr 10",
-        growthMapIosLabel: "iOS Launch",
-        growthMapIosDate: "Apr 7",
-        growthMapIos13Label: "iOS 1.3",
-        growthMapIos13Date: "Apr 18",
-        growthMapAndroidLabel: "Android Launch",
-        growthMapAndroidDate: "May 1",
-        growthMapTodayLabel: "Now"
+        growthMapTimelineSliderAria: "Coverage timeline"
       },
       fr: {
-        tagline: "Votre place dans votre poche",
+        tagline: "Stationnement intelligent dans votre poche",
         statsSectionTitle: "Chiffres de la plateforme",
         statUsers: "Utilisateurs",
         statFacilities: "Établissements",
@@ -3731,32 +3467,21 @@
         light: "Clair",
         dark: "Sombre",
         waitlistTitle: "Fournisseur ? Enregistrez votre place",
-        waitlistDesc: "Entrez votre email pour commencer à gagner avec votre parking",
+        waitlistDesc: "Entrez votre email pour commencer à gagner avec votre parking au lancement",
         waitlistPlaceholder: "Votre email",
         waitlistSubmit: "Rejoindre",
-        waitlistSuccess: "Inscription réussie ! Nous vous contacterons pour commencer.",
+        waitlistSuccess: "Inscription réussie ! Nous vous contacterons au lancement pour commencer.",
         waitlistError: "Une erreur s'est produite. Réessayez.",
         waitlistExists: "Cet email est déjà enregistré.",
-        availableNow: "",
+        availableNow: "Disponible · Essayez",
         growthMapTitle: "Évolution de la couverture de l’app",
         growthMapAria: "Carte interactive des emplacements couverts",
         growthMapPopupDb: "{count} places",
         growthMapPopupDbNamed: "{label} — {count} places",
-        growthMapTimelineSliderAria: "Chronologie de la couverture",
-        growthMapLaunchLabel: "Bêta 1.1 (Build 1)",
-        growthMapLaunchDate: "1 avr.",
-        growthMapReleaseLabel: "Lancement officiel",
-        growthMapReleaseDate: "10 avr.",
-        growthMapIosLabel: "Lancement iOS",
-        growthMapIosDate: "7 avr.",
-        growthMapIos13Label: "iOS 1.3",
-        growthMapIos13Date: "18 avr.",
-        growthMapAndroidLabel: "Lancement Android",
-        growthMapAndroidDate: "1 mai",
-        growthMapTodayLabel: "Maint."
+        growthMapTimelineSliderAria: "Chronologie de la couverture"
       },
       ur: {
-        tagline: "آپ کی جیب میں پارکنگ",
+        tagline: "ذہین پارکنگ آپ کی جیب میں",
         statsSectionTitle: "پلیٹ فارم کے اعداد",
         statUsers: "صارفین",
         statFacilities: "ادارے",
@@ -3826,50 +3551,73 @@
         light: "روشن",
         dark: "اندھیرا",
         waitlistTitle: "فراہم کرنے والے؟ اپنی جگہ رجسٹر کریں",
-        waitlistDesc: "اپنی پارکنگ سے کمائی شروع کرنے کے لیے ای میل درج کریں",
+        waitlistDesc: "لانچ پر اپنی پارکنگ سے کمائی شروع کرنے کے لیے ای میل درج کریں",
         waitlistPlaceholder: "آپ کا ای میل",
         waitlistSubmit: "شامل کریں",
-        waitlistSuccess: "سائن اپ ہو گیا! ہم کمائی شروع کرنے کے لیے رابطہ کریں گے۔",
+        waitlistSuccess: "سائن اپ ہو گیا! لانچ پر ہم کمائی شروع کرنے کے لیے رابطہ کریں گے۔",
         waitlistError: "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
         waitlistExists: "یہ ای میل پہلے سے رجسٹر ہے۔",
-        availableNow: "",
+        availableNow: "دستیاب · آزمائیں",
         growthMapTitle: "ایپ کی کوریج میں ترقی",
         growthMapAria: "کوریج کی جگہوں کی انٹرایکٹو نقشہ",
         growthMapPopupDb: "{count} مواقف",
         growthMapPopupDbNamed: "{label} — {count} مواقف",
-        growthMapTimelineSliderAria: "کوریج ٹائم لائن",
-        growthMapLaunchLabel: "بیٹا 1.1 (بلڈ 1)",
-        growthMapLaunchDate: "1 اپریل",
-        growthMapReleaseLabel: "آفیشل لانچ",
-        growthMapReleaseDate: "10 اپریل",
-        growthMapIosLabel: "iOS لانچ",
-        growthMapIosDate: "7 اپریل",
-        growthMapIos13Label: "iOS 1.3",
-        growthMapIos13Date: "18 اپریل",
-        growthMapAndroidLabel: "Android لانچ",
-        growthMapAndroidDate: "1 مئی",
-        growthMapTodayLabel: "ابھی"
+        growthMapTimelineSliderAria: "کوریج ٹائم لائن"
       }
     };
 
-    /** API proxy — المفاتيح على السيرفر فقط، المتصفح يكلم /api/ */
-    /* Defense-in-depth: server already sets Cache-Control: no-store, but
-       we also pass cache:'no-store' + a per-request cache buster so no
-       intermediate (browser HTTP cache, service worker, etc.) can serve
-       a stale count. */
-    function apiNoCacheUrl(path) {
-      return path + (path.includes("?") ? "&" : "?") + "_=" + Date.now();
+    /** يُقرأ من meta[name="supabase-url"] و meta[name="supabase-anon-key"] أو من window قبل التحميل. نفس القيم في التطبيق (SupabaseClient). */
+    const SUPABASE_URL = (function () {
+      const meta = document.querySelector('meta[name="supabase-url"]');
+      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
+      if (fromMeta) return fromMeta.replace(/\/$/, "");
+      if (typeof window !== "undefined" && window.__PARKINZI_SUPABASE_URL__) {
+        return String(window.__PARKINZI_SUPABASE_URL__).trim().replace(/\/$/, "");
+      }
+      return "https://brqsvtobletrlkpkhooc.supabase.co";
+    })();
+
+    const SUPABASE_ANON_KEY = (function () {
+      const meta = document.querySelector('meta[name="supabase-anon-key"]');
+      const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
+      if (fromMeta) return fromMeta;
+      if (typeof window !== "undefined" && window.__PARKINZI_SUPABASE_ANON_KEY__) {
+        return String(window.__PARKINZI_SUPABASE_ANON_KEY__).trim();
+      }
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJycXN2dG9ibGV0cmxrcGtob29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MjcxMTEsImV4cCI6MjA3MjMwMzExMX0.8U73jkytK-uVwacwfUnoM535yWxceCUPqQ3CMUdvLKQ";
+    })();
+
+    /** PostgREST للنماذج/الخريطة (بدون جلسة). */
+    const supabaseRestHeaders = {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: "Bearer " + SUPABASE_ANON_KEY
+    };
+
+    let supabaseBrowserClient = null;
+    async function getSupabase() {
+      if (supabaseBrowserClient) return supabaseBrowserClient;
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+      try {
+        const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+        supabaseBrowserClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+        });
+        return supabaseBrowserClient;
+      } catch {
+        return null;
+      }
     }
 
-    async function apiCount(table, before) {
+    async function fetchTableCountExact(supabase, tableName) {
       try {
-        let url = `/api/count?table=${table}`;
-        if (before) url += `&before=${encodeURIComponent(before)}`;
-        const res = await fetch(apiNoCacheUrl(url), { cache: "no-store" });
-        if (!res.ok) return null;
-        const { count } = await res.json();
-        return typeof count === "number" ? count : null;
-      } catch { return null; }
+        const { count, error } = await supabase
+          .from(tableName)
+          .select("*", { count: "exact", head: true });
+        if (error) return null;
+        return typeof count === "number" ? count : 0;
+      } catch {
+        return null;
+      }
     }
 
     function parseContentRangeTotal(contentRange) {
@@ -3880,31 +3628,89 @@
       return Number.isFinite(n) ? n : null;
     }
 
-    async function restTableCount(table) { return apiCount(table); }
-
-    async function restCountCreatedAtLte(table, endMs) {
-      return apiCount(table, new Date(endMs).toISOString());
+    async function restTableCount(table) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=id`, {
+          headers: {
+            ...supabaseRestHeaders,
+            Prefer: "count=exact",
+            Range: "0-0"
+          }
+        });
+        if (!res.ok) return null;
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
     }
 
+    /** عدد صفوف بـ created_at <= endMs (PostgREST: created_at=lte.iso) — يحتاج عمود created_at وصلاحية قراءة anon. */
+    async function restCountCreatedAtLte(table, endMs) {
+      try {
+        const iso = new Date(endMs).toISOString();
+        const filterVal = `lte.${iso}`;
+        const url = `${SUPABASE_URL}/rest/v1/${table}?select=id&created_at=${encodeURIComponent(filterVal)}`;
+        const res = await fetch(url, {
+          headers: {
+            ...supabaseRestHeaders,
+            Prefer: "count=exact",
+            Range: "0-0"
+          }
+        });
+        if (!res.ok) return null;
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
+    }
+
+    /** عدد مواقف has_electric_charger = true و created_at <= endMs */
     async function restCountParkingSpotsChargerUpTo(endMs) {
       try {
-        const res = await fetch(
-          apiNoCacheUrl(`/api/charger-count?before=${encodeURIComponent(new Date(endMs).toISOString())}`),
-          { cache: "no-store" }
-        );
+        const iso = new Date(endMs).toISOString();
+        const filterVal = `lte.${iso}`;
+        const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=id&has_electric_charger=eq.true&created_at=${encodeURIComponent(filterVal)}`;
+        const res = await fetch(url, {
+          headers: {
+            ...supabaseRestHeaders,
+            Prefer: "count=exact",
+            Range: "0-0"
+          }
+        });
         if (!res.ok) return null;
-        const { count } = await res.json();
-        return typeof count === "number" ? count : null;
-      } catch { return null; }
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
     }
 
-    async function fetchParkingSpotsChargerCount() {
+    /** عدد مواقف has_electric_charger = true — نفس عمود التطبيق */
+    async function fetchParkingSpotsChargerCount(supabase) {
       try {
-        const res = await fetch(apiNoCacheUrl("/api/charger-count"), { cache: "no-store" });
+        if (supabase) {
+          const { count, error } = await supabase
+            .from("parking_spots")
+            .select("*", { count: "exact", head: true })
+            .eq("has_electric_charger", true);
+          if (!error && typeof count === "number") return count;
+        }
+      } catch {}
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/parking_spots?select=id&has_electric_charger=eq.true`,
+          {
+            headers: {
+              ...supabaseRestHeaders,
+              Prefer: "count=exact",
+              Range: "0-0"
+            }
+          }
+        );
         if (!res.ok) return null;
-        const { count } = await res.json();
-        return typeof count === "number" ? count : null;
-      } catch { return null; }
+        return parseContentRangeTotal(res.headers.get("content-range"));
+      } catch {
+        return null;
+      }
     }
 
     /** نتيجة RPC get_fuel_type_stats: [{ fuel_type, total_count }, ...] — نفس منطق التطبيق */
@@ -3926,9 +3732,23 @@
       return out;
     }
 
-    async function fetchFuelTypeStats() {
+    async function fetchFuelTypeStats(supabase) {
       try {
-        const res = await fetch(apiNoCacheUrl("/api/fuel-stats"), { cache: "no-store" });
+        if (supabase) {
+          const { data, error } = await supabase.rpc("get_fuel_type_stats");
+          if (!error && Array.isArray(data)) return data;
+        }
+      } catch {}
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_fuel_type_stats`, {
+          method: "POST",
+          headers: {
+            ...supabaseRestHeaders,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: "{}"
+        });
         if (!res.ok) return null;
         const data = await res.json();
         return Array.isArray(data) ? data : null;
@@ -3937,7 +3757,7 @@
       }
     }
 
-    /** نفس مفتاح التطبيق؛ يحمل من meta[name="maptiler-api-key"] في أعلى الصفحة (أو window.__PARKINZI_MAPTILER_KEY__ قبل هذا السكربت). */
+    /** نفس مفتاح التطبيق؛ يُحمّل من meta[name="maptiler-api-key"] في أعلى الصفحة (أو window.__PARKINZI_MAPTILER_KEY__ قبل هذا السكربت). */
     const MAPTILER_API_KEY = (function () {
       const meta = document.querySelector('meta[name="maptiler-api-key"]');
       const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
@@ -3971,10 +3791,10 @@
 
     const langNames = { ar: "العربية", en: "English", fr: "Français", ur: "اردو" };
     const langTitles = {
-      ar: "PARKINZI | موقفك في جيبك",
-      en: "PARKINZI | Your parking spot in your pocket",
-      fr: "PARKINZI | Votre place dans votre poche",
-      ur: "PARKINZI | آپ کی جیب میں پارکنگ"
+      ar: "PARKINZI | مواقف ذكية",
+      en: "PARKINZI | Smart Parking",
+      fr: "PARKINZI | Stationnement intelligent",
+      ur: "PARKINZI | ذہین پارکنگ"
     };
 
     function setLang(l) {
@@ -4046,12 +3866,12 @@
       document.getElementById("check-dark").style.display = t === "dark" ? "inline" : "none";
       
       // Update all logos based on theme
-      const heroLogoSrc = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
+      const logoSrc = t === "dark" ? "parkinzi-logo-dark.png" : "parkinzi-logo-light.png";
       const heroLogo = document.getElementById("heroLogo");
-      if (heroLogo) heroLogo.src = heroLogoSrc;
-      document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = heroLogoSrc; });
+      if (heroLogo) heroLogo.src = logoSrc;
+      document.querySelectorAll("[data-brand-logo]").forEach(img => { img.src = logoSrc; });
       // Footer & chat header: خلفية داكنة → شعار أبيض
-      const footerLogoSrc = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
+      const footerLogoSrc = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
       document.querySelectorAll("[data-brand-logo-footer], [data-brand-logo-header]").forEach(img => { img.src = footerLogoSrc; });
 
       if (typeof window.__parkinziGrowthMapApplyTheme === "function") window.__parkinziGrowthMapApplyTheme();
@@ -4151,7 +3971,7 @@
       const delta = Math.abs(toNum - fromNum);
       const dir = toNum > fromNum ? 1 : -1;
 
-      /* فرق صغير: عداد خطوة بخطوة (إحساس سينمائي واضح) */
+      /* فرق صغير: عدّاد خطوة بخطوة (إحساس سينمائي واضح) */
       if (delta > 0 && delta <= 80) {
         let cur = fromNum;
         const msPerStep = Math.min(48, Math.max(22, Math.floor(560 / delta)));
@@ -4239,8 +4059,8 @@
     };
 
     /**
-     * يحدث بطاقات «أرقام المنصة» لتطابق التاريخ المختار على الشريط (تراكمي حتى نهاية اليوم).
-     * عند أقصى الشريط تعاد أرقام cachedPlatformStats الكاملة (بما فيها توزيع الوقود من الـ RPC).
+     * يحدّث بطاقات «أرقام المنصة» لتطابق التاريخ المختار على الشريط (تراكمي حتى نهاية اليوم).
+     * عند أقصى الشريط تُعاد أرقام cachedPlatformStats الكاملة (بما فيها توزيع الوقود من الـ RPC).
      */
     async function applyPlatformStatsForTimeline(cutoffMs, sliderPosition, timelineSliderSteps, spanMs) {
       if (!cachedPlatformStats) return;
@@ -4302,14 +4122,41 @@
         value !== null && Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
 
       try {
+        const supabase = await getSupabase();
+        if (!supabase) {
+          const [fuelRowsOnly, spotsTotalRest, spotsChargerRest] = await Promise.all([
+            fetchFuelTypeStats(null),
+            restTableCount("parking_spots"),
+            fetchParkingSpotsChargerCount(null)
+          ]);
+          const fuelOnly = fuelStatsFromRpcRows(fuelRowsOnly);
+          const totalSpots = safeCount(spotsTotalRest);
+          const ch = spotsChargerRest === null ? 0 : safeCount(spotsChargerRest);
+          cachedPlatformStats = {
+            ...zeroStats,
+            spots: totalSpots,
+            spotsCharger: ch,
+            spotsRegular: Math.max(0, totalSpots - ch),
+            carsElectric: fuelOnly.electric,
+            carsGasoline: fuelOnly.gasoline,
+            carsDiesel: fuelOnly.diesel,
+            carsHybrid: fuelOnly.hybrid
+          };
+          applyPlatformStatsToDom(cachedPlatformStats);
+          if (typeof window.__parkinziApplyTimelinePlatformStats === "function") {
+            void window.__parkinziApplyTimelinePlatformStats();
+          }
+          return;
+        }
+
         const [usersCount, facilitiesCount, spotsCount, carsCount, fuelRows, spotsChargerRaw] =
           await Promise.all([
-            apiCount("profiles"),
-            apiCount("facilities"),
-            apiCount("parking_spots"),
-            apiCount("user_cars"),
-            fetchFuelTypeStats(),
-            fetchParkingSpotsChargerCount()
+            fetchTableCountExact(supabase, "profiles"),
+            fetchTableCountExact(supabase, "facilities"),
+            fetchTableCountExact(supabase, "parking_spots"),
+            fetchTableCountExact(supabase, "user_cars"),
+            fetchFuelTypeStats(supabase),
+            fetchParkingSpotsChargerCount(supabase)
           ]);
 
         const fuel = fuelStatsFromRpcRows(fuelRows);
@@ -4339,33 +4186,6 @@
     }
     loadPlatformStats();
 
-    /* Auto-refresh platform stats every 60s while page is visible,
-       and immediately when the tab regains focus. */
-    (function initPlatformStatsAutoRefresh() {
-      const REFRESH_MS = 60000;
-      let timer = null;
-      function start() {
-        if (timer) return;
-        timer = window.setInterval(() => {
-          if (document.visibilityState === "visible") loadPlatformStats();
-        }, REFRESH_MS);
-      }
-      function stop() {
-        if (!timer) return;
-        window.clearInterval(timer);
-        timer = null;
-      }
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") {
-          loadPlatformStats();
-          start();
-        } else {
-          stop();
-        }
-      });
-      start();
-    })();
-
     (function initPlatformStatExpandToggles() {
       function wire(btnId, detailId) {
         const btn = document.getElementById(btnId);
@@ -4383,158 +4203,40 @@
       wire("platformStatCarsBtn", "platformStatDetailCars");
     })();
 
-    /** بداية الشريط الزمني للخريطة: 15 مارس 2026 (محليا) — لتفادي أيام بلا بيانات يظهر فيها الشريط أصفارا. */
-    const GROWTH_MAP_TIMELINE_START = new Date(2026, 3, 1);
+    /** بداية الشريط الزمني للخريطة: ١٥ مارس ٢٠٢٦ (محلياً) — لتفادي أيام بلا بيانات يظهر فيها الشريط أصفاراً. */
+    const GROWTH_MAP_TIMELINE_START = new Date(2026, 2, 15);
 
-    /**
-     * أعمدة جدول parking_spots — يجرب عدة قوائم حتى ينجح الطلب.
-     * لو الأعمدة lat/lng بدل latitude/longitude، المحاولات القديمة كانت تفشل كلها فلا تظهر أي علامة.
-     */
+    /** أعمدة جدول parking_spots — يُجرّب عدة قوائم حتى ينجح الطلب (created_at اختياري في القاعدة). */
     const PARKING_MAP_SELECT_ATTEMPTS = [
-      "*",
       "latitude,longitude,spot_name,national_address,spot_number,spot_count,created_at",
-      "latitude,longitude,spot_name,national_address,spot_number,spots,created_at",
       "latitude,longitude,spot_name,national_address,spot_number,created_at",
-      "latitude,longitude,spot_name,national_address,spot_number",
-      "lat,lng,spot_name,national_address,spot_number,spot_count,created_at",
-      "lat,lng,spot_name,national_address,spot_number,spots,created_at",
-      "lat,lng,spot_name,national_address,spot_number,created_at",
-      "lat,lng,spot_name,national_address,spot_number",
-      "latitude,longitude,spot_number,spot_count,created_at",
-      "lat,lng,spot_number,spot_count,created_at",
-      "latitude,longitude,spot_number,spots,created_at",
-      "lat,lng,spot_number,spots,created_at",
-      "latitude,longitude,created_at",
-      "lat,lng,created_at",
-      "latitude,longitude,spot_count",
-      "lat,lng,spot_count",
-      "latitude,longitude,spots",
-      "lat,lng,spots",
-      "latitude,longitude",
-      "lat,lng"
+      "latitude,longitude,spot_name,national_address,spot_number"
     ];
 
-    /** حدود المملكة العربية السعودية تقريبا: جنوب غرب، شمال شرق [lng, lat] */
+    /** حدود المملكة العربية السعودية تقريباً: جنوب غرب، شمال شرق [lng, lat] */
     const SAUDI_ARABIA_BOUNDS = [[34.5, 16.0], [55.7, 32.25]];
 
     /**
-     * الرقم على الشارة: أعمدة صريحة، أو spots كمصفوفة/JSON، أو حقول metadata/jsonb.
+     * الرقم على الشارة: spot_count (عدد المواقف) إن وُجد في الصف؛
+     * وإلا رقم الموقف spot_number؛ وإلا 1.
      */
     function parkingSpotBadgeValue(row) {
-      if (!row || typeof row !== "object") return 1;
+      const sc = row.spot_count != null ? Number(row.spot_count) : NaN;
+      if (Number.isFinite(sc) && sc > 0) return Math.floor(sc);
 
-      function numFrom(v) {
-        if (v == null || v === "") return 0;
-        const n = Number(v);
-        return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
-      }
+      const cnt = row.count != null ? Number(row.count) : NaN;
+      if (Number.isFinite(cnt) && cnt > 0) return Math.floor(cnt);
 
-      function scanNested(obj) {
-        if (!obj || typeof obj !== "object") return 0;
-        const keys = [
-          "spot_count",
-          "spotCount",
-          "spots_count",
-          "total_spots",
-          "num_spots",
-          "number_of_spots",
-          "parking_count",
-          "capacity",
-          "available_spots",
-          "spots_available",
-          "total_slots",
-          "count"
-        ];
-        if (Array.isArray(obj.spots)) return obj.spots.length > 0 ? obj.spots.length : 0;
-        for (let i = 0; i < keys.length; i++) {
-          const k = keys[i];
-          if (k === "spots") continue;
-          const v = obj[k];
-          if (v != null && v !== "" && typeof v !== "object") {
-            const n = numFrom(v);
-            if (n > 0) return n;
-          }
+      if (row.spot_number != null && row.spot_number !== "") {
+        const s = String(row.spot_number).trim();
+        const asNum = Number(s);
+        if (Number.isFinite(asNum) && asNum > 0) return Math.floor(asNum);
+        const m = s.match(/\d+/);
+        if (m) {
+          const v = parseInt(m[0], 10);
+          if (Number.isFinite(v) && v > 0) return v;
         }
-        return 0;
       }
-
-      function lengthFromSpotsField(raw) {
-        if (raw == null || raw === "") return 0;
-        if (Array.isArray(raw)) return raw.length > 0 ? raw.length : 0;
-        if (typeof raw === "object" && raw !== null) {
-          const nested = scanNested(raw);
-          if (nested > 0) return nested;
-        }
-        if (typeof raw === "string") {
-          const t = raw.trim();
-          if (t.startsWith("[") || t.startsWith("{")) {
-            try {
-              const p = JSON.parse(t);
-              if (Array.isArray(p)) return p.length > 0 ? p.length : 0;
-              if (p && typeof p === "object") {
-                if (Array.isArray(p.spots)) return p.spots.length;
-                const inner =
-                  numFrom(p.spot_count) ||
-                  numFrom(p.total_spots) ||
-                  numFrom(p.spots) ||
-                  numFrom(p.count);
-                if (inner > 0) return inner;
-              }
-            } catch (e) {}
-          }
-        }
-        return numFrom(raw);
-      }
-
-      if (row.spots != null) {
-        const fromSpots = lengthFromSpotsField(row.spots);
-        if (fromSpots > 0) return fromSpots;
-      }
-
-      const countKeys = [
-        "spot_count",
-        "spotCount",
-        "spots_count",
-        "spotsCount",
-        "total_spots",
-        "totalSpots",
-        "num_spots",
-        "numSpots",
-        "number_of_spots",
-        "numberOfSpots",
-        "parking_count",
-        "parkingCount",
-        "capacity",
-        "available_spots",
-        "availableSpots",
-        "spots_available",
-        "spotsAvailable",
-        "total_slots",
-        "totalSlots"
-      ];
-      for (let i = 0; i < countKeys.length; i++) {
-        const n = numFrom(row[countKeys[i]]);
-        if (n > 0) return n;
-      }
-
-      const jsonbKeys = ["metadata", "meta", "extras", "properties", "data", "config", "details", "json"];
-      for (let j = 0; j < jsonbKeys.length; j++) {
-        let v = row[jsonbKeys[j]];
-        if (v == null || v === "") continue;
-        if (typeof v === "string") {
-          try {
-            v = JSON.parse(v);
-          } catch (e) {
-            continue;
-          }
-        }
-        const n = scanNested(v);
-        if (n > 0) return n;
-      }
-
-      const c = numFrom(row.count);
-      if (c > 0) return c;
-
       return 1;
     }
 
@@ -4550,11 +4252,6 @@
       if (row.created_at != null && row.created_at !== "") {
         const d = new Date(String(row.created_at));
         if (!Number.isNaN(d.getTime())) createdAtMs = d.getTime();
-      } else {
-        /* بدون created_at: لا تضع تاريخا بعد «اليوم» وإلا يعتبر الموقف في المستقبل ويختفي من الخريطة عند أقصى الشريط */
-        const startMs = GROWTH_MAP_TIMELINE_START.getTime();
-        const nowMs = Date.now();
-        createdAtMs = startMs > nowMs ? nowMs : startMs;
       }
       return { lat: Number(lat), lng: Number(lng), spot_count, label, createdAtMs };
     }
@@ -4568,53 +4265,6 @@
           .replace("{count}", String(c));
       }
       return (tr.growthMapPopupDb || "").replace("{count}", String(c));
-    }
-
-    /**
-     * أرقام المنصة تعد صفوف parking_spots (كل صف غالبا = موقف واحد).
-     * نفس الإحداثيات كانت تنشئ عدة علامات كلها بـ 1 — ندمجها ونظهر مجموع المواقف على شارة واحدة.
-     */
-    function mergeParkingRowsByLocation(rows) {
-      if (!rows || !rows.length) return [];
-      const byKey = new Map();
-      for (let i = 0; i < rows.length; i++) {
-        const r = rows[i];
-        const key = r.lat.toFixed(6) + "," + r.lng.toFixed(6);
-        if (!byKey.has(key)) byKey.set(key, []);
-        byKey.get(key).push(r);
-      }
-      const out = [];
-      byKey.forEach(function (group) {
-        if (group.length === 1) {
-          out.push(group[0]);
-          return;
-        }
-        const spot_count = group.reduce(function (s, x) {
-          return s + Math.max(1, Number(x.spot_count) || 1);
-        }, 0);
-        const labels = [];
-        const seen = {};
-        for (let j = 0; j < group.length; j++) {
-          const lab = group[j].label;
-          if (lab && !seen[lab]) {
-            seen[lab] = true;
-            labels.push(lab);
-          }
-        }
-        let createdAtMs = 0;
-        for (let k = 0; k < group.length; k++) {
-          const t = group[k].createdAtMs || 0;
-          if (t > createdAtMs) createdAtMs = t;
-        }
-        out.push({
-          lat: group[0].lat,
-          lng: group[0].lng,
-          spot_count: spot_count,
-          label: labels.join(" · ") || group[0].label,
-          createdAtMs: createdAtMs
-        });
-      });
-      return out;
     }
 
     /** نفس منطق الـ hero: داكن → parkinzi-logo-dark (رمز فاتح)، فاتح → parkinzi-logo-light (رمز داكن) */
@@ -4646,8 +4296,7 @@
       badge.className = "parkinzi-map-marker-badge";
       const countEl = document.createElement("span");
       countEl.className = "parkinzi-map-marker-count";
-      const badgeVal = Math.max(1, Math.floor(Number(parkingSpotBadgeValue(row))) || 1);
-      countEl.textContent = String(badgeVal);
+      countEl.textContent = "1";
       badge.appendChild(countEl);
 
       iconWrap.appendChild(img);
@@ -4658,38 +4307,26 @@
     }
 
     async function fetchParkingMapRows() {
-      let best = { rows: [], hasCreatedAt: false };
-      let bestScore = -1;
       for (let i = 0; i < PARKING_MAP_SELECT_ATTEMPTS.length; i++) {
         const cols = PARKING_MAP_SELECT_ATTEMPTS[i];
         try {
-          const url = `/api/parking-spots?select=${encodeURIComponent(cols)}`;
-          const res = await fetch(url);
+          const url = `${SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(cols)}`;
+          const res = await fetch(url, {
+            headers: { ...supabaseRestHeaders, Accept: "application/json" }
+          });
           if (!res.ok) continue;
           const data = await res.json();
           const rows = Array.isArray(data) ? data : [];
-          if (rows.length === 0) continue;
-          const hasCreatedAt = cols === "*" || /(^|,)created_at($|,)/.test(cols);
-          const nk = Object.keys(rows[0]).length;
-          let maxBadge = 1;
-          for (let r = 0; r < rows.length; r++) {
-            const b = parkingSpotBadgeValue(rows[r]);
-            if (b > maxBadge) maxBadge = b;
-          }
-          const score = nk * 100 + maxBadge;
-          if (score > bestScore) {
-            bestScore = score;
-            best = { rows, hasCreatedAt };
-          }
-          if (cols === "*" && rows.length > 0) break;
-        } catch (e) {
+          const hasCreatedAt = /(^|,)created_at($|,)/.test(cols);
+          return { rows, hasCreatedAt };
+        } catch {
           continue;
         }
       }
-      return best;
+      return { rows: [], hasCreatedAt: false };
     }
 
-    /** عند zoom out يصغر الرمز قليلا؛ عند zoom in يقترب من الحجم الكامل (منطقي وليس بحجم ثابت يغطي الخريطة) */
+    /** عند zoom out يصغر الرمز قليلاً؛ عند zoom in يقترب من الحجم الكامل (منطقي وليس بحجم ثابت يغطي الخريطة) */
     function parkinziMapMarkerZoomScale(zoom, mapMaxZoom) {
       const maxZ = Math.max(Number(mapMaxZoom) || 16, 4);
       const z = Number(zoom) || 0;
@@ -4724,9 +4361,9 @@
         fetchResult = { rows: [], hasCreatedAt: false };
       }
       const dbRows = fetchResult.rows;
+      const hasCreatedAtColumn = fetchResult.hasCreatedAt;
       const normalized = dbRows.length ? dbRows.map(normalizeParkingRow).filter(Boolean) : [];
-      const mapRows = mergeParkingRowsByLocation(normalized);
-      const useDb = mapRows.length > 0;
+      const useDb = normalized.length > 0;
 
       const useMapTiler = hasMapTilerKey();
       const map = new maplibregl.Map({
@@ -4763,7 +4400,7 @@
       }
 
       if (useDb) {
-        mapRows.forEach((row) => {
+        normalized.forEach((row) => {
           const popup = new maplibregl.Popup({ offset: 14 });
           popup.setText(parkingPopupText(row, t0));
           const markerEl = createParkinziMapMarkerElement(row);
@@ -4794,21 +4431,11 @@
       }
       const startLabelEl = document.getElementById("growthMapTimelineStartLabel");
       const endLabelEl = document.getElementById("growthMapTimelineEndLabel");
-      let updateGrowthMapLaunchMilestone = function () {};
-      let updateGrowthMapReleaseMilestone = function () {};
-      let updateGrowthMapIosMilestone = function () {};
-      let updateGrowthMapIos13Milestone = function () {};
-      let updateGrowthMapAndroidMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
         const lo = lang();
         const loc = lo === "ur" ? "ur-PK" : lo;
-        return new Date(ms).toLocaleDateString(loc, {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          numberingSystem: "latn"
-        });
+        return new Date(ms).toLocaleDateString(loc, { year: "numeric", month: "short", day: "numeric" });
       }
 
       function formatGrowthMapTimelineDateTime(ms) {
@@ -4819,8 +4446,7 @@
           month: "short",
           day: "numeric",
           hour: "2-digit",
-          minute: "2-digit",
-          numberingSystem: "latn"
+          minute: "2-digit"
         });
       }
 
@@ -4923,17 +4549,13 @@
       let timelineSpanMs = 0;
       let minCutoffMs = 0;
       let maxCutoffMs = 0;
-      /* Warp: تحويل غير خطي — يضغط الفترة الفاضية قبل المايلستونز ويوسع منطقة الأحداث */
-      var _tlWarpToTime = null;
-      var _tlWarpToVisual = null;
 
       function sliderPositionToCutoffMs(pos) {
         if (timelineSpanMs <= 0) return maxCutoffMs;
         const t = Number(pos);
         if (!Number.isFinite(t) || t <= 0) return minCutoffMs;
         if (t >= TIMELINE_SLIDER_STEPS) return maxCutoffMs;
-        var r = t / TIMELINE_SLIDER_STEPS;
-        if (_tlWarpToTime) r = _tlWarpToTime(r);
+        const r = t / TIMELINE_SLIDER_STEPS;
         return Math.min(minCutoffMs + r * timelineSpanMs, maxCutoffMs);
       }
 
@@ -4998,7 +4620,7 @@
         timelineEl.style.setProperty("--timeline-fill-pct", p + "%");
       }
 
-      /** تحديث أرقام المنصة أثناء السحب — مقيد بـ ~5 إطارات لتقليل ضغط الشبكة */
+      /** تحديث أرقام المنصة أثناء السحب — مُقيّد بـ ~5 إطارات لتقليل ضغط الشبكة */
       let growthStatsThrottleScheduled = false;
       let growthStatsThrottlePendingPos = 0;
       let growthStatsThrottleFrames = 0;
@@ -5030,190 +4652,35 @@
         await applyGrowthMapTimelineStatsOnly(sliderPosition);
       }
 
-      if (timelineEl && sliderEl) {
+      if (useDb && hasCreatedAtColumn && timelineEl && sliderEl) {
         const timelineStartDay = new Date(
           GROWTH_MAP_TIMELINE_START.getFullYear(),
           GROWTH_MAP_TIMELINE_START.getMonth(),
           GROWTH_MAP_TIMELINE_START.getDate()
         );
         const now = new Date();
-        const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        /* النطاق المرئي الكامل: حتى 15 مايو 2026 (يشمل إطلاق Android) */
-        let timelineEndDay = new Date(2026, 4, 15);
-        if (todayDay > timelineEndDay) timelineEndDay = todayDay;
+        /* نهاية النطاق: نفس يوم اليوم فقط — لا يمتد الشريط إلى تواريخ مستقبلية */
+        let timelineEndDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
-        /* Linear mapping: التايم لاين من 1 أبريل إلى 15 مايو، بدون ضغط */
-        (function buildTimelineWarp() {
-          if (timelineSpanMs <= 0) return;
-          _tlWarpToVisual = function (r) {
-            if (r <= 0) return 0; if (r >= 1) return 1;
-            return r;
-          };
-          _tlWarpToTime = function (v) {
-            if (v <= 0) return 0; if (v >= 1) return 1;
-            return v;
-          };
-        })();
-
-        /* حد أقصى للسلايدر = اليوم (ما يتعدى المستقبل) */
-        const todaySpan = Math.max(0, Math.round((todayDay - timelineStartDay) / 86400000));
-        const todayMaxMs = growthMapTimelineDayEndMs(todaySpan);
-        var todayTimeR = timelineSpanMs > 0 ? (todayMaxMs - minCutoffMs) / timelineSpanMs : 1;
-        var todayVisualR = _tlWarpToVisual ? _tlWarpToVisual(todayTimeR) : todayTimeR;
-        const SLIDER_MAX_TODAY = timelineSpanMs > 0
-          ? Math.max(1, Math.round(todayVisualR * TIMELINE_SLIDER_STEPS))
-          : TIMELINE_SLIDER_STEPS;
         sliderEl.min = "0";
         sliderEl.max = String(TIMELINE_SLIDER_STEPS);
         sliderEl.step = "1";
-        sliderEl.value = String(SLIDER_MAX_TODAY);
+        sliderEl.value = String(TIMELINE_SLIDER_STEPS);
         sliderEl.setAttribute("aria-valuemin", "0");
         sliderEl.setAttribute("aria-valuemax", String(TIMELINE_SLIDER_STEPS));
-        sliderEl.setAttribute("aria-valuenow", String(SLIDER_MAX_TODAY));
+        sliderEl.setAttribute("aria-valuenow", String(TIMELINE_SLIDER_STEPS));
         if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
         if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
-        setTimelineFillFromPosition(SLIDER_MAX_TODAY);
         timelineEl.hidden = false;
         lastTimelineCutoffMs = null;
-
-        /* thumb = 36px — المتصفح يحط مركزه عند: 18px + ratio * (width - 36px)
-           نستخدم نفس المعادلة للعلامات عشان تتطابق مع الـ thumb */
-        var THUMB_W = 36;
-        function milestoneLeft(ratio, isRtl) {
-          var r = isRtl ? 1 - ratio : ratio;
-          return "calc(" + (THUMB_W / 2) + "px + (100% - " + THUMB_W + "px) * " + r + ")";
-        }
-
-        function warpR(r) { return _tlWarpToVisual ? _tlWarpToVisual(r) : r; }
-
-        const launchMilestoneEl = document.getElementById("growthMapTimelineLaunch");
-        updateGrowthMapLaunchMilestone = function () {
-          if (!launchMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) { launchMilestoneEl.hidden = true; return; }
-          const launchDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 1));
-          if (launchDayEnd < minCutoffMs || launchDayEnd > maxCutoffMs) { launchMilestoneEl.hidden = true; return; }
-          const r = warpR((launchDayEnd - minCutoffMs) / timelineSpanMs);
-          launchMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
-          launchMilestoneEl.hidden = false;
-        };
-        updateGrowthMapLaunchMilestone();
-
-        const releaseMilestoneEl = document.getElementById("growthMapTimelineRelease");
-        updateGrowthMapReleaseMilestone = function () {
-          if (!releaseMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) { releaseMilestoneEl.hidden = true; return; }
-          const releaseDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
-          if (releaseDayEnd < minCutoffMs || releaseDayEnd > maxCutoffMs) { releaseMilestoneEl.hidden = true; return; }
-          const r = warpR((releaseDayEnd - minCutoffMs) / timelineSpanMs);
-          releaseMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
-          releaseMilestoneEl.hidden = false;
-        };
-        updateGrowthMapReleaseMilestone();
-
-        const iosMilestoneEl = document.getElementById("growthMapTimelineIos");
-        updateGrowthMapIosMilestone = function () {
-          if (!iosMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) { iosMilestoneEl.hidden = true; return; }
-          const iosDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 7));
-          if (iosDayEnd < minCutoffMs || iosDayEnd > maxCutoffMs) { iosMilestoneEl.hidden = true; return; }
-          const r = warpR((iosDayEnd - minCutoffMs) / timelineSpanMs);
-          iosMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
-          iosMilestoneEl.hidden = false;
-        };
-        updateGrowthMapIosMilestone();
-
-        const ios13MilestoneEl = document.getElementById("growthMapTimelineIos13");
-        updateGrowthMapIos13Milestone = function () {
-          if (!ios13MilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) { ios13MilestoneEl.hidden = true; return; }
-          const ios13DayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 18));
-          if (ios13DayEnd < minCutoffMs || ios13DayEnd > maxCutoffMs) { ios13MilestoneEl.hidden = true; return; }
-          const r = warpR((ios13DayEnd - minCutoffMs) / timelineSpanMs);
-          ios13MilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
-          ios13MilestoneEl.hidden = false;
-        };
-        updateGrowthMapIos13Milestone();
-
-        const androidMilestoneEl = document.getElementById("growthMapTimelineAndroid");
-        updateGrowthMapAndroidMilestone = function () {
-          if (!androidMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) { androidMilestoneEl.hidden = true; return; }
-          const androidDayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 1));
-          if (androidDayEnd < minCutoffMs || androidDayEnd > maxCutoffMs) { androidMilestoneEl.hidden = true; return; }
-          const r = warpR((androidDayEnd - minCutoffMs) / timelineSpanMs);
-          androidMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
-          androidMilestoneEl.hidden = false;
-        };
-        updateGrowthMapAndroidMilestone();
-
-        /* إضافة كلاس الـ milestones (بديل :has للتوافق مع كل المتصفحات) */
-        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !androidMilestoneEl.hidden) {
-          timelineEl.classList.add("growth-map-timeline--has-milestones");
-        }
-
-        /* علامة "الان" على الثامب — تظهر فقط لما السلايدر عند اليوم */
-        const todayMarkerEl = document.getElementById("growthMapTimelineToday");
-        function updateThumbNowLabel(pos) {
-          if (!todayMarkerEl) return;
-          todayMarkerEl.style.left = milestoneLeft(todayVisualR, timelineEl.getAttribute("dir") === "rtl");
-          todayMarkerEl.hidden = false;
-          if (Number(pos) === SLIDER_MAX_TODAY) {
-            todayMarkerEl.classList.add("is-at-today");
-          } else {
-            todayMarkerEl.classList.remove("is-at-today");
-          }
-        }
-        updateThumbNowLabel(SLIDER_MAX_TODAY);
-
-        /* Snap: مواقع الـ milestones كـ slider steps (warped) */
-        const milestoneSteps = [];
-        var betaDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 1));
-        if (betaDayEnd >= minCutoffMs && betaDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(warpR((betaDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
-        }
-        var relDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 10));
-        if (relDayEnd >= minCutoffMs && relDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(warpR((relDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
-        }
-        var iosDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 7));
-        if (iosDayEnd >= minCutoffMs && iosDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(warpR((iosDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
-        }
-        var ios13DayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 18));
-        if (ios13DayEnd >= minCutoffMs && ios13DayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(warpR((ios13DayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
-        }
-        var androidDayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 1));
-        if (androidDayEnd >= minCutoffMs && androidDayEnd <= maxCutoffMs) {
-          milestoneSteps.push(Math.round(warpR((androidDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
-        }
-        milestoneSteps.push(SLIDER_MAX_TODAY);
-        const SNAP_THRESHOLD = Math.round(TIMELINE_SLIDER_STEPS * 0.015);
-        function snapToMilestone(v) {
-          for (var i = 0; i < milestoneSteps.length; i++) {
-            if (Math.abs(v - milestoneSteps[i]) <= SNAP_THRESHOLD) return milestoneSteps[i];
-          }
-          return v;
-        }
-
-        window.addEventListener(
-          "resize",
-          function () {
-            requestAnimationFrame(updateGrowthMapLaunchMilestone);
-            requestAnimationFrame(updateGrowthMapReleaseMilestone);
-            requestAnimationFrame(updateGrowthMapIosMilestone);
-            requestAnimationFrame(updateGrowthMapIos13Milestone);
-            requestAnimationFrame(updateGrowthMapAndroidMilestone);
-          },
-          { passive: true }
-        );
         const endSliderDrag = function () {
           timelineEl.classList.remove("is-slider-dragging");
         };
+        /** سحب يدوي: القيمة من clientX؛ pointer capture آمن هنا لأننا لا نعتمد على السحب الأصلي للـ range. */
         let growthMapSliderPointerActive = false;
         let growthMapSliderCapturedId = null;
         function growthMapSliderValueFromClientX(clientX) {
@@ -5227,12 +4694,11 @@
             ratio = 1 - ratio;
           }
           const value = Math.round(min + ratio * (max - min));
-          return snapToMilestone(Math.max(min, Math.min(SLIDER_MAX_TODAY, value)));
+          return Math.max(min, Math.min(max, value));
         }
         function growthMapSliderApplyValueIfChanged(v) {
-          var clamped = snapToMilestone(Math.min(v, SLIDER_MAX_TODAY));
-          if (Number(sliderEl.value) === clamped) return;
-          sliderEl.value = String(clamped);
+          if (Number(sliderEl.value) === v) return;
+          sliderEl.value = String(v);
           sliderEl.dispatchEvent(new Event("input", { bubbles: true }));
         }
         function growthMapSliderCommitFromUi() {
@@ -5293,13 +4759,11 @@
           if (growthMapSliderPointerActive) growthMapSliderDragEnd();
         });
         sliderEl.addEventListener("input", function () {
-          var pos = Number(sliderEl.value);
-          if (pos > SLIDER_MAX_TODAY) { pos = SLIDER_MAX_TODAY; sliderEl.value = String(pos); }
+          const pos = Number(sliderEl.value);
           sliderEl.setAttribute("aria-valuenow", String(pos));
           const cutoff = sliderPositionToCutoffMs(pos);
           sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
           setTimelineFillFromPosition(pos);
-          updateThumbNowLabel(pos);
           scheduleGrowthMapTimelineInput(cutoff);
           scheduleGrowthMapTimelineStatsThrottled(pos);
         });
@@ -5307,8 +4771,10 @@
           endSliderDrag();
           growthMapSliderCommitFromUi();
         });
-        setTimelineFillFromPosition(SLIDER_MAX_TODAY);
-        void applyGrowthMapTimelineFull(SLIDER_MAX_TODAY);
+        setTimelineFillFromPosition(TIMELINE_SLIDER_STEPS);
+        void applyGrowthMapTimelineFull(TIMELINE_SLIDER_STEPS);
+      } else if (timelineEl) {
+        timelineEl.hidden = true;
       }
 
       map.on("zoom", updateParkinziMarkerZoomScales);
@@ -5331,7 +4797,7 @@
             }
           } catch (e) {}
         }
-        /* افتراضي: إظهار كامل المملكة (نفس حدود SAUDI_ARABIA_BOUNDS)، وليس تكبيرا على المواقع فقط */
+        /* افتراضي: إظهار كامل المملكة (نفس حدود SAUDI_ARABIA_BOUNDS)، وليس تكبيراً على المواقع فقط */
         const saPadding = 48;
         const saMaxZoom = useMapTiler ? 8 : 6;
         map.fitBounds(SAUDI_ARABIA_BOUNDS, {
@@ -5370,11 +4836,6 @@
           void applyGrowthMapTimelineFull(Number(sliderEl.value));
           if (startLabelEl) startLabelEl.textContent = formatGrowthMapTimelineDate(minCutoffMs);
           if (endLabelEl) endLabelEl.textContent = formatGrowthMapTimelineDate(maxCutoffMs);
-          updateGrowthMapLaunchMilestone();
-          updateGrowthMapReleaseMilestone();
-          updateGrowthMapIosMilestone();
-          updateGrowthMapIos13Milestone();
-          updateGrowthMapAndroidMilestone();
         }
       };
       setTimeout(() => map.resize(), 400);
@@ -5401,7 +4862,7 @@
       };
     }
 
-    /** عربي/عبرية على الخريطة: بدون هذا يظهر النص منفصلا ومعكوسا (حروف “غبية”). */
+    /** عربي/عبرية على الخريطة: بدون هذا يظهر النص منفصلاً ومعكوساً (حروف “غبية”). */
     if (typeof maplibregl !== "undefined" && maplibregl.setRTLTextPlugin) {
       maplibregl.setRTLTextPlugin(
         "https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.3.0/dist/mapbox-gl-rtl-text.js",
@@ -5562,7 +5023,7 @@
       div.className = "chat-msg " + (isBot ? "bot" : "user");
       const content = document.createElement("div");
       if (text.includes("PARKINZI")) {
-        const logoHtml = '<img src="parkinzi-logo-full-dark.png" alt="PARKINZI" class="brand-logo-inline brand-logo-inline--xs">';
+        const logoHtml = '<span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img"><span class="brand-logo-text">ARKINZI</span></span>';
         const parts = text.split("PARKINZI");
         content.innerHTML = parts.map((p, i) => p + (i < parts.length - 1 ? logoHtml : "")).join("");
       } else {
@@ -5622,9 +5083,13 @@
         waitlistMsg.style.display = "none";
         const t = translations[lang()];
         try {
-          const res = await fetch("/api/waitlist", {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              ...supabaseRestHeaders,
+              Prefer: "return=minimal"
+            },
             body: JSON.stringify({ email })
           });
           if (res.ok || res.status === 201) {
@@ -5652,9 +5117,13 @@
       chatSendBtn.classList.add("sending");
       const t = translations[lang()];
       try {
-        const res = await fetch("/api/contact", {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...supabaseRestHeaders,
+            Prefer: "return=minimal"
+          },
           body: JSON.stringify(chatState.data)
         });
         if (res.ok || res.status === 201) {

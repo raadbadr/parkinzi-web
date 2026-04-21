@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#1a2933" id="themeColorMeta">
+  <title>سياسة الاسترجاع والاسترداد | PARKINZI</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="footer.css">
+  <style>
+    :root, [data-theme="light"] {
+      --primary: rgb(0, 104, 184);
+      --primary-light: rgb(25, 140, 220);
+      --primary-dark: rgb(0, 88, 160);
+      --text-primary: rgb(26, 26, 38);
+      --text-secondary: rgb(77, 77, 89);
+      --bg-top: rgb(250, 252, 255);
+      --bg-mid: rgb(242, 247, 252);
+      --bg-bottom: rgb(237, 245, 250);
+      --glass: rgba(255,255,255,0.85);
+      --glass-border: rgba(0,0,0,0.08);
+      --glass-strong: rgba(255, 255, 255, 0.95);
+      --shadow-light: rgba(255, 255, 255, 0.3);
+      --shadow-dark: rgba(0, 0, 0, 0.08);
+      --white: #ffffff;
+      --success: rgb(52, 199, 89);
+      --warning: rgb(255, 159, 10);
+      --primary-shadow: rgba(0, 104, 184, 0.3);
+    }
+
+    [data-theme="dark"] {
+      --primary: rgb(0, 160, 210);
+      --primary-light: rgb(40, 180, 220);
+      --primary-dark: rgb(0, 140, 190);
+      --text-primary: rgb(255, 255, 255);
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --bg-top: rgb(31, 46, 56);
+      --bg-mid: rgb(26, 41, 51);
+      --bg-bottom: rgb(20, 36, 46);
+      --glass: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.15);
+      --glass-strong: rgba(255, 255, 255, 0.12);
+      --shadow-light: rgba(255, 255, 255, 0.05);
+      --shadow-dark: rgba(5, 10, 15, 0.3);
+      --success: rgb(52, 199, 89);
+      --warning: rgb(255, 159, 10);
+      --primary-shadow: rgba(0, 160, 210, 0.35);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: var(--bg-bottom); }
+
+    body {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+      color: var(--text-primary);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    body.has-site-header { padding-top: 52px; }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] .header {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .last-updated {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .content {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    [data-theme="dark"] .content {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h3 {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    ul, ol {
+      margin: 1rem 0 1rem 2rem;
+      color: var(--text-secondary);
+    }
+
+    li { margin-bottom: 0.5rem; }
+
+    .contact-info {
+      background: linear-gradient(135deg, rgba(0,160,210,0.15), rgba(40,180,220,0.08));
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      direction: rtl;
+    }
+    [data-theme="light"] .contact-info {
+      background: linear-gradient(135deg, rgba(0,104,184,0.08), rgba(25,140,220,0.05));
+    }
+    .contact-info p, .contact-info li {
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+    .contact-info a {
+      color: var(--primary-light);
+      text-decoration: none;
+      font-weight: 500;
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+    .contact-info a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    [data-theme="light"] .contact-info a {
+      color: var(--primary-dark);
+    }
+    .contact-info ul {
+      margin: 0.5rem 0 0 0;
+      padding-inline-start: 1.5rem;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, rgba(0,104,184,0.1), rgba(25,140,220,0.1));
+      border-right: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    [data-theme="dark"] .info-box {
+      background: linear-gradient(135deg, rgba(0,160,210,0.12), rgba(40,180,220,0.08));
+    }
+
+    .warning-box {
+      background: linear-gradient(135deg, rgba(255,159,10,0.1), rgba(251,191,36,0.1));
+      border-right: 4px solid var(--warning);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .success-box {
+      background: linear-gradient(135deg, rgba(52,199,89,0.1), rgba(52,211,153,0.1));
+      border-right: 4px solid var(--success);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--primary-shadow);
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--primary-shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: var(--glass);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: right;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    th {
+      background: var(--primary);
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; margin: 0 auto; }
+      .content { padding: 2rem 1.5rem; }
+      .header, .content h1, .content h2, .content h3 { text-align: center; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      table { font-size: 0.9rem; margin-left: auto; margin-right: auto; }
+      th, td { padding: 0.75rem; }
+    }
+  </style>
+</head>
+<body class="has-site-header">
+  <header class="site-header">
+    <div class="menu-btn" id="langMenuBtn">
+      <div class="icon-circle"><span class="icon">🌐</span></div>
+      <div class="menu-text">
+        <div class="menu-label">اللغة</div>
+        <div class="menu-value" id="currentLangDisplay">العربية</div>
+      </div>
+      <span class="menu-icon">⋯</span>
+      <div class="menu-dropdown" id="langDropdown">
+        <div class="menu-dropdown-item" data-lang="ar"><span class="checkmark" id="check-ar">✓</span><span>العربية</span></div>
+        <div class="menu-dropdown-item" data-lang="en"><span class="checkmark" id="check-en" style="display:none">✓</span><span>English</span></div>
+        <div class="menu-dropdown-item" data-lang="fr"><span class="checkmark" id="check-fr" style="display:none">✓</span><span>Français</span></div>
+        <div class="menu-dropdown-item" data-lang="ur"><span class="checkmark" id="check-ur" style="display:none">✓</span><span>اردو</span></div>
+      </div>
+    </div>
+    <div class="menu-btn" id="themeMenuBtn">
+      <div class="icon-circle"><span class="icon" id="themeIcon">🌙</span></div>
+      <div class="menu-text">
+        <div class="menu-label">المظهر</div>
+        <div class="menu-value" id="currentThemeDisplay">داكن</div>
+      </div>
+      <span class="menu-icon">⋯</span>
+      <div class="menu-dropdown" id="themeDropdown">
+        <div class="menu-dropdown-item" data-theme="light"><span class="checkmark" id="check-light" style="display:none">✓</span><span>فاتح</span></div>
+        <div class="menu-dropdown-item" data-theme="dark"><span class="checkmark" id="check-dark">✓</span><span>داكن</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="header">
+      <h1>سياسة الاسترجاع والاسترداد</h1>
+      <p class="last-updated">آخر تحديث: فبراير 2026</p>
+    </div>
+
+    <div class="content">
+      <div class="info-box">
+        <strong>ملاحظة مهمة:</strong> نحن في PARKINZI نلتزم برضا عملائنا وحقوقهم. تم تصميم هذه السياسة لضمان تجربة عادلة وشفافة لجميع المستخدمين.
+      </div>
+
+      <h2>1. نظرة عامة</h2>
+      <p>توضح هذه السياسة شروط وأحكام استرجاع واسترداد المدفوعات في تطبيق PARKINZI لحجز مواقف السيارات.</p>
+
+      <div class="info-box">
+        <strong>مبدأ الحجز:</strong> من لحظة تأكيد الحجز، الموقف يصبح محجوزاً لك والوقت يبدأ بالاحتساب سواء وصلت للموقع أم لا. أنت تدفع مقابل حجز الموقف وحقك فيه طوال المدة المحجوزة.
+      </div>
+
+      <h2>2. حالات الاسترداد المؤهلة</h2>
+      
+      <h3>2.1 إلغاء الحجز المسبق</h3>
+      <table>
+        <tr>
+          <th>وقت الإلغاء</th>
+          <th>نسبة الاسترداد</th>
+        </tr>
+        <tr>
+          <td>أكثر من 24 ساعة قبل موعد الحجز</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td>12-24 ساعة قبل موعد الحجز</td>
+          <td>75%</td>
+        </tr>
+        <tr>
+          <td>6-12 ساعة قبل موعد الحجز</td>
+          <td>50%</td>
+        </tr>
+        <tr>
+          <td>أقل من 6 ساعات قبل موعد الحجز</td>
+          <td>لا يوجد استرداد</td>
+        </tr>
+      </table>
+
+      <h3>2.2 مشاكل تقنية</h3>
+      <div class="success-box">
+        <p><strong>استرداد كامل 100%</strong> في الحالات التالية:</p>
+        <ul>
+          <li>فشل في الوصول إلى الموقف بسبب خطأ في التطبيق</li>
+          <li>معلومات موقف خاطئة أو مضللة</li>
+          <li>عطل تقني منع استخدام الخدمة</li>
+          <li>رسوم مكررة أو غير صحيحة</li>
+        </ul>
+      </div>
+
+      <h3>2.3 ظروف طارئة</h3>
+      <ul>
+        <li>حالات طوارئ طبية (بموجب إثبات)</li>
+        <li>ظروف جوية قاهرة</li>
+        <li>إغلاق طرق غير متوقع</li>
+        <li>أعطال في السيارة (بموجب إثبات)</li>
+      </ul>
+      <p><em>يتم مراجعة هذه الحالات بشكل فردي وقد تستحق استرداداً كاملاً أو جزئياً.</em></p>
+
+      <h2>3. حالات عدم الاسترداد</h2>
+      <div class="warning-box">
+        <p><strong>لا يمكن استرداد المبالغ في الحالات التالية:</strong></p>
+        <ul>
+          <li>بعد بدء فترة الحجز</li>
+          <li>استخدام الموقف أو انتهاء فترة الحجز</li>
+          <li>إلغاء متأخر (أقل من 6 ساعات قبل موعد بدء الحجز)</li>
+          <li>عدم الالتزام بشروط الخدمة</li>
+          <li>استخدام غير مصرح به أو احتيالي</li>
+        </ul>
+      </div>
+
+      <h2>4. آلية طلب الاسترداد</h2>
+      
+      <h3>الخطوة 1: تقديم الطلب</h3>
+      <ul>
+        <li>افتح التطبيق وانتقل إلى "حجوزاتي"</li>
+        <li>اختر الحجز المراد استرداده</li>
+        <li>اضغط على "طلب استرداد"</li>
+        <li>اختر السبب من القائمة</li>
+        <li>أرفق أي مستندات داعمة إن لزم الأمر</li>
+      </ul>
+
+      <h3>الخطوة 2: المراجعة</h3>
+      <ul>
+        <li>سيتم مراجعة طلبك خلال 24-48 ساعة عمل</li>
+        <li>قد نطلب معلومات أو مستندات إضافية</li>
+        <li>ستتلقى إشعاراً بحالة الطلب</li>
+      </ul>
+
+      <h3>الخطوة 3: المعالجة</h3>
+      <ul>
+        <li>في حالة الموافقة، سيتم استرداد المبلغ خلال 5-7 أيام عمل</li>
+        <li>سيتم الاسترداد إلى نفس وسيلة الدفع المستخدمة</li>
+        <li>ستتلقى تأكيداً عبر البريد الإلكتروني والتطبيق</li>
+      </ul>
+
+      <h2>5. طرق الاسترداد</h2>
+      <p>الدفع عبر التطبيق بطريقتين: نقداً في موقع الموقف، أو عبر أجهزة نقطة البيع (POS). يتم الاسترداد إلى نفس وسيلة الدفع المستخدمة.</p>
+      <ul>
+        <li><strong>بطاقات الائتمان/الخصم:</strong> 5-7 أيام عمل</li>
+        <li><strong>المحافظ الإلكترونية:</strong> 2-3 أيام عمل</li>
+        <li><strong>Apple Pay:</strong> 3-5 أيام عمل</li>
+        <li><strong>رصيد التطبيق:</strong> فوري</li>
+      </ul>
+
+      <h2>6. الاعتراض على قرار الاسترداد</h2>
+      <p>إذا تم رفض طلب الاسترداد ولديك معلومات إضافية:</p>
+      <ul>
+        <li>يمكنك تقديم اعتراض خلال 14 يوماً</li>
+        <li>أرفق أي مستندات جديدة تدعم طلبك</li>
+        <li>سيتم مراجعة الاعتراض من قبل فريق أعلى</li>
+        <li>القرار النهائي سيكون ملزماً</li>
+      </ul>
+
+      <h2>7. رسوم المعالجة</h2>
+      <div class="info-box">
+        <p><strong>بدون رسوم معالجة!</strong></p>
+        <p>PARKINZI لا تفرض أي رسوم على معالجة طلبات الاسترداد. المبلغ المسترد سيكون كاملاً وفقاً للنسبة المستحقة.</p>
+      </div>
+
+      <h2>8. الاستثناءات الخاصة</h2>
+      
+      <h3>8.1 العملاء الجدد</h3>
+      <p>للحجز الأول: يمكن الإلغاء مجاناً حتى ساعة واحدة قبل الموعد.</p>
+
+      <h3>8.2 الاشتراكات الشهرية</h3>
+      <ul>
+        <li>يمكن إلغاء الاشتراك في أي وقت</li>
+        <li>لا يوجد استرداد للفترة الحالية</li>
+        <li>سيظل نشطاً حتى نهاية دورة الفوترة</li>
+      </ul>
+
+      <h3>8.3 العروض والخصومات</h3>
+      <p>الحجوزات المستفيدة من عروض خاصة أو أكواد خصم قد تخضع لشروط استرداد مختلفة موضحة في تفاصيل العرض.</p>
+
+      <h2>9. حقوق المستخدم</h2>
+      <ul>
+        <li>الحق في معرفة حالة طلب الاسترداد</li>
+        <li>الحق في الاعتراض على القرار</li>
+        <li>الحق في الحصول على تفسير مكتوب للرفض</li>
+        <li>الحق في التصعيد لخدمة العملاء</li>
+      </ul>
+
+      <h2 id="violations" data-i18n="violationsTitle">10. دليل المخالفات</h2>
+      <p data-i18n="violationsIntro">جدول مخالفات استخدام المواقف في المواقع التجارية والأماكن العامة وفق قرار مجلس الوزراء رقم (550) وتاريخ 1442/09/15هـ:</p>
+      
+      <h3 data-i18n="violationsGroup1">مخالفات المجموعة الأولى</h3>
+      <table>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><td>1/1</td><td>استخدام الموقف من غير دفع أجرة</td><td>200</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>2/1</td><td>انتهاء مدة الوقوف المدفوعة دون إخلاء الموقف</td><td>100</td><td>دفع الأجرة الإضافية</td></tr>
+        <tr><td>3/1</td><td>تجاوز المدة الزمنية القصوى المسموح بها للموقوف</td><td>100</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>4/1</td><td>الوقوف بشكل مخالف ضمن حيز الموقف</td><td>100</td><td>—</td></tr>
+      </table>
+
+      <h3 data-i18n="violationsGroup2">مخالفات المجموعة الثانية</h3>
+      <table>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><td>2/1</td><td>الوقوف في مكان موقف محجوز لاستخدام معين</td><td>300</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>2/2</td><td>الوقوف في موقف محظور</td><td>300</td><td>سحب المركبة وحجزها</td></tr>
+      </table>
+
+      <h3 data-i18n="violationsGroup3">مخالفات المجموعة الثالثة</h3>
+      <table>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><td>3/1</td><td>وضع حواجز أو معوقات أو تسوير أو إغلاق موقف دون تصريح</td><td>400</td><td>تحمل تكلفة إزالة الإحداث</td></tr>
+      </table>
+
+      <h3 data-i18n="violationsGroup4">مخالفات المجموعة الرابعة</h3>
+      <table>
+        <tr><th data-i18n="thArticle">المادة</th><th data-i18n="thViolationType">نوع المخالفة</th><th data-i18n="thFine">الغرامة (ريال)</th><th data-i18n="thPenalty">العقوبة</th></tr>
+        <tr><td>4/1</td><td>الوقوف في المنطقة المخصصة لخدمة أبواب الطوارئ</td><td>900</td><td>سحب المركبة وحجزها</td></tr>
+        <tr><td>4/2</td><td>وقوف المركبة عند مداخل ومخارج مباني مواقف السيارات</td><td>500</td><td>سحب المركبة وحجزها</td></tr>
+      </table>
+
+      <h3 data-i18n="towFees">مقابل السحب والحجز</h3>
+      <table>
+        <tr><th data-i18n="thVehicleWeight">وزن المركبة</th><th data-i18n="thTowFee">المقابل المادي للسحب (ريال/يوم)</th><th data-i18n="thImpoundFee">المقابل المالي للحجز (ريال/يوم)</th></tr>
+        <tr><td>المركبات الخفيفة (إلى 3 طن)</td><td>250</td><td>20</td></tr>
+        <tr><td>المركبات الثقيلة (إلى 5 طن)</td><td>1,250</td><td>50</td></tr>
+      </table>
+
+      <h2>11. الاتصال بنا</h2>
+      <div class="contact-info">
+        <p>لأي استفسارات أو مساعدة في طلبات الاسترداد:</p>
+        <p><a href="mailto:support@parkinzi.com">support@parkinzi.com</a> · <a href="tel:+966569601069" dir="ltr">+966 56 960 1069</a></p>
+      </div>
+      <h3>الشكاوى وأوقات الرد</h3>
+      <ul>
+        <li><strong>أوقات العمل:</strong> من 7 صباحاً إلى 3 مساءً (توقيت مكة المكرمة)</li>
+        <li><strong>وقت الرد على الشكوى:</strong> خلال 24 ساعة عمل</li>
+        <li><strong>وقت معالجة الشكوى:</strong> خلال 3–5 أيام عمل</li>
+        <li>يمكنك تقديم الشكوى عبر: الموقع (زر تواصل معنا)، البريد، الهاتف، أو منصاتنا على Instagram و TikTok و X و Snapchat</li>
+      </ul>
+
+      <h2>12. التعديلات على السياسة</h2>
+      <p>نحتفظ بالحق في تعديل هذه السياسة في أي وقت. سيتم إخطار المستخدمين بأي تغييرات جوهرية قبل 30 يوماً من تطبيقها.</p>
+
+      <div class="success-box">
+        <p><strong>التزامنا تجاهك:</strong></p>
+        <p>نسعى دائماً لتقديم أفضل خدمة وأكثر عدالة. رضاك هو أولويتنا، ونعمل باستمرار على تحسين سياساتنا لخدمتك بشكل أفضل.</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 2rem;">
+      <a href="index.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+        </svg>
+        العودة للرئيسية
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-links">
+      <a href="about.html" data-i18n="aboutLink">من نحن</a>
+      <a href="terms.html" data-i18n="termsLink">شروط الاستخدام</a>
+      <a href="pricing.html" data-i18n="pricingLink">سياسة الأسعار</a>
+      <a href="privacy.html" data-i18n="privacyLink">سياسة الخصوصية</a>
+      <a href="disclaimer.html" data-i18n="disclaimerLink">إخلاء المسؤولية</a>
+      <a href="refund.html#violations" data-i18n="violationsLink">دليل المخالفات</a>
+      <a href="refund.html" data-i18n="refundLink">سياسة الاسترجاع</a>
+      <a href="index.html" data-i18n="homeLink">الرئيسية</a>
+      <a href="index.html#contact" data-i18n="contactLink">تواصل معنا</a>
+      <a href="tel:+966569601069" class="footer-social-icon" aria-label="هاتف"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
+      <a href="mailto:support@parkinzi.com" class="footer-social-icon" aria-label="support@parkinzi.com"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      <a href="https://www.instagram.com/parkinzi" target="_blank" rel="noopener noreferrer" aria-label="انستغرام" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.058 1.645-.07 4.849-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="https://www.tiktok.com/@parkinzi" target="_blank" rel="noopener noreferrer" aria-label="تيك توك" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+      <a href="https://x.com/parkinziapp" target="_blank" rel="noopener noreferrer" aria-label="اكس" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://www.snapchat.com/add/parkinziapp" target="_blank" rel="noopener noreferrer" aria-label="سناب شات" class="footer-social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12.375-.164.57-.029.179-.074.36-.134.553-.076.271-.27.405-.555.405h-.03c-.135 0-.313-.031-.538-.074-.36-.075-.765-.135-1.273-.135-.3 0-.599.015-.913.074-.6.104-1.123.464-1.723.884-.853.599-1.826 1.288-3.294 1.288-.06 0-.119-.015-.18-.015h-.149c-1.468 0-2.427-.675-3.279-1.288-.599-.42-1.107-.779-1.707-.884-.314-.045-.629-.074-.928-.074-.54 0-.958.089-1.272.149-.211.043-.391.074-.54.074-.374 0-.523-.224-.583-.42-.061-.192-.09-.389-.135-.568-.046-.18-.105-.494-.166-.57-1.918-.222-2.95-.642-3.189-1.226-.031-.063-.052-.15-.052-.225-.015-.243.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.02l.016-.029c.18-.345.224-.645.119-.869-.195-.434-.884-.658-1.332-.809-.121-.029-.24-.074-.346-.119-1.107-.435-1.257-.93-1.197-1.273.09-.479.674-.793 1.168-.793.146 0 .27.029.383.074.42.194.789.3 1.104.3.234 0 .384-.06.465-.105l-.046-.569c-.098-1.626-.225-3.651.307-4.837C7.392 1.077 10.739.807 11.727.807l.419-.015h.06z"/></svg></a>
+    </p>
+    <p class="footer-copyright">
+      <span>جميع الحقوق محفوظة</span>
+      <span> <span class="brand-logo brand-logo--xs"><img src="parkinzi-logo-light.png" alt="P" class="brand-logo-img" id="footerLogo"><span class="brand-logo-text">ARKINZI</span></span> © 2026</span>
+    </p>
+  </footer>
+
+  <script>
+    const langNames = { ar: "العربية", en: "English", fr: "Français", ur: "اردو" };
+    const themeLabels = { ar: { light: "فاتح", dark: "داكن" }, en: { light: "Light", dark: "Dark" }, fr: { light: "Clair", dark: "Sombre" }, ur: { light: "روشن", dark: "اندھیرا" } };
+    const translations = {
+      ar: {
+        violationsTitle: "10. دليل المخالفات",
+        violationsIntro: "جدول مخالفات استخدام المواقف في المواقع التجارية والأماكن العامة وفق قرار مجلس الوزراء رقم (550) وتاريخ 1442/09/15هـ:",
+        violationsGroup1: "مخالفات المجموعة الأولى",
+        violationsGroup2: "مخالفات المجموعة الثانية",
+        violationsGroup3: "مخالفات المجموعة الثالثة",
+        violationsGroup4: "مخالفات المجموعة الرابعة",
+        towFees: "مقابل السحب والحجز",
+        thArticle: "المادة",
+        thViolationType: "نوع المخالفة",
+        thFine: "الغرامة (ريال)",
+        thPenalty: "العقوبة",
+        thVehicleWeight: "وزن المركبة",
+        thTowFee: "المقابل المادي للسحب (ريال/يوم)",
+        thImpoundFee: "المقابل المالي للحجز (ريال/يوم)",
+        privacyLink: "سياسة الخصوصية",
+        aboutLink: "من نحن",
+        termsLink: "شروط الاستخدام",
+        pricingLink: "سياسة الأسعار",
+        violationsLink: "دليل المخالفات",
+        refundLink: "سياسة الاسترجاع",
+        homeLink: "الرئيسية",
+        contactLink: "تواصل معنا"
+      },
+      en: {
+        violationsTitle: "10. Violations Guide",
+        violationsIntro: "Table of parking violations in commercial and public areas per Cabinet Decision No. (550) dated 1442/09/15 H:",
+        violationsGroup1: "Group 1 Violations",
+        violationsGroup2: "Group 2 Violations",
+        violationsGroup3: "Group 3 Violations",
+        violationsGroup4: "Group 4 Violations",
+        towFees: "Tow and Impound Fees",
+        thArticle: "Article",
+        thViolationType: "Violation Type",
+        thFine: "Fine (SAR)",
+        thPenalty: "Penalty",
+        thVehicleWeight: "Vehicle Weight",
+        thTowFee: "Tow Fee (SAR/day)",
+        thImpoundFee: "Impound Fee (SAR/day)",
+        privacyLink: "Privacy Policy",
+        aboutLink: "About Us",
+        termsLink: "Terms of Use",
+        pricingLink: "Pricing Policy",
+        violationsLink: "Violations Guide",
+        refundLink: "Refund Policy",
+        homeLink: "Home",
+        contactLink: "Contact Us"
+      },
+      fr: {
+        violationsTitle: "10. Guide des infractions",
+        violationsIntro: "Tableau des infractions de stationnement dans les zones commerciales et publiques selon la décision du Conseil des ministres n° (550) du 1442/09/15 H:",
+        violationsGroup1: "Infractions du groupe 1",
+        violationsGroup2: "Infractions du groupe 2",
+        violationsGroup3: "Infractions du groupe 3",
+        violationsGroup4: "Infractions du groupe 4",
+        towFees: "Frais de remorquage et mise en fourrière",
+        thArticle: "Article",
+        thViolationType: "Type d'infraction",
+        thFine: "Amende (SAR)",
+        thPenalty: "Sanction",
+        thVehicleWeight: "Poids du véhicule",
+        thTowFee: "Frais de remorquage (SAR/jour)",
+        thImpoundFee: "Frais de fourrière (SAR/jour)",
+        privacyLink: "Politique de confidentialité",
+        aboutLink: "À propos",
+        termsLink: "Conditions d'utilisation",
+        pricingLink: "Politique tarifaire",
+        violationsLink: "Guide des infractions",
+        refundLink: "Politique de remboursement",
+        homeLink: "Accueil",
+        contactLink: "Nous contacter"
+      },
+      ur: {
+        violationsTitle: "10. خلاف ورزیوں کی گائیڈ",
+        violationsIntro: "کابینہ فیصلہ نمبر (550) مورخہ 1442/09/15 ہجری کے مطابق تجارتی اور عوامی مقامات میں پارکنگ خلاف ورزیوں کا جدول:",
+        violationsGroup1: "گروپ 1 خلاف ورزیاں",
+        violationsGroup2: "گروپ 2 خلاف ورزیاں",
+        violationsGroup3: "گروپ 3 خلاف ورزیاں",
+        violationsGroup4: "گروپ 4 خلاف ورزیاں",
+        towFees: "ٹو اور ضبطی فیس",
+        thArticle: "دفعہ",
+        thViolationType: "خلاف ورزی کی قسم",
+        thFine: "جرمانہ (ریال)",
+        thPenalty: "سزا",
+        thVehicleWeight: "گاڑی کا وزن",
+        thTowFee: "ٹو فیس (ریال/دن)",
+        thImpoundFee: "ضبطی فیس (ریال/دن)",
+        privacyLink: "رازداری کی پالیسی",
+        aboutLink: "ہمارے بارے میں",
+        termsLink: "استعمال کی شرائط",
+        pricingLink: "قیمتوں کی پالیسی",
+        violationsLink: "خلاف ورزیوں کی گائیڈ",
+        refundLink: "واپسی کی پالیسی",
+        homeLink: "ہوم",
+        contactLink: "ہم سے رابطہ کریں"
+      }
+    };
+    const lang = () => localStorage.getItem("parkinzi_lang") || "ar";
+    const theme = () => localStorage.getItem("parkinzi_theme") || "dark";
+    let l = lang();
+    document.documentElement.lang = l;
+    document.documentElement.dir = (l === "ar" || l === "ur") ? "rtl" : "ltr";
+
+    function setLang(code) {
+      localStorage.setItem("parkinzi_lang", code);
+      location.reload();
+    }
+    function setTheme(th) {
+      localStorage.setItem("parkinzi_theme", th);
+      document.documentElement.dataset.theme = th;
+      const meta = document.getElementById("themeColorMeta");
+      if (meta) meta.content = th === "dark" ? "#1a2933" : "#0068b8";
+      const logo = document.getElementById("footerLogo");
+      if (logo) logo.src = th === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
+      document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️";
+      document.getElementById("currentThemeDisplay").textContent = themeLabels[l][th];
+      document.getElementById("check-light").style.display = th === "light" ? "inline" : "none";
+      document.getElementById("check-dark").style.display = th === "dark" ? "inline" : "none";
+    }
+
+    document.getElementById("langMenuBtn").addEventListener("click", e => {
+      e.stopPropagation();
+      document.getElementById("langDropdown").classList.toggle("show");
+      document.getElementById("themeDropdown").classList.remove("show");
+    });
+    document.getElementById("themeMenuBtn").addEventListener("click", e => {
+      e.stopPropagation();
+      document.getElementById("themeDropdown").classList.toggle("show");
+      document.getElementById("langDropdown").classList.remove("show");
+    });
+    document.addEventListener("click", () => {
+      document.getElementById("langDropdown").classList.remove("show");
+      document.getElementById("themeDropdown").classList.remove("show");
+    });
+    document.querySelectorAll("#langDropdown .menu-dropdown-item").forEach(item => {
+      item.addEventListener("click", () => setLang(item.dataset.lang));
+    });
+    document.querySelectorAll("#themeDropdown .menu-dropdown-item").forEach(item => {
+      item.addEventListener("click", () => {
+        setTheme(item.dataset.theme);
+        document.getElementById("themeDropdown").classList.remove("show");
+      });
+    });
+
+    document.getElementById("currentLangDisplay").textContent = langNames[l] || l;
+    ["ar","en","fr","ur"].forEach(c => {
+      const el = document.getElementById("check-" + c);
+      if (el) el.style.display = l === c ? "inline" : "none";
+    });
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.dataset.i18n;
+      if (translations[l] && translations[l][k]) el.textContent = translations[l][k];
+    });
+
+    (function() {
+      const t = theme();
+      document.documentElement.dataset.theme = t;
+      const meta = document.getElementById("themeColorMeta");
+      if (meta) meta.content = t === "dark" ? "#1a2933" : "#0068b8";
+      const logo = document.getElementById("footerLogo");
+      if (logo) logo.src = t === "dark" ? "parkinzi-logo-light.png" : "parkinzi-logo-dark.png";
+      document.getElementById("themeIcon").textContent = t === "dark" ? "🌙" : "☀️";
+      document.getElementById("currentThemeDisplay").textContent = themeLabels[l][t];
+      document.getElementById("check-light").style.display = t === "light" ? "inline" : "none";
+      document.getElementById("check-dark").style.display = t === "dark" ? "inline" : "none";
+    })();
+  </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
