@@ -1196,7 +1196,7 @@
       --timeline-fill-pct: 100%;
       margin-top: 0;
       margin-bottom: 0.85rem;
-      padding: 1.2rem 1.2rem 1.2rem;
+      padding: 6rem 1.2rem 2.6rem;
       border-radius: 16px;
       min-height: 0;
       position: relative;
@@ -1706,11 +1706,14 @@
     /* Responsive: timeline milestones — stagger labels to avoid overlap */
     @media (max-width: 600px) {
       .growth-map-timeline--has-milestones {
-        padding-top: 3rem;
+        padding-top: 6rem;
         padding-bottom: 3rem;
       }
       .growth-map-timeline {
         padding: 0.8rem 0.5rem;
+      }
+      .growth-map-timeline--has-milestones {
+        padding-top: 6rem;
       }
       .growth-map-timeline-launch-tick {
         height: 18px;
@@ -2566,7 +2569,7 @@
         min-height: 5rem;
       }
       .growth-map-timeline--has-milestones {
-        padding-top: 3rem;
+        padding-top: 6rem;
         padding-bottom: 1.6rem;
       }
 
@@ -2677,7 +2680,7 @@
         min-height: 4.75rem;
       }
       .growth-map-timeline--has-milestones {
-        padding-top: 2.8rem;
+        padding-top: 6rem;
         padding-bottom: 1.4rem;
       }
 
@@ -3335,8 +3338,8 @@
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
       <div class="growth-map-timeline-launch growth-map-timeline-social" id="growthMapTimelineSocial" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapSocialLabel">انطلاقة السوشيال ميديا</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapSocialDate">19 أبريل</span>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapSocialLabel">تواصل اجتماعي</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapSocialDate">22 أبريل</span>
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
       <div class="growth-map-timeline-launch growth-map-timeline-marketing" id="growthMapTimelineMarketing" hidden>
@@ -3658,8 +3661,8 @@
         growthMapIos13Date: "18 أبريل",
         growthMapExceptionalLabel: "أول إضافة استثنائية",
         growthMapExceptionalDate: "12 أبريل",
-        growthMapSocialLabel: "انطلاقة السوشيال ميديا",
-        growthMapSocialDate: "19 أبريل",
+        growthMapSocialLabel: "تواصل اجتماعي",
+        growthMapSocialDate: "22 أبريل",
         growthMapMarketingLabel: "اجتماع تسويق",
         growthMapMarketingDate: "21 أبريل",
         growthMapAndroidLabel: "إطلاق Android",
@@ -3759,8 +3762,8 @@
         growthMapIos13Date: "Apr 18",
         growthMapExceptionalLabel: "First Exceptional Addition",
         growthMapExceptionalDate: "Apr 12",
-        growthMapSocialLabel: "Social Media Kickoff",
-        growthMapSocialDate: "Apr 19",
+        growthMapSocialLabel: "Social",
+        growthMapSocialDate: "Apr 22",
         growthMapMarketingLabel: "Marketing Meeting",
         growthMapMarketingDate: "Apr 21",
         growthMapAndroidLabel: "Android Launch",
@@ -3861,8 +3864,8 @@
         growthMapIos13Date: "18 avr.",
         growthMapExceptionalLabel: "Premier ajout exceptionnel",
         growthMapExceptionalDate: "12 avr.",
-        growthMapSocialLabel: "Lancement reseaux sociaux",
-        growthMapSocialDate: "19 avr.",
+        growthMapSocialLabel: "Social",
+        growthMapSocialDate: "22 avr.",
         growthMapMarketingLabel: "Reunion marketing",
         growthMapMarketingDate: "21 avr.",
         growthMapAndroidLabel: "Lancement Android",
@@ -3962,8 +3965,8 @@
         growthMapIos13Date: "18 اپریل",
         growthMapExceptionalLabel: "پہلا غیر معمولی اضافہ",
         growthMapExceptionalDate: "12 اپریل",
-        growthMapSocialLabel: "سوشل میڈیا آغاز",
-        growthMapSocialDate: "19 اپریل",
+        growthMapSocialLabel: "سوشل",
+        growthMapSocialDate: "22 اپریل",
         growthMapMarketingLabel: "مارکیٹنگ میٹنگ",
         growthMapMarketingDate: "21 اپریل",
         growthMapAndroidLabel: "Android لانچ",
@@ -5277,7 +5280,7 @@
         updateGrowthMapSocialMilestone = function () {
           if (!socialMilestoneEl || !timelineEl) return;
           if (timelineSpanMs <= 0) { socialMilestoneEl.hidden = true; return; }
-          const socialDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 19));
+          const socialDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 22));
           if (socialDayEnd < minCutoffMs || socialDayEnd > maxCutoffMs) { socialMilestoneEl.hidden = true; return; }
           const r = warpR((socialDayEnd - minCutoffMs) / timelineSpanMs);
           socialMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
@@ -5350,7 +5353,7 @@
         if (exceptionalDayEnd >= minCutoffMs && exceptionalDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((exceptionalDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
-        var socialDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 19));
+        var socialDayEnd = growthMapEndOfLocalDay(new Date(2026, 3, 22));
         if (socialDayEnd >= minCutoffMs && socialDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((socialDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
