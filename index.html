@@ -1150,7 +1150,7 @@
       position: sticky;
       top: 70px;
       z-index: 20;
-      max-width: 1200px;
+      max-width: 1600px;
       margin-left: auto;
       margin-right: auto;
       padding-left: 2rem;
@@ -3342,11 +3342,6 @@
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapMarketingDate">21 أبريل</span>
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
-      <div class="growth-map-timeline-launch growth-map-timeline-android" id="growthMapTimelineAndroid" hidden>
-        <span class="growth-map-timeline-launch-label" data-i18n="growthMapAndroidLabel">إطلاق Android</span>
-        <span class="growth-map-timeline-launch-date" data-i18n="growthMapAndroidDate">1 مايو</span>
-        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
-      </div>
       <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
@@ -5167,16 +5162,18 @@
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
-        /* Linear mapping: التايم لاين من 1 أبريل إلى 15 مايو، بدون ضغط */
+        /* Power warp: يسحب المعالم نحو بداية الشريط (15 مارس)
+           بدلاً من تركّزها في الوسط/النهاية */
         (function buildTimelineWarp() {
           if (timelineSpanMs <= 0) return;
+          var WARP_EXP = 1.6;
           _tlWarpToVisual = function (r) {
             if (r <= 0) return 0; if (r >= 1) return 1;
-            return r;
+            return Math.pow(r, WARP_EXP);
           };
           _tlWarpToTime = function (v) {
             if (v <= 0) return 0; if (v >= 1) return 1;
-            return v;
+            return Math.pow(v, 1 / WARP_EXP);
           };
         })();
 
@@ -5295,20 +5292,8 @@
         };
         updateGrowthMapMarketingMilestone();
 
-        const androidMilestoneEl = document.getElementById("growthMapTimelineAndroid");
-        updateGrowthMapAndroidMilestone = function () {
-          if (!androidMilestoneEl || !timelineEl) return;
-          if (timelineSpanMs <= 0) { androidMilestoneEl.hidden = true; return; }
-          const androidDayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 1));
-          if (androidDayEnd < minCutoffMs || androidDayEnd > maxCutoffMs) { androidMilestoneEl.hidden = true; return; }
-          const r = warpR((androidDayEnd - minCutoffMs) / timelineSpanMs);
-          androidMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
-          androidMilestoneEl.hidden = false;
-        };
-        updateGrowthMapAndroidMilestone();
-
         /* إضافة كلاس الـ milestones (بديل :has للتوافق مع كل المتصفحات) */
-        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden || !androidMilestoneEl.hidden) {
+        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden) {
           timelineEl.classList.add("growth-map-timeline--has-milestones");
         }
 
