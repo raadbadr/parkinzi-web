@@ -133,6 +133,11 @@
   filter: brightness(0) invert(1);
 }
 
+/* الشعار في dark theme - رفع السطوع لأن حرف P في الصورة رمادي باهت */
+[data-theme="dark"] .footer .brand-logo-inline {
+  filter: brightness(1.5) contrast(1.1);
+}
+
 /* Light theme - شعار أسود، ARKINZI أزرق */
 [data-theme="light"] .footer {
   background: rgba(255, 255, 255, 0.75);
