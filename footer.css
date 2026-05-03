@@ -77,7 +77,21 @@
   display: block;
 }
 
-.footer-brand { display: none; }
+/* الشعار في الفوتر */
+.footer-brand {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-brand-logo {
+  height: 32px;
+  width: auto;
+  display: inline-block;
+  opacity: 1;
+  filter: brightness(0) invert(1);
+}
 
 /* حقوق النشر */
 .footer-copyright {
