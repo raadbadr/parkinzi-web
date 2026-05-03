@@ -80,6 +80,18 @@
 .brand-logo--xs .brand-logo-img { height: 1em; }
 .brand-logo--xs .brand-logo-text { font-size: 1em; }
 
+/* الشعار المضمن في سطر الكوبي رايت */
+.brand-logo-inline {
+  height: 1.6em;
+  width: auto;
+  display: inline-block;
+  vertical-align: -0.45em;
+}
+.brand-logo-inline--xs {
+  height: 1.3em;
+  vertical-align: -0.35em;
+}
+
 .brand-logo-text {
   font-family: 'Monoton', cursive;
   font-weight: 400;
