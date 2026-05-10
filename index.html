@@ -1684,6 +1684,65 @@
         0 0 8px rgba(230, 81, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
+    /* اجتماع تطمين — مارون وذهبي (مستوحى من شعار الشركة) */
+    .growth-map-timeline-tatmin .growth-map-timeline-launch-label {
+      color: #d4af37;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 0 8px rgba(212, 175, 55, 0.4);
+    }
+    [data-theme="light"] .growth-map-timeline-tatmin .growth-map-timeline-launch-label {
+      color: #7b1f2c;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .growth-map-timeline-tatmin .growth-map-timeline-launch-date { color: rgba(212, 175, 55, 0.75); }
+    [data-theme="light"] .growth-map-timeline-tatmin .growth-map-timeline-launch-date { color: rgba(123, 31, 44, 0.7); }
+    .growth-map-timeline-tatmin .growth-map-timeline-launch-tick {
+      background: linear-gradient(180deg, #f4e1a4 0%, #d4af37 35%, #8b1f3c 75%, #4a1525 100%);
+      animation: tatminGoldGlow 3.2s ease-in-out infinite;
+    }
+    [data-theme="light"] .growth-map-timeline-tatmin .growth-map-timeline-launch-tick {
+      animation: tatminGoldGlowLight 3.2s ease-in-out infinite;
+    }
+    @keyframes tatminGoldGlow {
+      0%, 100% {
+        box-shadow:
+          0 0 10px rgba(212, 175, 55, 0.45),
+          0 0 3px rgba(244, 225, 164, 0.75),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        box-shadow:
+          0 0 18px rgba(212, 175, 55, 0.7),
+          0 0 6px rgba(244, 225, 164, 0.95),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      }
+    }
+    @keyframes tatminGoldGlowLight {
+      0%, 100% {
+        box-shadow:
+          0 0 8px rgba(123, 31, 44, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      }
+      50% {
+        box-shadow:
+          0 0 14px rgba(123, 31, 44, 0.5),
+          0 0 4px rgba(212, 175, 55, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .growth-map-timeline-tatmin .growth-map-timeline-launch-tick,
+      [data-theme="light"] .growth-map-timeline-tatmin .growth-map-timeline-launch-tick {
+        animation: none;
+      }
+    }
+    /* اجتماع تطمين الأول (4 مايو) — رفع الليبل لتفادي التداخل مع Android (1 مايو) */
+    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-label {
+      bottom: calc(50% + 42px);
+    }
+    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-date {
+      top: calc(50% + 46px);
+    }
+
     /* Android — لون أخضر */
     .growth-map-timeline-android .growth-map-timeline-launch-label { color: #a5d6a7; }
     [data-theme="light"] .growth-map-timeline-android .growth-map-timeline-launch-label { color: #2e7d32; }
@@ -3343,6 +3402,16 @@
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapMarketingDate">21 أبريل</span>
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-tatmin growth-map-timeline-tatmin1" id="growthMapTimelineTatmin1" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapTatmin1Label">اجتماع تطمين</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapTatmin1Date">4 مايو</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-tatmin growth-map-timeline-tatmin2" id="growthMapTimelineTatmin2" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapTatmin2Label">اجتماع تطمين</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapTatmin2Date">7 مايو</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
       <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
@@ -3658,6 +3727,10 @@
         growthMapSocialDate: "22 أبريل",
         growthMapMarketingLabel: "اجتماع تسويق",
         growthMapMarketingDate: "21 أبريل",
+        growthMapTatmin1Label: "اجتماع تطمين",
+        growthMapTatmin1Date: "4 مايو",
+        growthMapTatmin2Label: "اجتماع تطمين",
+        growthMapTatmin2Date: "7 مايو",
         growthMapAndroidLabel: "إطلاق Android",
         growthMapAndroidDate: "1 مايو",
         growthMapTodayLabel: "الان"
@@ -3760,6 +3833,10 @@
         growthMapSocialDate: "Apr 22",
         growthMapMarketingLabel: "Marketing Meeting",
         growthMapMarketingDate: "Apr 21",
+        growthMapTatmin1Label: "Tatmin Meeting",
+        growthMapTatmin1Date: "May 4",
+        growthMapTatmin2Label: "Tatmin Meeting",
+        growthMapTatmin2Date: "May 7",
         growthMapAndroidLabel: "Android Launch",
         growthMapAndroidDate: "May 1",
         growthMapTodayLabel: "Now"
@@ -3863,6 +3940,10 @@
         growthMapSocialDate: "22 avr.",
         growthMapMarketingLabel: "Reunion marketing",
         growthMapMarketingDate: "21 avr.",
+        growthMapTatmin1Label: "Reunion Tatmin",
+        growthMapTatmin1Date: "4 mai",
+        growthMapTatmin2Label: "Reunion Tatmin",
+        growthMapTatmin2Date: "7 mai",
         growthMapAndroidLabel: "Lancement Android",
         growthMapAndroidDate: "1 mai",
         growthMapTodayLabel: "Maint."
@@ -3965,6 +4046,10 @@
         growthMapSocialDate: "22 اپریل",
         growthMapMarketingLabel: "مارکیٹنگ میٹنگ",
         growthMapMarketingDate: "21 اپریل",
+        growthMapTatmin1Label: "تطمین میٹنگ",
+        growthMapTatmin1Date: "4 مئی",
+        growthMapTatmin2Label: "تطمین میٹنگ",
+        growthMapTatmin2Date: "7 مئی",
         growthMapAndroidLabel: "Android لانچ",
         growthMapAndroidDate: "1 مئی",
         growthMapTodayLabel: "ابھی"
@@ -4920,6 +5005,8 @@
       let updateGrowthMapExceptionalMilestone = function () {};
       let updateGrowthMapSocialMilestone = function () {};
       let updateGrowthMapMarketingMilestone = function () {};
+      let updateGrowthMapTatmin1Milestone = function () {};
+      let updateGrowthMapTatmin2Milestone = function () {};
       let updateGrowthMapAndroidMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
@@ -5160,8 +5247,8 @@
         );
         const now = new Date();
         const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        /* النطاق المرئي الكامل: حتى 15 مايو 2026 (يشمل إطلاق Android) */
-        let timelineEndDay = new Date(2026, 4, 15);
+        /* النطاق المرئي الكامل: حتى 31 مايو 2026 */
+        let timelineEndDay = new Date(2026, 4, 31);
         if (todayDay > timelineEndDay) timelineEndDay = todayDay;
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
@@ -5172,7 +5259,7 @@
            بدلاً من تركّزها في الوسط/النهاية */
         (function buildTimelineWarp() {
           if (timelineSpanMs <= 0) return;
-          var WARP_EXP = 1.6;
+          var WARP_EXP = 2.0;
           _tlWarpToVisual = function (r) {
             if (r <= 0) return 0; if (r >= 1) return 1;
             return Math.pow(r, WARP_EXP);
@@ -5298,8 +5385,32 @@
         };
         updateGrowthMapMarketingMilestone();
 
+        const tatmin1MilestoneEl = document.getElementById("growthMapTimelineTatmin1");
+        updateGrowthMapTatmin1Milestone = function () {
+          if (!tatmin1MilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { tatmin1MilestoneEl.hidden = true; return; }
+          const tatmin1DayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 4));
+          if (tatmin1DayEnd < minCutoffMs || tatmin1DayEnd > maxCutoffMs) { tatmin1MilestoneEl.hidden = true; return; }
+          const r = warpR((tatmin1DayEnd - minCutoffMs) / timelineSpanMs);
+          tatmin1MilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          tatmin1MilestoneEl.hidden = false;
+        };
+        updateGrowthMapTatmin1Milestone();
+
+        const tatmin2MilestoneEl = document.getElementById("growthMapTimelineTatmin2");
+        updateGrowthMapTatmin2Milestone = function () {
+          if (!tatmin2MilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { tatmin2MilestoneEl.hidden = true; return; }
+          const tatmin2DayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 7));
+          if (tatmin2DayEnd < minCutoffMs || tatmin2DayEnd > maxCutoffMs) { tatmin2MilestoneEl.hidden = true; return; }
+          const r = warpR((tatmin2DayEnd - minCutoffMs) / timelineSpanMs);
+          tatmin2MilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          tatmin2MilestoneEl.hidden = false;
+        };
+        updateGrowthMapTatmin2Milestone();
+
         /* إضافة كلاس الـ milestones (بديل :has للتوافق مع كل المتصفحات) */
-        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden) {
+        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden || !tatmin1MilestoneEl.hidden || !tatmin2MilestoneEl.hidden) {
           timelineEl.classList.add("growth-map-timeline--has-milestones");
         }
 
@@ -5347,6 +5458,14 @@
         if (marketingDayEnd >= minCutoffMs && marketingDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((marketingDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
+        var tatmin1DayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 4));
+        if (tatmin1DayEnd >= minCutoffMs && tatmin1DayEnd <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(warpR((tatmin1DayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
+        var tatmin2DayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 7));
+        if (tatmin2DayEnd >= minCutoffMs && tatmin2DayEnd <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(warpR((tatmin2DayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
         var androidDayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 1));
         if (androidDayEnd >= minCutoffMs && androidDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((androidDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
@@ -5370,6 +5489,8 @@
             requestAnimationFrame(updateGrowthMapExceptionalMilestone);
             requestAnimationFrame(updateGrowthMapSocialMilestone);
             requestAnimationFrame(updateGrowthMapMarketingMilestone);
+            requestAnimationFrame(updateGrowthMapTatmin1Milestone);
+            requestAnimationFrame(updateGrowthMapTatmin2Milestone);
             requestAnimationFrame(updateGrowthMapAndroidMilestone);
           },
           { passive: true }
@@ -5540,6 +5661,8 @@
           updateGrowthMapExceptionalMilestone();
           updateGrowthMapSocialMilestone();
           updateGrowthMapMarketingMilestone();
+          updateGrowthMapTatmin1Milestone();
+          updateGrowthMapTatmin2Milestone();
           updateGrowthMapAndroidMilestone();
         }
       };
