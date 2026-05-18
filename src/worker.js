@@ -4,6 +4,24 @@
  * Static assets are served by the [assets] binding automatically.
  */
 
+// Android App Links — Digital Asset Links statement for parkinzi.com.
+// Cloudflare's static-assets binding skips files under a dot-folder, so we
+// serve this directly from the Worker to guarantee Google's verifier can
+// reach https://parkinzi.com/.well-known/assetlinks.json with the right
+// Content-Type and no redirects.
+const ASSETLINKS_JSON = JSON.stringify([
+  {
+    relation: ["delegate_permission/common.handle_all_urls"],
+    target: {
+      namespace: "android_app",
+      package_name: "com.parkinzi.android",
+      sha256_cert_fingerprints: [
+        "D1:86:1C:2F:71:23:DC:43:2A:14:D6:55:4E:15:12:6B:8A:D1:2A:CA:F7:2E:F5:ED:84:94:6C:65:C2:5B:03:EA",
+      ],
+    },
+  },
+]);
+
 const ALLOWED_TABLES = ["profiles", "facilities", "parking_spots", "user_cars"];
 const ALLOWED_COLUMNS = [
   "*", "id", "latitude", "longitude", "name", "facility_id",
@@ -130,6 +148,19 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    // Android App Links — must serve from the Worker because the assets
+    // binding strips dotfile folders. Google's verifier expects
+    // Content-Type: application/json and no redirects.
+    if (path === "/.well-known/assetlinks.json") {
+      return new Response(ASSETLINKS_JSON, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=300",
+        },
+      });
+    }
 
     // Only handle /api/* routes — everything else is static assets
     if (!path.startsWith("/api/")) return env.ASSETS.fetch(request);

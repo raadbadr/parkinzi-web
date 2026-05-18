@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.parkinzi.android",
+      "sha256_cert_fingerprints": [
+        "D1:86:1C:2F:71:23:DC:43:2A:14:D6:55:4E:15:12:6B:8A:D1:2A:CA:F7:2E:F5:ED:84:94:6C:65:C2:5B:03:EA"
+      ]
+    }
+  }
+]

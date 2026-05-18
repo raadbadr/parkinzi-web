@@ -24,3 +24,14 @@
 /delete-account.html
   X-Frame-Options: SAMEORIGIN
   Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://www.google-analytics.com;
+
+# Android App Links — Digital Asset Links verification.
+# Google Play Console requires this file to be served at:
+#   https://parkinzi.com/.well-known/assetlinks.json
+# with Content-Type: application/json and no redirects.
+/.well-known/assetlinks.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'none'
