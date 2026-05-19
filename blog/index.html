@@ -215,10 +215,6 @@
 </head>
 <body data-theme="dark">
 
-  <header style="position:absolute;top:1rem;inset-inline-end:1rem;display:flex;gap:0.5rem;z-index:10;">
-    <a href="/" class="back-btn" style="padding:0.5rem 1.1rem;font-size:0.9rem;background:transparent;border:1px solid var(--border-soft);color:var(--text-primary);">الرئيسية</a>
-  </header>
-
   <section class="blog-hero">
     <h1>مدونة PARKINZI</h1>
     <p>مقالات يومية عن المواقف الذكية وتأجير المواقف وشحن السيارات الكهربائية في المدن السعودية.</p>
@@ -266,7 +262,7 @@
           grid.innerHTML = '<div class="blog-empty">لا توجد منشورات منشورة بعد. تحقق غداً.</div>';
           return;
         }
-        const dateFmt = new Intl.DateTimeFormat('ar-SA', { year: 'numeric', month: 'long', day: 'numeric', numberingSystem: 'latn' });
+        const dateFmt = new Intl.DateTimeFormat('ar', { year: 'numeric', month: 'long', day: 'numeric', calendar: 'gregory', numberingSystem: 'latn' });
         const html = visible.map(p => `
           <a href="/blog/${p.slug}.html" class="blog-card" aria-labelledby="title-${p.slug}">
             <span class="blog-card-date">${dateFmt.format(new Date(p.publishDate))}</span>

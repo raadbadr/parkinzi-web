@@ -200,7 +200,7 @@
         .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate))
         .slice(0, 3);
       if (!list.length) return;
-      const fmt = new Intl.DateTimeFormat("ar-SA", { year: "numeric", month: "long", day: "numeric", numberingSystem: "latn" });
+      const fmt = new Intl.DateTimeFormat("ar", { year: "numeric", month: "long", day: "numeric", calendar: "gregory", numberingSystem: "latn" });
       const cardCss = "display:block;padding:1rem 1.25rem;background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;text-decoration:none;transition:transform 0.2s ease;";
       const html = '<h2 style="font-size:1.4rem;margin-bottom:1rem;color:var(--text-primary);">اقرأ أيضاً</h2>'
         + '<div style="display:grid;gap:1rem;">'
