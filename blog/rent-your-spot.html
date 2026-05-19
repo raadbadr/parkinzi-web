@@ -38,6 +38,7 @@
   <meta name="twitter:description" content="كيف تحوّل موقفك الفارغ إلى مصدر دخل شهري عبر PARKINZI. الخطوات، التسعير، والشروط.">
   <meta name="twitter:image" content="https://parkinzi.com/parkinzi-logo-full-dark.png">
   <title>أجّر موقف سيارتك واكسب دخلاً إضافياً مع PARKINZI | مدونة PARKINZI</title>
+  <link rel="alternate" type="application/rss+xml" title="مدونة PARKINZI — RSS" href="https://parkinzi.com/blog/feed.xml">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,6 +179,7 @@
         <p>حوّل المساحة الفارغة إلى دخل شهري. لا تكلفة تسجيل، لا اشتراك شهري.</p>
         <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="cta-btn" target="_blank" rel="noopener">سجّل كمالك موقف</a>
       </div>
+      <section id="relatedPosts" aria-label="مقالات ذات صلة" style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border-soft);"></section>
       <a href="/blog/" class="back-link">← العودة لكل المنشورات</a>
     </div>
   </article>
@@ -198,5 +200,33 @@
       <span> <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" style="height:1.3em;width:auto;display:inline-block;vertical-align:-0.35em;"> © 2026</span>
     </p>
   </footer>
+<!-- relatedPostsLoader -->
+<script>
+  (async function(){
+    const here = location.pathname.split("/").pop();
+    try {
+      const r = await fetch("/blog/posts.json", { cache: "no-store" });
+      if (!r.ok) return;
+      const posts = await r.json();
+      const now = new Date();
+      const list = posts
+        .filter(p => new Date(p.publishDate) <= now && p.slug + ".html" !== here)
+        .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate))
+        .slice(0, 3);
+      if (!list.length) return;
+      const fmt = new Intl.DateTimeFormat("ar-SA", { year: "numeric", month: "long", day: "numeric", numberingSystem: "latn" });
+      const cardCss = "display:block;padding:1rem 1.25rem;background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;text-decoration:none;transition:transform 0.2s ease;";
+      const html = '<h2 style="font-size:1.4rem;margin-bottom:1rem;color:var(--text-primary);">اقرأ أيضاً</h2>'
+        + '<div style="display:grid;gap:1rem;">'
+        + list.map(p => '<a href="/blog/' + p.slug + '.html" style="' + cardCss + '">'
+            + '<span style="font-size:0.8rem;color:var(--text-muted);">' + fmt.format(new Date(p.publishDate)) + '</span><br>'
+            + '<span style="color:var(--text-primary);font-weight:600;font-size:1.05rem;">' + p.title + '</span>'
+          + '</a>').join("")
+        + '</div>';
+      const target = document.getElementById("relatedPosts");
+      if (target) target.innerHTML = html;
+    } catch (e) {}
+  })();
+</script>
 </body>
 </html>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>مدونة PARKINZI</title>
+    <link>https://parkinzi.com/blog/</link>
+    <atom:link href="https://parkinzi.com/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <description>مقالات يومية عن المواقف الذكية وتأجير المواقف وشحن السيارات الكهربائية في المدن السعودية.</description>
+    <language>ar-SA</language>
+    <copyright>© 2026 PARKINZI</copyright>
+    <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
+    <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
+    <lastBuildDate>Sat, 16 May 2026 10:00:00 +0300</lastBuildDate>
+    <generator>PARKINZI</generator>
+    <image>
+      <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
+      <title>مدونة PARKINZI</title>
+      <link>https://parkinzi.com/blog/</link>
+    </image>
+
+    <item>
+      <title>مستقبل المواقف في رؤية 2030 — كيف يدعم PARKINZI التحول</title>
+      <link>https://parkinzi.com/blog/future-of-parking.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/future-of-parking.html</guid>
+      <pubDate>Sat, 16 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>رؤية 2030</category>
+      <category>مستقبل</category>
+      <description>كيف ينسجم PARKINZI مع رؤية المملكة 2030 وما خططنا لدعم المدن الذكية.</description>
+    </item>
+
+    <item>
+      <title>أين تركن سيارتك في كورنيش جدة؟ دليل المواقف الكامل</title>
+      <link>https://parkinzi.com/blog/parking-jeddah-corniche.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/parking-jeddah-corniche.html</guid>
+      <pubDate>Fri, 15 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>جدة</category>
+      <category>دليل</category>
+      <description>دليل شامل للمواقف القريبة من كورنيش جدة، الأسعار، أوقات الذروة، وبدائل الموقف.</description>
+    </item>
+
+    <item>
+      <title>عشر نصائح لإيجاد موقف سيارة في الرياض دون عناء</title>
+      <link>https://parkinzi.com/blog/parking-tips-riyadh.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/parking-tips-riyadh.html</guid>
+      <pubDate>Thu, 14 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>الرياض</category>
+      <category>نصائح</category>
+      <description>نصائح عملية من فريق PARKINZI لإيجاد موقف في الرياض خلال ساعات الذروة، شمالاً وجنوباً.</description>
+    </item>
+
+    <item>
+      <title>شحن السيارات الكهربائية في المملكة — شبكة PARKINZI تنمو</title>
+      <link>https://parkinzi.com/blog/ev-charging-network.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/ev-charging-network.html</guid>
+      <pubDate>Wed, 13 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>شحن كهربائي</category>
+      <category>EV</category>
+      <description>دليلك لشحن السيارة الكهربائية عبر شبكة PARKINZI. أنواع الشواحن، الأسعار، وأماكن الانتشار.</description>
+    </item>
+
+    <item>
+      <title>أجّر موقف سيارتك واكسب دخلاً إضافياً مع PARKINZI</title>
+      <link>https://parkinzi.com/blog/rent-your-spot.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/rent-your-spot.html</guid>
+      <pubDate>Tue, 12 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>تأجير</category>
+      <category>دخل إضافي</category>
+      <description>كيف تحوّل موقفك الفارغ إلى مصدر دخل شهري عبر PARKINZI. الخطوات، التسعير، والشروط.</description>
+    </item>
+
+    <item>
+      <title>ما هي المواقف الذكية ولماذا تحتاجها مدن السعودية الآن؟</title>
+      <link>https://parkinzi.com/blog/smart-parking-saudi.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/smart-parking-saudi.html</guid>
+      <pubDate>Mon, 11 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>مواقف ذكية</category>
+      <category>تقنية</category>
+      <description>شرح مبسط للمواقف الذكية والتقنية وراءها والفوائد على المدى الطويل لمدن المملكة.</description>
+    </item>
+
+    <item>
+      <title>PARKINZI الآن في App Store — تطبيق سعودي يعيد تعريف المواقف</title>
+      <link>https://parkinzi.com/blog/parkinzi-launch.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/parkinzi-launch.html</guid>
+      <pubDate>Sun, 10 May 2026 10:00:00 +0300</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>إطلاق</category>
+      <category>PARKINZI</category>
+      <description>إطلاق رسمي لتطبيق PARKINZI. اعرف الميزات الأساسية وكيف يحل أزمة المواقف في المدن السعودية.</description>
+    </item>
+
+  </channel>
+</rss>
