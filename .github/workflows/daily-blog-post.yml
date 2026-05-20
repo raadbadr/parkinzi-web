@@ -1,0 +1,63 @@
+name: Daily Blog Post
+
+# Generates and commits one blog post per day via Claude (with web search),
+# then regenerates sitemap.xml + blog/feed.xml. Cloudflare Pages picks up
+# the push and deploys automatically.
+
+on:
+  # Runs at 07:00 UTC = 10:00 Asia/Riyadh.
+  schedule:
+    - cron: '0 7 * * *'
+  # Allow manual trigger from the Actions tab (useful for testing).
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-blog-post
+  cancel-in-progress: false
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: scripts/package.json
+
+      - name: Install dependencies
+        working-directory: scripts
+        run: npm install --no-audit --no-fund
+
+      - name: Generate daily post
+        working-directory: scripts
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-4-5' }}
+        run: node generate-daily-post.js
+
+      - name: Regenerate sitemap and feed
+        working-directory: scripts
+        run: node regen-sitemap-feed.js
+
+      - name: Commit and push
+        run: |
+          git config user.name  "PARKINZI Blog Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Blog: auto-publish daily post ($(date -u +%Y-%m-%d))"
+          git push

@@ -1,0 +1,14 @@
+{
+  "name": "parkinzi-blog-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily blog generator + sitemap/feed regen for parkinzi.com",
+  "type": "commonjs",
+  "scripts": {
+    "generate-daily": "node generate-daily-post.js",
+    "regen": "node regen-sitemap-feed.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0"
+  }
+}
