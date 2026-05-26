@@ -20,13 +20,25 @@ You need to add the Anthropic API key as a repository secret:
 2. Add a new repository secret:
    - Name: `ANTHROPIC_API_KEY`
    - Value: your key from <https://console.anthropic.com/settings/keys>
-3. *(Optional)* Override the model via a repo variable:
-   - Name: `ANTHROPIC_MODEL`
-   - Value: e.g. `claude-sonnet-4-5` or `claude-opus-4-5`
 
-## Cost
+## Optional repo *variables* (Settings → Variables tab)
 
-Roughly 5–7 USD per month at the default settings (Sonnet 4.5, 4 web searches per run, ~1k tokens of input + 3k of output per post). Watch your Anthropic dashboard for actuals.
+All have safe defaults — only set them if you want to override.
+
+| Variable | Default | Notes |
+| --- | --- | --- |
+| `ANTHROPIC_MODEL` | `claude-haiku-4-5` | Use `claude-sonnet-4-5` for higher quality (~5x cost). |
+| `WEB_SEARCH_USES` | `1` | Number of web searches per run. `0` disables web search entirely. |
+| `MAX_TOKENS` | `4000` | Output token cap. Lower for shorter posts. |
+
+## Cost (Haiku 4.5 defaults)
+
+- 1 web search × $0.01 = $0.01
+- ~10K input tokens × $1/M = $0.01
+- ~3K output tokens × $5/M = $0.015
+- **~$0.035 per run ≈ $1 per month (~4 SAR)**
+
+If you bump to Sonnet 4.5 with 4 searches it goes back up to ~$5/month.
 
 ## Running locally
 

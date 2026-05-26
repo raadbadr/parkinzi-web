@@ -79,16 +79,23 @@ function gregorianLabel(iso) {
 
 async function main() {
   if (!process.env.ANTHROPIC_API_KEY) {
-    throw new Error('ANTHROPIC_API_KEY is not set');
+    throw new Error('ANTHROPIC_API_KEY is not set. Add it in GitHub → Settings → Secrets → Actions.');
   }
-  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5';
+  // Default to Haiku 4.5 — ~5x cheaper than Sonnet for blog-quality output.
+  const model = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
+  // 1 search by default keeps cost low; bump via repo var if you want richer
+  // fact-finding.
+  const searchUses = Number(process.env.WEB_SEARCH_USES || 1);
+  const maxTokens = Number(process.env.MAX_TOKENS || 4000);
   const client = new Anthropic();
 
   const topic = pickTopic();
   const todayIso = new Date().toISOString().slice(0, 10);
   const publishDate = `${todayIso}T10:00:00+03:00`;
-  console.log('[generate-daily-post] topic =', topic);
-  console.log('[generate-daily-post] model =', model);
+  console.log('[generate-daily-post] topic       =', topic);
+  console.log('[generate-daily-post] model       =', model);
+  console.log('[generate-daily-post] searchUses  =', searchUses);
+  console.log('[generate-daily-post] maxTokens   =', maxTokens);
 
   const userPrompt = `أنت كاتب مدوّنة عربي محترف لموقع PARKINZI — منصة سعودية للمواقف الذكية.
 
@@ -97,7 +104,7 @@ async function main() {
 
 تعليمات:
 1) استخدم web_search للبحث عن آخر التطورات والأرقام والمنتجات والشركات في 2026.
-2) المقال 600–900 كلمة، عناوين فرعية H2 و H3، فقرات قصيرة، قوائم نقطية حيث تناسب.
+2) المقال 500–800 كلمة، عناوين فرعية H2 و H3، فقرات قصيرة، قوائم نقطية حيث تناسب.
 3) أسلوب احترافي، معلوماتي، بدون مبالغة. أرقام حقيقية لما أمكن.
 4) السوق المستهدف: السعودية والخليج. اربط بالسياق المحلي حيث يصح.
 5) لا تضمّن خرافات أو معلومات غير موثّقة.
@@ -122,25 +129,56 @@ async function main() {
 - اقتباسات: <blockquote>...</blockquote>.
 - لا تضمّن CTA في النهاية — يضاف تلقائياً.`;
 
-  const response = await client.messages.create({
-    model,
-    max_tokens: 6000,
-    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 4 }],
-    messages: [{ role: 'user', content: userPrompt }],
-  });
+  let response;
+  try {
+    response = await client.messages.create({
+      model,
+      max_tokens: maxTokens,
+      tools: searchUses > 0
+        ? [{ type: 'web_search_20250305', name: 'web_search', max_uses: searchUses }]
+        : [],
+      messages: [{ role: 'user', content: userPrompt }],
+    });
+  } catch (err) {
+    // Surface Anthropic-API specific errors clearly so GitHub Actions logs
+    // show the real cause (auth, rate limit, billing, unknown model, etc.).
+    const status = err && err.status;
+    const apiType = err && err.error && err.error.error && err.error.error.type;
+    const apiMsg  = err && err.error && err.error.error && err.error.error.message;
+    console.error('[generate-daily-post] Anthropic call failed:');
+    console.error('  status:', status);
+    console.error('  type  :', apiType);
+    console.error('  msg   :', apiMsg);
+    console.error('  raw   :', err && err.message);
+    throw err;
+  }
+
+  console.log('[generate-daily-post] usage:', JSON.stringify(response.usage));
+  console.log('[generate-daily-post] stop_reason:', response.stop_reason);
 
   // Find the final assistant text block (web_search returns interleaved blocks).
   const textBlocks = response.content.filter(b => b.type === 'text').map(b => b.text).join('\n');
-  const jsonMatch = textBlocks.match(/\{[\s\S]*\}/);
+  if (!textBlocks.trim()) {
+    throw new Error('Claude returned no text blocks. stop_reason=' + response.stop_reason
+      + '\nFull response: ' + JSON.stringify(response.content).slice(0, 600));
+  }
+
+  // Strip code fences if Claude wrapped the JSON in ```json … ```.
+  const cleaned = textBlocks
+    .replace(/```(?:json)?\s*/gi, '')
+    .replace(/```/g, '');
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
-    throw new Error('No JSON object found in Claude response.\n' + textBlocks.slice(0, 500));
+    throw new Error('No JSON object found in Claude response.\nFirst 600 chars:\n'
+      + textBlocks.slice(0, 600));
   }
 
   let post;
   try {
     post = JSON.parse(jsonMatch[0]);
   } catch (e) {
-    throw new Error('Failed to parse JSON from Claude:\n' + e.message + '\nRaw:\n' + jsonMatch[0].slice(0, 500));
+    throw new Error('Failed to parse JSON from Claude:\n' + e.message
+      + '\nRaw match (first 600 chars):\n' + jsonMatch[0].slice(0, 600));
   }
 
   // Sanity-check required fields
