@@ -89,4 +89,15 @@ jobs:
             exit 0
           fi
           git commit -m "Blog: auto-publish daily post ($(date -u +%Y-%m-%d))"
-          git push
+          # If main moved while we were generating, rebase and try again.
+          # Up to 3 attempts to handle concurrent pushes gracefully.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected on attempt $attempt — rebasing onto origin/main and retrying..."
+            git pull --rebase origin main
+          done
+          echo "::error::Push failed after 3 rebase attempts; main is moving too fast or there's a real conflict."
+          exit 1
