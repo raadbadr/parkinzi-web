@@ -72,7 +72,8 @@ jobs:
           # writes strong evergreen posts from its own training. Set this to
           # 1+ via repo vars when you specifically want fresh news.
           WEB_SEARCH_USES: ${{ vars.WEB_SEARCH_USES || '0' }}
-          MAX_TOKENS: ${{ vars.MAX_TOKENS || '3500' }}
+          # Bumped from 3500 to fit TL;DR + key takeaways + FAQ + longer body.
+          MAX_TOKENS: ${{ vars.MAX_TOKENS || '5000' }}
         run: node generate-daily-post.js
 
       - name: Regenerate sitemap and feed
@@ -81,6 +82,7 @@ jobs:
 
       - name: Commit and push
         run: |
+          set -euo pipefail
           git config user.name  "PARKINZI Blog Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
@@ -89,15 +91,30 @@ jobs:
             exit 0
           fi
           git commit -m "Blog: auto-publish daily post ($(date -u +%Y-%m-%d))"
-          # If main moved while we were generating, rebase and try again.
-          # Up to 3 attempts to handle concurrent pushes gracefully.
-          for attempt in 1 2 3; do
+
+          # Up to 6 attempts with exponential backoff + jitter. This handles
+          # the case where a human pushes to main during our run — fetch the
+          # latest, rebase our commit onto it, and try again.
+          MAX_ATTEMPTS=6
+          for attempt in $(seq 1 $MAX_ATTEMPTS); do
             if git push; then
               echo "Pushed on attempt $attempt."
               exit 0
             fi
-            echo "Push rejected on attempt $attempt — rebasing onto origin/main and retrying..."
-            git pull --rebase origin main
+            if [ "$attempt" -eq "$MAX_ATTEMPTS" ]; then
+              break
+            fi
+            # Sleep between 2 and 5 seconds, growing with each attempt.
+            sleep_secs=$(( attempt * 2 + RANDOM % 3 ))
+            echo "Push rejected on attempt $attempt. Fetching origin and rebasing in ${sleep_secs}s..."
+            sleep "$sleep_secs"
+            git fetch origin main
+            # Rebase our single commit onto whatever is at origin/main now.
+            git rebase origin/main || {
+              echo "::error::git rebase failed — manual intervention needed."
+              git rebase --abort || true
+              exit 1
+            }
           done
-          echo "::error::Push failed after 3 rebase attempts; main is moving too fast or there's a real conflict."
+          echo "::error::Push failed after $MAX_ATTEMPTS attempts."
           exit 1
