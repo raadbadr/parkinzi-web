@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGDPERQEF4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TGDPERQEF4');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#1a2933">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="PARKINZI MCP Server — اربط Claude أو ChatGPT بقاعدة بيانات PARKINZI الحية للمواقف الذكية والشواحن الكهربائية في السعودية.">
+  <link rel="canonical" href="https://parkinzi.com/mcp-server.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://parkinzi.com/mcp-server.html">
+  <meta property="og:title" content="PARKINZI MCP Server — للذكاء الاصطناعي">
+  <meta property="og:description" content="اربط Claude أو ChatGPT بقاعدة بيانات PARKINZI الحية للمواقف الذكية والشواحن الكهربائية في السعودية.">
+  <meta property="og:image" content="https://parkinzi.com/parkinzi-logo-full-dark.png">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:site_name" content="PARKINZI">
+  <title>PARKINZI MCP Server — اربط ChatGPT و Claude بقاعدة بياناتنا</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/header.css">
+  <link rel="stylesheet" href="/footer.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      line-height: 1.8;
+      background: var(--bg-page);
+      color: var(--text-primary);
+    }
+    :root, [data-theme="light"] {
+      --primary: rgb(0, 104, 184);
+      --primary-soft: rgba(0, 104, 184, 0.1);
+      --text-primary: rgb(26, 26, 38);
+      --text-secondary: rgb(75, 85, 99);
+      --text-muted: rgb(120, 130, 145);
+      --bg-page: rgb(245, 247, 250);
+      --bg-card: rgb(255, 255, 255);
+      --border-soft: rgba(0, 0, 0, 0.08);
+      --code-bg: rgb(245, 247, 250);
+      --code-border: rgba(0, 0, 0, 0.08);
+      --accent: rgb(46, 125, 50);
+    }
+    [data-theme="dark"] {
+      --primary: rgb(86, 173, 255);
+      --primary-soft: rgba(86, 173, 255, 0.12);
+      --text-primary: rgb(240, 244, 250);
+      --text-secondary: rgb(195, 205, 220);
+      --text-muted: rgb(140, 155, 175);
+      --bg-page: rgb(15, 23, 33);
+      --bg-card: rgba(30, 42, 56, 0.6);
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --code-bg: rgba(0, 0, 0, 0.35);
+      --code-border: rgba(255, 255, 255, 0.1);
+      --accent: rgb(105, 240, 174);
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 4rem 1.5rem 4rem; }
+    .hero-logo { display: block; margin: 0 auto 1.5rem; height: clamp(3rem, 7vw, 4.5rem); width: auto; max-width: min(80vw, 380px); }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); margin: 0 0 0.6rem; font-weight: 700; letter-spacing: -0.01em; text-align: center; }
+    .subtitle { text-align: center; color: var(--text-secondary); font-size: 1.1rem; margin: 0 0 3rem; max-width: 640px; margin-inline: auto; }
+    h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; color: var(--text-primary); }
+    h3 { font-size: 1.2rem; margin: 1.6rem 0 0.6rem; color: var(--text-primary); }
+    p { color: var(--text-secondary); margin: 0 0 1rem; }
+    code, pre {
+      font-family: 'SF Mono', Menlo, Consolas, monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+    }
+    code { padding: 0.15em 0.4em; font-size: 0.9em; direction: ltr; display: inline-block; }
+    pre { padding: 1rem 1.2rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.55; direction: ltr; text-align: left; }
+    .endpoint-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin: 1rem 0 2rem;
+    }
+    .endpoint-card .endpoint-url {
+      font-family: 'SF Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--primary);
+      direction: ltr;
+      display: block;
+      margin-top: 0.4rem;
+      word-break: break-all;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.8rem;
+      margin: 1rem 0 2rem;
+    }
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+    }
+    .tool-card code { background: transparent; border: 0; padding: 0; color: var(--primary); font-weight: 600; font-size: 0.95rem; }
+    .tool-card p { font-size: 0.9rem; margin: 0.4rem 0 0; }
+    ol li, ul li { margin-bottom: 0.5rem; color: var(--text-secondary); }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--primary-soft);
+      color: var(--primary);
+      margin-inline-start: 0.5rem;
+    }
+    .badge-live { background: rgba(46, 125, 50, 0.12); color: var(--accent); }
+    .copy-btn {
+      background: var(--primary);
+      color: #fff;
+      border: 0;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      float: left;
+      margin-inline-start: 1rem;
+    }
+    .back-link { display: inline-block; margin-top: 2.5rem; color: var(--primary); font-weight: 600; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body data-theme="dark">
+  <main class="wrap">
+    <a href="/" aria-label="PARKINZI — العودة للرئيسية">
+      <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" class="hero-logo">
+    </a>
+    <h1>MCP Server <span class="badge badge-live">● LIVE</span></h1>
+    <p class="subtitle">اربط Claude أو ChatGPT أو أي مساعد ذكاء اصطناعي يدعم MCP بقاعدة بيانات PARKINZI الحية. ابحث عن المواقف، الشواحن الكهربائية، وإحصائيات المنصة مباشرة من المحادثة.</p>
+
+    <h2>الاتصال بالـ Server</h2>
+    <div class="endpoint-card">
+      <div><strong>Endpoint:</strong> <span class="endpoint-url">https://parkinzi.com/mcp</span></div>
+      <p style="margin-top: 0.8rem;">Transport: <code>streamable-http</code> · Auth: <code>none</code> · Read-only.</p>
+    </div>
+
+    <h2>كيف تربطه في Claude</h2>
+    <ol>
+      <li>افتح <a href="https://claude.ai/settings/connectors" target="_blank" rel="noopener">claude.ai/settings/connectors</a> أو في تطبيق Claude Desktop: Settings → Connectors.</li>
+      <li>اضغط <strong>Add custom connector</strong>.</li>
+      <li>الصق الرابط: <code>https://parkinzi.com/mcp</code></li>
+      <li>اضغط <strong>Add</strong>، ثم فعّل الـ connector.</li>
+      <li>في أي محادثة، اطلب من Claude: "ابحث عن مواقف PARKINZI قرب موقعي".</li>
+    </ol>
+
+    <h2>كيف تربطه في ChatGPT</h2>
+    <ol>
+      <li>افتح ChatGPT (نسخة Pro أو Enterprise).</li>
+      <li>Settings → Connectors → Custom Connector.</li>
+      <li>الصق نفس الرابط: <code>https://parkinzi.com/mcp</code></li>
+      <li>احفظ، ثم في المحادثة فعّل الـ tool وابدأ الاستخدام.</li>
+    </ol>
+
+    <h2>الأدوات المتاحة</h2>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <code>search_parking_spots</code>
+        <p>بحث المواقف بالموقع، المسافة، أو النص الحر.</p>
+      </div>
+      <div class="tool-card">
+        <code>find_ev_chargers</code>
+        <p>شواحن السيارات الكهربائية قرب موقع.</p>
+      </div>
+      <div class="tool-card">
+        <code>get_spot_details</code>
+        <p>تفاصيل كاملة لموقف معين.</p>
+      </div>
+      <div class="tool-card">
+        <code>get_platform_stats</code>
+        <p>إحصائيات المنصة الحية.</p>
+      </div>
+      <div class="tool-card">
+        <code>list_supported_cities</code>
+        <p>المدن والمناطق المغطاة.</p>
+      </div>
+      <div class="tool-card">
+        <code>search_blog_posts</code>
+        <p>بحث في مقالات المدونة.</p>
+      </div>
+      <div class="tool-card">
+        <code>get_app_info</code>
+        <p>معلومات تحميل التطبيق وأرقام الدعم.</p>
+      </div>
+    </div>
+
+    <h2>أمثلة طلبات</h2>
+    <p>بعد ما تربط الـ MCP في Claude، جرّب:</p>
+    <ul>
+      <li>"ابحث لي عن موقف فيه شاحن كهربائي قرب الرياض بارك."</li>
+      <li>"كم موقف PARKINZI متوفر حالياً في جدة؟"</li>
+      <li>"لخّص لي آخر 3 مقالات في مدونة PARKINZI عن السيارات الكهربائية."</li>
+      <li>"اعطني إحصائيات PARKINZI الحالية: عدد المواقف، الشواحن، المدن."</li>
+    </ul>
+
+    <h2>للمطوّرين</h2>
+    <p>الـ server يستخدم JSON-RPC 2.0. مثال طلب يدوي:</p>
+    <pre><code>curl -X POST https://parkinzi.com/mcp \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</code></pre>
+
+    <p>مثال تنفيذ أداة:</p>
+    <pre><code>curl -X POST https://parkinzi.com/mcp \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": {
+      "name": "find_ev_chargers",
+      "arguments": {
+        "latitude": 24.7136,
+        "longitude": 46.6753,
+        "radius_km": 5
+      }
+    }
+  }'</code></pre>
+
+    <p>الـ discovery manifest متاح على:</p>
+    <pre><code>GET https://parkinzi.com/.well-known/mcp.json</code></pre>
+
+    <h2>الحدود والاستخدام</h2>
+    <ul>
+      <li>الوصول مجاني وبدون مصادقة (read-only).</li>
+      <li>القراءة فقط — لا يدعم الحجز أو الدفع حالياً (مرحلة لاحقة).</li>
+      <li>Rate limiting على مستوى Cloudflare WAF لتفادي الإساءة.</li>
+      <li>جميع البيانات حية من قاعدة بيانات PARKINZI الإنتاجية.</li>
+    </ul>
+
+    <h2>الخصوصية</h2>
+    <p>الـ MCP server لا يكشف بيانات المستخدمين. يكشف فقط بيانات المواقف العامة (نفس البيانات التي تظهر على الخريطة في الصفحة الرئيسية). راجع <a href="/privacy.html">سياسة الخصوصية</a> للتفاصيل.</p>
+
+    <a href="/" class="back-link">← العودة للرئيسية</a>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-links">
+      <a href="/about.html">من نحن</a>
+      <a href="/terms.html">شروط الاستخدام</a>
+      <a href="/pricing.html">سياسة الأسعار</a>
+      <a href="/privacy.html">سياسة الخصوصية</a>
+      <a href="/blog/">المدونة</a>
+      <a href="/delete-account">حذف الحساب</a>
+      <a href="/refund.html">سياسة الاسترجاع</a>
+      <a href="/#contact">تواصل معنا</a>
+    </p>
+    <p class="footer-copyright">
+      <span>جميع الحقوق محفوظة</span>
+      <span> <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" style="height:1.3em;width:auto;display:inline-block;vertical-align:-0.35em;"> © 2026</span>
+    </p>
+  </footer>
+  <script src="/brand-logo.js?v=3" defer></script>
+</body>
+</html>

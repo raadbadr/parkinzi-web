@@ -4,6 +4,8 @@
  * Static assets are served by the [assets] binding automatically.
  */
 
+import { handleMcpRequest, mcpDiscoveryDocument } from "./mcp.js";
+
 // Android App Links — Digital Asset Links statement for parkinzi.com.
 // Cloudflare's static-assets binding skips files under a dot-folder, so we
 // serve this directly from the Worker to guarantee Google's verifier can
@@ -154,6 +156,23 @@ export default {
     // Content-Type: application/json and no redirects.
     if (path === "/.well-known/assetlinks.json") {
       return new Response(ASSETLINKS_JSON, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=300",
+        },
+      });
+    }
+
+    // MCP Server — read-only access for AI assistants (Claude, ChatGPT, etc.)
+    if (path === "/mcp") {
+      return handleMcpRequest(request, env);
+    }
+
+    // MCP discovery manifest. Served from the Worker so it's never cached
+    // behind a stale assets build.
+    if (path === "/.well-known/mcp.json") {
+      return new Response(JSON.stringify(mcpDiscoveryDocument(), null, 2), {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
