@@ -92,6 +92,26 @@
   vertical-align: -0.35em;
 }
 
+/* Inline brand mark used by brand-logo.js to swap the word "PARKINZI"
+   inside body text for the small parkinzi-logo icon. Tuned to sit on
+   the baseline without bumping line-height. */
+.brand-logo-mark {
+  height: 1em;
+  width: auto;
+  display: inline-block;
+  vertical-align: -0.18em;
+  margin: 0 0.15em;
+  max-width: none;
+}
+/* When the mark sits inside a heading, scale it slightly down so it
+   doesn't dominate the H1/H2. */
+h1 .brand-logo-mark,
+h2 .brand-logo-mark,
+h3 .brand-logo-mark {
+  height: 0.85em;
+  vertical-align: -0.12em;
+}
+
 .brand-logo-text {
   font-family: 'Monoton', cursive;
   font-weight: 400;
