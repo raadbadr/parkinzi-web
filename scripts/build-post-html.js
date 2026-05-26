@@ -5,6 +5,60 @@ function buildPostHtml(post) {
   const tagsHtml = post.tags.map(t => `<span class="post-tag">${escapeHtml(t)}</span>`).join('');
   const tagsMeta = post.tags.map(t => `<meta property="article:tag" content="${escapeAttr(t)}">`).join('\n  ');
 
+  // Optional AI/SEO-helpful blocks. Render only if Claude provided them.
+  const tldrBlock = post.tldr
+    ? `<aside class="post-tldr" aria-label="ملخص سريع">
+        <strong>الخلاصة:</strong> ${escapeHtml(post.tldr)}
+      </aside>`
+    : '';
+
+  const keyTakeawaysBlock = (Array.isArray(post.keyTakeaways) && post.keyTakeaways.length)
+    ? `<section class="post-takeaways" aria-label="أهم النقاط">
+        <h2>أهم النقاط</h2>
+        <ul>${post.keyTakeaways.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+      </section>`
+    : '';
+
+  const faqBlock = (Array.isArray(post.faq) && post.faq.length)
+    ? `<section class="post-faq" aria-label="أسئلة شائعة">
+        <h2>أسئلة شائعة</h2>
+        ${post.faq.map(item => `
+        <details>
+          <summary>${escapeHtml(item.q)}</summary>
+          <p>${escapeHtml(item.a)}</p>
+        </details>`).join('')}
+      </section>`
+    : '';
+
+  const faqSchema = (Array.isArray(post.faq) && post.faq.length)
+    ? `<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": ${JSON.stringify(post.faq.map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a }
+    })))}
+  }
+  </script>`
+    : '';
+
+  // Speakable schema — surfaces TL;DR/title in voice assistants & AI read-alouds.
+  const speakableSchema = post.tldr
+    ? `<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".post-wrap h1", ".post-tldr"]
+    },
+    "url": "https://parkinzi.com/blog/${post.slug}.html"
+  }
+  </script>`
+    : '';
+
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="dark">
 <head>
@@ -77,6 +131,8 @@ function buildPostHtml(post) {
     ]
   }
   </script>
+  ${faqSchema}
+  ${speakableSchema}
   <style>
     *, *::before, *::after { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
     body { font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; margin: 0; min-height: 100vh; line-height: 1.8; background: var(--bg-page); color: var(--text-primary); }
@@ -109,6 +165,20 @@ function buildPostHtml(post) {
     .post-content a:hover { text-decoration: underline; }
     .post-footer-cta { margin-top: 3rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 16px; text-align: center; }
     .post-footer-cta h3 { margin-top: 0; color: var(--text-primary); }
+    .post-tldr { background: var(--bg-card); border: 1px solid var(--border-soft); border-inline-start: 4px solid var(--primary); border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0 2rem; color: var(--text-primary); font-size: 1.02rem; }
+    .post-tldr strong { color: var(--primary); margin-inline-end: 0.4rem; }
+    .post-takeaways { margin: 2.5rem 0; padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 14px; }
+    .post-takeaways h2 { margin-top: 0; font-size: 1.25rem; color: var(--text-primary); }
+    .post-takeaways ul { padding-inline-start: 1.2rem; margin: 0; }
+    .post-takeaways li { color: var(--text-primary); margin-bottom: 0.55rem; }
+    .post-faq { margin: 2.5rem 0; }
+    .post-faq h2 { font-size: 1.4rem; color: var(--text-primary); margin-bottom: 0.8rem; }
+    .post-faq details { border: 1px solid var(--border-soft); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 0.6rem; background: var(--bg-card); }
+    .post-faq summary { cursor: pointer; font-weight: 600; color: var(--text-primary); list-style: none; padding-inline-end: 1.6rem; position: relative; }
+    .post-faq summary::-webkit-details-marker { display: none; }
+    .post-faq summary::after { content: "+"; position: absolute; inset-inline-end: 0; top: 0; color: var(--primary); font-weight: 700; font-size: 1.2rem; }
+    .post-faq details[open] summary::after { content: "−"; }
+    .post-faq details p { margin: 0.7rem 0 0; color: var(--text-secondary); }
     .cta-btn { display: inline-block; padding: 0.8rem 1.8rem; background: var(--primary); color: #fff; border-radius: 12px; font-weight: 600; text-decoration: none; margin-top: 0.8rem; }
     .back-link { display: inline-block; margin-top: 2rem; color: var(--primary); font-weight: 600; text-decoration: none; }
     .back-link:hover { text-decoration: underline; }
@@ -129,7 +199,10 @@ function buildPostHtml(post) {
       <span>فريق PARKINZI</span>
     </div>
     <div class="post-tags">${tagsHtml}</div>
+    ${tldrBlock}
     <div class="post-content">${post.body}
+      ${keyTakeawaysBlock}
+      ${faqBlock}
       <div class="post-footer-cta">
         <h3>${escapeHtml(post.cta.heading)}</h3>
         <p>${escapeHtml(post.cta.body)}</p>
