@@ -49,9 +49,11 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           # Default to Haiku 4.5 — ~5x cheaper than Sonnet at blog quality.
           ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-haiku-4-5' }}
-          # 1 web search per run keeps cost low; bump via repo var if needed.
-          WEB_SEARCH_USES: ${{ vars.WEB_SEARCH_USES || '1' }}
-          MAX_TOKENS: ${{ vars.MAX_TOKENS || '4000' }}
+          # Web search OFF by default — it's >80% of the per-run cost. Haiku
+          # writes strong evergreen posts from its own training. Set this to
+          # 1+ via repo vars when you specifically want fresh news.
+          WEB_SEARCH_USES: ${{ vars.WEB_SEARCH_USES || '0' }}
+          MAX_TOKENS: ${{ vars.MAX_TOKENS || '3500' }}
         run: node generate-daily-post.js
 
       - name: Regenerate sitemap and feed

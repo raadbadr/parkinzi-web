@@ -28,17 +28,26 @@ All have safe defaults — only set them if you want to override.
 | Variable | Default | Notes |
 | --- | --- | --- |
 | `ANTHROPIC_MODEL` | `claude-haiku-4-5` | Use `claude-sonnet-4-5` for higher quality (~5x cost). |
-| `WEB_SEARCH_USES` | `1` | Number of web searches per run. `0` disables web search entirely. |
-| `MAX_TOKENS` | `4000` | Output token cap. Lower for shorter posts. |
+| `WEB_SEARCH_USES` | `0` | Web search is off by default. `1`+ enables fresh news at $0.01/search. |
+| `MAX_TOKENS` | `3500` | Output token cap. Lower for shorter posts. |
 
-## Cost (Haiku 4.5 defaults)
+## Cost (default settings)
 
-- 1 web search × $0.01 = $0.01
-- ~10K input tokens × $1/M = $0.01
+- ~2K input tokens × $1/M = $0.002
 - ~3K output tokens × $5/M = $0.015
-- **~$0.035 per run ≈ $1 per month (~4 SAR)**
+- **~$0.017 per run ≈ $0.50 per month (~2 SAR)**
 
-If you bump to Sonnet 4.5 with 4 searches it goes back up to ~$5/month.
+Add web_search (1 query) → ~$1/month. Sonnet 4.5 + 4 searches → ~$5/month.
+
+## Quality gates
+
+`generate-daily-post.js` refuses to write a post if any of these is true:
+- Claude omits a required field (slug / title / summary / body / tags)
+- Body has fewer than 800 chars of visible text
+- Body contains zero `<h2>` headings
+- Body contains a dollar/USD price, an external URL, or `<script>` / `<style>` / `<iframe>` (anti-hallucination + anti-XSS)
+
+A failure exits with code 1, GitHub emails you, and nothing is pushed.
 
 ## Running locally
 

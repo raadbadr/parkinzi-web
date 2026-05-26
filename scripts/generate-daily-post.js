@@ -83,10 +83,13 @@ async function main() {
   }
   // Default to Haiku 4.5 — ~5x cheaper than Sonnet for blog-quality output.
   const model = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
-  // 1 search by default keeps cost low; bump via repo var if you want richer
-  // fact-finding.
-  const searchUses = Number(process.env.WEB_SEARCH_USES || 1);
-  const maxTokens = Number(process.env.MAX_TOKENS || 4000);
+  // Web search is OFF by default — it's the single biggest cost driver
+  // ($10/1000 searches + 5-10x the input tokens). Haiku already knows the
+  // topics well enough to write strong evergreen posts. Set
+  // WEB_SEARCH_USES=1+ via repo var when you want fresh news on a specific
+  // day.
+  const searchUses = Number(process.env.WEB_SEARCH_USES || 0);
+  const maxTokens = Number(process.env.MAX_TOKENS || 3500);
   const client = new Anthropic();
 
   const topic = pickTopic();
@@ -97,19 +100,23 @@ async function main() {
   console.log('[generate-daily-post] searchUses  =', searchUses);
   console.log('[generate-daily-post] maxTokens   =', maxTokens);
 
+  const searchInstruction = searchUses > 0
+    ? '1) استخدم web_search للبحث عن آخر التطورات والأرقام في 2026.'
+    : '1) اكتب من معرفتك العامة عن الموضوع. لا تخترع أرقاماً محددة أو أسماء شركات لست متأكداً منها — اكتفِ بالمعلومات العامة الموثوقة.';
+
   const userPrompt = `أنت كاتب مدوّنة عربي محترف لموقع PARKINZI — منصة سعودية للمواقف الذكية.
 
 اكتب مقال مدوّنة بالعربية الفصحى (بدون لهجات) عن:
 "${topic}"
 
 تعليمات:
-1) استخدم web_search للبحث عن آخر التطورات والأرقام والمنتجات والشركات في 2026.
+${searchInstruction}
 2) المقال 500–800 كلمة، عناوين فرعية H2 و H3، فقرات قصيرة، قوائم نقطية حيث تناسب.
-3) أسلوب احترافي، معلوماتي، بدون مبالغة. أرقام حقيقية لما أمكن.
+3) أسلوب احترافي، معلوماتي، بدون مبالغة.
 4) السوق المستهدف: السعودية والخليج. اربط بالسياق المحلي حيث يصح.
-5) لا تضمّن خرافات أو معلومات غير موثّقة.
+5) لا تضمّن خرافات أو معلومات غير موثّقة. لا تضع أرقام محددة (مثل أسعار أو إحصائيات) إلا إذا كنت متأكداً منها 100%.
 
-اعد ردك كـ JSON واحد فقط، بدون أي نص قبله أو بعده، بهذه البنية:
+اعد ردك كـ JSON واحد فقط، بدون أي نص قبله أو بعده، وبدون code fences. هذه البنية:
 {
   "slug": "english-slug-using-dashes",
   "title": "العنوان بالعربية",
@@ -129,16 +136,23 @@ async function main() {
 - اقتباسات: <blockquote>...</blockquote>.
 - لا تضمّن CTA في النهاية — يضاف تلقائياً.`;
 
+  // Build request params; only attach tools when we actually want search.
+  const requestParams = {
+    model,
+    max_tokens: maxTokens,
+    messages: [{ role: 'user', content: userPrompt }],
+  };
+  if (searchUses > 0) {
+    requestParams.tools = [{
+      type: 'web_search_20250305',
+      name: 'web_search',
+      max_uses: searchUses,
+    }];
+  }
+
   let response;
   try {
-    response = await client.messages.create({
-      model,
-      max_tokens: maxTokens,
-      tools: searchUses > 0
-        ? [{ type: 'web_search_20250305', name: 'web_search', max_uses: searchUses }]
-        : [],
-      messages: [{ role: 'user', content: userPrompt }],
-    });
+    response = await client.messages.create(requestParams);
   } catch (err) {
     // Surface Anthropic-API specific errors clearly so GitHub Actions logs
     // show the real cause (auth, rate limit, billing, unknown model, etc.).
@@ -184,6 +198,28 @@ async function main() {
   // Sanity-check required fields
   for (const f of ['slug', 'title', 'summary', 'body', 'tags']) {
     if (!post[f]) throw new Error(`Claude output missing field: ${f}`);
+  }
+
+  // Quality gates — refuse to publish broken or trivially-short content.
+  // A failing run is loud (exit 1, Actions emails you) instead of silently
+  // pushing a 50-word stub article.
+  if (!Array.isArray(post.tags) || post.tags.length === 0) {
+    throw new Error('post.tags must be a non-empty array');
+  }
+  const bodyText = String(post.body || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (bodyText.length < 800) {
+    throw new Error(`body too short (${bodyText.length} chars of text); want >= 800.\nFirst 200 chars:\n${bodyText.slice(0, 200)}`);
+  }
+  if (!/<h2[\s>]/i.test(post.body)) {
+    throw new Error('body missing any <h2> heading — likely malformed HTML');
+  }
+  // Reject obvious AI hallucination tells (price/year that we know are wrong,
+  // claims of "today" inside an article that lives forever, etc.).
+  const banned = [/\$\s*\d/, /USD\s*\d/, /https?:\/\//, /<script/i, /<style/i, /<iframe/i];
+  for (const re of banned) {
+    if (re.test(post.body)) {
+      throw new Error(`body contains banned pattern ${re}; not publishing`);
+    }
   }
 
   // Force a date-prefixed slug so we never overwrite an existing post.
