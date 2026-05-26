@@ -103,19 +103,27 @@
       line-height: 1.6;
     }
     .blog-hero {
-      padding: 6rem 1.5rem 3rem;
+      padding: 5rem 1.5rem 3rem;
       text-align: center;
       max-width: 900px;
       margin: 0 auto;
     }
+    .blog-hero-logo {
+      display: block;
+      margin: 0 auto 1.2rem;
+      height: clamp(3rem, 7vw, 4.5rem);
+      width: auto;
+      max-width: min(80vw, 380px);
+    }
     .blog-hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      margin: 0 0 1rem;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin: 0 0 0.8rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
     }
     .blog-hero p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text-secondary);
       margin: 0;
       max-width: 640px;
@@ -216,7 +224,10 @@
 <body data-theme="dark">
 
   <section class="blog-hero">
-    <h1>مدونة PARKINZI</h1>
+    <a href="/" aria-label="PARKINZI — العودة للرئيسية">
+      <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" class="blog-hero-logo">
+    </a>
+    <h1>المدونة</h1>
     <p>مقالات يومية عن المواقف الذكية وتأجير المواقف وشحن السيارات الكهربائية في المدن السعودية.</p>
   </section>
 
