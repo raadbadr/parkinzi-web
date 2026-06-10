@@ -9,13 +9,26 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Tue, 09 Jun 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>حماية البيانات الشخصية في تطبيقات المواقف: دليل شامل</title>
+      <link>https://parkinzi.com/blog/daily-2026-06-10-hmayt-albynt-alshkhsyt-fi-ttbyqt-almwqf.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-06-10-hmayt-albynt-alshkhsyt-fi-ttbyqt-almwqf.html</guid>
+      <pubDate>Wed, 10 Jun 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>أمان البيانات</category>
+      <category>الخصوصية</category>
+      <category>التطبيقات الذكية</category>
+      <category>المواقف الذكية</category>
+      <description>تعرّف على أفضل الممارسات لحماية بيانات المستخدمين في تطبيقات المواقف الذكية، والمعايير الأمنية الواجب توفرها للثقة والأمان.</description>
+    </item>
 
     <item>
       <title>تجربة المستخدم في تطبيقات المواقف: المعايير والتحديات</title>
