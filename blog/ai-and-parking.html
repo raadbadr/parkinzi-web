@@ -1,14 +1,7 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGDPERQEF4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TGDPERQEF4');
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#1a2933">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -42,9 +35,16 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/header.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/footer.css">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <script>
+    (function(){
+      var t = localStorage.getItem('parkinzi_theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -72,57 +72,43 @@
     ]
   }
   </script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-    body { font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; margin: 0; min-height: 100vh; line-height: 1.8; background: var(--bg-page); color: var(--text-primary); }
-    :root, [data-theme="light"] {
-      --primary: rgb(0, 104, 184); --text-primary: rgb(26, 26, 38); --text-secondary: rgb(75, 85, 99); --text-muted: rgb(120, 130, 145);
-      --bg-page: rgb(245, 247, 250); --bg-card: rgb(255, 255, 255); --border-soft: rgba(0, 0, 0, 0.08);
-      --tag-bg: rgba(0, 104, 184, 0.1); --tag-text: rgb(0, 88, 160); --quote-border: rgba(0, 104, 184, 0.3);
-    }
-    [data-theme="dark"] {
-      --primary: rgb(86, 173, 255); --text-primary: rgb(240, 244, 250); --text-secondary: rgb(195, 205, 220); --text-muted: rgb(140, 155, 175);
-      --bg-page: rgb(15, 23, 33); --bg-card: rgba(30, 42, 56, 0.6); --border-soft: rgba(255, 255, 255, 0.08);
-      --tag-bg: rgba(86, 173, 255, 0.15); --tag-text: rgb(140, 200, 255); --quote-border: rgba(86, 173, 255, 0.4);
-    }
-    .post-wrap { max-width: 760px; margin: 0 auto; padding: 5rem 1.5rem 4rem; }
-    .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .breadcrumb a { color: var(--primary); text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
-    h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.3; margin: 0 0 1rem; font-weight: 700; letter-spacing: -0.01em; }
-    .post-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
-    .post-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 2rem; }
-    .post-tag { background: var(--tag-bg); color: var(--tag-text); padding: 0.3rem 0.7rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
-    .post-content { font-size: 1.05rem; color: var(--text-secondary); }
-    .post-content h2 { color: var(--text-primary); margin-top: 2.5rem; margin-bottom: 0.8rem; font-size: 1.5rem; }
-    .post-content h3 { color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.5rem; font-size: 1.2rem; }
-    .post-content p { margin: 0 0 1.2rem; }
-    .post-content ul, .post-content ol { padding-inline-start: 1.5rem; margin-bottom: 1.2rem; }
-    .post-content li { margin-bottom: 0.5rem; }
-    .post-content blockquote { border-inline-start: 4px solid var(--quote-border); padding: 0.5rem 1rem; margin: 1.5rem 0; color: var(--text-primary); font-style: italic; }
-    .post-content a { color: var(--primary); }
-    .post-content a:hover { text-decoration: underline; }
-    .post-footer-cta { margin-top: 3rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 16px; text-align: center; }
-    .post-footer-cta h3 { margin-top: 0; color: var(--text-primary); }
-    .cta-btn { display: inline-block; padding: 0.8rem 1.8rem; background: var(--primary); color: #fff; border-radius: 12px; font-weight: 600; text-decoration: none; margin-top: 0.8rem; }
-    .back-link { display: inline-block; margin-top: 2rem; color: var(--primary); font-weight: 600; text-decoration: none; }
-    .back-link:hover { text-decoration: underline; }
-  </style>
+  
+  
 </head>
-<body data-theme="dark">
+<body>
+  <div class="post-progress" aria-hidden="true"><span></span></div>
+
+  <div class="post-hero" data-blog-cover data-cover-slug="ai-and-parking" data-cover-tags="AI,ذكاء اصطناعي,تقنية" data-cover-size="large"></div>
+
   <article class="post-wrap">
     <nav class="breadcrumb" aria-label="مسار التنقل">
-      <a href="/">الرئيسية</a> ← <a href="/blog/">المدونة</a> ← <span>AI والمواقف</span>
+      <ol>
+        <li><a href="/">الرئيسية</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="/blog/">المدونة</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page">AI والمواقف</li>
+      </ol>
     </nav>
+
     <h1>الذكاء الاصطناعي والمواقف — ماذا ينتظرنا؟</h1>
+
     <div class="post-meta">
       <time datetime="2026-05-28">28 مايو 2026</time>
-      <span>·</span>
-      <span>قراءة 5 دقائق</span>
-      <span>·</span>
+      <span aria-hidden="true">•</span>
+      <span>قراءة دقيقتان</span>
+      <span aria-hidden="true">•</span>
       <span>فريق PARKINZI</span>
     </div>
-    <div class="post-tags"><span class="post-tag">AI</span><span class="post-tag">ذكاء اصطناعي</span><span class="post-tag">تقنية</span></div>
+
+    
+
+    
+
+    <div class="post-tags"><a href="/blog/?tag=AI" class="post-tag">AI</a><a href="/blog/?tag=%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A" class="post-tag">ذكاء اصطناعي</a><a href="/blog/?tag=%D8%AA%D9%82%D9%86%D9%8A%D8%A9" class="post-tag">تقنية</a></div>
+
+    
+
     <div class="post-content"><p>الذكاء الاصطناعي يغيّر كل شيء، والمواقف ليست استثناء. ما الذي يحدث حالياً وما الذي ينتظرنا؟</p>
       <h2>1. التنبؤ بالازدحام</h2>
       <p>نماذج AI تتدرّب على بيانات تاريخية (ساعات اليوم، أحداث المدينة، الطقس) لتتوقع متى يمتلئ موقف معين. تستطيع أن تخبرك: "غداً الساعة 7 مساء، الرياض بارك سيكون 95% ممتلئ".</p>
@@ -147,12 +133,42 @@
       <div class="post-footer-cta">
         <h3>جرّب الذكاء قربك</h3>
         <p>PARKINZI يستفيد من AI لتجربتك.</p>
-        <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="cta-btn" target="_blank" rel="noopener">حمّل التطبيق</a>
-      </div>
-      <section id="relatedPosts" aria-label="مقالات ذات صلة" style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border-soft);"></section>
-      <a href="/blog/" class="back-link">← العودة لكل المنشورات</a>
+        <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="cta-btn" target="_blank" rel="noopener">حمّل التطبيق</a></div>
+
+    
+
+    
+    <nav class="post-share" aria-label="مشاركة المقال">
+      <span class="post-share-label">شارك المقال</span>
+      <a href="https://wa.me/?text=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A%20%D9%88%D8%A7%D9%84%D9%85%D9%88%D8%A7%D9%82%D9%81%20%E2%80%94%20%D9%85%D8%A7%D8%B0%D8%A7%20%D9%8A%D9%86%D8%AA%D8%B8%D8%B1%D9%86%D8%A7%D8%9F%20https%3A%2F%2Fparkinzi.com%2Fblog%2Fai-and-parking.html" target="_blank" rel="noopener" aria-label="شارك عبر واتساب" class="post-share-btn post-share-btn--whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5C18.3 1.2 15.2 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.6 1.4 5.6 1.4h.1c6.6 0 12-5.4 12-12 0-3.2-1.3-6.2-3.4-8.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.5 4.5-9.9 9.9-9.9 2.6 0 5.1 1 7 2.9 1.9 1.9 2.9 4.4 2.9 7-.1 5.4-4.6 9.8-10 9.8zm5.4-7.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.6.1-.3-.1-1.2-.4-2.4-1.4-.9-.8-1.4-1.8-1.6-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
+        واتساب
+      </a>
+      <a href="https://twitter.com/intent/tweet?text=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A%20%D9%88%D8%A7%D9%84%D9%85%D9%88%D8%A7%D9%82%D9%81%20%E2%80%94%20%D9%85%D8%A7%D8%B0%D8%A7%20%D9%8A%D9%86%D8%AA%D8%B8%D8%B1%D9%86%D8%A7%D8%9F&url=https%3A%2F%2Fparkinzi.com%2Fblog%2Fai-and-parking.html" target="_blank" rel="noopener" aria-label="شارك عبر X" class="post-share-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fparkinzi.com%2Fblog%2Fai-and-parking.html" target="_blank" rel="noopener" aria-label="شارك عبر LinkedIn" class="post-share-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        LinkedIn
+      </a>
+      <button type="button" class="post-share-btn post-share-copy" data-share-url="https://parkinzi.com/blog/ai-and-parking.html" aria-label="نسخ رابط المقال">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span class="post-share-copy-label">نسخ الرابط</span>
+      </button>
+    </nav>
+
+    <div class="post-footer-cta">
+      <h2>جرّب الذكاء قربك</h2>
+      <p>PARKINZI يستفيد من AI لتجربتك.</p>
+      <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="cta-btn" target="_blank" rel="noopener noreferrer" aria-label="حمّل التطبيق (يفتح في نافذة جديدة)">حمّل التطبيق ↗</a>
     </div>
+
+    <section id="relatedPosts" class="related-posts" aria-label="مقالات ذات صلة"></section>
+
+    <a href="/blog/" class="back-link">← العودة لكل المنشورات</a>
   </article>
+
   <footer class="footer">
     <p class="footer-links">
       <a href="/about.html">من نحن</a>
@@ -166,37 +182,19 @@
     </p>
     <p class="footer-copyright">
       <span>جميع الحقوق محفوظة</span>
-      <span> <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" style="height:1.3em;width:auto;display:inline-block;vertical-align:-0.35em;"> © 2026</span>
+      <span> <img src="/parkinzi-logo-full-dark.png" alt="" aria-hidden="true" class="brand-logo-inline brand-logo-inline--xs"> © 2026</span>
     </p>
   </footer>
-  <!-- relatedPostsLoader -->
+
+  <script src="/blog/cover-gen.js?v=2" defer></script>
+  <script src="/blog/post-runtime.js?v=2" defer></script>
+  <script src="/brand-logo.js?v=4" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGDPERQEF4"></script>
   <script>
-    (async function(){
-      const here = location.pathname.split("/").pop();
-      try {
-        const r = await fetch("/blog/posts.json", { cache: "no-store" });
-        if (!r.ok) return;
-        const posts = await r.json();
-        const now = new Date();
-        const list = posts
-          .filter(p => new Date(p.publishDate) <= now && p.slug + ".html" !== here)
-          .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate))
-          .slice(0, 3);
-        if (!list.length) return;
-        const fmt = new Intl.DateTimeFormat("ar", { year: "numeric", month: "long", day: "numeric", calendar: "gregory", numberingSystem: "latn" });
-        const cardCss = "display:block;padding:1rem 1.25rem;background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;text-decoration:none;transition:transform 0.2s ease;";
-        const html = '<h2 style="font-size:1.4rem;margin-bottom:1rem;color:var(--text-primary);">اقرأ أيضاً</h2>'
-          + '<div style="display:grid;gap:1rem;">'
-          + list.map(p => '<a href="/blog/' + p.slug + '.html" style="' + cardCss + '">'
-              + '<span style="font-size:0.8rem;color:var(--text-muted);">' + fmt.format(new Date(p.publishDate)) + '</span><br>'
-              + '<span style="color:var(--text-primary);font-weight:600;font-size:1.05rem;">' + p.title + '</span>'
-            + '</a>').join("")
-          + '</div>';
-        const target = document.getElementById("relatedPosts");
-        if (target) target.innerHTML = html;
-      } catch (e) {}
-    })();
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TGDPERQEF4');
   </script>
-<script src="/brand-logo.js?v=3" defer></script>
 </body>
 </html>

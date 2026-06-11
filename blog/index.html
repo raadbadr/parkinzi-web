@@ -1,14 +1,7 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGDPERQEF4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TGDPERQEF4');
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="theme-color" content="#1a2933">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -25,21 +18,28 @@
   <meta property="og:url" content="https://parkinzi.com/blog/">
   <meta property="og:title" content="المدونة | PARKINZI">
   <meta property="og:description" content="مقالات يومية عن المواقف الذكية وتأجير المواقف وشحن السيارات الكهربائية.">
-  <meta property="og:image" content="https://parkinzi.com/logo.png">
+  <meta property="og:image" content="https://parkinzi.com/parkinzi-logo-full-dark.png">
   <meta property="og:locale" content="ar_SA">
   <meta property="og:site_name" content="PARKINZI">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="المدونة | PARKINZI">
   <meta name="twitter:description" content="مقالات يومية عن المواقف الذكية وتأجير المواقف وشحن السيارات الكهربائية.">
-  <meta name="twitter:image" content="https://parkinzi.com/logo.png">
+  <meta name="twitter:image" content="https://parkinzi.com/parkinzi-logo-full-dark.png">
   <title>المدونة | PARKINZI</title>
   <link rel="alternate" type="application/rss+xml" title="مدونة PARKINZI — RSS" href="https://parkinzi.com/blog/feed.xml">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/header.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/footer.css">
+  <link rel="stylesheet" href="/blog/blog.css?v=4">
+  <script>
+    (function(){
+      var t = localStorage.getItem('parkinzi_theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -51,188 +51,59 @@
     "publisher": {
       "@type": "Organization",
       "name": "PARKINZI",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://parkinzi.com/parkinzi-logo-full-dark.png"
-      }
+      "logo": { "@type": "ImageObject", "url": "https://parkinzi.com/parkinzi-logo-full-dark.png" }
     }
   }
   </script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-    img, svg { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-
-    :root, [data-theme="light"] {
-      --primary: rgb(0, 104, 184);
-      --primary-light: rgb(25, 140, 220);
-      --text-primary: rgb(26, 26, 38);
-      --text-secondary: rgb(75, 85, 99);
-      --text-muted: rgb(120, 130, 145);
-      --bg-page: rgb(245, 247, 250);
-      --bg-card: rgb(255, 255, 255);
-      --bg-card-hover: rgb(250, 252, 255);
-      --border-soft: rgba(0, 0, 0, 0.08);
-      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
-      --shadow-card-hover: 0 12px 36px rgba(0, 104, 184, 0.18);
-      --tag-bg: rgba(0, 104, 184, 0.1);
-      --tag-text: rgb(0, 88, 160);
-    }
-    [data-theme="dark"] {
-      --primary: rgb(86, 173, 255);
-      --primary-light: rgb(140, 200, 255);
-      --text-primary: rgb(240, 244, 250);
-      --text-secondary: rgb(195, 205, 220);
-      --text-muted: rgb(140, 155, 175);
-      --bg-page: rgb(15, 23, 33);
-      --bg-card: rgba(30, 42, 56, 0.7);
-      --bg-card-hover: rgba(40, 55, 75, 0.85);
-      --border-soft: rgba(255, 255, 255, 0.08);
-      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
-      --shadow-card-hover: 0 12px 36px rgba(86, 173, 255, 0.2);
-      --tag-bg: rgba(86, 173, 255, 0.15);
-      --tag-text: rgb(140, 200, 255);
-    }
-    body {
-      font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
-      background: var(--bg-page);
-      color: var(--text-primary);
-      margin: 0;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-    .blog-hero {
-      padding: 5rem 1.5rem 3rem;
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .blog-hero-logo {
-      display: block;
-      margin: 0 auto 1.2rem;
-      height: clamp(3rem, 7vw, 4.5rem);
-      width: auto;
-      max-width: min(80vw, 380px);
-    }
-    .blog-hero h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      margin: 0 0 0.8rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-    }
-    .blog-hero p {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      margin: 0;
-      max-width: 640px;
-      margin-inline: auto;
-    }
-    .blog-grid {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 1.5rem 1.5rem 4rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .blog-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-soft);
-      border-radius: 18px;
-      padding: 1.75rem;
-      box-shadow: var(--shadow-card);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .blog-card:hover, .blog-card:focus-within {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-card-hover);
-      background: var(--bg-card-hover);
-    }
-    .blog-card-date {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-    .blog-card-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin: 0;
-      line-height: 1.35;
-    }
-    .blog-card-summary {
-      color: var(--text-secondary);
-      font-size: 0.96rem;
-      margin: 0;
-      flex-grow: 1;
-    }
-    .blog-card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
-    .blog-card-tag {
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      padding: 0.3rem 0.7rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-    .blog-card-read {
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      align-self: flex-start;
-      margin-top: 0.5rem;
-      position: relative;
-    }
-    .blog-card-read::after {
-      content: '←';
-      margin-inline-start: 0.4rem;
-      transition: transform 0.2s ease;
-      display: inline-block;
-    }
-    .blog-card:hover .blog-card-read::after { transform: translateX(-4px); }
-    .blog-empty {
-      text-align: center;
-      padding: 3rem;
-      color: var(--text-muted);
-      grid-column: 1 / -1;
-    }
-    .back-btn {
-      display: inline-block;
-      padding: 0.7rem 1.6rem;
-      background: var(--primary);
-      color: #fff;
-      border-radius: 12px;
-      font-weight: 600;
-      transition: opacity 0.2s ease;
-    }
-    .back-btn:hover { opacity: 0.9; }
-    .back-wrap { text-align: center; padding: 0 1.5rem 3rem; }
-  </style>
 </head>
-<body data-theme="dark">
+<body>
 
   <section class="blog-hero">
     <a href="/" aria-label="PARKINZI — العودة للرئيسية">
-      <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" class="blog-hero-logo">
+      <img src="/parkinzi-logo-full-dark.png" alt="" aria-hidden="true" class="blog-hero-logo">
     </a>
     <h1>المدونة</h1>
-    <p>مقالات يومية عن المواقف الذكية وتأجير المواقف وشحن السيارات الكهربائية في المدن السعودية.</p>
+    <p>كل يوم مقال عن المواقف، الشحن، والقيادة الذكية في مدنك السعودية.</p>
   </section>
 
-  <main class="blog-grid" id="blogGrid">
-    <div class="blog-empty" id="blogLoading">جارٍ تحميل المنشورات…</div>
+  <div class="blog-toolbar" id="blogToolbar" hidden>
+    <div class="blog-search">
+      <svg class="blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="search" id="blogSearchInput" placeholder="ابحث في المقالات…" aria-label="بحث في المقالات">
+    </div>
+    <div class="blog-tagbar" id="blogTagbar" role="group" aria-label="تصفية بالوسوم"></div>
+  </div>
+
+  <main class="blog-grid" id="blogGrid" aria-live="polite">
+    <!-- Skeleton placeholders while loading -->
+    <div class="blog-card blog-card-skeleton">
+      <div class="blog-card-cover"></div>
+      <div class="blog-card-body">
+        <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--med"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--long"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--long"></div>
+      </div>
+    </div>
+    <div class="blog-card blog-card-skeleton">
+      <div class="blog-card-cover"></div>
+      <div class="blog-card-body">
+        <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--med"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--long"></div>
+      </div>
+    </div>
+    <div class="blog-card blog-card-skeleton">
+      <div class="blog-card-cover"></div>
+      <div class="blog-card-body">
+        <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--med"></div>
+        <div class="blog-skeleton-line blog-skeleton-line--long"></div>
+      </div>
+    </div>
   </main>
 
   <div class="back-wrap">
@@ -252,43 +123,169 @@
     </p>
     <p class="footer-copyright">
       <span>جميع الحقوق محفوظة</span>
-      <span> <img src="/parkinzi-logo-full-dark.png" alt="PARKINZI" style="height:1.3em;width:auto;display:inline-block;vertical-align:-0.35em;max-width:none;"> © 2026</span>
+      <span> <img src="/parkinzi-logo-full-dark.png" alt="" aria-hidden="true" class="brand-logo-inline brand-logo-inline--xs"> © 2026</span>
     </p>
   </footer>
 
+  <script src="/blog/cover-gen.js?v=2" defer></script>
+  <script src="/brand-logo.js?v=4" defer></script>
   <script>
-    (async function loadPosts() {
-      const grid = document.getElementById('blogGrid');
-      const loading = document.getElementById('blogLoading');
-      try {
-        const res = await fetch('/blog/posts.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('failed');
-        const posts = await res.json();
-        const now = new Date();
-        const visible = posts
-          .filter(p => new Date(p.publishDate) <= now)
-          .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
-        if (loading) loading.remove();
-        if (visible.length === 0) {
-          grid.innerHTML = '<div class="blog-empty">لا توجد منشورات منشورة بعد. تحقق غداً.</div>';
+    (function () {
+      var grid = document.getElementById('blogGrid');
+      var toolbar = document.getElementById('blogToolbar');
+      var searchInput = document.getElementById('blogSearchInput');
+      var tagbar = document.getElementById('blogTagbar');
+
+      var fmt = new Intl.DateTimeFormat('ar', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        calendar: 'gregory', numberingSystem: 'latn',
+      });
+      var rtf = (typeof Intl.RelativeTimeFormat === 'function')
+        ? new Intl.RelativeTimeFormat('ar', { numeric: 'auto' })
+        : null;
+
+      function relativeOrAbsolute(d) {
+        var diffMs = Date.now() - d.getTime();
+        var diffDays = Math.round(diffMs / 86400000);
+        if (rtf && Math.abs(diffDays) <= 30) {
+          if (diffDays === 0) return 'اليوم';
+          if (diffDays === 1) return 'أمس';
+          return rtf.format(-diffDays, 'day');
+        }
+        return fmt.format(d);
+      }
+
+      function ensureCovers() {
+        return new Promise(function (resolve) {
+          if (window.parkinziBuildCover) return resolve();
+          var t0 = Date.now();
+          var iv = setInterval(function () {
+            if (window.parkinziBuildCover || Date.now() - t0 > 1500) {
+              clearInterval(iv); resolve();
+            }
+          }, 30);
+        });
+      }
+
+      function escape(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      function buildCard(p, featured) {
+        var cover = window.parkinziBuildCover
+          ? window.parkinziBuildCover(p.slug, p.tags || [])
+          : '<div class="blog-card-cover"></div>';
+        var tagsHtml = (p.tags || []).slice(0, 3).map(function (t) {
+          return '<span class="blog-card-tag">' + escape(t) + '</span>';
+        }).join('');
+        var publishDate = new Date(p.publishDate);
+        var dateText = relativeOrAbsolute(publishDate);
+        var read = p.readMinutes
+          ? ' · قراءة ' + (p.readMinutes === 1 ? 'دقيقة واحدة' : p.readMinutes === 2 ? 'دقيقتان' : (p.readMinutes <= 10 ? p.readMinutes + ' دقائق' : p.readMinutes + ' دقيقة'))
+          : '';
+        var featuredBadge = featured ? '<span class="blog-card-featured-tag">مميّز</span>' : '';
+        var cls = 'blog-card' + (featured ? ' blog-card--featured' : '');
+        return ''
+          + '<a href="/blog/' + p.slug + '.html" class="' + cls + '" aria-labelledby="t-' + p.slug + '">'
+          + cover + featuredBadge
+          + '  <div class="blog-card-body">'
+          + '    <span class="blog-card-date"><time datetime="' + p.publishDate.slice(0, 10) + '">' + escape(dateText) + '</time>' + escape(read) + '</span>'
+          + '    <h2 class="blog-card-title" id="t-' + p.slug + '">' + escape(p.title) + '</h2>'
+          + '    <p class="blog-card-summary">' + escape(p.summary) + '</p>'
+          + '    <div class="blog-card-tags">' + tagsHtml + '</div>'
+          + '  </div>'
+          + '</a>';
+      }
+
+      var state = { all: [], query: '', tag: '' };
+
+      function render() {
+        var q = state.query.trim().toLowerCase();
+        var filtered = state.all.filter(function (p) {
+          if (state.tag && (p.tags || []).indexOf(state.tag) === -1) return false;
+          if (q) {
+            var hay = (p.title + ' ' + p.summary + ' ' + (p.tags || []).join(' ')).toLowerCase();
+            if (hay.indexOf(q) === -1) return false;
+          }
+          return true;
+        });
+
+        if (!filtered.length) {
+          grid.innerHTML = '<div class="blog-empty">لا توجد نتائج. جرّب كلمة أخرى أو وسماً مختلفاً.</div>';
           return;
         }
-        const dateFmt = new Intl.DateTimeFormat('ar', { year: 'numeric', month: 'long', day: 'numeric', calendar: 'gregory', numberingSystem: 'latn' });
-        const html = visible.map(p => `
-          <a href="/blog/${p.slug}.html" class="blog-card" aria-labelledby="title-${p.slug}">
-            <span class="blog-card-date">${dateFmt.format(new Date(p.publishDate))}</span>
-            <h2 class="blog-card-title" id="title-${p.slug}">${p.title}</h2>
-            <p class="blog-card-summary">${p.summary}</p>
-            <div class="blog-card-tags">${(p.tags || []).map(t => `<span class="blog-card-tag">${t}</span>`).join('')}</div>
-            <span class="blog-card-read">اقرأ المزيد</span>
-          </a>
-        `).join('');
-        grid.insertAdjacentHTML('beforeend', html);
-      } catch (err) {
-        if (loading) loading.textContent = 'تعذّر تحميل المنشورات.';
+
+        var html = '';
+        // Pick first as featured only when no filter is active
+        if (!state.tag && !q) {
+          html += buildCard(filtered[0], true);
+          for (var i = 1; i < filtered.length; i++) html += buildCard(filtered[i], false);
+        } else {
+          for (var j = 0; j < filtered.length; j++) html += buildCard(filtered[j], false);
+        }
+        grid.innerHTML = html;
       }
+
+      function renderTagbar() {
+        var counts = {};
+        state.all.forEach(function (p) {
+          (p.tags || []).forEach(function (t) { counts[t] = (counts[t] || 0) + 1; });
+        });
+        var top = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 6);
+        var html = '<button type="button" data-tag="" class="' + (state.tag === '' ? 'is-active' : '') + '">الكل</button>';
+        top.forEach(function (t) {
+          html += '<button type="button" data-tag="' + escape(t) + '" class="' + (state.tag === t ? 'is-active' : '') + '">' + escape(t) + '</button>';
+        });
+        tagbar.innerHTML = html;
+        tagbar.querySelectorAll('button').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.tag = btn.dataset.tag || '';
+            tagbar.querySelectorAll('button').forEach(function (b) { b.classList.toggle('is-active', b.dataset.tag === state.tag); });
+            render();
+          });
+        });
+      }
+
+      function handleUrlTag() {
+        var p = new URLSearchParams(location.search);
+        var t = p.get('tag');
+        if (t) state.tag = t;
+      }
+
+      (function init() {
+        fetch('/blog/posts.json', { cache: 'no-cache' })
+          .then(function (r) {
+            if (!r.ok) throw new Error('failed');
+            return r.json();
+          })
+          .then(function (posts) {
+            return ensureCovers().then(function () { return posts; });
+          })
+          .then(function (posts) {
+            var now = new Date();
+            state.all = posts
+              .filter(function (p) { return new Date(p.publishDate) <= now; })
+              .sort(function (a, b) {
+                var fa = a.featured ? 1 : 0;
+                var fb = b.featured ? 1 : 0;
+                if (fa !== fb) return fb - fa;
+                return new Date(b.publishDate) - new Date(a.publishDate);
+              });
+            handleUrlTag();
+            toolbar.hidden = false;
+            renderTagbar();
+            render();
+            searchInput.addEventListener('input', function () {
+              state.query = searchInput.value;
+              render();
+            });
+          })
+          .catch(function () {
+            grid.innerHTML = '<div class="blog-empty">تعذّر تحميل المنشورات. <a href="/blog/feed.xml" style="color:var(--primary)">جرّب RSS</a> أو حدّث الصفحة.</div>';
+          });
+      })();
     })();
   </script>
-<script src="/brand-logo.js?v=3" defer></script>
 </body>
 </html>
