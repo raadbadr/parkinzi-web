@@ -9,6 +9,7 @@
  * Discovery:  GET  /.well-known/mcp.json
  *
  * Tools currently exposed (all read-only):
+ *   - search / fetch          ← ChatGPT connector + Deep Research contract
  *   - search_parking_spots
  *   - find_ev_chargers
  *   - get_spot_details
@@ -17,15 +18,26 @@
  *   - search_blog_posts
  *   - get_app_info
  *
+ * Compatibility notes
+ * - Claude custom connectors negotiate the protocol version on initialize;
+ *   we accept any version we know and answer with the newest we support.
+ * - ChatGPT connectors REQUIRE tools literally named `search` and `fetch`
+ *   (Deep Research refuses to attach otherwise). search returns
+ *   {results:[{id,title,url}]}, fetch returns {id,title,text,url,metadata}.
+ * - Notifications get HTTP 202 with no body per the Streamable HTTP spec.
+ *
  * Rate limiting is enforced at the Cloudflare WAF layer (free tier) plus
  * a soft cap inside this module to keep Supabase costs predictable.
  */
 
-const MCP_PROTOCOL_VERSION = "2024-11-05";
+// Newest first. We answer initialize with the client's requested version when
+// we know it, otherwise with our newest.
+const SUPPORTED_PROTOCOL_VERSIONS = ["2025-06-18", "2025-03-26", "2024-11-05"];
+const LATEST_PROTOCOL_VERSION = SUPPORTED_PROTOCOL_VERSIONS[0];
 
 const MCP_SERVER_INFO = {
   name: "parkinzi",
-  version: "0.1.0",
+  version: "0.2.0",
   title: "PARKINZI — Smart Parking & EV Charging (Saudi Arabia)",
 };
 
@@ -52,6 +64,37 @@ function supaHeaders(env) {
 // --- Tool catalogue --------------------------------------------------------
 
 const TOOLS = [
+  {
+    name: "search",
+    description:
+      "Search PARKINZI for parking spots, EV chargers, covered cities, and blog articles. Returns a list of results with id, title, and url. Use fetch with a result id to get the full record. Queries can be Arabic or English (e.g. 'مواقف الرياض', 'EV charging Jeddah').",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: {
+          type: "string",
+          description: "Free-text search query (Arabic or English).",
+        },
+      },
+      required: ["query"],
+    },
+  },
+  {
+    name: "fetch",
+    description:
+      "Fetch the full content of a PARKINZI search result by its id (as returned by the search tool). Returns id, title, full text, url, and metadata.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+          description:
+            "Result id from search, e.g. 'post:smart-parking-saudi' or 'spot:<uuid>'.",
+        },
+      },
+      required: ["id"],
+    },
+  },
   {
     name: "search_parking_spots",
     description:
@@ -426,10 +469,195 @@ function toolAppInfo() {
   };
 }
 
+// --- ChatGPT connector contract: search + fetch ---------------------------
+// ChatGPT (including Deep Research) requires tools literally named `search`
+// and `fetch` with these result shapes:
+//   search → { results: [{ id, title, url }] }
+//   fetch  → { id, title, text, url, metadata }
+
+async function loadPostsJson(env) {
+  try {
+    const res = await env.ASSETS.fetch(new Request("https://parkinzi.com/blog/posts.json"));
+    return await res.json();
+  } catch {
+    const res = await fetch("https://parkinzi.com/blog/posts.json", { cf: NO_CACHE });
+    return res.json();
+  }
+}
+
+async function toolUnifiedSearch(args, env) {
+  const q = String(args.query || "").trim();
+  if (!q) return { results: [] };
+  const qLower = q.toLowerCase();
+  const results = [];
+
+  // 1) Blog posts (static, cheap).
+  try {
+    const posts = await loadPostsJson(env);
+    const now = new Date();
+    for (const p of posts) {
+      if (new Date(p.publishDate) > now) continue;
+      const hay = `${p.title} ${p.summary} ${(p.tags || []).join(" ")}`.toLowerCase();
+      if (hay.includes(qLower)) {
+        results.push({
+          id: `post:${p.slug}`,
+          title: p.title,
+          url: `https://parkinzi.com/blog/${p.slug}.html`,
+        });
+      }
+      if (results.length >= 8) break;
+    }
+  } catch {
+    // blog search is best-effort
+  }
+
+  // 2) Parking spots by name/area (live).
+  try {
+    const safe = q.replace(/[%,]/g, "");
+    const rows = await supaSelect(
+      env,
+      "parking_spots",
+      `select=id,spot_name,name,label,area_name&or=(spot_name.ilike.*${safe}*,name.ilike.*${safe}*,area_name.ilike.*${safe}*,label.ilike.*${safe}*)&limit=8`
+    );
+    for (const r of rows) {
+      const title = r.spot_name || r.name || r.label || "موقف PARKINZI";
+      results.push({
+        id: `spot:${r.id}`,
+        title: r.area_name ? `${title} — ${r.area_name}` : title,
+        url: "https://parkinzi.com/",
+      });
+    }
+  } catch {
+    // spot search is best-effort
+  }
+
+  // 3) Static pages worth surfacing for app/company queries.
+  const STATIC_HITS = [
+    { match: /parkinzi|باركنزي|تطبيق|app|تحميل|download/i, id: "page:app", title: "تطبيق PARKINZI — التحميل والميزات", url: "https://parkinzi.com/" },
+    { match: /سعر|أسعار|pricing|عمولة|اشتراك/i, id: "page:pricing", title: "سياسة أسعار PARKINZI", url: "https://parkinzi.com/pricing.html" },
+    { match: /خصوصية|privacy|بيانات/i, id: "page:privacy", title: "سياسة خصوصية PARKINZI", url: "https://parkinzi.com/privacy.html" },
+    { match: /mcp|ذكاء|ai|كلود|claude|chatgpt/i, id: "page:mcp", title: "PARKINZI MCP Server للذكاء الاصطناعي", url: "https://parkinzi.com/mcp-server.html" },
+  ];
+  for (const s of STATIC_HITS) {
+    if (s.match.test(q)) results.push({ id: s.id, title: s.title, url: s.url });
+  }
+
+  return { results: results.slice(0, 20) };
+}
+
+function stripHtmlToText(html) {
+  return String(html)
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+async function toolUnifiedFetch(args, env) {
+  const id = String(args.id || "").trim();
+  if (!id) throw new Error("id is required");
+
+  // post:<slug> → full article text from the static HTML.
+  if (id.startsWith("post:")) {
+    const slug = id.slice(5).replace(/[^a-zA-Z0-9\-_.]/g, "");
+    const url = `https://parkinzi.com/blog/${slug}.html`;
+    let html = "";
+    try {
+      const res = await env.ASSETS.fetch(new Request(url));
+      if (!res.ok) throw new Error("not found");
+      html = await res.text();
+    } catch {
+      const res = await fetch(url, { cf: NO_CACHE });
+      if (!res.ok) throw new Error(`Post not found: ${slug}`);
+      html = await res.text();
+    }
+    const titleMatch = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
+    const contentMatch = html.match(/<div class="post-content">([\s\S]*?)<\/div>\s*<\/article>|<div class="post-content">([\s\S]*?)$/);
+    const rawContent = contentMatch ? (contentMatch[1] || contentMatch[2] || "") : html;
+    const posts = await loadPostsJson(env).catch(() => []);
+    const meta = posts.find((p) => p.slug === slug) || {};
+    return {
+      id,
+      title: titleMatch ? stripHtmlToText(titleMatch[1]) : (meta.title || slug),
+      text: stripHtmlToText(rawContent).slice(0, 20000),
+      url,
+      metadata: {
+        published: meta.publishDate || null,
+        tags: meta.tags || [],
+        source: "PARKINZI blog",
+        language: "ar",
+      },
+    };
+  }
+
+  // spot:<uuid> → full spot record from Supabase.
+  if (id.startsWith("spot:")) {
+    const spotId = id.slice(5);
+    const rows = await supaSelect(
+      env,
+      "parking_spots",
+      `select=*&id=eq.${encodeURIComponent(spotId)}&limit=1`
+    );
+    if (!rows.length) throw new Error(`Spot not found: ${spotId}`);
+    const s = rows[0];
+    const title = s.spot_name || s.name || s.label || "موقف PARKINZI";
+    return {
+      id,
+      title: s.area_name ? `${title} — ${s.area_name}` : title,
+      text: JSON.stringify(s, null, 2),
+      url: "https://parkinzi.com/",
+      metadata: {
+        type: "parking_spot",
+        has_electric_charger: Boolean(s.has_electric_charger),
+        area: s.area_name || null,
+        source: "PARKINZI live database",
+      },
+    };
+  }
+
+  // page:<key> → canned summaries for the static pages.
+  const PAGES = {
+    "page:app": {
+      title: "تطبيق PARKINZI",
+      text: "PARKINZI منصة سعودية للمواقف الذكية: ابحث عن موقف قرب وجهتك، احجز مسبقاً، ادفع داخل التطبيق، أو أجّر موقفك الخاص واكسب دخلاً شهرياً. يدعم فلترة المواقف ذات شواحن السيارات الكهربائية. متاح على iOS، وإصدار Android قادم.",
+      url: "https://parkinzi.com/",
+    },
+    "page:pricing": {
+      title: "سياسة أسعار PARKINZI",
+      text: "التسجيل مجاني للسائقين وملاك المواقف. يدفع السائق عند إتمام الحجز فقط. تحصل المنصة على عمولة من قيمة الحجز، ويستلم المالك أرباحه شهرياً عبر التحويل البنكي.",
+      url: "https://parkinzi.com/pricing.html",
+    },
+    "page:privacy": {
+      title: "سياسة خصوصية PARKINZI",
+      text: "تلتزم PARKINZI بنظام حماية البيانات الشخصية السعودي (PDPL). البيانات تُجمع للأغراض التشغيلية فقط ولا تُباع لأطراف ثالثة.",
+      url: "https://parkinzi.com/privacy.html",
+    },
+    "page:mcp": {
+      title: "PARKINZI MCP Server",
+      text: "خادم MCP عام للقراءة فقط على https://parkinzi.com/mcp يتيح لمساعدات الذكاء الاصطناعي البحث في المواقف والشواحن والمدونة مباشرة. بدون مصادقة.",
+      url: "https://parkinzi.com/mcp-server.html",
+    },
+  };
+  if (PAGES[id]) {
+    return { id, ...PAGES[id], metadata: { type: "static_page", source: "parkinzi.com" } };
+  }
+
+  throw new Error(`Unknown id format: ${id}. Expected post:<slug>, spot:<uuid>, or page:<key>.`);
+}
+
 // --- Dispatcher ------------------------------------------------------------
 
 async function callTool(name, args, env) {
   switch (name) {
+    case "search":
+      return toolUnifiedSearch(args || {}, env);
+    case "fetch":
+      return toolUnifiedFetch(args || {}, env);
     case "search_parking_spots":
       return toolSearchParkingSpots(args || {}, env);
     case "find_ev_chargers":
@@ -489,17 +717,25 @@ async function handleSingleRpc(body, env) {
 
   try {
     switch (method) {
-      case "initialize":
+      case "initialize": {
+        // Version negotiation: echo the client's requested version when we
+        // support it (Claude sends 2025-06-18, older clients 2024-11-05);
+        // otherwise answer with our newest so the client can decide.
+        const requested = params?.protocolVersion;
+        const negotiated = SUPPORTED_PROTOCOL_VERSIONS.includes(requested)
+          ? requested
+          : LATEST_PROTOCOL_VERSION;
         return {
           jsonrpc: "2.0",
           id,
           result: {
-            protocolVersion: MCP_PROTOCOL_VERSION,
+            protocolVersion: negotiated,
             capabilities: { tools: { listChanged: false } },
             serverInfo: MCP_SERVER_INFO,
             instructions: MCP_SERVER_INSTRUCTIONS,
           },
         };
+      }
 
       case "tools/list":
         return { jsonrpc: "2.0", id, result: { tools: TOOLS } };
@@ -542,11 +778,12 @@ async function handleSingleRpc(body, env) {
       case "prompts/list":
         return { jsonrpc: "2.0", id, result: { [method.split("/")[0]]: [] } };
 
-      case "notifications/initialized":
-      case "notifications/cancelled":
-        return null; // notifications get no response
-
       default:
+        // Any notification (no id, method starts with "notifications/")
+        // gets no JSON-RPC response — the transport layer answers 202.
+        if (typeof method === "string" && method.startsWith("notifications/")) {
+          return null;
+        }
         return {
           jsonrpc: "2.0",
           id,
@@ -567,12 +804,19 @@ export async function handleMcpRequest(request, env) {
     return new Response(null, { status: 204, headers: CORS_HEADERS });
   }
 
-  // A friendly GET response so people opening the URL in a browser don't see
-  // a blank 405. MCP itself uses POST exclusively.
   if (request.method === "GET") {
+    // Streamable HTTP: a GET with Accept: text/event-stream asks to open a
+    // server-initiated SSE stream. We are stateless and have nothing to
+    // push, so 405 (explicitly allowed by the spec — clients fall back).
+    const accept = request.headers.get("Accept") || "";
+    if (accept.includes("text/event-stream")) {
+      return new Response(null, { status: 405, headers: { ...CORS_HEADERS, Allow: "POST, OPTIONS" } });
+    }
+    // A friendly browser response so the URL isn't a blank 405.
     return rpcResponse({
       server: MCP_SERVER_INFO,
-      protocolVersion: MCP_PROTOCOL_VERSION,
+      protocolVersion: LATEST_PROTOCOL_VERSION,
+      supportedProtocolVersions: SUPPORTED_PROTOCOL_VERSIONS,
       transport: "streamable-http",
       tools: TOOLS.map((t) => ({ name: t.name, description: t.description })),
       docs: "https://parkinzi.com/.well-known/mcp.json",
@@ -598,13 +842,17 @@ export async function handleMcpRequest(request, env) {
       const r = await handleSingleRpc(item, env);
       if (r) responses.push(r);
     }
+    if (!responses.length) {
+      // All items were notifications.
+      return new Response(null, { status: 202, headers: CORS_HEADERS });
+    }
     return rpcResponse(responses);
   }
 
   const r = await handleSingleRpc(body, env);
   if (!r) {
-    // Notification — return 204 No Content per MCP spec.
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
+    // Notification — 202 Accepted with no body per the Streamable HTTP spec.
+    return new Response(null, { status: 202, headers: CORS_HEADERS });
   }
   return rpcResponse(r);
 }
@@ -626,8 +874,13 @@ export function mcpDiscoveryDocument() {
         auth: "none",
       },
     ],
+    protocol_versions: SUPPORTED_PROTOCOL_VERSIONS,
+    compatibility: {
+      claude: "Add as a custom connector at claude.ai/settings/connectors with the URL above.",
+      chatgpt: "Add as a custom MCP connector. Implements the search/fetch contract required by ChatGPT and Deep Research.",
+    },
     tools: TOOLS.map((t) => ({ name: t.name, description: t.description })),
-    documentation: "https://parkinzi.com/blog/",
+    documentation: "https://parkinzi.com/mcp-server.html",
     privacy_policy: "https://parkinzi.com/privacy.html",
     terms_of_service: "https://parkinzi.com/terms.html",
   };

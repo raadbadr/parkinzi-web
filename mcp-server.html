@@ -166,14 +166,23 @@
 
     <h2>كيف تربطه في ChatGPT</h2>
     <ol>
-      <li>افتح ChatGPT (نسخة Pro أو Enterprise).</li>
-      <li>Settings → Connectors → Custom Connector.</li>
+      <li>افتح ChatGPT (نسخة Plus أو Pro أو Enterprise).</li>
+      <li>Settings → Connectors → <strong>Add custom connector</strong>.</li>
       <li>الصق نفس الرابط: <code>https://parkinzi.com/mcp</code></li>
-      <li>احفظ، ثم في المحادثة فعّل الـ tool وابدأ الاستخدام.</li>
+      <li>احفظ، ثم في المحادثة فعّل الـ connector وابدأ الاستخدام.</li>
     </ol>
+    <p>الخادم يطبّق عقد <code>search</code> / <code>fetch</code> الذي يتطلبه ChatGPT، لذلك يعمل أيضاً في وضع <strong>Deep Research</strong> — اطلب بحثاً معمّقاً عن المواقف في السعودية وسيستشهد ببيانات PARKINZI ومقالات المدونة كمصادر.</p>
 
     <h2>الأدوات المتاحة</h2>
     <div class="tools-grid">
+      <div class="tool-card">
+        <code>search</code>
+        <p>بحث موحّد (ChatGPT contract): مواقف + مدونة + صفحات.</p>
+      </div>
+      <div class="tool-card">
+        <code>fetch</code>
+        <p>جلب النص الكامل لأي نتيجة بحث بمعرّفها.</p>
+      </div>
       <div class="tool-card">
         <code>search_parking_spots</code>
         <p>بحث المواقف بالموقع، المسافة، أو النص الحر.</p>
