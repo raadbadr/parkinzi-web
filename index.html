@@ -4810,7 +4810,7 @@
       if (lat == null || lng == null || Number.isNaN(Number(lat)) || Number.isNaN(Number(lng))) return null;
       const spot_count = parkingSpotBadgeValue(row);
       const label = String(
-        row.label ?? row.spot_name ?? row.name ?? row.national_address ?? row.area_name ?? ""
+        row.spot_location ?? row.label ?? row.spot_name ?? row.name ?? row.national_address ?? row.area_name ?? ""
       ).trim();
       let createdAtMs = GROWTH_MAP_TIMELINE_START.getTime();
       if (row.created_at != null && row.created_at !== "") {

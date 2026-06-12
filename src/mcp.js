@@ -296,20 +296,61 @@ function spotLng(row) {
   return Number(row.longitude ?? row.lng);
 }
 
+// Columns of parking_spots that are safe to show the public. Owner identity,
+// deed/commercial-register numbers, camera URLs, and detection IPs must NEVER
+// leave the database through this server.
+const PUBLIC_SPOT_COLUMNS = [
+  "id",
+  "spot_location",
+  "spot_code",
+  "spot_number",
+  "spot_type",
+  "spot_size",
+  "spot_status",
+  "latitude",
+  "longitude",
+  "has_electric_charger",
+  "charger_power_kw",
+  "supported_fuel_type",
+  "spot_price_per_hour",
+  "spot_price_per_day",
+  "spot_discount_percentage",
+  "average_rating",
+  "total_ratings",
+  "national_address",
+  "created_at",
+].join(",");
+
+function spotDisplayName(row) {
+  return (
+    row.spot_location ||
+    row.spot_code ||
+    (row.spot_number != null ? `موقف ${row.spot_number}` : null) ||
+    "موقف PARKINZI"
+  );
+}
+
 function projectSpot(row, originLat, originLng) {
   const lat = spotLat(row);
   const lng = spotLng(row);
   const out = {
     id: row.id,
-    name: row.spot_name || row.name || row.label || null,
-    area: row.area_name || null,
+    name: spotDisplayName(row),
+    location: row.spot_location ?? null,
+    national_address: row.national_address ?? null,
+    spot_number: row.spot_number ?? null,
     latitude: Number.isFinite(lat) ? lat : null,
     longitude: Number.isFinite(lng) ? lng : null,
-    floor: row.floor ?? null,
     spot_type: row.spot_type ?? null,
+    spot_size: row.spot_size ?? null,
+    status: row.spot_status ?? null,
     has_electric_charger: Boolean(row.has_electric_charger),
-    ev_charger_type: row.ev_charger_type ?? null,
-    is_available: row.is_available !== false,
+    charger_power_kw: row.charger_power_kw ?? null,
+    supported_fuel_type: row.supported_fuel_type ?? null,
+    price_per_hour: row.spot_price_per_hour ?? null,
+    price_per_day: row.spot_price_per_day ?? null,
+    rating: row.average_rating ?? null,
+    ratings_count: row.total_ratings ?? null,
   };
   if (
     Number.isFinite(originLat) &&
@@ -357,8 +398,7 @@ async function toolSearchParkingSpots(args, env) {
   const radius = clampNum(args.radius_km, 5, 0.1, 50);
   const hasGeo = Number.isFinite(lat) && Number.isFinite(lng);
 
-  const cols =
-    "id,spot_name,name,label,area_name,latitude,longitude,floor,spot_type,has_electric_charger,ev_charger_type,is_available";
+  const cols = PUBLIC_SPOT_COLUMNS;
   const filters = [];
 
   if (hasGeo) {
@@ -371,8 +411,8 @@ async function toolSearchParkingSpots(args, env) {
   if (args.has_charger === true) filters.push("has_electric_charger=eq.true");
 
   if (args.query && typeof args.query === "string") {
-    const q = args.query.replace(/[%,]/g, "");
-    filters.push(`or=(spot_name.ilike.*${q}*,name.ilike.*${q}*,area_name.ilike.*${q}*,label.ilike.*${q}*)`);
+    const q = args.query.replace(/[%,()]/g, "");
+    filters.push(`or=(spot_location.ilike.*${q}*,spot_code.ilike.*${q}*,national_address.ilike.*${q}*)`);
   }
 
   const queryStr = `select=${cols}&${filters.join("&")}&limit=${Math.min(limit * 4, 200)}`;
@@ -393,15 +433,20 @@ async function toolSearchParkingSpots(args, env) {
 }
 
 async function toolFindEvChargers(args, env) {
-  return toolSearchParkingSpots(
-    {
-      ...args,
-      has_charger: true,
-      radius_km: args.radius_km ?? 10,
-      query: args.charger_type, // search the charger_type text inside the same fields
-    },
+  const base = await toolSearchParkingSpots(
+    { ...args, has_charger: true, radius_km: args.radius_km ?? 10, query: undefined },
     env
   );
+  // charger_type filters client-side against the fuel/charger fields.
+  const ct = String(args.charger_type || "").trim().toLowerCase();
+  if (ct) {
+    base.spots = base.spots.filter((s) => {
+      const hay = `${s.supported_fuel_type || ""} ${s.charger_power_kw || ""}`.toLowerCase();
+      return hay.includes(ct);
+    });
+    base.count = base.spots.length;
+  }
+  return base;
 }
 
 async function toolGetSpotDetails(args, env) {
@@ -411,10 +456,10 @@ async function toolGetSpotDetails(args, env) {
   const rows = await supaSelect(
     env,
     "parking_spots",
-    `select=*&id=eq.${encodeURIComponent(args.spot_id)}&limit=1`
+    `select=${PUBLIC_SPOT_COLUMNS}&id=eq.${encodeURIComponent(args.spot_id)}&limit=1`
   );
   if (!rows.length) return { found: false };
-  return { found: true, spot: rows[0] };
+  return { found: true, spot: projectSpot(rows[0]) };
 }
 
 async function toolPlatformStats(env) {
@@ -436,15 +481,15 @@ async function toolPlatformStats(env) {
 }
 
 async function toolListCities(env) {
-  // We don't have a dedicated cities table, but area_name is populated.
+  // No dedicated cities table — group by the spot_location text.
   const rows = await supaSelect(
     env,
     "parking_spots",
-    "select=area_name&area_name=not.is.null&limit=2000"
+    "select=spot_location&spot_location=not.is.null&limit=2000"
   );
   const counts = new Map();
   for (const r of rows) {
-    const a = (r.area_name || "").trim();
+    const a = (r.spot_location || "").trim();
     if (!a) continue;
     counts.set(a, (counts.get(a) || 0) + 1);
   }
@@ -566,22 +611,23 @@ async function toolUnifiedSearch(args, env) {
     // blog search is best-effort
   }
 
-  // 2) Parking spots by name/area (live). Query Supabase with the FIRST
-  // token (broadest ilike), then require the remaining tokens client-side.
+  // 2) Parking spots by location/code/address (live). Query Supabase with
+  // the FIRST token (broadest ilike), then require the remaining tokens
+  // client-side.
   try {
     const first = tokens[0].replace(/[%,()]/g, "");
     const rows = await supaSelect(
       env,
       "parking_spots",
-      `select=id,spot_name,name,label,area_name&or=(spot_name.ilike.*${first}*,name.ilike.*${first}*,area_name.ilike.*${first}*,label.ilike.*${first}*)&limit=30`
+      `select=id,spot_location,spot_code,spot_number,national_address&or=(spot_location.ilike.*${first}*,spot_code.ilike.*${first}*,national_address.ilike.*${first}*)&limit=30`
     );
     for (const r of rows) {
-      const title = r.spot_name || r.name || r.label || "موقف PARKINZI";
-      const hay = `${r.spot_name || ""} ${r.name || ""} ${r.label || ""} ${r.area_name || ""}`;
+      const title = spotDisplayName(r);
+      const hay = `${r.spot_location || ""} ${r.spot_code || ""} ${r.national_address || ""}`;
       if (!matchesAllTokens(hay, tokens)) continue;
       results.push({
         id: `spot:${r.id}`,
-        title: r.area_name ? `${title} — ${r.area_name}` : title,
+        title: r.national_address ? `${title} — ${r.national_address}` : title,
         url: "https://parkinzi.com/",
       });
       if (results.length >= 16) break;
@@ -654,26 +700,26 @@ async function toolUnifiedFetch(args, env) {
     };
   }
 
-  // spot:<uuid> → full spot record from Supabase.
+  // spot:<uuid> → public spot record from Supabase (sensitive columns —
+  // owner identity, deeds, camera URLs — are never selected).
   if (id.startsWith("spot:")) {
     const spotId = id.slice(5);
     const rows = await supaSelect(
       env,
       "parking_spots",
-      `select=*&id=eq.${encodeURIComponent(spotId)}&limit=1`
+      `select=${PUBLIC_SPOT_COLUMNS}&id=eq.${encodeURIComponent(spotId)}&limit=1`
     );
     if (!rows.length) throw new Error(`Spot not found: ${spotId}`);
-    const s = rows[0];
-    const title = s.spot_name || s.name || s.label || "موقف PARKINZI";
+    const s = projectSpot(rows[0]);
     return {
       id,
-      title: s.area_name ? `${title} — ${s.area_name}` : title,
+      title: s.national_address ? `${s.name} — ${s.national_address}` : s.name,
       text: JSON.stringify(s, null, 2),
       url: "https://parkinzi.com/",
       metadata: {
         type: "parking_spot",
-        has_electric_charger: Boolean(s.has_electric_charger),
-        area: s.area_name || null,
+        has_electric_charger: s.has_electric_charger,
+        location: s.location,
         source: "PARKINZI live database",
       },
     };

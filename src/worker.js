@@ -25,12 +25,29 @@ const ASSETLINKS_JSON = JSON.stringify([
 ]);
 
 const ALLOWED_TABLES = ["profiles", "facilities", "parking_spots", "user_cars"];
+// Public columns ONLY. Owner identity (owner_name, owner_profile_number),
+// legal documents (location_deed_number, location_commercial_register),
+// and infrastructure details (camera_url, detection_ip) must never be
+// selectable through the public API.
+const PUBLIC_SPOT_COLUMNS =
+  "id,spot_location,spot_code,spot_number,spot_type,spot_size,spot_status," +
+  "latitude,longitude,has_electric_charger,charger_power_kw,supported_fuel_type," +
+  "spot_price_per_hour,spot_price_per_day,spot_discount_percentage," +
+  "average_rating,total_ratings,national_address,created_at";
 const ALLOWED_COLUMNS = [
-  "*", "id", "latitude", "longitude", "name", "facility_id",
+  // "*" intentionally NOT allowed — it leaked owner names, deed numbers,
+  // camera URLs, and detection IPs. handleParkingSpots maps "*" to
+  // PUBLIC_SPOT_COLUMNS instead, so old clients keep working safely.
+  "id", "latitude", "longitude", "name", "facility_id",
   "has_electric_charger", "created_at", "spot_number", "floor",
   "spot_type", "ev_charger_type", "is_available",
   "spot_name", "national_address", "area_name", "spot_count", "spots",
   "lat", "lng", "metadata", "label",
+  // Real schema additions
+  "spot_location", "spot_code", "spot_size", "spot_status",
+  "charger_power_kw", "supported_fuel_type",
+  "spot_price_per_hour", "spot_price_per_day", "spot_discount_percentage",
+  "average_rating", "total_ratings",
 ];
 
 function json(data, status = 200) {
@@ -104,9 +121,16 @@ async function handleFuelStats(env) {
 }
 
 async function handleParkingSpots(url, env) {
-  const select = url.searchParams.get("select") || "*";
-  const cols = select.split(",").map((c) => c.trim());
-  if (!cols.every((c) => ALLOWED_COLUMNS.includes(c))) return json({ error: "invalid columns" }, 400);
+  let select = url.searchParams.get("select") || "*";
+  // "*" used to pass straight through and exposed every column, including
+  // owner identity, deed numbers, camera URLs, and detection IPs. Map it to
+  // the public column list — same callers, sanitized payload.
+  if (select.trim() === "*") {
+    select = PUBLIC_SPOT_COLUMNS;
+  } else {
+    const cols = select.split(",").map((c) => c.trim());
+    if (!cols.every((c) => ALLOWED_COLUMNS.includes(c))) return json({ error: "invalid columns" }, 400);
+  }
 
   const endpoint = `${env.SUPABASE_URL}/rest/v1/parking_spots?select=${encodeURIComponent(select)}`;
   const res = await fetch(endpoint, {
