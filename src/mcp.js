@@ -211,6 +211,45 @@ const TOOLS = [
   },
 ];
 
+// Every PARKINZI tool is read-only against our own data — annotate so
+// clients (Claude shows these) can skip confirmation prompts.
+for (const t of TOOLS) {
+  t.annotations = {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  };
+}
+
+// --- Soft rate limiting ------------------------------------------------------
+// Per-isolate, in-memory sliding window. Not airtight (isolates recycle and
+// each PoP counts separately) but it caps Supabase cost from any single
+// abusive client at zero infrastructure cost. Cloudflare WAF remains the
+// hard outer layer.
+
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX_PER_WINDOW = 120;
+const rateBuckets = new Map();
+
+function isRateLimited(ip) {
+  if (!ip) return false;
+  const now = Date.now();
+  let bucket = rateBuckets.get(ip);
+  if (!bucket || now - bucket.start >= RATE_WINDOW_MS) {
+    bucket = { start: now, count: 0 };
+    rateBuckets.set(ip, bucket);
+  }
+  bucket.count++;
+  // Opportunistic prune so the Map can't grow unbounded in a hot isolate.
+  if (rateBuckets.size > 5000) {
+    for (const [k, v] of rateBuckets) {
+      if (now - v.start >= RATE_WINDOW_MS) rateBuckets.delete(k);
+    }
+  }
+  return bucket.count > RATE_MAX_PER_WINDOW;
+}
+
 // --- Helpers ---------------------------------------------------------------
 
 function clampInt(n, fallback, min, max) {
@@ -432,12 +471,11 @@ async function toolSearchBlogPosts(args, env) {
   const now = new Date();
   let visible = posts.filter((p) => new Date(p.publishDate) <= now);
 
-  const q = (args.query || "").trim().toLowerCase();
-  if (q) {
-    visible = visible.filter((p) => {
-      const hay = `${p.title} ${p.summary} ${(p.tags || []).join(" ")}`.toLowerCase();
-      return hay.includes(q);
-    });
+  const tokens = tokenize(args.query || "");
+  if (tokens.length) {
+    visible = visible.filter((p) =>
+      matchesAllTokens(`${p.title} ${p.summary} ${(p.tags || []).join(" ")}`, tokens)
+    );
   }
   visible.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
 
@@ -485,10 +523,27 @@ async function loadPostsJson(env) {
   }
 }
 
+// Tokenize a query: multi-word queries match when EVERY token appears
+// somewhere in the haystack (order-independent). This makes Arabic phrases
+// like "مواقف الرياض" hit posts that contain both words separately.
+function tokenize(q) {
+  return String(q)
+    .toLowerCase()
+    .split(/\s+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length >= 2);
+}
+
+function matchesAllTokens(hay, tokens) {
+  const h = hay.toLowerCase();
+  return tokens.every((t) => h.includes(t));
+}
+
 async function toolUnifiedSearch(args, env) {
   const q = String(args.query || "").trim();
   if (!q) return { results: [] };
-  const qLower = q.toLowerCase();
+  const tokens = tokenize(q);
+  if (!tokens.length) return { results: [] };
   const results = [];
 
   // 1) Blog posts (static, cheap).
@@ -497,8 +552,8 @@ async function toolUnifiedSearch(args, env) {
     const now = new Date();
     for (const p of posts) {
       if (new Date(p.publishDate) > now) continue;
-      const hay = `${p.title} ${p.summary} ${(p.tags || []).join(" ")}`.toLowerCase();
-      if (hay.includes(qLower)) {
+      const hay = `${p.title} ${p.summary} ${(p.tags || []).join(" ")}`;
+      if (matchesAllTokens(hay, tokens)) {
         results.push({
           id: `post:${p.slug}`,
           title: p.title,
@@ -511,21 +566,25 @@ async function toolUnifiedSearch(args, env) {
     // blog search is best-effort
   }
 
-  // 2) Parking spots by name/area (live).
+  // 2) Parking spots by name/area (live). Query Supabase with the FIRST
+  // token (broadest ilike), then require the remaining tokens client-side.
   try {
-    const safe = q.replace(/[%,]/g, "");
+    const first = tokens[0].replace(/[%,()]/g, "");
     const rows = await supaSelect(
       env,
       "parking_spots",
-      `select=id,spot_name,name,label,area_name&or=(spot_name.ilike.*${safe}*,name.ilike.*${safe}*,area_name.ilike.*${safe}*,label.ilike.*${safe}*)&limit=8`
+      `select=id,spot_name,name,label,area_name&or=(spot_name.ilike.*${first}*,name.ilike.*${first}*,area_name.ilike.*${first}*,label.ilike.*${first}*)&limit=30`
     );
     for (const r of rows) {
       const title = r.spot_name || r.name || r.label || "موقف PARKINZI";
+      const hay = `${r.spot_name || ""} ${r.name || ""} ${r.label || ""} ${r.area_name || ""}`;
+      if (!matchesAllTokens(hay, tokens)) continue;
       results.push({
         id: `spot:${r.id}`,
         title: r.area_name ? `${title} — ${r.area_name}` : title,
         url: "https://parkinzi.com/",
       });
+      if (results.length >= 16) break;
     }
   } catch {
     // spot search is best-effort
@@ -802,6 +861,24 @@ async function handleSingleRpc(body, env) {
 export async function handleMcpRequest(request, env) {
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: CORS_HEADERS });
+  }
+
+  // Soft per-IP rate limit (POST only — GET is the cheap info page).
+  if (request.method === "POST") {
+    const ip = request.headers.get("CF-Connecting-IP") || "";
+    if (isRateLimited(ip)) {
+      return new Response(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: null,
+          error: { code: -32000, message: "Rate limit exceeded. Try again in a minute." },
+        }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", "Retry-After": "60", ...CORS_HEADERS },
+        }
+      );
+    }
   }
 
   if (request.method === "GET") {

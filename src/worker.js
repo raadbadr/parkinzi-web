@@ -169,6 +169,21 @@ export default {
       return handleMcpRequest(request, env);
     }
 
+    // MCP Registry domain verification (HTTP method). The registry's
+    // mcp-publisher CLI checks this when we publish under com.parkinzi/*.
+    // Public key only — the private seed lives outside the repo.
+    if (path === "/.well-known/mcp-registry-auth") {
+      return new Response(
+        "v=MCPv1; k=ed25519; p=T/Re6kkxh2i3M0SEFF97seIxQHpXMe8sdW3wwnft/Cc=",
+        {
+          headers: {
+            "Content-Type": "text/plain",
+            "Cache-Control": "public, max-age=300",
+          },
+        }
+      );
+    }
+
     // MCP discovery manifest. Served from the Worker so it's never cached
     // behind a stale assets build.
     if (path === "/.well-known/mcp.json") {
