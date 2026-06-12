@@ -4,3 +4,8 @@ main = "src/worker.js"
 
 [assets]
 directory = "./"
+# Expose the assets binding to the Worker. Without this line env.ASSETS is
+# undefined inside the Worker (static pages still serve because Cloudflare
+# answers asset-matching requests before the Worker runs) — which silently
+# broke every MCP tool that reads blog content.
+binding = "ASSETS"

@@ -1,0 +1,20 @@
+# Files excluded from the public static-assets upload.
+# Keep this list tight: anything NOT listed here is downloadable from
+# parkinzi.com by anyone.
+
+# Tooling and infrastructure — never public
+.wrangler
+.git
+.gitignore
+.github
+.claude
+node_modules
+
+# Worker source — bundled separately via `main`, must not be served raw
+src
+
+# Blog automation scripts — contain prompts and internals
+scripts
+
+# Internal docs (README, fix logs, design notes)
+*.md
