@@ -252,8 +252,9 @@
     <ul>
       <li>الوصول مجاني وبدون مصادقة (read-only).</li>
       <li>القراءة فقط — لا يدعم الحجز أو الدفع حالياً (مرحلة لاحقة).</li>
-      <li>Rate limiting على مستوى Cloudflare WAF لتفادي الإساءة.</li>
+      <li>Rate limit: 120 طلباً في الدقيقة لكل IP (يرجع 429 عند التجاوز).</li>
       <li>جميع البيانات حية من قاعدة بيانات PARKINZI الإنتاجية.</li>
+      <li>مسجَّل في <a href="https://registry.modelcontextprotocol.io" target="_blank" rel="noopener">MCP Registry</a> الرسمي باسم <code>com.parkinzi/parkinzi</code>.</li>
     </ul>
 
     <h2>الخصوصية</h2>
