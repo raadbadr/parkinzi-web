@@ -65,5 +65,8 @@ Allow: /
 User-agent: DuckDuckBot
 Allow: /
 
+# Hidden pages
+Disallow: /mcp-server.html
+
 # Sitemaps and feeds
 Sitemap: https://parkinzi.com/sitemap.xml
