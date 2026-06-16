@@ -188,8 +188,9 @@ export default {
       });
     }
 
-    // MCP Server — read-only access for AI assistants (Claude, ChatGPT, etc.)
+    // MCP Server — POST only. GET from browsers returns 404 to avoid exposure.
     if (path === "/mcp") {
+      if (request.method !== "POST") return new Response(null, { status: 404 });
       return handleMcpRequest(request, env);
     }
 
