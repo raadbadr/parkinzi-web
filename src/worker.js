@@ -190,7 +190,10 @@ export default {
 
     // MCP Server — POST only. GET from browsers returns 404 to avoid exposure.
     if (path === "/mcp") {
-      if (request.method !== "POST") return new Response("404 Not Found", { status: 404, headers: { "Content-Type": "text/plain" } });
+      if (request.method !== "POST") {
+        const page = await env.ASSETS.fetch(new Request(new URL("/404.html", request.url)));
+        return new Response(page.body, { status: 404, headers: page.headers });
+      }
       return handleMcpRequest(request, env);
     }
 
