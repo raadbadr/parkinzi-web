@@ -13,7 +13,6 @@ const today = new Date().toISOString().slice(0, 10);
 const STATIC_URLS = [
   { loc: 'https://parkinzi.com/', lastmod: today, changefreq: 'weekly', priority: '1.0' },
   { loc: 'https://parkinzi.com/blog/', lastmod: today, changefreq: 'daily', priority: '0.9' },
-  { loc: 'https://parkinzi.com/mcp-server.html', lastmod: today, changefreq: 'monthly', priority: '0.7' },
   { loc: 'https://parkinzi.com/llms.txt', lastmod: today, changefreq: 'monthly', priority: '0.5' },
   { loc: 'https://parkinzi.com/about.html', lastmod: '2026-04-09', changefreq: 'monthly', priority: '0.8' },
   { loc: 'https://parkinzi.com/pricing.html', lastmod: '2026-04-09', changefreq: 'monthly', priority: '0.8' },
