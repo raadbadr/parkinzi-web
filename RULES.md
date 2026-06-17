@@ -9,9 +9,9 @@ These rules apply to every AI agent, developer, and automated tool working on th
 
 | File / Path | What it is | Why it's locked |
 |---|---|---|
-| `favicon.ico` | Website favicon | Brand identity — must match original design |
-| `favicon-32x32.png` | Favicon 32px | Brand identity |
-| `apple-touch-icon.png` | iOS home screen icon | Brand identity |
+| `favicon.ico` | Website favicon | Brand identity — must be the iOS app icon (P logo, commit `1e15924`). Never replace. |
+| `favicon-32x32.png` | Favicon 32px | Brand identity — same source as favicon.ico |
+| `apple-touch-icon.png` | iOS home screen icon | Brand identity — same source as favicon.ico |
 | `src/worker.js` — `PUBLIC_SPOT_COLUMNS` | Public API column allowlist | PII protection — removing columns from this list can expose owner names, deed numbers, camera URLs |
 | `src/worker.js` — `/mcp` route | MCP endpoint | AI assistant integration — must remain POST-only |
 | `src/mcp.js` — tool schemas | MCP tool definitions | Published to official MCP Registry (com.parkinzi/parkinzi) — breaking changes require version bump |
