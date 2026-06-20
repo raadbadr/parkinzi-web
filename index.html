@@ -3473,6 +3473,11 @@
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapTatmin2Date">7 مايو</span>
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-android" id="growthMapTimelineAndroid" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapAndroidLabel">نسخة أندرويد</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapAndroidDate">20 يونيو</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
       <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
@@ -3615,10 +3620,9 @@
       <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="download-block download-block--ios" target="_blank" rel="noopener noreferrer">
         <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="حمل PARKINZI من App Store" class="store-badge app-store-badge" loading="eager">
       </a>
-      <div class="download-block download-block--android">
+      <a href="https://play.google.com/store/apps/details?id=com.parkinzi.android" class="download-block download-block--android" target="_blank" rel="noopener noreferrer">
         <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="حمل PARKINZI من Google Play" class="store-badge google-play-badge" loading="eager">
-        <span class="download-block-status download-block-status--soon" data-i18n="comingSoon">قريبا</span>
-      </div>
+      </a>
       <div class="download-block download-block--waitlist">
         <p class="waitlist-title" data-i18n="waitlistTitle">مقدم خدمة؟ سجل موقفك</p>
         <p class="waitlist-desc" data-i18n="waitlistDesc">سجل بريدك لتبدأ بتحقيق الدخل من موقفك</p>
@@ -3793,8 +3797,8 @@
         growthMapTatmin1Date: "4 مايو",
         growthMapTatmin2Label: "اجتماع مهم 2",
         growthMapTatmin2Date: "7 مايو",
-        growthMapAndroidLabel: "إطلاق Android",
-        growthMapAndroidDate: "1 مايو",
+        growthMapAndroidLabel: "نسخة أندرويد",
+        growthMapAndroidDate: "20 يونيو",
         growthMapTodayLabel: "الان"
       },
       en: {
@@ -3899,8 +3903,8 @@
         growthMapTatmin1Date: "May 4",
         growthMapTatmin2Label: "Key Meeting 2",
         growthMapTatmin2Date: "May 7",
-        growthMapAndroidLabel: "Android Launch",
-        growthMapAndroidDate: "May 1",
+        growthMapAndroidLabel: "Android Version",
+        growthMapAndroidDate: "Jun 20",
         growthMapTodayLabel: "Now"
       },
       fr: {
@@ -4006,8 +4010,8 @@
         growthMapTatmin1Date: "4 mai",
         growthMapTatmin2Label: "Reunion cle 2",
         growthMapTatmin2Date: "7 mai",
-        growthMapAndroidLabel: "Lancement Android",
-        growthMapAndroidDate: "1 mai",
+        growthMapAndroidLabel: "Version Android",
+        growthMapAndroidDate: "20 juin",
         growthMapTodayLabel: "Maint."
       },
       ur: {
@@ -4112,8 +4116,8 @@
         growthMapTatmin1Date: "4 مئی",
         growthMapTatmin2Label: "اہم میٹنگ 2",
         growthMapTatmin2Date: "7 مئی",
-        growthMapAndroidLabel: "Android لانچ",
-        growthMapAndroidDate: "1 مئی",
+        growthMapAndroidLabel: "Android ورژن",
+        growthMapAndroidDate: "20 جون",
         growthMapTodayLabel: "ابھی"
       }
     };
@@ -5471,8 +5475,20 @@
         };
         updateGrowthMapTatmin2Milestone();
 
+        const androidMilestoneEl = document.getElementById("growthMapTimelineAndroid");
+        updateGrowthMapAndroidMilestone = function () {
+          if (!androidMilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { androidMilestoneEl.hidden = true; return; }
+          const androidDayEnd2 = growthMapEndOfLocalDay(new Date(2026, 5, 20));
+          if (androidDayEnd2 < minCutoffMs || androidDayEnd2 > maxCutoffMs) { androidMilestoneEl.hidden = true; return; }
+          const r = warpR((androidDayEnd2 - minCutoffMs) / timelineSpanMs);
+          androidMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          androidMilestoneEl.hidden = false;
+        };
+        updateGrowthMapAndroidMilestone();
+
         /* إضافة كلاس الـ milestones (بديل :has للتوافق مع كل المتصفحات) */
-        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden || !tatmin1MilestoneEl.hidden || !tatmin2MilestoneEl.hidden) {
+        if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden || !tatmin1MilestoneEl.hidden || !tatmin2MilestoneEl.hidden || !androidMilestoneEl.hidden) {
           timelineEl.classList.add("growth-map-timeline--has-milestones");
         }
 
@@ -5528,7 +5544,7 @@
         if (tatmin2DayEnd >= minCutoffMs && tatmin2DayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((tatmin2DayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
-        var androidDayEnd = growthMapEndOfLocalDay(new Date(2026, 4, 1));
+        var androidDayEnd = growthMapEndOfLocalDay(new Date(2026, 5, 20));
         if (androidDayEnd >= minCutoffMs && androidDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((androidDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
