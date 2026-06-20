@@ -1828,14 +1828,26 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
-    /* ── 4-Level stagger system to avoid label overlap ──────────────────
-       Level A (bottom +52px): Apr 1 · Apr 18 · May 4
-       Level B (bottom +26px): Apr 10 · Apr 22 · Jun 20
-       Level C (top   +14px) : Apr 7  · Apr 21
-       Level D (top   +40px) : Apr 12 · May 7
-       ───────────────────────────────────────────────────────────────── */
+    /* ── 5 visible milestones only — secondary ones hidden to avoid overlap ──
+       Visible (spaced ≥8% apart):
+         Apr 1  (تجريبية 1.1) → Level A above +52px
+         Apr 7  (إطلاق iOS)   → Level C below +14px
+         Apr 18 (iOS 1.3)      → Level A above +52px  [8.5% from Apr 1]
+         May 7  (اجتماع مهم 2)→ Level D below +40px  [10% from Apr 18]
+         Jun 20 (أندرويد)      → Level B above +26px  [24.6% from May 7]
+       Hidden (too close, cause overlap):
+         Apr 10 (الإطلاق الرسمي), Apr 12 (استثنائية),
+         Apr 21 (تسويق), Apr 22 (تواصل اجتماعي), May 4 (مهم 1)
+    ─────────────────────────────────────────────────────────────────── */
 
-    /* Level A — highest above */
+    /* Hide secondary milestones */
+    #growthMapTimelineRelease,
+    #growthMapTimelineExceptional,
+    #growthMapTimelineMarketing,
+    #growthMapTimelineSocial,
+    #growthMapTimelineTatmin1 { display: none !important; }
+
+    /* Level A — highest above (+52px) */
     #growthMapTimelineLaunch .growth-map-timeline-launch-label {
       bottom: calc(50% + 52px);
     }
@@ -1843,42 +1855,15 @@
       bottom: calc(50% + 52px);
     }
     .growth-map-timeline-ios13 .growth-map-timeline-launch-date { display: none; }
-    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-label {
-      bottom: calc(50% + 52px);
-    }
-    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-date { display: none; }
 
-    /* Level B — standard above */
-    #growthMapTimelineRelease .growth-map-timeline-launch-label {
-      bottom: calc(50% + 26px);
-    }
-    .growth-map-timeline-social .growth-map-timeline-launch-label {
-      bottom: calc(50% + 26px);
-      top: auto;
-    }
-    .growth-map-timeline-social .growth-map-timeline-launch-date { display: none; }
+    /* Level B — standard above (+26px) */
     .growth-map-timeline-android .growth-map-timeline-launch-label {
       bottom: calc(50% + 26px);
     }
 
-    /* Level C — just below */
-    /* ios (Apr 7) already at top+14px ✓ */
-    .growth-map-timeline-marketing .growth-map-timeline-launch-label {
-      bottom: auto;
-      top: calc(50% + 14px);
-    }
-    .growth-map-timeline-marketing .growth-map-timeline-launch-date {
-      top: calc(50% + 28px);
-    }
+    /* Level C — just below (top +14px): ios (Apr 7) already there ✓ */
 
-    /* Level D — further below */
-    .growth-map-timeline-exceptional .growth-map-timeline-launch-label {
-      bottom: auto;
-      top: calc(50% + 40px);
-    }
-    .growth-map-timeline-exceptional .growth-map-timeline-launch-date {
-      top: calc(50% + 56px);
-    }
+    /* Level D — further below (top +40px) */
     .growth-map-timeline-tatmin2 .growth-map-timeline-launch-label {
       bottom: auto;
       top: calc(50% + 40px);
