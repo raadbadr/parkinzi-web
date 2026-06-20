@@ -1874,17 +1874,43 @@
       min-width: 36px;
     }
 
-    /* ظهور عند snap للنقطة الأقرب */
-    .growth-map-timeline-launch[data-active] .growth-map-timeline-launch-label,
-    .growth-map-timeline-launch[data-active] .growth-map-timeline-launch-date {
-      opacity: 1;
-      visibility: visible;
+    /* Tooltip مشترك — يظهر تحت الشريط عند أقرب نقطة */
+    .growth-map-timeline-milestone-tooltip {
+      position: absolute;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 30;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .growth-map-milestone-tooltip-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: rgba(16, 16, 26, 0.90);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 6px;
+      padding: 3px 9px;
+      margin-bottom: 2px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    [data-theme="light"] .growth-map-milestone-tooltip-label {
+      background: rgba(255, 255, 255, 0.96);
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      color: #111;
+    }
+    .growth-map-milestone-tooltip-date {
+      display: block;
+      font-size: 0.52rem;
+      opacity: 0.72;
     }
 
-    /* حاوية مدمجة — الـ tooltip يطفو خارجها، لا مساحة مهدرة */
+    /* حاوية: مساحة كافية أسفل الشريط لعرض الـ tooltip */
     .growth-map-timeline--has-milestones {
       padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding-bottom: 3.5rem;
       overflow: visible;
     }
 
@@ -3522,6 +3548,10 @@
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
       </div>
+    </div>
+    <div class="growth-map-timeline-milestone-tooltip" id="growthMapMilestoneTooltip" hidden aria-hidden="true">
+      <span class="growth-map-milestone-tooltip-label" id="growthMapMilestoneTooltipLabel"></span>
+      <span class="growth-map-milestone-tooltip-date" id="growthMapMilestoneTooltipDate"></span>
     </div>
     <div class="growth-map-timeline-ends">
       <span id="growthMapTimelineStartLabel"></span>
@@ -5596,23 +5626,41 @@
           return v;
         }
 
-        /* ── Tooltip snap: يتبع الماوس ويُظهر بيانات أقرب نقطة ──── */
+        /* ── Tooltip مشترك: يتتبع الماوس ويُظهر بيانات أقرب نقطة ─── */
         var allMilestonesForTooltip = [
           launchMilestoneEl, releaseMilestoneEl, iosMilestoneEl, ios13MilestoneEl,
           exceptionalMilestoneEl, socialMilestoneEl, marketingMilestoneEl,
           tatmin1MilestoneEl, tatmin2MilestoneEl, androidMilestoneEl
         ].filter(Boolean);
 
-        function setActiveMilestone(el) {
-          allMilestonesForTooltip.forEach(function(m) { m.removeAttribute('data-active'); });
-          if (el) el.setAttribute('data-active', '');
+        var tooltipEl = document.getElementById('growthMapMilestoneTooltip');
+        var tooltipLabelEl = document.getElementById('growthMapMilestoneTooltipLabel');
+        var tooltipDateEl = document.getElementById('growthMapMilestoneTooltipDate');
+
+        var growthMapRangeWrap = timelineEl.querySelector('.growth-map-timeline-range-wrap');
+
+        function showMilestoneTooltip(m) {
+          if (!tooltipEl || !tooltipLabelEl || !tooltipDateEl) return;
+          if (!m) { tooltipEl.hidden = true; return; }
+          var timelineRect = timelineEl.getBoundingClientRect();
+          var mRect = m.getBoundingClientRect();
+          var mCenterX = mRect.left + mRect.width / 2 - timelineRect.left;
+          var wrapBottom = growthMapRangeWrap
+            ? growthMapRangeWrap.getBoundingClientRect().bottom - timelineRect.top
+            : mRect.bottom - timelineRect.top;
+          var mLabel = m.querySelector('.growth-map-timeline-launch-label');
+          var mDate  = m.querySelector('.growth-map-timeline-launch-date');
+          tooltipLabelEl.textContent = mLabel ? mLabel.textContent : '';
+          tooltipDateEl.textContent  = mDate  ? mDate.textContent  : '';
+          tooltipEl.style.left = mCenterX + 'px';
+          tooltipEl.style.top  = (wrapBottom + 6) + 'px';
+          tooltipEl.hidden = false;
         }
 
         function snapTooltipFromClientX(clientX) {
           var rect = timelineEl.getBoundingClientRect();
           var mouseX = clientX - rect.left;
-          var nearest = null;
-          var minDist = Infinity;
+          var nearest = null, minDist = Infinity;
           allMilestonesForTooltip.forEach(function(m) {
             if (m.hidden) return;
             var mRect = m.getBoundingClientRect();
@@ -5620,7 +5668,7 @@
             var dist = Math.abs(mouseX - mX);
             if (dist < minDist) { minDist = dist; nearest = m; }
           });
-          setActiveMilestone(nearest);
+          showMilestoneTooltip(nearest);
         }
 
         timelineEl.addEventListener('mousemove', function(e) {
@@ -5628,7 +5676,7 @@
         }, { passive: true });
 
         timelineEl.addEventListener('mouseleave', function() {
-          setActiveMilestone(null);
+          showMilestoneTooltip(null);
         }, { passive: true });
 
         timelineEl.addEventListener('touchmove', function(e) {
@@ -5636,7 +5684,7 @@
         }, { passive: true });
 
         timelineEl.addEventListener('touchend', function() {
-          setActiveMilestone(null);
+          showMilestoneTooltip(null);
         }, { passive: true });
 
         window.addEventListener(
