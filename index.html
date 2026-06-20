@@ -1828,6 +1828,71 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
+    /* ── 4-Level stagger system to avoid label overlap ──────────────────
+       Level A (bottom +52px): Apr 1 · Apr 18 · May 4
+       Level B (bottom +26px): Apr 10 · Apr 22 · Jun 20
+       Level C (top   +14px) : Apr 7  · Apr 21
+       Level D (top   +40px) : Apr 12 · May 7
+       ───────────────────────────────────────────────────────────────── */
+
+    /* Level A — highest above */
+    #growthMapTimelineLaunch .growth-map-timeline-launch-label {
+      bottom: calc(50% + 52px);
+    }
+    .growth-map-timeline-ios13 .growth-map-timeline-launch-label {
+      bottom: calc(50% + 52px);
+    }
+    .growth-map-timeline-ios13 .growth-map-timeline-launch-date { display: none; }
+    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-label {
+      bottom: calc(50% + 52px);
+    }
+    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-date { display: none; }
+
+    /* Level B — standard above */
+    #growthMapTimelineRelease .growth-map-timeline-launch-label {
+      bottom: calc(50% + 26px);
+    }
+    .growth-map-timeline-social .growth-map-timeline-launch-label {
+      bottom: calc(50% + 26px);
+      top: auto;
+    }
+    .growth-map-timeline-social .growth-map-timeline-launch-date { display: none; }
+    .growth-map-timeline-android .growth-map-timeline-launch-label {
+      bottom: calc(50% + 26px);
+    }
+
+    /* Level C — just below */
+    /* ios (Apr 7) already at top+14px ✓ */
+    .growth-map-timeline-marketing .growth-map-timeline-launch-label {
+      bottom: auto;
+      top: calc(50% + 14px);
+    }
+    .growth-map-timeline-marketing .growth-map-timeline-launch-date {
+      top: calc(50% + 28px);
+    }
+
+    /* Level D — further below */
+    .growth-map-timeline-exceptional .growth-map-timeline-launch-label {
+      bottom: auto;
+      top: calc(50% + 40px);
+    }
+    .growth-map-timeline-exceptional .growth-map-timeline-launch-date {
+      top: calc(50% + 56px);
+    }
+    .growth-map-timeline-tatmin2 .growth-map-timeline-launch-label {
+      bottom: auto;
+      top: calc(50% + 40px);
+    }
+    .growth-map-timeline-tatmin2 .growth-map-timeline-launch-date {
+      top: calc(50% + 56px);
+    }
+
+    /* Extra padding so labels don't clip */
+    .growth-map-timeline--has-milestones {
+      padding-top: 4.5rem;
+      padding-bottom: 4rem;
+    }
+
     /* Responsive: timeline milestones — stagger labels to avoid overlap */
     @media (max-width: 600px) {
       .growth-map-timeline {
