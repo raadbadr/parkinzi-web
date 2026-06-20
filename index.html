@@ -1874,11 +1874,9 @@
       min-width: 36px;
     }
 
-    /* ظهور عند تحريك المؤشر أو اللمس */
-    .growth-map-timeline-launch:hover .growth-map-timeline-launch-label,
-    .growth-map-timeline-launch:hover .growth-map-timeline-launch-date,
-    .growth-map-timeline-launch:active .growth-map-timeline-launch-label,
-    .growth-map-timeline-launch:active .growth-map-timeline-launch-date {
+    /* ظهور عند snap للنقطة الأقرب */
+    .growth-map-timeline-launch[data-active] .growth-map-timeline-launch-label,
+    .growth-map-timeline-launch[data-active] .growth-map-timeline-launch-date {
       opacity: 1;
       visibility: visible;
     }
@@ -5597,6 +5595,49 @@
           }
           return v;
         }
+
+        /* ── Tooltip snap: يتبع الماوس ويُظهر بيانات أقرب نقطة ──── */
+        var allMilestonesForTooltip = [
+          launchMilestoneEl, releaseMilestoneEl, iosMilestoneEl, ios13MilestoneEl,
+          exceptionalMilestoneEl, socialMilestoneEl, marketingMilestoneEl,
+          tatmin1MilestoneEl, tatmin2MilestoneEl, androidMilestoneEl
+        ].filter(Boolean);
+
+        function setActiveMilestone(el) {
+          allMilestonesForTooltip.forEach(function(m) { m.removeAttribute('data-active'); });
+          if (el) el.setAttribute('data-active', '');
+        }
+
+        function snapTooltipFromClientX(clientX) {
+          var rect = timelineEl.getBoundingClientRect();
+          var mouseX = clientX - rect.left;
+          var nearest = null;
+          var minDist = Infinity;
+          allMilestonesForTooltip.forEach(function(m) {
+            if (m.hidden) return;
+            var mRect = m.getBoundingClientRect();
+            var mX = mRect.left + mRect.width / 2 - rect.left;
+            var dist = Math.abs(mouseX - mX);
+            if (dist < minDist) { minDist = dist; nearest = m; }
+          });
+          setActiveMilestone(nearest);
+        }
+
+        timelineEl.addEventListener('mousemove', function(e) {
+          snapTooltipFromClientX(e.clientX);
+        }, { passive: true });
+
+        timelineEl.addEventListener('mouseleave', function() {
+          setActiveMilestone(null);
+        }, { passive: true });
+
+        timelineEl.addEventListener('touchmove', function(e) {
+          if (e.touches.length) snapTooltipFromClientX(e.touches[0].clientX);
+        }, { passive: true });
+
+        timelineEl.addEventListener('touchend', function() {
+          setActiveMilestone(null);
+        }, { passive: true });
 
         window.addEventListener(
           "resize",
