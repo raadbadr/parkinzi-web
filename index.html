@@ -1883,10 +1883,11 @@
       visibility: visible;
     }
 
-    /* حاوية مدمجة — مساحة أسفل للـ tooltip فقط */
+    /* حاوية مدمجة — الـ tooltip يطفو خارجها، لا مساحة مهدرة */
     .growth-map-timeline--has-milestones {
-      padding-top: 1.5rem;
-      padding-bottom: 3.5rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      overflow: visible;
     }
 
     @media (max-width: 600px) {
