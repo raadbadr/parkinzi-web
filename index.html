@@ -1828,59 +1828,51 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
-    /* ── 6-Level stagger via #ID (high specificity) ──────────────────
-       L1 (bottom +68px): Apr 1 · Apr 18 · Jun 20
-       L2 (bottom +42px): Apr 10 · May 4
-       L3 (bottom +18px): Apr 21
-       L4 (top   +12px) : Apr 7  · May 7
-       L5 (top   +38px) : Apr 22
-       L6 (top   +62px) : Apr 12
-    ─────────────────────────────────────────────────────────────────── */
+    /* ── نظام H1/H2 — كل النقاط فوق الشريط — يتناوب بانتظام ───────────
+       Apr1(H1) Apr7(H2) Apr10(H1) Apr12(H2) Apr18(H1)
+       Apr21(H2) May4(H1) May7(H2) Jun20(H1)
+       Apr22 مخفية: نفس موقع Apr21 (يوم فرق)
+    ──────────────────────────────────────────────────────────────────── */
 
-    /* Smaller font */
-    .growth-map-timeline-launch-label { font-size: 0.55rem; }
-    .growth-map-timeline-launch-date  { font-size: 0.46rem; }
+    .growth-map-timeline-launch-label { font-size: 0.60rem; }
+    .growth-map-timeline-launch-date  { font-size: 0.50rem; }
+    .growth-map-timeline-launch-date  { top: auto; }
 
-    /* L1 (bottom +68px) */
-    #growthMapTimelineLaunch      .growth-map-timeline-launch-label { bottom: calc(50% + 68px); }
-    #growthMapTimelineIos13       .growth-map-timeline-launch-label { bottom: calc(50% + 68px); top: auto; }
-    #growthMapTimelineIos13       .growth-map-timeline-launch-date  { display: none; }
-    #growthMapTimelineAndroid     .growth-map-timeline-launch-label { bottom: calc(50% + 68px); top: auto; }
+    /* H1 — label −58px · date −42px */
+    #growthMapTimelineLaunch      .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
+    #growthMapTimelineLaunch      .growth-map-timeline-launch-date  { bottom: calc(50% + 42px); top: auto; }
+    #growthMapTimelineRelease     .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
+    #growthMapTimelineRelease     .growth-map-timeline-launch-date  { bottom: calc(50% + 42px); top: auto; }
+    #growthMapTimelineIos13       .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
+    #growthMapTimelineIos13       .growth-map-timeline-launch-date  { bottom: calc(50% + 42px); top: auto; }
+    #growthMapTimelineTatmin1     .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
+    #growthMapTimelineTatmin1     .growth-map-timeline-launch-date  { bottom: calc(50% + 42px); top: auto; }
+    #growthMapTimelineAndroid     .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
+    #growthMapTimelineAndroid     .growth-map-timeline-launch-date  { bottom: calc(50% + 42px); top: auto; }
 
-    /* L2 (bottom +42px) */
-    #growthMapTimelineRelease     .growth-map-timeline-launch-label { bottom: calc(50% + 42px); top: auto; }
-    #growthMapTimelineTatmin1     .growth-map-timeline-launch-label { bottom: calc(50% + 42px); top: auto; }
-    #growthMapTimelineTatmin1     .growth-map-timeline-launch-date  { display: none; }
+    /* H2 — label −30px · date −14px */
+    #growthMapTimelineIos         .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
+    #growthMapTimelineIos         .growth-map-timeline-launch-date  { bottom: calc(50% + 14px); top: auto; }
+    #growthMapTimelineExceptional .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
+    #growthMapTimelineExceptional .growth-map-timeline-launch-date  { bottom: calc(50% + 14px); top: auto; }
+    #growthMapTimelineMarketing   .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
+    #growthMapTimelineMarketing   .growth-map-timeline-launch-date  { bottom: calc(50% + 14px); top: auto; }
+    #growthMapTimelineTatmin2     .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
+    #growthMapTimelineTatmin2     .growth-map-timeline-launch-date  { bottom: calc(50% + 14px); top: auto; }
 
-    /* L3 (bottom +18px) */
-    #growthMapTimelineMarketing   .growth-map-timeline-launch-label { bottom: calc(50% + 18px); top: auto; }
-    #growthMapTimelineMarketing   .growth-map-timeline-launch-date  { display: none; }
+    /* Apr22 مخفية — نفس موقع Apr21 */
+    #growthMapTimelineSocial { display: none !important; }
 
-    /* L4 (top +12px) */
-    #growthMapTimelineIos         .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 12px); }
-    #growthMapTimelineTatmin2     .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 12px); }
-    #growthMapTimelineTatmin2     .growth-map-timeline-launch-date  { top: calc(50% + 26px); }
-
-    /* L5 (top +38px) */
-    #growthMapTimelineSocial      .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 38px); }
-    #growthMapTimelineSocial      .growth-map-timeline-launch-date  { top: calc(50% + 52px); }
-
-    /* L6 (top +62px) */
-    #growthMapTimelineExceptional .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 62px); }
-    #growthMapTimelineExceptional .growth-map-timeline-launch-date  { top: calc(50% + 76px); }
-
-    /* Taller container */
     .growth-map-timeline--has-milestones {
       padding-top: 5.5rem;
-      padding-bottom: 5.5rem;
+      padding-bottom: 1.5rem;
     }
 
-    /* Mobile (<1000px): hide secondary milestones, too dense to display */
+    /* موبايل: 5 نقاط — تتناوب H1/H2 تلقائياً */
     @media (max-width: 1000px) {
       #growthMapTimelineRelease,
       #growthMapTimelineExceptional,
       #growthMapTimelineMarketing,
-      #growthMapTimelineSocial,
       #growthMapTimelineTatmin1 { display: none !important; }
     }
 
