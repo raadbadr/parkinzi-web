@@ -1213,7 +1213,10 @@
       position: sticky;
       top: 70px;
       z-index: 20;
-      max-width: 1600px;
+      /* العرض = عرض حاوية الخريطة تماماً: 100% ناقص حشو القسم (2rem كل جهة)،
+         بحد أقصى 1136px (=1200 ناقص الحشو) موسّطاً */
+      width: calc(100% - 64px);
+      max-width: 1136px;
       margin-left: auto;
       margin-right: auto;
       padding-left: 2rem;
@@ -1527,19 +1530,8 @@
 
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline--has-milestones {
-      padding-top: 3.2rem;
-      padding-bottom: 1.8rem;
-    }
-    /* Hide dates for Beta & Release (above-bar) — avoids overlap */
-    /* dates handled by stagger block below */
-    /* Alternate: iOS below bar, Beta & Release above */
-    #growthMapTimelineIos .growth-map-timeline-launch-label {
-      bottom: auto;
-      top: calc(50% + 14px);
-    }
-    /* iOS date under its label */
-    #growthMapTimelineIos .growth-map-timeline-launch-date {
-      top: calc(50% + 26px);
+      padding-top: 2rem;
+      padding-bottom: 1.4rem;
     }
     .growth-map-timeline-launch {
       position: absolute;
@@ -1553,6 +1545,10 @@
       justify-content: center;
       pointer-events: none;
       z-index: 2;
+    }
+    /* بدون هذا، display:flex يتغلّب على [hidden] الافتراضية فلا يختفي المعلم */
+    .growth-map-timeline-launch[hidden] {
+      display: none !important;
     }
     .growth-map-timeline-launch-label {
       position: absolute;
@@ -1825,53 +1821,9 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
-    /* ── نظام H1/H2 — كل النقاط فوق الشريط — يتناوب بانتظام ───────────
-       Apr1(H1) Apr7(H2) Apr10(H1) Apr12(H2) Apr18(H1)
-       Apr21(H2) May4(H1) May7(H2) Jun20(H1)
-       Apr22 مخفية: نفس موقع Apr21 (يوم فرق)
-    ──────────────────────────────────────────────────────────────────── */
-
+    /* معلم واحد نشِط فقط — موضع موحّد فوق الشريط (بلا توزيع رأسي H1/H2) */
     .growth-map-timeline-launch-label { font-size: 0.60rem; }
     .growth-map-timeline-launch-date  { font-size: 0.50rem; }
-    .growth-map-timeline-launch-date  { top: auto; }
-
-    /* H1 — label −58px · date −42px */
-    #growthMapTimelineLaunch      .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
-    #growthMapTimelineLaunch      .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 42px); top: auto; }
-    #growthMapTimelineRelease     .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
-    #growthMapTimelineRelease     .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 42px); top: auto; }
-    #growthMapTimelineIos13       .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
-    #growthMapTimelineIos13       .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 42px); top: auto; }
-    #growthMapTimelineTatmin1     .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
-    #growthMapTimelineTatmin1     .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 42px); top: auto; }
-    #growthMapTimelineAndroid     .growth-map-timeline-launch-label { bottom: calc(50% + 58px); top: auto; }
-    #growthMapTimelineAndroid     .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 42px); top: auto; }
-
-    /* H2 — label −30px · date −14px */
-    #growthMapTimelineIos         .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
-    #growthMapTimelineIos         .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 14px); top: auto; }
-    #growthMapTimelineExceptional .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
-    #growthMapTimelineExceptional .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 14px); top: auto; }
-    #growthMapTimelineMarketing   .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
-    #growthMapTimelineMarketing   .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 14px); top: auto; }
-    #growthMapTimelineTatmin2     .growth-map-timeline-launch-label { bottom: calc(50% + 30px); top: auto; }
-    #growthMapTimelineTatmin2     .growth-map-timeline-launch-date  { display: block; bottom: calc(50% + 14px); top: auto; }
-
-    /* Apr22 مخفية — نفس موقع Apr21 */
-    #growthMapTimelineSocial { display: none !important; }
-
-    .growth-map-timeline--has-milestones {
-      padding-top: 5.5rem;
-      padding-bottom: 1.5rem;
-    }
-
-    /* موبايل: 5 نقاط — تتناوب H1/H2 تلقائياً */
-    @media (max-width: 1000px) {
-      #growthMapTimelineRelease,
-      #growthMapTimelineExceptional,
-      #growthMapTimelineMarketing,
-      #growthMapTimelineTatmin1 { display: none !important; }
-    }
 
     /* Responsive: timeline milestones — stagger labels to avoid overlap */
     @media (max-width: 600px) {
@@ -1879,8 +1831,8 @@
         padding: 0.8rem 0.5rem;
       }
       .growth-map-timeline--has-milestones {
-        padding-top: 4.5rem;
-        padding-bottom: 3rem;
+        padding-top: 2.2rem;
+        padding-bottom: 1.6rem;
       }
       .growth-map-timeline-launch-tick {
         height: 18px;
@@ -1899,18 +1851,6 @@
       }
       .growth-map-timeline-today-label {
         font-size: 0.48rem;
-      }
-      /* Alternate: Beta above, iOS below, Release above */
-      #growthMapTimelineLaunch .growth-map-timeline-launch-label {
-        bottom: calc(50% + 22px) !important;
-      }
-      #growthMapTimelineIos .growth-map-timeline-launch-label {
-        bottom: auto !important;
-        top: calc(50% + 14px) !important;
-      }
-      #growthMapTimelineRelease .growth-map-timeline-launch-label {
-        bottom: calc(50% + 22px) !important;
-        top: auto !important;
       }
     }
     @media (max-width: 600px) {
@@ -2734,13 +2674,17 @@
         margin-top: 1rem;
       }
 
+      .growth-map-timeline.growth-map-timeline--sticky {
+        width: calc(100% - 48px);
+        max-width: none;
+      }
       .growth-map-timeline {
         padding: 1.15rem 1.2rem 1.3rem;
         min-height: 5rem;
       }
       .growth-map-timeline--has-milestones {
-        padding-top: 4.5rem;
-        padding-bottom: 3rem;
+        padding-top: 2.2rem;
+        padding-bottom: 1.6rem;
       }
 
       .platform-stats {
@@ -2845,13 +2789,17 @@
         margin-top: 0.75rem;
       }
 
+      .growth-map-timeline.growth-map-timeline--sticky {
+        width: calc(100% - 32px);
+        max-width: none;
+      }
       .growth-map-timeline {
         padding: 1.05rem 1rem 1.2rem;
         min-height: 4.75rem;
       }
       .growth-map-timeline--has-milestones {
-        padding-top: 4.5rem;
-        padding-bottom: 3rem;
+        padding-top: 2.2rem;
+        padding-bottom: 1.6rem;
       }
 
       .platform-stats {
@@ -5128,6 +5076,7 @@
       let updateGrowthMapTatmin1Milestone = function () {};
       let updateGrowthMapTatmin2Milestone = function () {};
       let updateGrowthMapAndroidMilestone = function () {};
+      let applyActiveMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
         const lo = lang();
@@ -5540,6 +5489,49 @@
         };
         updateGrowthMapAndroidMilestone();
 
+        /* المعلم النشِط فقط: يُظهر المعلم الأخير الذي وصل إليه المؤشر بالماوس، ويخفي البقية —
+           سطر واحد فقط فيصبح الشريط أنحف بلا حاجة لتوزيع رأسي */
+        var ACTIVE_MILESTONES = [
+          { el: launchMilestoneEl, date: new Date(2026, 3, 1) },
+          { el: iosMilestoneEl, date: new Date(2026, 3, 7) },
+          { el: releaseMilestoneEl, date: new Date(2026, 3, 10) },
+          { el: exceptionalMilestoneEl, date: new Date(2026, 3, 12) },
+          { el: ios13MilestoneEl, date: new Date(2026, 3, 18) },
+          { el: marketingMilestoneEl, date: new Date(2026, 3, 21) },
+          { el: socialMilestoneEl, date: new Date(2026, 3, 22) },
+          { el: tatmin1MilestoneEl, date: new Date(2026, 4, 4) },
+          { el: tatmin2MilestoneEl, date: new Date(2026, 4, 7) },
+          { el: androidMilestoneEl, date: new Date(2026, 5, 20) }
+        ];
+        function milestoneStepForDate(d) {
+          if (timelineSpanMs <= 0) return null;
+          var dayEnd = growthMapEndOfLocalDay(d);
+          if (dayEnd < minCutoffMs || dayEnd > maxCutoffMs) return null;
+          /* نُقرّب مثل خطوات snap حتى يطابق معلم "اليوم" قيمة SLIDER_MAX_TODAY عند الحدّ */
+          return Math.round(warpR((dayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS);
+        }
+        applyActiveMilestone = function (pos) {
+          var p = Number(pos);
+          var activeEl = null;
+          var bestStep = -1;
+          for (var i = 0; i < ACTIVE_MILESTONES.length; i++) {
+            var s = milestoneStepForDate(ACTIVE_MILESTONES[i].date);
+            if (s == null) continue;
+            if (s <= p && s > bestStep) { bestStep = s; activeEl = ACTIVE_MILESTONES[i].el; }
+          }
+          for (var j = 0; j < ACTIVE_MILESTONES.length; j++) {
+            var el = ACTIVE_MILESTONES[j].el;
+            if (!el) continue;
+            if (el === activeEl) {
+              el.hidden = false;
+              el.classList.add("is-active-milestone");
+            } else {
+              el.hidden = true;
+              el.classList.remove("is-active-milestone");
+            }
+          }
+        };
+
         /* إضافة كلاس الـ milestones (بديل :has للتوافق مع كل المتصفحات) */
         if (!launchMilestoneEl.hidden || !releaseMilestoneEl.hidden || !iosMilestoneEl.hidden || !ios13MilestoneEl.hidden || !exceptionalMilestoneEl.hidden || !socialMilestoneEl.hidden || !marketingMilestoneEl.hidden || !tatmin1MilestoneEl.hidden || !tatmin2MilestoneEl.hidden || !androidMilestoneEl.hidden) {
           timelineEl.classList.add("growth-map-timeline--has-milestones");
@@ -5558,6 +5550,7 @@
           }
         }
         updateThumbNowLabel(SLIDER_MAX_TODAY);
+        applyActiveMilestone(SLIDER_MAX_TODAY);
 
         /* Snap: مواقع الـ milestones كـ slider steps (warped) */
         const milestoneSteps = [];
@@ -5623,6 +5616,7 @@
             requestAnimationFrame(updateGrowthMapTatmin1Milestone);
             requestAnimationFrame(updateGrowthMapTatmin2Milestone);
             requestAnimationFrame(updateGrowthMapAndroidMilestone);
+            requestAnimationFrame(function () { applyActiveMilestone(Number(sliderEl.value)); });
           },
           { passive: true }
         );
@@ -5715,6 +5709,7 @@
           sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoff));
           setTimelineFillFromPosition(pos);
           updateThumbNowLabel(pos);
+          applyActiveMilestone(pos);
           scheduleGrowthMapTimelineInput(cutoff);
           scheduleGrowthMapTimelineStatsThrottled(pos);
         });
@@ -5795,6 +5790,7 @@
           updateGrowthMapTatmin1Milestone();
           updateGrowthMapTatmin2Milestone();
           updateGrowthMapAndroidMilestone();
+          applyActiveMilestone(Number(sliderEl.value));
         }
       };
       setTimeout(() => map.resize(), 400);
