@@ -1867,8 +1867,12 @@
       white-space: nowrap;
     }
 
-    /* المؤشر pointer */
-    .growth-map-timeline-launch { cursor: pointer; }
+    /* منطقة hover واسعة */
+    .growth-map-timeline-launch {
+      pointer-events: auto;
+      cursor: pointer;
+      min-width: 36px;
+    }
 
     /* ظهور عند تحريك المؤشر أو اللمس */
     .growth-map-timeline-launch:hover .growth-map-timeline-launch-label,
