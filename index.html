@@ -1828,59 +1828,60 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
-    /* ── 6-Level stagger — all 10 milestones visible, no overlap ────────
-       L1 (bottom +68px): Apr 1 · Apr 18 · Jun 20    [gaps ≥8.5%]
-       L2 (bottom +42px): Apr 10 · May 4              [gap 12.5%]
-       L3 (bottom +18px): Apr 21                       [alone]
-       L4 (top   +12px) : Apr 7  · May 7              [gap 15.6%]
-       L5 (top   +38px) : Apr 22                       [alone]
-       L6 (top   +62px) : Apr 12                       [alone]
+    /* ── 6-Level stagger via #ID (high specificity) ──────────────────
+       L1 (bottom +68px): Apr 1 · Apr 18 · Jun 20
+       L2 (bottom +42px): Apr 10 · May 4
+       L3 (bottom +18px): Apr 21
+       L4 (top   +12px) : Apr 7  · May 7
+       L5 (top   +38px) : Apr 22
+       L6 (top   +62px) : Apr 12
     ─────────────────────────────────────────────────────────────────── */
 
-    /* Restore all milestones */
-    #growthMapTimelineRelease,
-    #growthMapTimelineExceptional,
-    #growthMapTimelineMarketing,
-    #growthMapTimelineSocial,
-    #growthMapTimelineTatmin1 { display: unset; }
+    /* Smaller font */
+    .growth-map-timeline-launch-label { font-size: 0.55rem; }
+    .growth-map-timeline-launch-date  { font-size: 0.46rem; }
 
-    /* Smaller font for density */
-    .growth-map-timeline-launch-label { font-size: 0.58rem; }
-    .growth-map-timeline-launch-date  { font-size: 0.48rem; }
+    /* L1 (bottom +68px) */
+    #growthMapTimelineLaunch      .growth-map-timeline-launch-label { bottom: calc(50% + 68px); }
+    #growthMapTimelineIos13       .growth-map-timeline-launch-label { bottom: calc(50% + 68px); top: auto; }
+    #growthMapTimelineIos13       .growth-map-timeline-launch-date  { display: none; }
+    #growthMapTimelineAndroid     .growth-map-timeline-launch-label { bottom: calc(50% + 68px); top: auto; }
 
-    /* L1 — highest above */
-    #growthMapTimelineLaunch         .growth-map-timeline-launch-label { bottom: calc(50% + 68px); }
-    .growth-map-timeline-ios13       .growth-map-timeline-launch-label { bottom: calc(50% + 68px); }
-    .growth-map-timeline-ios13       .growth-map-timeline-launch-date  { display: none; }
-    .growth-map-timeline-android     .growth-map-timeline-launch-label { bottom: calc(50% + 68px); }
+    /* L2 (bottom +42px) */
+    #growthMapTimelineRelease     .growth-map-timeline-launch-label { bottom: calc(50% + 42px); top: auto; }
+    #growthMapTimelineTatmin1     .growth-map-timeline-launch-label { bottom: calc(50% + 42px); top: auto; }
+    #growthMapTimelineTatmin1     .growth-map-timeline-launch-date  { display: none; }
 
-    /* L2 — second above */
-    #growthMapTimelineRelease        .growth-map-timeline-launch-label { bottom: calc(50% + 42px); }
-    .growth-map-timeline-tatmin1     .growth-map-timeline-launch-label { bottom: calc(50% + 42px); }
-    .growth-map-timeline-tatmin1     .growth-map-timeline-launch-date  { display: none; }
+    /* L3 (bottom +18px) */
+    #growthMapTimelineMarketing   .growth-map-timeline-launch-label { bottom: calc(50% + 18px); top: auto; }
+    #growthMapTimelineMarketing   .growth-map-timeline-launch-date  { display: none; }
 
-    /* L3 — just above */
-    .growth-map-timeline-marketing   .growth-map-timeline-launch-label { bottom: calc(50% + 18px); top: auto; }
-    .growth-map-timeline-marketing   .growth-map-timeline-launch-date  { display: none; }
+    /* L4 (top +12px) */
+    #growthMapTimelineIos         .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 12px); }
+    #growthMapTimelineTatmin2     .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 12px); }
+    #growthMapTimelineTatmin2     .growth-map-timeline-launch-date  { top: calc(50% + 26px); }
 
-    /* L4 — just below */
-    #growthMapTimelineIos            .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 12px); }
-    #growthMapTimelineIos            .growth-map-timeline-launch-date  { top: calc(50% + 26px); }
-    .growth-map-timeline-tatmin2     .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 12px); }
-    .growth-map-timeline-tatmin2     .growth-map-timeline-launch-date  { top: calc(50% + 26px); }
+    /* L5 (top +38px) */
+    #growthMapTimelineSocial      .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 38px); }
+    #growthMapTimelineSocial      .growth-map-timeline-launch-date  { top: calc(50% + 52px); }
 
-    /* L5 — further below */
-    .growth-map-timeline-social      .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 38px); }
-    .growth-map-timeline-social      .growth-map-timeline-launch-date  { top: calc(50% + 52px); }
+    /* L6 (top +62px) */
+    #growthMapTimelineExceptional .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 62px); }
+    #growthMapTimelineExceptional .growth-map-timeline-launch-date  { top: calc(50% + 76px); }
 
-    /* L6 — deepest below */
-    .growth-map-timeline-exceptional .growth-map-timeline-launch-label { bottom: auto; top: calc(50% + 62px); }
-    .growth-map-timeline-exceptional .growth-map-timeline-launch-date  { top: calc(50% + 76px); }
-
-    /* Taller container to accommodate 6 levels */
+    /* Taller container */
     .growth-map-timeline--has-milestones {
       padding-top: 5.5rem;
       padding-bottom: 5.5rem;
+    }
+
+    /* Mobile (<1000px): hide secondary milestones, too dense to display */
+    @media (max-width: 1000px) {
+      #growthMapTimelineRelease,
+      #growthMapTimelineExceptional,
+      #growthMapTimelineMarketing,
+      #growthMapTimelineSocial,
+      #growthMapTimelineTatmin1 { display: none !important; }
     }
 
     /* Responsive: timeline milestones — stagger labels to avoid overlap */
