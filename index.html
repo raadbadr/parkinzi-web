@@ -5322,19 +5322,19 @@
         );
         const now = new Date();
         const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        /* النطاق المرئي الكامل: حتى 31 مايو 2026 */
-        let timelineEndDay = new Date(2026, 4, 31);
+        /* النطاق المرئي: يمتد حتى 15 أكتوبر 2026 لإعطاء مسافة بعد اليوم */
+        let timelineEndDay = new Date(2026, 9, 15);
         if (todayDay > timelineEndDay) timelineEndDay = todayDay;
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
-        /* Power warp: يسحب المعالم نحو بداية الشريط (15 مارس)
-           بدلاً من تركّزها في الوسط/النهاية */
+        /* Power warp: يسحب المعالم نحو نهاية الشريط (اليوم)
+           لتقليل المسافة الفارغة بين مايو ويونيو */
         (function buildTimelineWarp() {
           if (timelineSpanMs <= 0) return;
-          var WARP_EXP = 1.6;
+          var WARP_EXP = 0.6;
           _tlWarpToVisual = function (r) {
             if (r <= 0) return 0; if (r >= 1) return 1;
             return Math.pow(r, WARP_EXP);
