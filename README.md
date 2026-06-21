@@ -104,6 +104,14 @@ Web/
 
 ## ⚠️ تعليمات ثابتة — لا تُعدّل
 
+### طريقة النشر (GitHub → Cloudflare Pages)
+- **المستودع:** `github.com/raadbadr/parkinzi-web`
+- **لوحة Cloudflare:** Workers & Pages → parkinzi → Settings → Builds & deployments
+- **الربط:** Connect to Git → GitHub → `raadbadr/parkinzi-web` → الفرع `main`
+- **إعدادات البناء:** Build command = فارغ، Build output directory = `/`
+- **كل `git push` للفرع `main` ينشر تلقائياً خلال ثوانٍ.**
+- **لا تستخدم `wrangler deploy` يدوياً — النشر فقط من GitHub.**
+
 ### أيقونة الموقع (Favicon & Apple Touch Icon)
 - ملفات الأيقونة: `favicon-32x32.png`، `favicon-16x16.png`، `apple-touch-icon.png`
 - المصدر: `parkinzi_icon_512.png` (512×512 PNG)
