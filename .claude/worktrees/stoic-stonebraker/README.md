@@ -102,14 +102,6 @@ Web/
 
 © 2026 PARKINZI. جميع الحقوق محفوظة.
 
-## ⚠️ تعليمات ثابتة — لا تُعدّل
-
-### أيقونة الموقع (Favicon & Apple Touch Icon)
-- ملفات الأيقونة: `favicon-32x32.png`، `favicon-16x16.png`، `apple-touch-icon.png`
-- المصدر: `parkinzi_icon_512.png` (512×512 PNG)
-- **لا تغيير هذه الأيقونة بعد الآن بدون إذن مباشر من رعد.**
-- مرجعية في `manifest.webmanifest` وكل صفحات HTML الست.
-
 ---
 
 **النسخة:** 2.1
