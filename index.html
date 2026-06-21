@@ -1530,7 +1530,7 @@
 
     /* نسخة تجريبية 1.1 — علامة على شريط التايملاين */
     .growth-map-timeline--has-milestones {
-      padding-top: 2rem;
+      padding-top: 2.6rem;
       padding-bottom: 1.4rem;
     }
     .growth-map-timeline-launch {
@@ -1550,9 +1550,22 @@
     .growth-map-timeline-launch[hidden] {
       display: none !important;
     }
+    /* كل التيكات ظاهرة دائماً (المعالم موجودة) — التيك النشِط أبرز، وتظهر تسميته فقط */
+    .growth-map-timeline-launch-tick {
+      opacity: 0.5;
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+    .growth-map-timeline-launch.is-active-milestone .growth-map-timeline-launch-tick {
+      opacity: 1;
+      transform: scaleY(1.35);
+    }
+    .growth-map-timeline-launch.is-active-milestone .growth-map-timeline-launch-label,
+    .growth-map-timeline-launch.is-active-milestone .growth-map-timeline-launch-date {
+      opacity: 1;
+    }
     .growth-map-timeline-launch-label {
       position: absolute;
-      bottom: calc(50% + 18px);
+      bottom: calc(50% + 30px);
       left: 50%;
       transform: translateX(-50%);
       white-space: nowrap;
@@ -1563,6 +1576,8 @@
       color: #ffb347;
       letter-spacing: 0.03em;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      transition: opacity 0.16s ease;
     }
     [data-theme="light"] .growth-map-timeline-launch-label {
       color: #c2410c;
@@ -1570,7 +1585,8 @@
     }
     .growth-map-timeline-launch-date {
       position: absolute;
-      top: calc(50% + 26px);
+      top: auto;
+      bottom: calc(50% + 16px);
       left: 50%;
       transform: translateX(-50%);
       white-space: nowrap;
@@ -1580,6 +1596,8 @@
       text-align: center;
       color: rgba(255, 179, 71, 0.7);
       letter-spacing: 0.02em;
+      opacity: 0;
+      transition: opacity 0.16s ease;
     }
     [data-theme="light"] .growth-map-timeline-launch-date {
       color: rgba(194, 65, 12, 0.65);
@@ -1660,9 +1678,8 @@
         0 0 8px rgba(25, 118, 210, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
-    /* إضافة استثنائية — لون ذهبي، ليبل مرفوع لتفادي التداخل مع الإطلاق الرسمي (10 أبريل) */
+    /* إضافة استثنائية — لون ذهبي */
     .growth-map-timeline-exceptional .growth-map-timeline-launch-label {
-      bottom: calc(50% + 42px);
       color: #ffd700;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 0 8px rgba(255, 215, 0, 0.4);
     }
@@ -1671,7 +1688,6 @@
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
     }
     .growth-map-timeline-exceptional .growth-map-timeline-launch-date {
-      top: calc(50% + 46px);
       color: rgba(255, 215, 0, 0.75);
     }
     [data-theme="light"] .growth-map-timeline-exceptional .growth-map-timeline-launch-date {
@@ -1689,15 +1705,10 @@
         0 0 10px rgba(184, 134, 11, 0.35),
         inset 0 1px 0 rgba(255, 255, 255, 0.55);
     }
-    /* تواصل اجتماعي — لون وردي، الليبل تحت الشريط لتفادي التداخل مع iOS 1.3 و"اجتماع تسويق" */
+    /* تواصل اجتماعي — لون وردي */
     .growth-map-timeline-social .growth-map-timeline-launch-label {
-      bottom: auto;
-      top: calc(50% + 14px);
       color: #f06292;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 0 8px rgba(240, 98, 146, 0.35);
-    }
-    .growth-map-timeline-social .growth-map-timeline-launch-date {
-      top: calc(50% + 28px);
     }
     [data-theme="light"] .growth-map-timeline-social .growth-map-timeline-launch-label {
       color: #c2185b;
@@ -1721,13 +1732,9 @@
         0 0 10px rgba(194, 24, 91, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.55);
     }
-    /* اجتماع تسويق — لون برتقالي، ليبل مرفوع فوق لتفادي التداخل مع iOS 1.3 */
+    /* اجتماع تسويق — لون برتقالي */
     .growth-map-timeline-marketing .growth-map-timeline-launch-label {
-      bottom: calc(50% + 42px);
       color: #ffb74d;
-    }
-    .growth-map-timeline-marketing .growth-map-timeline-launch-date {
-      top: calc(50% + 46px);
     }
     [data-theme="light"] .growth-map-timeline-marketing .growth-map-timeline-launch-label { color: #e65100; }
     .growth-map-timeline-marketing .growth-map-timeline-launch-date { color: rgba(255, 183, 77, 0.7); }
@@ -1795,14 +1802,6 @@
         animation: none;
       }
     }
-    /* اجتماع تطمين الأول (4 مايو) — رفع الليبل لتفادي التداخل مع Android (1 مايو) */
-    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-label {
-      bottom: calc(50% + 42px);
-    }
-    .growth-map-timeline-tatmin1 .growth-map-timeline-launch-date {
-      top: calc(50% + 46px);
-    }
-
     /* Android — لون أخضر */
     .growth-map-timeline-android .growth-map-timeline-launch-label { color: #a5d6a7; }
     [data-theme="light"] .growth-map-timeline-android .growth-map-timeline-launch-label { color: #2e7d32; }
@@ -5519,16 +5518,11 @@
             if (s == null) continue;
             if (s <= p && s > bestStep) { bestStep = s; activeEl = ACTIVE_MILESTONES[i].el; }
           }
+          /* كل المعالم تبقى ظاهرة (التيكات موجودة) — نُبرز النشِط فقط بإظهار تسميته */
           for (var j = 0; j < ACTIVE_MILESTONES.length; j++) {
             var el = ACTIVE_MILESTONES[j].el;
             if (!el) continue;
-            if (el === activeEl) {
-              el.hidden = false;
-              el.classList.add("is-active-milestone");
-            } else {
-              el.hidden = true;
-              el.classList.remove("is-active-milestone");
-            }
+            el.classList.toggle("is-active-milestone", el === activeEl);
           }
         };
 
