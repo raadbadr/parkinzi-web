@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "com.parkinzi/parkinzi",
   "description": "Live Saudi smart-parking data: spots, EV chargers, stats, and blog. Read-only, no auth.",
-  "version": "0.2.0",
-  "websiteUrl": "https://parkinzi.com/mcp-server.html",
+  "version": "0.3.0",
+  "websiteUrl": "https://parkinzi.com/",
   "remotes": [
     {
       "type": "streamable-http",

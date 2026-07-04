@@ -37,7 +37,7 @@ const LATEST_PROTOCOL_VERSION = SUPPORTED_PROTOCOL_VERSIONS[0];
 
 const MCP_SERVER_INFO = {
   name: "parkinzi",
-  version: "0.2.0",
+  version: "0.3.0",
   title: "PARKINZI — Smart Parking & EV Charging (Saudi Arabia)",
 };
 
@@ -542,13 +542,16 @@ function toolAppInfo() {
     languages: ["ar", "en", "fr", "ur"],
     platforms: {
       ios: "https://apps.apple.com/sa/app/parkinzi/id6751274124",
-      android: "Coming soon",
+      android: "https://play.google.com/store/apps/details?id=com.parkinzi.android",
     },
     website: "https://parkinzi.com",
     blog: "https://parkinzi.com/blog/",
     support_email: "support@parkinzi.com",
     primary_country: "SA",
-    founded: "2024",
+    launched: {
+      ios: "2026-04-07",
+      android: "2026-06-20",
+    },
   };
 }
 
@@ -641,7 +644,7 @@ async function toolUnifiedSearch(args, env) {
     { match: /parkinzi|باركنزي|تطبيق|app|تحميل|download/i, id: "page:app", title: "تطبيق PARKINZI — التحميل والميزات", url: "https://parkinzi.com/" },
     { match: /سعر|أسعار|pricing|عمولة|اشتراك/i, id: "page:pricing", title: "سياسة أسعار PARKINZI", url: "https://parkinzi.com/pricing.html" },
     { match: /خصوصية|privacy|بيانات/i, id: "page:privacy", title: "سياسة خصوصية PARKINZI", url: "https://parkinzi.com/privacy.html" },
-    { match: /mcp|ذكاء|ai|كلود|claude|chatgpt/i, id: "page:mcp", title: "PARKINZI MCP Server للذكاء الاصطناعي", url: "https://parkinzi.com/mcp-server.html" },
+    { match: /mcp|ذكاء|ai|كلود|claude|chatgpt/i, id: "page:mcp", title: "PARKINZI MCP Server للذكاء الاصطناعي", url: "https://parkinzi.com/.well-known/mcp.json" },
   ];
   for (const s of STATIC_HITS) {
     if (s.match.test(q)) results.push({ id: s.id, title: s.title, url: s.url });
@@ -729,12 +732,12 @@ async function toolUnifiedFetch(args, env) {
   const PAGES = {
     "page:app": {
       title: "تطبيق PARKINZI",
-      text: "PARKINZI منصة سعودية للمواقف الذكية: ابحث عن موقف قرب وجهتك، احجز مسبقاً، ادفع داخل التطبيق، أو أجّر موقفك الخاص واكسب دخلاً شهرياً. يدعم فلترة المواقف ذات شواحن السيارات الكهربائية. متاح على iOS، وإصدار Android قادم.",
+      text: "PARKINZI منصة سعودية للمواقف الذكية: ابحث عن موقف قرب وجهتك، احجز مسبقاً، ادفع داخل التطبيق، أو أجّر موقفك الخاص واكسب دخلاً. يدعم فلترة المواقف ذات شواحن السيارات الكهربائية. متاح على iOS (App Store) وAndroid (Google Play).",
       url: "https://parkinzi.com/",
     },
     "page:pricing": {
       title: "سياسة أسعار PARKINZI",
-      text: "التسجيل مجاني للسائقين وملاك المواقف. يدفع السائق عند إتمام الحجز فقط. تحصل المنصة على عمولة من قيمة الحجز، ويستلم المالك أرباحه شهرياً عبر التحويل البنكي.",
+      text: "التسجيل مجاني للسائقين ومقدمي الخدمة. يدفع السائق عند إتمام الحجز فقط. عمولة المنصة 30% من قيمة الحجز (مثال: سعر 20 ريالاً للساعة يحصل منه مقدم الخدمة على 14 ريالاً). الدفع إلكتروني أو عبر جهاز POS في الموقع، مع اشتراكات اختيارية لمقدمي الخدمة.",
       url: "https://parkinzi.com/pricing.html",
     },
     "page:privacy": {
@@ -744,8 +747,8 @@ async function toolUnifiedFetch(args, env) {
     },
     "page:mcp": {
       title: "PARKINZI MCP Server",
-      text: "خادم MCP عام للقراءة فقط على https://parkinzi.com/mcp يتيح لمساعدات الذكاء الاصطناعي البحث في المواقف والشواحن والمدونة مباشرة. بدون مصادقة.",
-      url: "https://parkinzi.com/mcp-server.html",
+      text: "خادم MCP عام للقراءة فقط على https://parkinzi.com/mcp يتيح لمساعدات الذكاء الاصطناعي البحث في المواقف والشواحن والمدونة مباشرة. بدون مصادقة. وثيقة الاكتشاف: https://parkinzi.com/.well-known/mcp.json",
+      url: "https://parkinzi.com/.well-known/mcp.json",
     },
   };
   if (PAGES[id]) {
@@ -1003,7 +1006,7 @@ export function mcpDiscoveryDocument() {
       chatgpt: "Add as a custom MCP connector. Implements the search/fetch contract required by ChatGPT and Deep Research.",
     },
     tools: TOOLS.map((t) => ({ name: t.name, description: t.description })),
-    documentation: "https://parkinzi.com/mcp-server.html",
+    documentation: "https://parkinzi.com/.well-known/mcp.json",
     privacy_policy: "https://parkinzi.com/privacy.html",
     terms_of_service: "https://parkinzi.com/terms.html",
   };
