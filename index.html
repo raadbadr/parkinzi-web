@@ -1329,8 +1329,61 @@
     .growth-map-timeline[dir="ltr"] input[type="range"] {
       direction: ltr;
     }
+    /* صف التنقّل: زرّا المعالم على طرفي الشريط */
+    .growth-map-timeline-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      --tl-nav-inset: calc(34px + 0.6rem);
+    }
+    .growth-map-timeline-nav-btn {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 50%;
+      /* داخل حاوية زجاجية: بلا خلفية شبه شفافة (تتراكم الطبقات) — حدود فقط */
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
+    }
+    .growth-map-timeline-nav-btn:hover:not(:disabled) {
+      color: #4fc3f7;
+      border-color: rgba(79, 195, 247, 0.75);
+      transform: scale(1.08);
+    }
+    .growth-map-timeline-nav-btn:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+    .growth-map-timeline-nav-btn:focus-visible {
+      outline: 2px solid #4fc3f7;
+      outline-offset: 2px;
+    }
+    .growth-map-timeline-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+    [data-theme="light"] .growth-map-timeline-nav-btn {
+      border-color: rgba(0, 60, 100, 0.3);
+      color: rgba(0, 60, 100, 0.75);
+    }
+    [data-theme="light"] .growth-map-timeline-nav-btn:hover:not(:disabled) {
+      color: #0277bd;
+      border-color: rgba(2, 119, 189, 0.7);
+    }
+    /* في RTL يُعكس اتجاه السهمين */
+    .growth-map-timeline[dir="rtl"] .growth-map-timeline-nav-btn svg {
+      transform: scaleX(-1);
+    }
     .growth-map-timeline-range-wrap {
       position: relative;
+      flex: 1 1 auto;
+      min-width: 0;
       height: 20px;
       margin-top: 0;
       z-index: 0;
@@ -1489,6 +1542,8 @@
       display: flex;
       justify-content: space-between;
       margin-top: 0.5rem;
+      /* نفس إزاحة زرّي التنقّل حتى يحاذي التاريخان طرفي المسار */
+      padding-inline: calc(34px + 0.6rem);
       font-size: 0.85rem;
       color: var(--text-secondary);
       font-weight: 600;
@@ -1839,8 +1894,20 @@
       .growth-map-timeline-launch-tick {
         height: 18px;
       }
+      .growth-map-timeline-nav-row {
+        gap: 0.4rem;
+      }
+      .growth-map-timeline-nav-btn {
+        width: 28px;
+        height: 28px;
+      }
+      .growth-map-timeline-nav-btn svg {
+        width: 13px;
+        height: 13px;
+      }
       .growth-map-timeline-ends {
         font-size: 0.65rem;
+        padding-inline: calc(28px + 0.4rem);
       }
       /* All labels: smaller */
       .growth-map-timeline-launch-label {
@@ -3431,6 +3498,10 @@
 
   <div class="growth-data-area">
   <div class="growth-map-timeline growth-map-timeline--sticky" id="growthMapTimeline">
+    <div class="growth-map-timeline-nav-row">
+    <button type="button" class="growth-map-timeline-nav-btn" id="growthMapTimelinePrevBtn" data-i18n-aria-label="growthMapNavPrevAria" aria-label="المعلم السابق">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5"/></svg>
+    </button>
     <div class="growth-map-timeline-range-wrap">
       <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
         <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">تجريبية 1.1</span>
@@ -3486,6 +3557,10 @@
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
       </div>
+    </div>
+    <button type="button" class="growth-map-timeline-nav-btn" id="growthMapTimelineNextBtn" data-i18n-aria-label="growthMapNavNextAria" aria-label="المعلم التالي">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5"/></svg>
+    </button>
     </div>
     <div class="growth-map-timeline-ends">
       <span id="growthMapTimelineStartLabel"></span>
@@ -3783,6 +3858,8 @@
         growthMapPopupDb: "{count} مواقف",
         growthMapPopupDbNamed: "{label} — {count} مواقف",
         growthMapTimelineSliderAria: "خط زمني للتغطية",
+        growthMapNavPrevAria: "المعلم السابق",
+        growthMapNavNextAria: "المعلم التالي",
         growthMapLaunchLabel: "تجريبية 1.1",
         growthMapLaunchDate: "1 أبريل",
         growthMapReleaseLabel: "الإطلاق الرسمي",
@@ -3889,6 +3966,8 @@
         growthMapPopupDb: "{count} spots",
         growthMapPopupDbNamed: "{label} — {count} spots",
         growthMapTimelineSliderAria: "Coverage timeline",
+        growthMapNavPrevAria: "Previous milestone",
+        growthMapNavNextAria: "Next milestone",
         growthMapLaunchLabel: "Beta 1.1 (Build 1)",
         growthMapLaunchDate: "Apr 1",
         growthMapReleaseLabel: "Official Launch",
@@ -3996,6 +4075,8 @@
         growthMapPopupDb: "{count} places",
         growthMapPopupDbNamed: "{label} — {count} places",
         growthMapTimelineSliderAria: "Chronologie de la couverture",
+        growthMapNavPrevAria: "Jalon précédent",
+        growthMapNavNextAria: "Jalon suivant",
         growthMapLaunchLabel: "Bêta 1.1 (Build 1)",
         growthMapLaunchDate: "1 avr.",
         growthMapReleaseLabel: "Lancement officiel",
@@ -4102,6 +4183,8 @@
         growthMapPopupDb: "{count} مواقف",
         growthMapPopupDbNamed: "{label} — {count} مواقف",
         growthMapTimelineSliderAria: "کوریج ٹائم لائن",
+        growthMapNavPrevAria: "پچھلا سنگ میل",
+        growthMapNavNextAria: "اگلا سنگ میل",
         growthMapLaunchLabel: "بیٹا 1.1 (بلڈ 1)",
         growthMapLaunchDate: "1 اپریل",
         growthMapReleaseLabel: "آفیشل لانچ",
@@ -5600,6 +5683,39 @@
           return v;
         }
 
+        /* أزرار التنقّل بين المعالم: السابق/التالي يقفزان لأقرب معلم (أو "الآن") */
+        const prevBtnEl = document.getElementById("growthMapTimelinePrevBtn");
+        const nextBtnEl = document.getElementById("growthMapTimelineNextBtn");
+        const navStops = Array.from(new Set(milestoneSteps)).sort(function (a, b) { return a - b; });
+        function gotoNavStop(v) {
+          sliderEl.value = String(v);
+          sliderEl.dispatchEvent(new Event("input", { bubbles: true }));
+          sliderEl.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        function updateNavButtons(pos) {
+          if (!prevBtnEl || !nextBtnEl) return;
+          var p = Number(pos);
+          prevBtnEl.disabled = !navStops.some(function (s) { return s < p; });
+          nextBtnEl.disabled = !navStops.some(function (s) { return s > p; });
+        }
+        if (prevBtnEl) {
+          prevBtnEl.addEventListener("click", function () {
+            var p = Number(sliderEl.value);
+            for (var i = navStops.length - 1; i >= 0; i--) {
+              if (navStops[i] < p) { gotoNavStop(navStops[i]); return; }
+            }
+          });
+        }
+        if (nextBtnEl) {
+          nextBtnEl.addEventListener("click", function () {
+            var p = Number(sliderEl.value);
+            for (var i = 0; i < navStops.length; i++) {
+              if (navStops[i] > p) { gotoNavStop(navStops[i]); return; }
+            }
+          });
+        }
+        updateNavButtons(SLIDER_MAX_TODAY);
+
         window.addEventListener(
           "resize",
           function () {
@@ -5707,6 +5823,7 @@
           setTimelineFillFromPosition(pos);
           updateThumbNowLabel(pos);
           applyActiveMilestone(pos);
+          updateNavButtons(pos);
           scheduleGrowthMapTimelineInput(cutoff);
           scheduleGrowthMapTimelineStatsThrottled(pos);
         });
