@@ -9,13 +9,26 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Sun, 26 Jul 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jul 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>مواقف ذاتية الركن — كيف تعمل وأمثلة عملية</title>
+      <link>https://parkinzi.com/blog/daily-2026-07-27-self-parking-vehicles-how-they-work.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-07-27-self-parking-vehicles-how-they-work.html</guid>
+      <pubDate>Mon, 27 Jul 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>مواقف ذكية</category>
+      <category>السيارات ذاتية الركن</category>
+      <category>تقنية المواقف</category>
+      <category>المدن الذكية</category>
+      <description>شرح شامل لتقنية المواقف الذاتية وآلية عملها وتطبيقاتها العملية في المنطقة الخليجية.</description>
+    </item>
 
     <item>
       <title>تقنية NFC و RFID في دخول المواقف الذكية: الحل الآمن والسريع</title>
