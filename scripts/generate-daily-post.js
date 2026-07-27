@@ -242,25 +242,42 @@ ${searchInstruction}
     }];
   }
 
+  // A post that outgrows max_tokens gets truncated mid-JSON and can never
+  // parse. Detect stop_reason=max_tokens and retry with a doubled budget
+  // instead of failing the whole workflow run.
   let response;
-  try {
-    response = await client.messages.create(requestParams);
-  } catch (err) {
-    // Surface Anthropic-API specific errors clearly so GitHub Actions logs
-    // show the real cause (auth, rate limit, billing, unknown model, etc.).
-    const status = err && err.status;
-    const apiType = err && err.error && err.error.error && err.error.error.type;
-    const apiMsg  = err && err.error && err.error.error && err.error.error.message;
-    console.error('[generate-daily-post] Anthropic call failed:');
-    console.error('  status:', status);
-    console.error('  type  :', apiType);
-    console.error('  msg   :', apiMsg);
-    console.error('  raw   :', err && err.message);
-    throw err;
-  }
+  let attemptTokens = maxTokens;
+  const MAX_GEN_ATTEMPTS = 3;
+  for (let attempt = 1; attempt <= MAX_GEN_ATTEMPTS; attempt++) {
+    requestParams.max_tokens = attemptTokens;
+    try {
+      response = await client.messages.create(requestParams);
+    } catch (err) {
+      // Surface Anthropic-API specific errors clearly so GitHub Actions logs
+      // show the real cause (auth, rate limit, billing, unknown model, etc.).
+      const status = err && err.status;
+      const apiType = err && err.error && err.error.error && err.error.error.type;
+      const apiMsg  = err && err.error && err.error.error && err.error.error.message;
+      console.error('[generate-daily-post] Anthropic call failed:');
+      console.error('  status:', status);
+      console.error('  type  :', apiType);
+      console.error('  msg   :', apiMsg);
+      console.error('  raw   :', err && err.message);
+      throw err;
+    }
 
-  console.log('[generate-daily-post] usage:', JSON.stringify(response.usage));
-  console.log('[generate-daily-post] stop_reason:', response.stop_reason);
+    console.log('[generate-daily-post] usage:', JSON.stringify(response.usage));
+    console.log('[generate-daily-post] stop_reason:', response.stop_reason);
+
+    if (response.stop_reason !== 'max_tokens') break;
+    if (attempt === MAX_GEN_ATTEMPTS) {
+      throw new Error('Response still truncated (stop_reason=max_tokens) after '
+        + MAX_GEN_ATTEMPTS + ' attempts, last max_tokens=' + attemptTokens
+        + '. Raise MAX_TOKENS or shorten the prompt.');
+    }
+    attemptTokens *= 2;
+    console.log('[generate-daily-post] Output truncated at max_tokens — retrying with ' + attemptTokens + '.');
+  }
 
   // Find the final assistant text block (web_search returns interleaved blocks).
   const textBlocks = response.content.filter(b => b.type === 'text').map(b => b.text).join('\n');

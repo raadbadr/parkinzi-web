@@ -72,8 +72,10 @@ jobs:
           # writes strong evergreen posts from its own training. Set this to
           # 1+ via repo vars when you specifically want fresh news.
           WEB_SEARCH_USES: ${{ vars.WEB_SEARCH_USES || '0' }}
-          # Bumped from 3500 to fit TL;DR + key takeaways + FAQ + longer body.
-          MAX_TOKENS: ${{ vars.MAX_TOKENS || '5000' }}
+          # 8000 gives long posts headroom; generate-daily-post.js also
+          # retries with a doubled budget on stop_reason=max_tokens, so a
+          # long post can no longer truncate mid-JSON and fail the run.
+          MAX_TOKENS: ${{ vars.MAX_TOKENS || '8000' }}
         run: node generate-daily-post.js
 
       - name: Regenerate sitemap and feed
