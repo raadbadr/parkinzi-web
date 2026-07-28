@@ -9,13 +9,27 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Mon, 27 Jul 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>Edge Computing وتسريع قرارات المواقف الذكية</title>
+      <link>https://parkinzi.com/blog/daily-2026-07-28-edge-computing-taqrir-qarar-mawaqif.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-07-28-edge-computing-taqrir-qarar-mawaqif.html</guid>
+      <pubDate>Tue, 28 Jul 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>Edge Computing</category>
+      <category>المواقف الذكية</category>
+      <category>تقنية</category>
+      <category>الذكاء الاصطناعي</category>
+      <category>تحسين الكفاءة</category>
+      <description>تعرّف على كيفية استخدام تقنية Edge Computing في تحسين كفاءة أنظمة المواقف الذكية وتسريع اتخاذ القرارات في الوقت الفعلي.</description>
+    </item>
 
     <item>
       <title>مواقف ذاتية الركن — كيف تعمل وأمثلة عملية</title>
