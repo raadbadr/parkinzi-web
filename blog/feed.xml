@@ -9,13 +9,26 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Wed, 29 Jul 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>تقنية V2G وتأثيرها على مواقف الشحن الذكية</title>
+      <link>https://parkinzi.com/blog/daily-2026-07-30-v2g-technology-smart-parking-impact.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-07-30-v2g-technology-smart-parking-impact.html</guid>
+      <pubDate>Thu, 30 Jul 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>V2G</category>
+      <category>المواقف الذكية</category>
+      <category>السيارات الكهربائية</category>
+      <category>تقنية الشحن</category>
+      <description>تعرّف على كيفية تحويل تقنية V2G (المركبة إلى الشبكة) للمواقف الذكية إلى محطات طاقة ذكية، وكيف يستفيد منها مالكو السيارات الكهربائية والشبكة الكهربائية معاً.</description>
+    </item>
 
     <item>
       <title>مواقف السيارات الكهربائية وأحدث شواحن 2026</title>
