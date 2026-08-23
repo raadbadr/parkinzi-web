@@ -1,5 +1,5 @@
 /* PARKINZI — تخزين مؤقت للتصفح دون اتصال (نفس أصل الموقع فقط) */
-const CACHE_NAME = "parkinzi-offline-v4";
+const CACHE_NAME = "parkinzi-offline-v5";
 
 const PRECACHE_URLS = [
   "./index.html",
@@ -64,6 +64,10 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  /* بيانات حية (خريطة النمو، أرقام المنصة): لا تُعترض إطلاقاً.
+     الكاش-أولا هنا جمّد المواقف والمنشآت الجديدة على أجهزة الزوار. */
+  if (url.pathname.startsWith("/api/")) return;
 
   /* صفحات HTML: الشبكة أولاً حتى تظهر التحديثات فوراً (سفاري + Service Worker) */
   if (isDocumentRequest(request, url)) {
