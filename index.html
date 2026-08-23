@@ -2095,8 +2095,10 @@
     }
     .growth-map-container .parkinzi-map-marker-badge {
       position: absolute;
-      top: -1px;
-      right: -1px;
+      /* فوق الشعار بالكامل — الأرقام الكبيرة (122+) تتمدد يساراً دون أن تغطي P */
+      top: -2px;
+      right: -2px;
+      transform: translateY(-100%);
       min-width: calc(11px * 1.25);
       height: calc(11px * 1.25);
       padding: 0 calc(3px * 1.25);
