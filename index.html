@@ -2068,6 +2068,10 @@
     .growth-map-container .parkinzi-map-marker-anchor {
       display: block;
     }
+    /* علامة مضمومة داخل عنقود (تجميع حسب الزوم) — تُخفى ويمثلها عنقودها */
+    .growth-map-container .parkinzi-map-marker-clustered {
+      display: none !important;
+    }
     .growth-map-container .parkinzi-map-marker {
       cursor: pointer;
       -webkit-user-select: none;
@@ -5020,8 +5024,9 @@
       for (let i = 0; i < PARKING_MAP_SELECT_ATTEMPTS.length; i++) {
         const cols = PARKING_MAP_SELECT_ATTEMPTS[i];
         try {
+          /* apiNoCacheUrl: بدونها بقيت الخريطة مجمّدة على كاش SW القديم بينما الأرقام تتحدث */
           const url = `/api/parking-spots?select=${encodeURIComponent(cols)}`;
-          const res = await fetch(url);
+          const res = await fetch(apiNoCacheUrl(url), { cache: "no-store" });
           if (!res.ok) continue;
           const data = await res.json();
           const rows = Array.isArray(data) ? data : [];
@@ -5102,14 +5107,17 @@
         "top-right"
       );
       const markers = [];
+      /* تجميع حسب الزوم: بعيد = علامة واحدة بمجموع المواقف، أقرب = تنفصل كل منشأة */
+      let clusterMarkers = [];
+      let clusterRafId = null;
       const t0 = translations[lang()] || {};
 
       function updateParkinziMarkerZoomScales() {
-        if (!markers.length) return;
+        if (!markers.length && !clusterMarkers.length) return;
         const z = map.getZoom();
         const maxZ = map.getMaxZoom();
         const s = parkinziMapMarkerZoomScale(z, maxZ);
-        markers.forEach((m) => {
+        markers.concat(clusterMarkers).forEach((m) => {
           const node = m.getElement && m.getElement();
           const inner = node && node.querySelector(".parkinzi-map-marker-scale-inner");
           if (inner) {
@@ -5117,6 +5125,88 @@
             inner.style.transform = `scale(${s})`;
           }
         });
+      }
+
+      /**
+       * التجميع حسب الزوم: العلامات المتقاربة على الشاشة (أقل من CLUSTER_PX بكسل)
+       * تندمج في علامة واحدة بمجموع مواقفها؛ التقريب يفكّها تلقائياً لأن المسافة
+       * البكسلية تكبر مع الزوم. النقر على العنقود يقرّب الخريطة ليفصل منشآته.
+       */
+      const CLUSTER_PX = 56;
+      function updateMapClusters() {
+        if (!markers.length) return;
+        clusterMarkers.forEach(function (cm) { cm.remove(); });
+        clusterMarkers = [];
+        markers.forEach(function (m) {
+          const node = m.getElement && m.getElement();
+          if (node) node.classList.remove("parkinzi-map-marker-clustered");
+        });
+        const vis = markers.filter(function (m) { return m._parkinziTimelineVisible !== false; });
+        if (vis.length < 2) { updateParkinziMarkerZoomScales(); return; }
+        const pts = vis.map(function (m) { return { m: m, p: map.project(m.getLngLat()) }; });
+        const used = new Array(pts.length).fill(false);
+        const tr = translations[lang()] || {};
+        for (let i = 0; i < pts.length; i++) {
+          if (used[i]) continue;
+          const group = [pts[i]];
+          used[i] = true;
+          for (let j = i + 1; j < pts.length; j++) {
+            if (used[j]) continue;
+            const dx = pts[i].p.x - pts[j].p.x;
+            const dy = pts[i].p.y - pts[j].p.y;
+            if (Math.sqrt(dx * dx + dy * dy) <= CLUSTER_PX) {
+              group.push(pts[j]);
+              used[j] = true;
+            }
+          }
+          if (group.length < 2) continue;
+          let sumCount = 0, sumLat = 0, sumLng = 0;
+          const labels = [];
+          const seenLab = {};
+          group.forEach(function (g) {
+            const row = g.m._parkinziDbRow || {};
+            sumCount += Math.max(1, Number(row.spot_count) || 1);
+            const ll = g.m.getLngLat();
+            sumLat += ll.lat;
+            sumLng += ll.lng;
+            if (row.label && !seenLab[row.label]) { seenLab[row.label] = true; labels.push(row.label); }
+            const node = g.m.getElement && g.m.getElement();
+            if (node) node.classList.add("parkinzi-map-marker-clustered");
+          });
+          const clusterRow = {
+            spot_count: sumCount,
+            label: labels.join(" · "),
+            lat: sumLat / group.length,
+            lng: sumLng / group.length
+          };
+          const el2 = createParkinziMapMarkerElement(clusterRow);
+          el2.style.cursor = "pointer";
+          const cm = new maplibregl.Marker({ element: el2, anchor: "bottom" })
+            .setLngLat([clusterRow.lng, clusterRow.lat])
+            .addTo(map);
+          cm._parkinziDbRow = clusterRow;
+          const popup = new maplibregl.Popup({ offset: 14 });
+          popup.setText(parkingPopupText(clusterRow, tr));
+          cm.setPopup(popup);
+          el2.addEventListener("click", function () {
+            /* تقريب لفصل منشآت العنقود — "لما أقرب يفرق بينهم" */
+            map.easeTo({
+              center: [clusterRow.lng, clusterRow.lat],
+              zoom: Math.min(map.getZoom() + 2.5, map.getMaxZoom()),
+              duration: 500
+            });
+          });
+          clusterMarkers.push(cm);
+        }
+        updateParkinziMarkerZoomScales();
+      }
+      function scheduleClusterUpdate() {
+        /* setTimeout لا rAF: التبويبات الخلفية تكبح rAF فلا تُحسب العناقيد أبداً */
+        if (clusterRafId != null) return;
+        clusterRafId = window.setTimeout(function () {
+          clusterRafId = null;
+          updateMapClusters();
+        }, 40);
       }
 
       if (useDb) {
@@ -5129,6 +5219,7 @@
             .setPopup(popup)
             .addTo(map);
           marker._parkinziDbRow = row;
+          marker._parkinziTimelineVisible = true;
           markers.push(marker);
         });
       }
@@ -5243,6 +5334,7 @@
       }
 
       function setGrowthMapMarkerVisible(m, show) {
+        m._parkinziTimelineVisible = !!show;
         const node = m.getElement && m.getElement();
         if (!node) return;
         const countEl = node.querySelector(".parkinzi-map-marker-count");
@@ -5333,6 +5425,9 @@
         }
 
         lastTimelineCutoffMs = cutoffMs;
+
+        /* تغيّرت رؤية العلامات بالتايم لاين → أعد حساب العناقيد */
+        scheduleClusterUpdate();
 
         if (!skipAria && sliderEl) sliderEl.setAttribute("aria-valuetext", formatGrowthMapTimelineDateTime(cutoffMs));
       }
@@ -5837,6 +5932,7 @@
 
       map.on("zoom", updateParkinziMarkerZoomScales);
       map.on("zoomend", updateParkinziMarkerZoomScales);
+      map.on("zoomend", scheduleClusterUpdate);
 
       function collapseGrowthMapAttribution() {
         try {
@@ -5864,6 +5960,7 @@
           duration: 0
         });
         requestAnimationFrame(() => updateParkinziMarkerZoomScales());
+        scheduleClusterUpdate();
         collapseGrowthMapAttribution();
         requestAnimationFrame(() => requestAnimationFrame(collapseGrowthMapAttribution));
         map.once("idle", collapseGrowthMapAttribution);
@@ -5889,6 +5986,7 @@
         });
         map.resize();
         updateParkinziMarkerZoomScales();
+        scheduleClusterUpdate();
         if (timelineEl && !timelineEl.hidden && sliderEl) {
           lastTimelineCutoffMs = null;
           void applyGrowthMapTimelineFull(Number(sliderEl.value));
@@ -6276,7 +6374,7 @@
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+        navigator.serviceWorker.register("sw.js", { scope: "./", updateViaCache: "none" }).catch(() => {});
       });
     }
   </script>
