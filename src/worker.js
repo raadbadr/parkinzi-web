@@ -4,7 +4,7 @@
  * Static assets are served by the [assets] binding automatically.
  */
 
-import { handleMcpRequest, mcpDiscoveryDocument } from "./mcp.js";
+import { handleMcpRequest, mcpDiscoveryDocument, handleAssistantRequest } from "./mcp.js";
 
 // Android App Links — Digital Asset Links statement for parkinzi.com.
 // Cloudflare's static-assets binding skips files under a dot-folder, so we
@@ -244,6 +244,7 @@ export default {
       if (path === "/api/charger-count" && request.method === "GET") return await handleChargerCount(url, env);
       if (path === "/api/fuel-stats" && request.method === "GET") return await handleFuelStats(env);
       if (path === "/api/parking-spots" && request.method === "GET") return await handleParkingSpots(url, env);
+      if (path === "/api/assistant" && request.method === "POST") return await handleAssistantRequest(request, env);
       if (path === "/api/waitlist" && request.method === "POST") return await handleWaitlist(request, env);
       if (path === "/api/contact" && request.method === "POST") return await handleContact(request, env);
       return json({ error: "not found" }, 404);

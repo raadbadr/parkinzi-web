@@ -1018,3 +1018,146 @@ export function mcpDiscoveryDocument() {
     terms_of_service: "https://parkinzi.com/terms.html",
   };
 }
+
+// --- مساعد الموقع (LLM) --------------------------------------------------
+// POST /api/assistant — يستدعي Claude مع نفس أدوات البيانات الحية أعلاه،
+// فيجيب زوار الموقع بمعلومات فعلية من المنصة (مواقف، شواحن، أرقام، مدونة).
+// المفتاح ANTHROPIC_API_KEY سرّ Cloudflare؛ غيابه يرجع 503 فتتحول الواجهة
+// تلقائياً لمسار "تواصل مع الدعم" القديم.
+
+const ASSISTANT_MODEL = "claude-sonnet-5";
+const ASSISTANT_MAX_TOKENS = 1024;
+const ASSISTANT_MAX_TOOL_ROUNDS = 4;
+const ASSISTANT_MAX_MESSAGES = 16;
+const ASSISTANT_MAX_CHARS = 2000;
+// حد أشد من حد MCP العام: استدعاءات LLM أغلى بكثير من قراءات Supabase.
+const ASSISTANT_RATE_MAX_PER_WINDOW = 15;
+const assistantRateBuckets = new Map();
+
+function assistantRateLimited(ip) {
+  if (!ip) return false;
+  const now = Date.now();
+  let bucket = assistantRateBuckets.get(ip);
+  if (!bucket || now - bucket.start >= RATE_WINDOW_MS) {
+    bucket = { start: now, count: 0 };
+    assistantRateBuckets.set(ip, bucket);
+  }
+  bucket.count += 1;
+  if (assistantRateBuckets.size > 5000) assistantRateBuckets.clear();
+  return bucket.count > ASSISTANT_RATE_MAX_PER_WINDOW;
+}
+
+// أدوات المساعد = أدوات MCP الحية عدا عقد ChatGPT (search/fetch)
+const ASSISTANT_TOOL_NAMES = [
+  "search_parking_spots", "find_ev_chargers", "get_spot_details",
+  "get_platform_stats", "list_supported_cities", "search_blog_posts",
+  "get_app_info",
+];
+
+function assistantSystemPrompt() {
+  const info = toolAppInfo();
+  return `أنت مساعد PARKINZI الرسمي على موقع parkinzi.com — منصة سعودية للمواقف الذكية وشواحن السيارات الكهربائية.
+
+قواعدك:
+- أجب بلغة رسالة الزائر (عربية فصحى، إنجليزية، فرنسية، أو أردو).
+- كن مختصراً وودوداً ومباشراً؛ الأرقام دائماً غربية (1234567890).
+- استخدم الأدوات لأي معلومة حية (مواقف، شواحن، إحصاءات، مقالات) — لا تختلق بيانات أبداً.
+- حقائق ثابتة: التطبيق متاح على iOS (${info.platforms.ios}) وAndroid (${info.platforms.android}). التسجيل مجاني، يدفع السائق عند إتمام الحجز فقط، عمولة المنصة 30% من قيمة الحجز، والدفع إلكتروني أو عبر POS في الموقع. الكيان: شركة باركينزي (ذ.م.م) — سجل تجاري 7055060102، رقم ضريبي 314983900200003.
+- لطلبات الدعم الشخصية (مشكلة حساب، فاتورة، استرجاع): وجّه الزائر لزر "التواصل مع الدعم" في هذه المحادثة أو support@parkinzi.com — لا تجمع بياناته بنفسك.
+- لا تناقش مواضيع خارج PARKINZI والمواقف والشحن الكهربائي؛ اعتذر بلطف وأعد التوجيه.`;
+}
+
+export async function handleAssistantRequest(request, env) {
+  const headers = { "Content-Type": "application/json", "Cache-Control": "no-store" };
+  if (!env.ANTHROPIC_API_KEY) {
+    return new Response(JSON.stringify({ error: "assistant_unavailable" }), { status: 503, headers });
+  }
+  const ip = request.headers.get("cf-connecting-ip") || "";
+  if (assistantRateLimited(ip)) {
+    return new Response(JSON.stringify({ error: "rate_limited" }), { status: 429, headers });
+  }
+
+  let body;
+  try { body = await request.json(); } catch { body = null; }
+  const incoming = body && Array.isArray(body.messages) ? body.messages : null;
+  if (!incoming || !incoming.length || incoming.length > ASSISTANT_MAX_MESSAGES) {
+    return new Response(JSON.stringify({ error: "invalid_messages" }), { status: 400, headers });
+  }
+  const messages = [];
+  for (const m of incoming) {
+    const role = m && m.role === "assistant" ? "assistant" : "user";
+    const text = String((m && m.content) || "").slice(0, ASSISTANT_MAX_CHARS).trim();
+    if (!text) continue;
+    messages.push({ role, content: text });
+  }
+  if (!messages.length || messages[messages.length - 1].role !== "user") {
+    return new Response(JSON.stringify({ error: "invalid_messages" }), { status: 400, headers });
+  }
+
+  const tools = TOOLS.filter((t) => ASSISTANT_TOOL_NAMES.includes(t.name)).map((t) => ({
+    name: t.name,
+    description: t.description,
+    input_schema: t.inputSchema,
+  }));
+
+  const anthropicHeaders = {
+    "x-api-key": env.ANTHROPIC_API_KEY,
+    "anthropic-version": "2023-06-01",
+    "Content-Type": "application/json",
+  };
+
+  try {
+    for (let round = 0; round <= ASSISTANT_MAX_TOOL_ROUNDS; round++) {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: anthropicHeaders,
+        body: JSON.stringify({
+          model: ASSISTANT_MODEL,
+          max_tokens: ASSISTANT_MAX_TOKENS,
+          system: assistantSystemPrompt(),
+          messages,
+          tools,
+        }),
+        cf: NO_CACHE,
+      });
+      if (!res.ok) {
+        return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+      }
+      const data = await res.json();
+
+      if (data.stop_reason === "tool_use" && round < ASSISTANT_MAX_TOOL_ROUNDS) {
+        messages.push({ role: "assistant", content: data.content });
+        const results = [];
+        for (const block of data.content) {
+          if (block.type !== "tool_use") continue;
+          let out;
+          try {
+            out = await callTool(block.name, block.input || {}, env);
+          } catch (e) {
+            out = { error: String((e && e.message) || e) };
+          }
+          results.push({
+            type: "tool_result",
+            tool_use_id: block.id,
+            content: JSON.stringify(out).slice(0, 12000),
+          });
+        }
+        messages.push({ role: "user", content: results });
+        continue;
+      }
+
+      const reply = (data.content || [])
+        .filter((b) => b.type === "text")
+        .map((b) => b.text)
+        .join("\n")
+        .trim();
+      if (!reply) {
+        return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+      }
+      return new Response(JSON.stringify({ reply }), { status: 200, headers });
+    }
+    return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+  }
+}

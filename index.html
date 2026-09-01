@@ -3355,6 +3355,18 @@
       border: 1px solid var(--glass-border);
       box-shadow: 4px 4px 12px var(--shadow-dark), -2px -2px 8px var(--shadow-light);
     }
+    /* ردود المساعد الذكي قد تحوي أسطراً متعددة */
+    .chat-msg.bot > div {
+      white-space: pre-wrap;
+    }
+    .chat-typing > div {
+      letter-spacing: 3px;
+      animation: chatTypingPulse 1s ease-in-out infinite;
+    }
+    @keyframes chatTypingPulse {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.9; }
+    }
 
     .chat-msg.user {
       align-self: flex-end;
@@ -3955,6 +3967,14 @@
         chatAskEmail: "ما بريدك الإلكتروني؟",
         chatAskMessage: "اكتب رسالتك:",
         chatSending: "جاري الإرسال...",
+        chatAssistantWelcome: "أهلاً بك! أنا مساعد PARKINZI الذكي — اسألني عن المواقف، الشواحن الكهربائية، الأسعار، أو أي شيء عن المنصة.",
+        chatAssistantPlaceholder: "اكتب سؤالك...",
+        chatAssistantSuggest1: "كيف أحجز موقفاً؟",
+        chatAssistantSuggest2: "أين تتوفر شواحن كهربائية؟",
+        chatAssistantSuggest3: "كم عمولة المنصة؟",
+        chatContactSupportBtn: "التواصل مع الدعم",
+        chatAssistantUnavailable: "المساعد الذكي غير متاح حالياً — سأحوّلك لفريق الدعم.",
+        chatAssistantError: "تعذر الرد الآن. حاول مجدداً أو تواصل مع الدعم.",
         chatDone: "تم إرسال رسالتك بنجاح",
         language: "اللغة",
         appearance: "المظهر",
@@ -4071,6 +4091,14 @@
         chatAskEmail: "What's your email?",
         chatAskMessage: "Type your message:",
         chatSending: "Sending...",
+        chatAssistantWelcome: "Hi! I'm the PARKINZI smart assistant — ask me about parking spots, EV chargers, pricing, or anything about the platform.",
+        chatAssistantPlaceholder: "Type your question...",
+        chatAssistantSuggest1: "How do I book a spot?",
+        chatAssistantSuggest2: "Where are EV chargers available?",
+        chatAssistantSuggest3: "What is the platform fee?",
+        chatContactSupportBtn: "Contact support",
+        chatAssistantUnavailable: "The smart assistant is unavailable right now — switching you to our support team.",
+        chatAssistantError: "Could not reply right now. Try again or contact support.",
         chatDone: "Message sent successfully",
         language: "Language",
         appearance: "Appearance",
@@ -4188,6 +4216,14 @@
         chatAskEmail: "Quel est votre e-mail ?",
         chatAskMessage: "Tapez votre message :",
         chatSending: "Envoi en cours...",
+        chatAssistantWelcome: "Bonjour ! Je suis l'assistant intelligent PARKINZI — posez-moi vos questions sur les places, les bornes de recharge, les tarifs ou la plateforme.",
+        chatAssistantPlaceholder: "Écrivez votre question...",
+        chatAssistantSuggest1: "Comment réserver une place ?",
+        chatAssistantSuggest2: "Où trouver des bornes de recharge ?",
+        chatAssistantSuggest3: "Quelle est la commission ?",
+        chatContactSupportBtn: "Contacter le support",
+        chatAssistantUnavailable: "L'assistant intelligent est indisponible — transfert vers notre équipe support.",
+        chatAssistantError: "Réponse impossible pour le moment. Réessayez ou contactez le support.",
         chatDone: "Message envoyé avec succès",
         language: "Langue",
         appearance: "Apparence",
@@ -4304,6 +4340,14 @@
         chatAskEmail: "آپ کا ای میل کیا ہے؟",
         chatAskMessage: "اپنا پیغام لکھیں:",
         chatSending: "بھیج رہا ہے...",
+        chatAssistantWelcome: "خوش آمدید! میں PARKINZI کا سمارٹ اسسٹنٹ ہوں — پارکنگ، EV چارجرز، قیمتوں یا پلیٹ فارم کے بارے میں پوچھیں۔",
+        chatAssistantPlaceholder: "اپنا سوال لکھیں...",
+        chatAssistantSuggest1: "پارکنگ کیسے بک کروں؟",
+        chatAssistantSuggest2: "EV چارجرز کہاں دستیاب ہیں؟",
+        chatAssistantSuggest3: "پلیٹ فارم کی فیس کتنی ہے؟",
+        chatContactSupportBtn: "سپورٹ سے رابطہ",
+        chatAssistantUnavailable: "سمارٹ اسسٹنٹ فی الحال دستیاب نہیں — آپ کو سپورٹ ٹیم سے ملا رہا ہوں۔",
+        chatAssistantError: "ابھی جواب ممکن نہیں۔ دوبارہ کوشش کریں یا سپورٹ سے رابطہ کریں۔",
         chatDone: "پیغام کامیابی سے بھیج دیا گیا",
         language: "زبان",
         appearance: "ظہور",
@@ -6506,27 +6550,107 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
+    /* وضعان: "assistant" (LLM بأدوات البيانات الحية عبر /api/assistant) افتراضياً،
+       و"contact" (مسار تذاكر الدعم القديم subject→name→email→message) بزرّ صريح
+       أو تلقائياً إن كان المساعد غير متاح (503). */
+    let chatMode = "assistant";
+    let assistantHistory = [];
+    let assistantBusy = false;
+
+    function clearChatOptionButtons() {
+      document.querySelectorAll(".chat-option-btn").forEach((b) => b.remove());
+    }
+
     function handleOption(value) {
+      const t = translations[lang()];
+      clearChatOptionButtons();
+      if (value === "__contact") {
+        enterContactMode();
+        return;
+      }
+      if (value.indexOf("__sugg") === 0) {
+        const q = t["chatAssistantSuggest" + value.slice(6)];
+        if (q) sendAssistantMessage(q);
+        return;
+      }
       const opt = subjectOptions.find((o) => o.value === value);
-      const label = opt ? translations[lang()][opt.i18n] : value;
+      const label = opt ? t[opt.i18n] : value;
       addChatMsg(label, false);
       chatState.data.subject = value;
       chatState.step = "name";
-      document.querySelectorAll(".chat-option-btn").forEach((b) => b.remove());
-      addChatMsg(translations[lang()].chatAskName, true);
-      setInputPlaceholder(translations[lang()].contactName);
+      addChatMsg(t.chatAskName, true);
+      setInputPlaceholder(t.contactName);
     }
-    
+
     function setInputPlaceholder(placeholder) {
       chatInput.placeholder = placeholder;
     }
-    
-    function initChat() {
-      chatMessages.innerHTML = "";
+
+    function enterContactMode() {
+      chatMode = "contact";
       chatState = { step: "subject", data: {} };
       const t = translations[lang()];
       addChatMsg(t.chatWelcome, true, subjectOptions.map((o) => ({ value: o.value, label: t[o.i18n] })));
       setInputPlaceholder(t.chatTypeOrSelect);
+    }
+
+    async function sendAssistantMessage(text) {
+      if (assistantBusy) return;
+      const t = translations[lang()];
+      clearChatOptionButtons();
+      addChatMsg(text, false);
+      assistantHistory.push({ role: "user", content: text });
+      if (assistantHistory.length > 12) assistantHistory = assistantHistory.slice(-12);
+      assistantBusy = true;
+      chatSendBtn.disabled = true;
+      const typing = document.createElement("div");
+      typing.className = "chat-msg bot chat-typing";
+      const typingInner = document.createElement("div");
+      typingInner.textContent = "…";
+      typing.appendChild(typingInner);
+      chatMessages.appendChild(typing);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      try {
+        const res = await fetch("/api/assistant", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: assistantHistory })
+        });
+        typing.remove();
+        if (res.status === 503) {
+          addChatMsg(t.chatAssistantUnavailable, true);
+          enterContactMode();
+          return;
+        }
+        if (!res.ok) throw new Error("assistant");
+        const data = await res.json();
+        const reply = String(data.reply || "").trim();
+        if (!reply) throw new Error("assistant");
+        assistantHistory.push({ role: "assistant", content: reply });
+        addChatMsg(reply, true, [{ value: "__contact", label: t.chatContactSupportBtn }]);
+      } catch (err) {
+        typing.remove();
+        addChatMsg(t.chatAssistantError, true, [{ value: "__contact", label: t.chatContactSupportBtn }]);
+      } finally {
+        assistantBusy = false;
+        chatSendBtn.disabled = false;
+      }
+    }
+
+    function initChat() {
+      chatMessages.innerHTML = "";
+      chatMode = "assistant";
+      assistantHistory = [];
+      chatState = { step: "subject", data: {} };
+      chatInput.disabled = false;
+      const t = translations[lang()];
+      addChatMsg(t.chatAssistantWelcome, true, [
+        { value: "__sugg1", label: t.chatAssistantSuggest1 },
+        { value: "__sugg2", label: t.chatAssistantSuggest2 },
+        { value: "__sugg3", label: t.chatAssistantSuggest3 },
+        { value: "__contact", label: t.chatContactSupportBtn }
+      ]);
+      setInputPlaceholder(t.chatAssistantPlaceholder);
     }
     
     const waitlistForm = document.getElementById("waitlistForm");
@@ -6598,7 +6722,14 @@
     
     function handleChatSend() {
       const text = chatInput.value.trim();
-      if (!text || chatState.step === "done") return;
+      if (!text) return;
+      if (chatMode === "assistant") {
+        if (assistantBusy) return;
+        chatInput.value = "";
+        sendAssistantMessage(text);
+        return;
+      }
+      if (chatState.step === "done") return;
       addChatMsg(text, false);
       chatInput.value = "";
       const t = translations[lang()];
