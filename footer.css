@@ -57,13 +57,14 @@
   z-index: 1;
 }
 
-/* السجل التجاري والرقم الضريبي — سطر واحد: التسمية بجانب الرقم */
+/* السجل التجاري والرقم الضريبي — سطر واحد دائماً (الرقمان معاً)؛
+   clamp يقلّص الخط على الشاشات الضيقة بدل الالتفاف لسطرين */
 .footer-legal {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap: 0.4rem 1.8rem;
-  flex-wrap: wrap;
+  gap: clamp(0.6rem, 3vw, 1.8rem);
+  flex-wrap: nowrap;
   margin: 1.1rem 0 0.3rem;
   position: relative;
   z-index: 1;
@@ -72,18 +73,18 @@
   display: inline-flex;
   flex-direction: row;
   align-items: baseline;
-  gap: 0.45rem;
+  gap: 0.35rem;
   white-space: nowrap;
 }
 .footer-legal-label {
-  font-size: 0.85rem;
+  font-size: clamp(0.56rem, 2.5vw, 0.85rem);
   font-weight: 600;
   opacity: 0.75;
 }
 .footer-legal-value {
-  font-size: 1rem;
+  font-size: clamp(0.62rem, 2.8vw, 1rem);
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   font-variant-numeric: tabular-nums;
   direction: ltr;
   unicode-bidi: isolate;
