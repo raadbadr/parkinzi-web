@@ -1921,6 +1921,10 @@
       .growth-map-timeline-today-label {
         font-size: 0.48rem;
       }
+      /* الجوال: تكفي الفواصل — أسماء الأشهر تزدحم */
+      .growth-map-timeline-month-label {
+        display: none;
+      }
     }
     @media (max-width: 600px) {
       /* Smaller thumb on mobile — easier to tap, less overlap */
@@ -2071,6 +2075,33 @@
     /* علامة مضمومة داخل عنقود (تجميع حسب الزوم) — تُخفى ويمثلها عنقودها */
     .growth-map-container .parkinzi-map-marker-clustered {
       display: none !important;
+    }
+    /* فواصل الفترات الشهرية على شريط التايم لاين */
+    .growth-map-timeline-month-tick {
+      position: absolute;
+      top: calc(50% - 7px);
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    [data-theme="light"] .growth-map-timeline-month-tick {
+      background: rgba(0, 60, 100, 0.18);
+    }
+    .growth-map-timeline-month-label {
+      position: absolute;
+      top: calc(50% + 13px);
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 0.58rem;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--text-secondary);
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 1;
     }
     .growth-map-container .parkinzi-map-marker {
       cursor: pointer;
@@ -5272,6 +5303,7 @@
       let updateGrowthMapTatmin1Milestone = function () {};
       let updateGrowthMapTatmin2Milestone = function () {};
       let updateGrowthMapAndroidMilestone = function () {};
+      let updateGrowthMapMonthDividers = function () {};
       let applyActiveMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
@@ -5516,25 +5548,85 @@
         );
         const now = new Date();
         const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        /* النطاق المرئي: يمتد حتى 1 سبتمبر 2026 ليكون اليوم في المنتصف تقريباً */
-        let timelineEndDay = new Date(2026, 8, 1);
+        /* النطاق الديناميكي: من انطلاقة الشريط حتى نهاية الشهر الحالي —
+           يمتد تلقائياً مع كل شهر جديد دون أي تعديل يدوي */
+        let timelineEndDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
         if (todayDay > timelineEndDay) timelineEndDay = todayDay;
         if (timelineEndDay < timelineStartDay) timelineEndDay = timelineStartDay;
         timelineDaySpan = Math.max(0, Math.round((timelineEndDay - timelineStartDay) / 86400000));
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
-        /* Power warp: يسحب المعالم نحو بداية الشريط لإبراز الأحداث المبكرة */
+        /* تايم لاين مقسّم بين الفترات (الأشهر): عرض كل شهر يتناسب مع عدد
+           معالمه — الأشهر الحافلة تتّسع والفارغة تنضغط، والتحويل الزمني↔البصري
+           خطي داخل كل فترة (piecewise-linear قابل للعكس بدقة) */
+        let timelineMonthSegs = [];
         (function buildTimelineWarp() {
           if (timelineSpanMs <= 0) return;
-          var WARP_EXP = 1.2;
+          var MILESTONE_DATES = [
+            new Date(2026, 3, 1), new Date(2026, 3, 7), new Date(2026, 3, 10),
+            new Date(2026, 3, 12), new Date(2026, 3, 18), new Date(2026, 3, 21),
+            new Date(2026, 3, 22), new Date(2026, 4, 4), new Date(2026, 4, 7),
+            new Date(2026, 5, 20)
+          ];
+          var todayEndMs = growthMapEndOfLocalDay(todayDay);
+          /* حدود الأشهر داخل النطاق */
+          var bounds = [minCutoffMs];
+          var y = timelineStartDay.getFullYear();
+          var mo = timelineStartDay.getMonth();
+          for (;;) {
+            var bMs = growthMapEndOfLocalDay(new Date(y, mo + 1, 0));
+            if (bMs >= maxCutoffMs) break;
+            bounds.push(bMs);
+            mo++; if (mo > 11) { mo = 0; y++; }
+          }
+          bounds.push(maxCutoffMs);
+          /* الوزن: 1 أساس + 1.2 لكل معلم + 0.5 لفترة "الآن" */
+          var segs = [];
+          var totalW = 0;
+          for (var i = 0; i < bounds.length - 1; i++) {
+            var a = bounds[i], b = bounds[i + 1];
+            var count = 0;
+            for (var k = 0; k < MILESTONE_DATES.length; k++) {
+              var mms = growthMapEndOfLocalDay(MILESTONE_DATES[k]);
+              if (mms > a && mms <= b) count++;
+            }
+            var w = 1 + 1.2 * count;
+            if (todayEndMs > a && todayEndMs <= b) w += 0.5;
+            segs.push({ a: a, b: b, w: w });
+            totalW += w;
+          }
+          var acc = 0;
+          for (var j = 0; j < segs.length; j++) {
+            segs[j].v0 = acc;
+            acc += segs[j].w / totalW;
+            segs[j].v1 = acc;
+          }
+          segs[segs.length - 1].v1 = 1;
+          timelineMonthSegs = segs;
           _tlWarpToVisual = function (r) {
             if (r <= 0) return 0; if (r >= 1) return 1;
-            return Math.pow(r, WARP_EXP);
+            var t = minCutoffMs + r * timelineSpanMs;
+            for (var i2 = 0; i2 < segs.length; i2++) {
+              var s = segs[i2];
+              if (t <= s.b || i2 === segs.length - 1) {
+                var f = (t - s.a) / (s.b - s.a);
+                return s.v0 + f * (s.v1 - s.v0);
+              }
+            }
+            return 1;
           };
           _tlWarpToTime = function (v) {
             if (v <= 0) return 0; if (v >= 1) return 1;
-            return Math.pow(v, 1 / WARP_EXP);
+            for (var i3 = 0; i3 < segs.length; i3++) {
+              var s2 = segs[i3];
+              if (v <= s2.v1 || i3 === segs.length - 1) {
+                var f2 = (v - s2.v0) / (s2.v1 - s2.v0);
+                var t2 = s2.a + f2 * (s2.b - s2.a);
+                return (t2 - minCutoffMs) / timelineSpanMs;
+              }
+            }
+            return 1;
           };
         })();
 
@@ -5746,6 +5838,34 @@
         }
         updateThumbNowLabel(SLIDER_MAX_TODAY);
         applyActiveMilestone(SLIDER_MAX_TODAY);
+
+        /* فواصل الفترات وأسماء الأشهر الواسعة — تُعاد عند تغيير اللغة */
+        updateGrowthMapMonthDividers = function () {
+          var wrap = sliderEl.closest(".growth-map-timeline-range-wrap");
+          if (!wrap || !timelineMonthSegs.length || timelineMonthSegs.length < 2) return;
+          var isRtl = timelineEl.getAttribute("dir") === "rtl";
+          var lo = lang();
+          var loc = lo === "ur" ? "ur-PK" : lo;
+          [].slice.call(wrap.querySelectorAll(".growth-map-timeline-month-tick, .growth-map-timeline-month-label")).forEach(function (n) { n.remove(); });
+          for (var i = 0; i < timelineMonthSegs.length; i++) {
+            var s = timelineMonthSegs[i];
+            if (i > 0) {
+              var tick = document.createElement("span");
+              tick.className = "growth-map-timeline-month-tick";
+              tick.style.left = milestoneLeft(s.v0, isRtl);
+              wrap.appendChild(tick);
+            }
+            /* اسم الشهر فقط للفترات الواسعة كفاية (منظم بلا ازدحام) */
+            if ((s.v1 - s.v0) >= 0.09) {
+              var lab = document.createElement("span");
+              lab.className = "growth-map-timeline-month-label";
+              lab.textContent = new Date((s.a + s.b) / 2).toLocaleDateString(loc, { month: "short" });
+              lab.style.left = milestoneLeft((s.v0 + s.v1) / 2, isRtl);
+              wrap.appendChild(lab);
+            }
+          }
+        };
+        updateGrowthMapMonthDividers();
 
         /* Snap: مواقع الـ milestones كـ slider steps (warped) */
         const milestoneSteps = [];
@@ -6022,6 +6142,7 @@
           updateGrowthMapTatmin1Milestone();
           updateGrowthMapTatmin2Milestone();
           updateGrowthMapAndroidMilestone();
+          updateGrowthMapMonthDividers();
           applyActiveMilestone(Number(sliderEl.value));
         }
       };
