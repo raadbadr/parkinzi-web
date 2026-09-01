@@ -4566,6 +4566,7 @@
 
       if (typeof window.__parkinziPlatformStatsRefresh === "function") window.__parkinziPlatformStatsRefresh();
       if (typeof window.__parkinziGrowthMapRefresh === "function") window.__parkinziGrowthMapRefresh();
+      if (typeof window.__parkinziChatLangRefresh === "function") window.__parkinziChatLangRefresh();
     }
 
     function setTheme(t) {
@@ -6763,7 +6764,23 @@
         handleChatSend();
       }
     });
-    
+
+    /* تبديل اللغة: أعد بناء الترحيب والاقتراحات باللغة الجديدة ما دامت
+       المحادثة لم تبدأ فعلياً؛ وإن كانت جارية فحدّث حقل الإدخال فقط */
+    window.__parkinziChatLangRefresh = function () {
+      const t = translations[lang()];
+      if (!t) return;
+      const untouched =
+        chatMode === "assistant" && assistantHistory.length === 0 && !assistantBusy;
+      if (untouched) {
+        initChat();
+        return;
+      }
+      if (chatMode === "assistant") {
+        setInputPlaceholder(t.chatAssistantPlaceholder);
+      }
+    };
+
     initChat();
     
     // Chat widget toggle - زر يظهر ويخفي
@@ -6788,6 +6805,9 @@
       chatWidget.classList.add("open");
     }
     
+    /* نقرات داخل الودجت لا تصل document — بدون هذا، حذف زر الاقتراح لحظة
+       النقر يجعل e.target خارج الشجرة فيُحسب "نقراً خارجياً" وتنغلق الدردشة */
+    chatWidget.addEventListener("click", (e) => e.stopPropagation());
     document.addEventListener("click", (e) => {
       if (chatWidget.classList.contains("open") && !chatWidget.contains(e.target)) {
         chatWidget.classList.remove("open");
