@@ -1,5 +1,5 @@
 /* PARKINZI — تخزين مؤقت للتصفح دون اتصال (نفس أصل الموقع فقط) */
-const CACHE_NAME = "parkinzi-offline-v5";
+const CACHE_NAME = "parkinzi-offline-v6";
 
 const PRECACHE_URLS = [
   "./index.html",
@@ -69,8 +69,11 @@ self.addEventListener("fetch", (event) => {
      الكاش-أولا هنا جمّد المواقف والمنشآت الجديدة على أجهزة الزوار. */
   if (url.pathname.startsWith("/api/")) return;
 
-  /* صفحات HTML: الشبكة أولاً حتى تظهر التحديثات فوراً (سفاري + Service Worker) */
-  if (isDocumentRequest(request, url)) {
+  /* صفحات HTML + CSS/JS: الشبكة أولاً حتى تصل التحديثات فوراً —
+     الكاش-أولا هنا جمّد تعديلات footer.css على أجهزة الزوار */
+  const p = url.pathname;
+  const isFreshAsset = p.endsWith(".css") || p.endsWith(".js") || p.endsWith(".webmanifest");
+  if (isDocumentRequest(request, url) || isFreshAsset) {
     event.respondWith(
       fetch(request)
         .then((response) => {
@@ -83,6 +86,8 @@ self.addEventListener("fetch", (event) => {
         .catch(() =>
           caches.match(request).then((cached) => {
             if (cached) return cached;
+            /* سقوط index.html للمستندات فقط — لا يصلح بديلاً لأصل CSS/JS */
+            if (isFreshAsset) return Response.error();
             return caches.match(new URL("./index.html", scopeBase()).href);
           })
         )
