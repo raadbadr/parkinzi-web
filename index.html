@@ -3962,6 +3962,7 @@
         chatTypeOrSelect: "اختر أو اكتب...",
         chatAskName: "ما اسمك؟",
         chatAskEmail: "ما بريدك الإلكتروني؟",
+        chatEmailInvalid: "هذا البريد غير صالح — الرجاء إدخال بريد إلكتروني صحيح (مثل name@example.com).",
         chatAskMessage: "اكتب رسالتك:",
         chatSending: "جاري الإرسال...",
         chatAssistantWelcome: "أهلاً بك! أنا مساعد PARKINZI الذكي — اسألني عن المواقف، الشواحن الكهربائية، الأسعار، أو أي شيء عن المنصة.",
@@ -4085,6 +4086,7 @@
         chatTypeOrSelect: "Choose or type...",
         chatAskName: "What's your name?",
         chatAskEmail: "What's your email?",
+        chatEmailInvalid: "That email doesn't look valid — please enter a correct address (e.g. name@example.com).",
         chatAskMessage: "Type your message:",
         chatSending: "Sending...",
         chatAssistantWelcome: "Hi! I'm the PARKINZI smart assistant — ask me about parking spots, EV chargers, pricing, or anything about the platform.",
@@ -4209,6 +4211,7 @@
         chatTypeOrSelect: "Choisissez ou tapez...",
         chatAskName: "Quel est votre nom ?",
         chatAskEmail: "Quel est votre e-mail ?",
+        chatEmailInvalid: "Cet e-mail semble invalide — veuillez saisir une adresse correcte (ex. name@example.com).",
         chatAskMessage: "Tapez votre message :",
         chatSending: "Envoi en cours...",
         chatAssistantWelcome: "Bonjour ! Je suis l'assistant intelligent PARKINZI — posez-moi vos questions sur les places, les bornes de recharge, les tarifs ou la plateforme.",
@@ -4332,6 +4335,7 @@
         chatTypeOrSelect: "منتخب کریں یا اپنا پیغام لکھیں...",
         chatAskName: "آپ کا نام کیا ہے؟",
         chatAskEmail: "آپ کا ای میل کیا ہے؟",
+        chatEmailInvalid: "یہ ای میل درست نہیں لگتا — براہ کرم صحیح ای میل درج کریں (مثلاً name@example.com)۔",
         chatAskMessage: "اپنا پیغام لکھیں:",
         chatSending: "بھیج رہا ہے...",
         chatAssistantWelcome: "خوش آمدید! میں PARKINZI کا سمارٹ اسسٹنٹ ہوں — پارکنگ، EV چارجرز، قیمتوں یا پلیٹ فارم کے بارے میں پوچھیں۔",
@@ -6740,7 +6744,13 @@
         addChatMsg(t.chatAskEmail, true);
         setInputPlaceholder(t.contactEmail);
       } else if (chatState.step === "email") {
-        chatState.data.email = text;
+        /* تحقق فعلي من صيغة البريد قبل المتابعة */
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(text)) {
+          addChatMsg(t.chatEmailInvalid, true);
+          setInputPlaceholder(t.contactEmail);
+          return;
+        }
+        chatState.data.email = text.toLowerCase();
         chatState.step = "message";
         addChatMsg(t.chatAskMessage, true);
         setInputPlaceholder(t.contactMessage);
