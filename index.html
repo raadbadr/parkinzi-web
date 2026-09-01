@@ -1877,6 +1877,40 @@
         0 0 8px rgba(46, 125, 50, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
+    /* تأسيس الشركة ذ.م.م — لون بنفسجي */
+    .growth-map-timeline-company .growth-map-timeline-launch-label { color: #b388ff; }
+    [data-theme="light"] .growth-map-timeline-company .growth-map-timeline-launch-label { color: #6a1b9a; }
+    .growth-map-timeline-company .growth-map-timeline-launch-date { color: rgba(179, 136, 255, 0.75); }
+    [data-theme="light"] .growth-map-timeline-company .growth-map-timeline-launch-date { color: rgba(106, 27, 154, 0.7); }
+    .growth-map-timeline-company .growth-map-timeline-launch-tick {
+      background: linear-gradient(180deg, #ede7f6 0%, #9575cd 45%, #6a1b9a 100%);
+      box-shadow:
+        0 0 10px rgba(149, 117, 205, 0.55),
+        0 0 3px rgba(237, 231, 246, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    [data-theme="light"] .growth-map-timeline-company .growth-map-timeline-launch-tick {
+      box-shadow:
+        0 0 8px rgba(106, 27, 154, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    /* أول 50 مستخدماً — لون تركوازي */
+    .growth-map-timeline-users50 .growth-map-timeline-launch-label { color: #4dd0e1; }
+    [data-theme="light"] .growth-map-timeline-users50 .growth-map-timeline-launch-label { color: #00838f; }
+    .growth-map-timeline-users50 .growth-map-timeline-launch-date { color: rgba(77, 208, 225, 0.75); }
+    [data-theme="light"] .growth-map-timeline-users50 .growth-map-timeline-launch-date { color: rgba(0, 131, 143, 0.7); }
+    .growth-map-timeline-users50 .growth-map-timeline-launch-tick {
+      background: linear-gradient(180deg, #e0f7fa 0%, #26c6da 45%, #00838f 100%);
+      box-shadow:
+        0 0 10px rgba(38, 198, 218, 0.55),
+        0 0 3px rgba(224, 247, 250, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    [data-theme="light"] .growth-map-timeline-users50 .growth-map-timeline-launch-tick {
+      box-shadow:
+        0 0 8px rgba(0, 131, 143, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
 
     /* معلم واحد نشِط فقط — موضع موحّد فوق الشريط (بلا توزيع رأسي H1/H2) */
     .growth-map-timeline-launch-label { font-size: 0.60rem; }
@@ -3590,6 +3624,16 @@
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapAndroidDate">20 يونيو</span>
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-company" id="growthMapTimelineCompany" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapCompanyLabel">تأسيس الشركة ذ.م.م</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapCompanyDate">24 أغسطس</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-users50" id="growthMapTimelineUsers50" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapUsers50Label">أول 50 مستخدماً</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapUsers50Date">1 سبتمبر</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
       <input type="range" id="growthMapTimelineSlider" min="0" max="0" value="0" step="1" data-i18n-aria-label="growthMapTimelineSliderAria" aria-label="خط زمني للتغطية" />
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
@@ -3928,6 +3972,10 @@
         growthMapTatmin2Label: "اجتماع مهم 2",
         growthMapTatmin2Date: "7 مايو",
         growthMapAndroidLabel: "نسخة أندرويد",
+        growthMapCompanyLabel: "تأسيس الشركة ذ.م.م",
+        growthMapCompanyDate: "24 أغسطس",
+        growthMapUsers50Label: "أول 50 مستخدماً",
+        growthMapUsers50Date: "1 سبتمبر",
         growthMapAndroidDate: "20 يونيو",
         growthMapTodayLabel: "الان"
       },
@@ -4038,6 +4086,10 @@
         growthMapTatmin2Label: "Key Meeting 2",
         growthMapTatmin2Date: "May 7",
         growthMapAndroidLabel: "Android Version",
+        growthMapCompanyLabel: "Company Founded (LLC)",
+        growthMapCompanyDate: "Aug 24",
+        growthMapUsers50Label: "First 50 Users",
+        growthMapUsers50Date: "Sep 1",
         growthMapAndroidDate: "Jun 20",
         growthMapTodayLabel: "Now"
       },
@@ -4149,6 +4201,10 @@
         growthMapTatmin2Label: "Reunion cle 2",
         growthMapTatmin2Date: "7 mai",
         growthMapAndroidLabel: "Version Android",
+        growthMapCompanyLabel: "Société fondée (SARL)",
+        growthMapCompanyDate: "24 août",
+        growthMapUsers50Label: "50 premiers utilisateurs",
+        growthMapUsers50Date: "1er sept.",
         growthMapAndroidDate: "20 juin",
         growthMapTodayLabel: "Maint."
       },
@@ -4259,6 +4315,10 @@
         growthMapTatmin2Label: "اہم میٹنگ 2",
         growthMapTatmin2Date: "7 مئی",
         growthMapAndroidLabel: "Android ورژن",
+        growthMapCompanyLabel: "کمپنی کا قیام (LLC)",
+        growthMapCompanyDate: "24 اگست",
+        growthMapUsers50Label: "پہلے 50 صارفین",
+        growthMapUsers50Date: "1 ستمبر",
         growthMapAndroidDate: "20 جون",
         growthMapTodayLabel: "ابھی"
       }
@@ -5303,6 +5363,8 @@
       let updateGrowthMapTatmin1Milestone = function () {};
       let updateGrowthMapTatmin2Milestone = function () {};
       let updateGrowthMapAndroidMilestone = function () {};
+      let updateGrowthMapCompanyMilestone = function () {};
+      let updateGrowthMapUsers50Milestone = function () {};
       let updateGrowthMapMonthDividers = function () {};
       let applyActiveMilestone = function () {};
 
@@ -5567,7 +5629,7 @@
             new Date(2026, 3, 1), new Date(2026, 3, 7), new Date(2026, 3, 10),
             new Date(2026, 3, 12), new Date(2026, 3, 18), new Date(2026, 3, 21),
             new Date(2026, 3, 22), new Date(2026, 4, 4), new Date(2026, 4, 7),
-            new Date(2026, 5, 20)
+            new Date(2026, 5, 20), new Date(2026, 7, 24), new Date(2026, 8, 1)
           ];
           var todayEndMs = growthMapEndOfLocalDay(todayDay);
           /* حدود الأشهر داخل النطاق */
@@ -5781,6 +5843,30 @@
         };
         updateGrowthMapAndroidMilestone();
 
+        const companyMilestoneEl = document.getElementById("growthMapTimelineCompany");
+        updateGrowthMapCompanyMilestone = function () {
+          if (!companyMilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { companyMilestoneEl.hidden = true; return; }
+          const companyDayEnd = growthMapEndOfLocalDay(new Date(2026, 7, 24));
+          if (companyDayEnd < minCutoffMs || companyDayEnd > maxCutoffMs) { companyMilestoneEl.hidden = true; return; }
+          const r = warpR((companyDayEnd - minCutoffMs) / timelineSpanMs);
+          companyMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          companyMilestoneEl.hidden = false;
+        };
+        updateGrowthMapCompanyMilestone();
+
+        const users50MilestoneEl = document.getElementById("growthMapTimelineUsers50");
+        updateGrowthMapUsers50Milestone = function () {
+          if (!users50MilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { users50MilestoneEl.hidden = true; return; }
+          const users50DayEnd = growthMapEndOfLocalDay(new Date(2026, 8, 1));
+          if (users50DayEnd < minCutoffMs || users50DayEnd > maxCutoffMs) { users50MilestoneEl.hidden = true; return; }
+          const r = warpR((users50DayEnd - minCutoffMs) / timelineSpanMs);
+          users50MilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          users50MilestoneEl.hidden = false;
+        };
+        updateGrowthMapUsers50Milestone();
+
         /* المعلم النشِط فقط: يُظهر المعلم الأخير الذي وصل إليه المؤشر بالماوس، ويخفي البقية —
            سطر واحد فقط فيصبح الشريط أنحف بلا حاجة لتوزيع رأسي */
         var ACTIVE_MILESTONES = [
@@ -5793,7 +5879,9 @@
           { el: socialMilestoneEl, date: new Date(2026, 3, 22) },
           { el: tatmin1MilestoneEl, date: new Date(2026, 4, 4) },
           { el: tatmin2MilestoneEl, date: new Date(2026, 4, 7) },
-          { el: androidMilestoneEl, date: new Date(2026, 5, 20) }
+          { el: androidMilestoneEl, date: new Date(2026, 5, 20) },
+          { el: companyMilestoneEl, date: new Date(2026, 7, 24) },
+          { el: users50MilestoneEl, date: new Date(2026, 8, 1) }
         ];
         function milestoneStepForDate(d) {
           if (timelineSpanMs <= 0) return null;
@@ -5909,6 +5997,14 @@
         if (androidDayEnd >= minCutoffMs && androidDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((androidDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
+        var companyDayEnd2 = growthMapEndOfLocalDay(new Date(2026, 7, 24));
+        if (companyDayEnd2 >= minCutoffMs && companyDayEnd2 <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(warpR((companyDayEnd2 - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
+        var users50DayEnd2 = growthMapEndOfLocalDay(new Date(2026, 8, 1));
+        if (users50DayEnd2 >= minCutoffMs && users50DayEnd2 <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(warpR((users50DayEnd2 - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
         milestoneSteps.push(SLIDER_MAX_TODAY);
         const SNAP_THRESHOLD = Math.round(TIMELINE_SLIDER_STEPS * 0.015);
         function snapToMilestone(v) {
@@ -5964,6 +6060,8 @@
             requestAnimationFrame(updateGrowthMapTatmin1Milestone);
             requestAnimationFrame(updateGrowthMapTatmin2Milestone);
             requestAnimationFrame(updateGrowthMapAndroidMilestone);
+            requestAnimationFrame(updateGrowthMapCompanyMilestone);
+            requestAnimationFrame(updateGrowthMapUsers50Milestone);
             requestAnimationFrame(function () { applyActiveMilestone(Number(sliderEl.value)); });
           },
           { passive: true }
@@ -6142,6 +6240,8 @@
           updateGrowthMapTatmin1Milestone();
           updateGrowthMapTatmin2Milestone();
           updateGrowthMapAndroidMilestone();
+          updateGrowthMapCompanyMilestone();
+          updateGrowthMapUsers50Milestone();
           updateGrowthMapMonthDividers();
           applyActiveMilestone(Number(sliderEl.value));
         }
