@@ -3963,6 +3963,7 @@
         chatAskName: "ما اسمك؟",
         chatAskEmail: "ما بريدك الإلكتروني؟",
         chatEmailInvalid: "هذا البريد غير صالح — الرجاء إدخال بريد إلكتروني صحيح (مثل name@example.com).",
+        chatNameInvalid: "هذا لا يبدو اسماً — الرجاء كتابة اسمك.",
         chatAskMessage: "اكتب رسالتك:",
         chatSending: "جاري الإرسال...",
         chatAssistantWelcome: "أهلاً بك! أنا مساعد PARKINZI الذكي — اسألني عن المواقف، الشواحن الكهربائية، الأسعار، أو أي شيء عن المنصة.",
@@ -4087,6 +4088,7 @@
         chatAskName: "What's your name?",
         chatAskEmail: "What's your email?",
         chatEmailInvalid: "That email doesn't look valid — please enter a correct address (e.g. name@example.com).",
+        chatNameInvalid: "That doesn't look like a name — please type your name.",
         chatAskMessage: "Type your message:",
         chatSending: "Sending...",
         chatAssistantWelcome: "Hi! I'm the PARKINZI smart assistant — ask me about parking spots, EV chargers, pricing, or anything about the platform.",
@@ -4212,6 +4214,7 @@
         chatAskName: "Quel est votre nom ?",
         chatAskEmail: "Quel est votre e-mail ?",
         chatEmailInvalid: "Cet e-mail semble invalide — veuillez saisir une adresse correcte (ex. name@example.com).",
+        chatNameInvalid: "Cela ne ressemble pas à un nom — veuillez saisir votre nom.",
         chatAskMessage: "Tapez votre message :",
         chatSending: "Envoi en cours...",
         chatAssistantWelcome: "Bonjour ! Je suis l'assistant intelligent PARKINZI — posez-moi vos questions sur les places, les bornes de recharge, les tarifs ou la plateforme.",
@@ -4336,6 +4339,7 @@
         chatAskName: "آپ کا نام کیا ہے؟",
         chatAskEmail: "آپ کا ای میل کیا ہے؟",
         chatEmailInvalid: "یہ ای میل درست نہیں لگتا — براہ کرم صحیح ای میل درج کریں (مثلاً name@example.com)۔",
+        chatNameInvalid: "یہ نام معلوم نہیں ہوتا — براہ کرم اپنا نام لکھیں۔",
         chatAskMessage: "اپنا پیغام لکھیں:",
         chatSending: "بھیج رہا ہے...",
         chatAssistantWelcome: "خوش آمدید! میں PARKINZI کا سمارٹ اسسٹنٹ ہوں — پارکنگ، EV چارجرز، قیمتوں یا پلیٹ فارم کے بارے میں پوچھیں۔",
@@ -6739,6 +6743,13 @@
         addChatMsg(t.chatAskName, true);
         setInputPlaceholder(t.contactName);
       } else if (chatState.step === "name") {
+        /* الاسم يجب أن يحوي حرفين فعليين على الأقل (أي أبجدية) — لا أرقاماً ورموزاً فقط */
+        const letters = (text.match(/\p{L}/gu) || []).length;
+        if (letters < 2 || text.length > 100) {
+          addChatMsg(t.chatNameInvalid, true);
+          setInputPlaceholder(t.contactName);
+          return;
+        }
         chatState.data.name = text;
         chatState.step = "email";
         addChatMsg(t.chatAskEmail, true);
