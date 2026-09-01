@@ -1877,6 +1877,23 @@
         0 0 8px rgba(46, 125, 50, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
+    /* إضافة متدرب — لون ليموني */
+    .growth-map-timeline-intern .growth-map-timeline-launch-label { color: #d4e157; }
+    [data-theme="light"] .growth-map-timeline-intern .growth-map-timeline-launch-label { color: #9e9d24; }
+    .growth-map-timeline-intern .growth-map-timeline-launch-date { color: rgba(212, 225, 87, 0.75); }
+    [data-theme="light"] .growth-map-timeline-intern .growth-map-timeline-launch-date { color: rgba(158, 157, 36, 0.7); }
+    .growth-map-timeline-intern .growth-map-timeline-launch-tick {
+      background: linear-gradient(180deg, #f9fbe7 0%, #d4e157 45%, #9e9d24 100%);
+      box-shadow:
+        0 0 10px rgba(212, 225, 87, 0.55),
+        0 0 3px rgba(249, 251, 231, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    [data-theme="light"] .growth-map-timeline-intern .growth-map-timeline-launch-tick {
+      box-shadow:
+        0 0 8px rgba(158, 157, 36, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
     /* تأسيس الشركة ذ.م.م — لون بنفسجي */
     .growth-map-timeline-company .growth-map-timeline-launch-label { color: #b388ff; }
     [data-theme="light"] .growth-map-timeline-company .growth-map-timeline-launch-label { color: #6a1b9a; }
@@ -3624,6 +3641,11 @@
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapAndroidDate">20 يونيو</span>
         <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
       </div>
+      <div class="growth-map-timeline-launch growth-map-timeline-intern" id="growthMapTimelineIntern" hidden>
+        <span class="growth-map-timeline-launch-label" data-i18n="growthMapInternLabel">إضافة متدرب</span>
+        <span class="growth-map-timeline-launch-date" data-i18n="growthMapInternDate">8 أغسطس</span>
+        <span class="growth-map-timeline-launch-tick" aria-hidden="true"></span>
+      </div>
       <div class="growth-map-timeline-launch growth-map-timeline-company" id="growthMapTimelineCompany" hidden>
         <span class="growth-map-timeline-launch-label" data-i18n="growthMapCompanyLabel">تأسيس الشركة ذ.م.م</span>
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapCompanyDate">24 أغسطس</span>
@@ -3972,6 +3994,8 @@
         growthMapTatmin2Label: "اجتماع مهم 2",
         growthMapTatmin2Date: "7 مايو",
         growthMapAndroidLabel: "نسخة أندرويد",
+        growthMapInternLabel: "إضافة متدرب",
+        growthMapInternDate: "8 أغسطس",
         growthMapCompanyLabel: "تأسيس الشركة ذ.م.م",
         growthMapCompanyDate: "24 أغسطس",
         growthMapUsers50Label: "أول 50 مستخدماً",
@@ -4086,6 +4110,8 @@
         growthMapTatmin2Label: "Key Meeting 2",
         growthMapTatmin2Date: "May 7",
         growthMapAndroidLabel: "Android Version",
+        growthMapInternLabel: "Intern Joined",
+        growthMapInternDate: "Aug 8",
         growthMapCompanyLabel: "Company Founded (LLC)",
         growthMapCompanyDate: "Aug 24",
         growthMapUsers50Label: "First 50 Users",
@@ -4201,6 +4227,8 @@
         growthMapTatmin2Label: "Reunion cle 2",
         growthMapTatmin2Date: "7 mai",
         growthMapAndroidLabel: "Version Android",
+        growthMapInternLabel: "Stagiaire recruté",
+        growthMapInternDate: "8 août",
         growthMapCompanyLabel: "Société fondée (SARL)",
         growthMapCompanyDate: "24 août",
         growthMapUsers50Label: "50 premiers utilisateurs",
@@ -4315,6 +4343,8 @@
         growthMapTatmin2Label: "اہم میٹنگ 2",
         growthMapTatmin2Date: "7 مئی",
         growthMapAndroidLabel: "Android ورژن",
+        growthMapInternLabel: "انٹرن کی شمولیت",
+        growthMapInternDate: "8 اگست",
         growthMapCompanyLabel: "کمپنی کا قیام (LLC)",
         growthMapCompanyDate: "24 اگست",
         growthMapUsers50Label: "پہلے 50 صارفین",
@@ -5363,6 +5393,7 @@
       let updateGrowthMapTatmin1Milestone = function () {};
       let updateGrowthMapTatmin2Milestone = function () {};
       let updateGrowthMapAndroidMilestone = function () {};
+      let updateGrowthMapInternMilestone = function () {};
       let updateGrowthMapCompanyMilestone = function () {};
       let updateGrowthMapUsers50Milestone = function () {};
       let updateGrowthMapMonthDividers = function () {};
@@ -5629,7 +5660,8 @@
             new Date(2026, 3, 1), new Date(2026, 3, 7), new Date(2026, 3, 10),
             new Date(2026, 3, 12), new Date(2026, 3, 18), new Date(2026, 3, 21),
             new Date(2026, 3, 22), new Date(2026, 4, 4), new Date(2026, 4, 7),
-            new Date(2026, 5, 20), new Date(2026, 7, 24), new Date(2026, 8, 1)
+            new Date(2026, 5, 20), new Date(2026, 7, 8), new Date(2026, 7, 24),
+            new Date(2026, 8, 1)
           ];
           var todayEndMs = growthMapEndOfLocalDay(todayDay);
           /* حدود الأشهر داخل النطاق */
@@ -5843,6 +5875,18 @@
         };
         updateGrowthMapAndroidMilestone();
 
+        const internMilestoneEl = document.getElementById("growthMapTimelineIntern");
+        updateGrowthMapInternMilestone = function () {
+          if (!internMilestoneEl || !timelineEl) return;
+          if (timelineSpanMs <= 0) { internMilestoneEl.hidden = true; return; }
+          const internDayEnd = growthMapEndOfLocalDay(new Date(2026, 7, 8));
+          if (internDayEnd < minCutoffMs || internDayEnd > maxCutoffMs) { internMilestoneEl.hidden = true; return; }
+          const r = warpR((internDayEnd - minCutoffMs) / timelineSpanMs);
+          internMilestoneEl.style.left = milestoneLeft(r, timelineEl.getAttribute("dir") === "rtl");
+          internMilestoneEl.hidden = false;
+        };
+        updateGrowthMapInternMilestone();
+
         const companyMilestoneEl = document.getElementById("growthMapTimelineCompany");
         updateGrowthMapCompanyMilestone = function () {
           if (!companyMilestoneEl || !timelineEl) return;
@@ -5880,6 +5924,7 @@
           { el: tatmin1MilestoneEl, date: new Date(2026, 4, 4) },
           { el: tatmin2MilestoneEl, date: new Date(2026, 4, 7) },
           { el: androidMilestoneEl, date: new Date(2026, 5, 20) },
+          { el: internMilestoneEl, date: new Date(2026, 7, 8) },
           { el: companyMilestoneEl, date: new Date(2026, 7, 24) },
           { el: users50MilestoneEl, date: new Date(2026, 8, 1) }
         ];
@@ -5997,6 +6042,10 @@
         if (androidDayEnd >= minCutoffMs && androidDayEnd <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((androidDayEnd - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
         }
+        var internDayEnd2 = growthMapEndOfLocalDay(new Date(2026, 7, 8));
+        if (internDayEnd2 >= minCutoffMs && internDayEnd2 <= maxCutoffMs) {
+          milestoneSteps.push(Math.round(warpR((internDayEnd2 - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
+        }
         var companyDayEnd2 = growthMapEndOfLocalDay(new Date(2026, 7, 24));
         if (companyDayEnd2 >= minCutoffMs && companyDayEnd2 <= maxCutoffMs) {
           milestoneSteps.push(Math.round(warpR((companyDayEnd2 - minCutoffMs) / timelineSpanMs) * TIMELINE_SLIDER_STEPS));
@@ -6060,6 +6109,7 @@
             requestAnimationFrame(updateGrowthMapTatmin1Milestone);
             requestAnimationFrame(updateGrowthMapTatmin2Milestone);
             requestAnimationFrame(updateGrowthMapAndroidMilestone);
+            requestAnimationFrame(updateGrowthMapInternMilestone);
             requestAnimationFrame(updateGrowthMapCompanyMilestone);
             requestAnimationFrame(updateGrowthMapUsers50Milestone);
             requestAnimationFrame(function () { applyActiveMilestone(Number(sliderEl.value)); });
@@ -6240,6 +6290,7 @@
           updateGrowthMapTatmin1Milestone();
           updateGrowthMapTatmin2Milestone();
           updateGrowthMapAndroidMilestone();
+          updateGrowthMapInternMilestone();
           updateGrowthMapCompanyMilestone();
           updateGrowthMapUsers50Milestone();
           updateGrowthMapMonthDividers();
