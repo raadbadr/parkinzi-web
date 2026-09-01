@@ -37,7 +37,7 @@ const LATEST_PROTOCOL_VERSION = SUPPORTED_PROTOCOL_VERSIONS[0];
 
 const MCP_SERVER_INFO = {
   name: "parkinzi",
-  version: "0.3.0",
+  version: "0.3.1",
   title: "PARKINZI — Smart Parking & EV Charging (Saudi Arabia)",
 };
 
@@ -551,6 +551,13 @@ function toolAppInfo() {
     launched: {
       ios: "2026-04-07",
       android: "2026-06-20",
+    },
+    legal_entity: {
+      name_ar: "شركة باركينزي",
+      name_en: "PARKINZI Company",
+      type: "Limited Liability Company (one person)",
+      commercial_registration: "7055060102",
+      vat_number: "314983900200003",
     },
   };
 }

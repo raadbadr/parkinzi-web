@@ -57,6 +57,44 @@
   z-index: 1;
 }
 
+/* السجل التجاري والرقم الضريبي — تسمية فوق ورقم تحتها (كالمواقع الرسمية) */
+.footer-legal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin: 1.4rem 0 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+.footer-legal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.footer-legal-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+.footer-legal-value {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+[data-theme="light"] .footer .footer-legal-label {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+[data-theme="light"] .footer .footer-legal-value {
+  color: var(--text-primary);
+}
+
 .footer-copyright {
   margin-top: 0.5rem;
   font-size: 0.95rem;
