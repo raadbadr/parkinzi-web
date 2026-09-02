@@ -222,3 +222,10 @@ h3 .brand-logo-mark {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* السنة و©: وحدة LTR معزولة — في العربية تُقرأ "2026 ©" (© بعد السنة) */
+.footer-year {
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}
