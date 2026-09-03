@@ -1205,12 +1205,15 @@ async function workersAiAssistant(messages, env, headers) {
 
       const reply = String((out && out.response) || "").trim();
       if (!reply) {
-        return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+        const shape = out && typeof out === "object" ? Object.keys(out).join(",") : typeof out;
+        return new Response(JSON.stringify({ error: "assistant_error", detail: "empty reply; keys=" + shape }), { status: 502, headers });
       }
       return new Response(JSON.stringify({ reply, engine: "workers-ai" }), { status: 200, headers });
     }
     return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
   } catch (e) {
-    return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+    const detail = String((e && e.message) || e).slice(0, 300);
+    console.error("[assistant] workers-ai failed:", detail);
+    return new Response(JSON.stringify({ error: "assistant_error", detail }), { status: 502, headers });
   }
 }
