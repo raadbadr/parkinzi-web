@@ -1232,8 +1232,8 @@ async function workersAiAssistant(messages, env, headers) {
 
       const reply = String((out && out.response) || "").trim();
       if (!reply) {
-        const shape = out && typeof out === "object" ? Object.keys(out).join(",") : typeof out;
-        return new Response(JSON.stringify({ error: "assistant_error", detail: "empty reply; keys=" + shape }), { status: 502, headers });
+        console.error("[assistant] workers-ai empty reply; keys=", out && typeof out === "object" ? Object.keys(out).join(",") : typeof out);
+        return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
       }
       return new Response(JSON.stringify({ reply, engine: "workers-ai" }), { status: 200, headers });
     }
@@ -1241,6 +1241,6 @@ async function workersAiAssistant(messages, env, headers) {
   } catch (e) {
     const detail = String((e && e.message) || e).slice(0, 300);
     console.error("[assistant] workers-ai failed:", detail);
-    return new Response(JSON.stringify({ error: "assistant_error", detail }), { status: 502, headers });
+    return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
   }
 }
