@@ -1188,17 +1188,44 @@ async function workersAiAssistant(messages, env, headers) {
       const calls = out && Array.isArray(out.tool_calls) ? out.tool_calls : [];
 
       if (calls.length && round < ASSISTANT_MAX_TOOL_ROUNDS) {
-        msgs.push({ role: "assistant", content: String((out && out.response) || ""), tool_calls: calls });
-        for (const c of calls) {
-          let args = c.arguments;
-          if (typeof args === "string") { try { args = JSON.parse(args); } catch { args = {}; } }
+        /* Workers AI يتحقق من صيغة OpenAI الكاملة في الجولة التالية:
+           id + type:"function" لكل استدعاء، وtool_call_id في نتيجة الأداة */
+        const normalized = calls.map((c, i) => {
+          const fn = c.function || c;
+          const name = fn.name || c.name;
+          const rawArgs = fn.arguments != null ? fn.arguments : c.arguments;
+          const argsStr = typeof rawArgs === "string" ? rawArgs : JSON.stringify(rawArgs || {});
+          let argsObj = {};
+          try { argsObj = JSON.parse(argsStr) || {}; } catch { argsObj = {}; }
+          return {
+            id: c.id || ("call_" + round + "_" + i),
+            name,
+            argsStr,
+            argsObj,
+          };
+        });
+        msgs.push({
+          role: "assistant",
+          content: String((out && out.response) || ""),
+          tool_calls: normalized.map((n) => ({
+            id: n.id,
+            type: "function",
+            function: { name: n.name, arguments: n.argsStr },
+          })),
+        });
+        for (const n of normalized) {
           let result;
           try {
-            result = await callTool(c.name, args || {}, env);
+            result = await callTool(n.name, n.argsObj, env);
           } catch (e) {
             result = { error: String((e && e.message) || e) };
           }
-          msgs.push({ role: "tool", name: c.name, content: JSON.stringify(result).slice(0, 12000) });
+          msgs.push({
+            role: "tool",
+            tool_call_id: n.id,
+            name: n.name,
+            content: JSON.stringify(result).slice(0, 12000),
+          });
         }
         continue;
       }
