@@ -9,3 +9,8 @@ directory = "./"
 # answers asset-matching requests before the Worker runs) — which silently
 # broke every MCP tool that reads blog content.
 binding = "ASSETS"
+
+# Workers AI — يشغّل مساعد الموقع مجاناً (الحصة اليومية المجانية) حين لا يوجد
+# ANTHROPIC_API_KEY؛ يظهر داخل الـ Worker كـ env.AI
+[ai]
+binding = "AI"

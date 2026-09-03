@@ -1069,9 +1069,6 @@ function assistantSystemPrompt() {
 
 export async function handleAssistantRequest(request, env) {
   const headers = { "Content-Type": "application/json", "Cache-Control": "no-store" };
-  if (!env.ANTHROPIC_API_KEY) {
-    return new Response(JSON.stringify({ error: "assistant_unavailable" }), { status: 503, headers });
-  }
   const ip = request.headers.get("cf-connecting-ip") || "";
   if (assistantRateLimited(ip)) {
     return new Response(JSON.stringify({ error: "rate_limited" }), { status: 429, headers });
@@ -1092,6 +1089,13 @@ export async function handleAssistantRequest(request, env) {
   }
   if (!messages.length || messages[messages.length - 1].role !== "user") {
     return new Response(JSON.stringify({ error: "invalid_messages" }), { status: 400, headers });
+  }
+
+  /* بلا مفتاح Anthropic: Workers AI المجاني (env.AI عبر [ai] في wrangler.toml)؛
+     وبلا الاثنين: 503 فتتحول الواجهة لمسار الدعم */
+  if (!env.ANTHROPIC_API_KEY) {
+    if (env.AI) return workersAiAssistant(messages, env, headers);
+    return new Response(JSON.stringify({ error: "assistant_unavailable" }), { status: 503, headers });
   }
 
   const tools = TOOLS.filter((t) => ASSISTANT_TOOL_NAMES.includes(t.name)).map((t) => ({
@@ -1155,6 +1159,55 @@ export async function handleAssistantRequest(request, env) {
         return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
       }
       return new Response(JSON.stringify({ reply }), { status: 200, headers });
+    }
+    return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+  }
+}
+
+// --- مسار Workers AI المجاني -----------------------------------------------
+// نفس أدوات البيانات الحية، بصيغة OpenAI-style function calling التي يفهمها
+// Workers AI. Llama 3.3 70B: أقوى نموذج مجاني متعدد اللغات يدعم الأدوات.
+const WORKERS_AI_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+
+async function workersAiAssistant(messages, env, headers) {
+  const tools = TOOLS.filter((t) => ASSISTANT_TOOL_NAMES.includes(t.name)).map((t) => ({
+    type: "function",
+    function: { name: t.name, description: t.description, parameters: t.inputSchema },
+  }));
+  const msgs = [{ role: "system", content: assistantSystemPrompt() }].concat(messages);
+
+  try {
+    for (let round = 0; round <= ASSISTANT_MAX_TOOL_ROUNDS; round++) {
+      const out = await env.AI.run(WORKERS_AI_MODEL, {
+        messages: msgs,
+        tools,
+        max_tokens: ASSISTANT_MAX_TOKENS,
+      });
+      const calls = out && Array.isArray(out.tool_calls) ? out.tool_calls : [];
+
+      if (calls.length && round < ASSISTANT_MAX_TOOL_ROUNDS) {
+        msgs.push({ role: "assistant", content: String((out && out.response) || ""), tool_calls: calls });
+        for (const c of calls) {
+          let args = c.arguments;
+          if (typeof args === "string") { try { args = JSON.parse(args); } catch { args = {}; } }
+          let result;
+          try {
+            result = await callTool(c.name, args || {}, env);
+          } catch (e) {
+            result = { error: String((e && e.message) || e) };
+          }
+          msgs.push({ role: "tool", name: c.name, content: JSON.stringify(result).slice(0, 12000) });
+        }
+        continue;
+      }
+
+      const reply = String((out && out.response) || "").trim();
+      if (!reply) {
+        return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
+      }
+      return new Response(JSON.stringify({ reply, engine: "workers-ai" }), { status: 200, headers });
     }
     return new Response(JSON.stringify({ error: "assistant_error" }), { status: 502, headers });
   } catch (e) {
