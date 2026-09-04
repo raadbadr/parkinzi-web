@@ -1328,6 +1328,64 @@
     .growth-map-timeline[dir="ltr"] input[type="range"] {
       direction: ltr;
     }
+    /* صف تصفّح الأشهر: يمرّر عرض الشريط أفقياً بلا ما يغيّر التاريخ المختار
+       (مختلف عن صف زرّي المعالم تحته اللي يقفز بالتاريخ نفسه) */
+    .growth-map-timeline-month-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+      padding-inline-end: 0.1rem;
+    }
+    .growth-map-timeline-month-nav-label {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      opacity: 0.75;
+      margin-inline-end: 0.15rem;
+    }
+    .growth-map-timeline-month-nav-btn {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
+    }
+    .growth-map-timeline-month-nav-btn:hover:not(:disabled) {
+      color: #4fc3f7;
+      border-color: rgba(79, 195, 247, 0.75);
+      transform: scale(1.08);
+    }
+    .growth-map-timeline-month-nav-btn:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+    .growth-map-timeline-month-nav-btn:focus-visible {
+      outline: 2px solid #4fc3f7;
+      outline-offset: 2px;
+    }
+    .growth-map-timeline-month-nav-btn:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+    [data-theme="light"] .growth-map-timeline-month-nav-btn {
+      border-color: rgba(0, 60, 100, 0.25);
+      color: rgba(0, 60, 100, 0.7);
+    }
+    [data-theme="light"] .growth-map-timeline-month-nav-btn:hover:not(:disabled) {
+      color: #0277bd;
+      border-color: rgba(2, 119, 189, 0.7);
+    }
+    .growth-map-timeline[dir="rtl"] .growth-map-timeline-month-nav-btn svg {
+      transform: scaleX(-1);
+    }
     /* صف التنقّل: زرّا المعالم على طرفي الشريط */
     .growth-map-timeline-nav-row {
       display: flex;
@@ -1379,10 +1437,36 @@
     .growth-map-timeline[dir="rtl"] .growth-map-timeline-nav-btn svg {
       transform: scaleX(-1);
     }
-    .growth-map-timeline-range-wrap {
-      position: relative;
+    /* حاوية التمرير: لما عدد الأشهر يكبر وتضيق كل واحدة عن حدها الأدنى،
+       يصير الشريط أعرض من الحاوية ويظهر سكرول أفقي بدل ما يتكدّس */
+    .growth-map-timeline-scroll {
       flex: 1 1 auto;
       min-width: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+    }
+    [data-theme="light"] .growth-map-timeline-scroll {
+      scrollbar-color: rgba(0, 60, 100, 0.3) transparent;
+    }
+    .growth-map-timeline-scroll::-webkit-scrollbar {
+      height: 5px;
+    }
+    .growth-map-timeline-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .growth-map-timeline-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+    }
+    [data-theme="light"] .growth-map-timeline-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0, 60, 100, 0.25);
+    }
+    .growth-map-timeline-range-wrap {
+      position: relative;
+      width: max(100%, calc(var(--tl-months, 1) * 46px));
       height: 20px;
       margin-top: 0;
       z-index: 0;
@@ -1974,6 +2058,18 @@
       /* الجوال: تكفي الفواصل — أسماء الأشهر تزدحم */
       .growth-map-timeline-month-label {
         display: none;
+      }
+      /* الجوال: النص يزدحم — الأيقونتان تكفيان */
+      .growth-map-timeline-month-nav-label {
+        display: none;
+      }
+      .growth-map-timeline-month-nav-btn {
+        width: 21px;
+        height: 21px;
+      }
+      .growth-map-timeline-month-nav-btn svg {
+        width: 11px;
+        height: 11px;
       }
     }
     @media (max-width: 600px) {
@@ -3584,11 +3680,21 @@
 
   <div class="growth-data-area">
   <div class="growth-map-timeline growth-map-timeline--sticky" id="growthMapTimeline">
+    <div class="growth-map-timeline-month-nav-row">
+      <span class="growth-map-timeline-month-nav-label" data-i18n="growthMapMonthNavLabel">تصفّح الأشهر</span>
+      <button type="button" class="growth-map-timeline-month-nav-btn" id="growthMapTimelineMonthPrevBtn" data-i18n-aria-label="growthMapMonthNavPrevAria" aria-label="الشهر السابق">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5"/></svg>
+      </button>
+      <button type="button" class="growth-map-timeline-month-nav-btn" id="growthMapTimelineMonthNextBtn" data-i18n-aria-label="growthMapMonthNavNextAria" aria-label="الشهر التالي">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5"/></svg>
+      </button>
+    </div>
     <div class="growth-map-timeline-nav-row">
     <button type="button" class="growth-map-timeline-nav-btn" id="growthMapTimelinePrevBtn" data-i18n-aria-label="growthMapNavPrevAria" aria-label="المعلم السابق">
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5"/></svg>
     </button>
-    <div class="growth-map-timeline-range-wrap">
+    <div class="growth-map-timeline-scroll" id="growthMapTimelineScroll">
+    <div class="growth-map-timeline-range-wrap" id="growthMapTimelineRangeWrap">
       <div class="growth-map-timeline-launch" id="growthMapTimelineLaunch" hidden>
         <span class="growth-map-timeline-launch-label" data-i18n="growthMapLaunchLabel">تجريبية 1.1</span>
         <span class="growth-map-timeline-launch-date" data-i18n="growthMapLaunchDate">1 أبريل</span>
@@ -3658,6 +3764,7 @@
       <div class="growth-map-timeline-today" id="growthMapTimelineToday" hidden>
         <span class="growth-map-timeline-today-label" data-i18n="growthMapTodayLabel">الان</span>
       </div>
+    </div>
     </div>
     <button type="button" class="growth-map-timeline-nav-btn" id="growthMapTimelineNextBtn" data-i18n-aria-label="growthMapNavNextAria" aria-label="المعلم التالي">
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5"/></svg>
@@ -3981,6 +4088,9 @@
         growthMapTimelineSliderAria: "خط زمني للتغطية",
         growthMapNavPrevAria: "المعلم السابق",
         growthMapNavNextAria: "المعلم التالي",
+        growthMapMonthNavLabel: "تصفّح الأشهر",
+        growthMapMonthNavPrevAria: "الشهر السابق",
+        growthMapMonthNavNextAria: "الشهر التالي",
         growthMapLaunchLabel: "تجريبية 1.1",
         growthMapLaunchDate: "1 أبريل",
         growthMapReleaseLabel: "الإطلاق الرسمي",
@@ -4106,6 +4216,9 @@
         growthMapTimelineSliderAria: "Coverage timeline",
         growthMapNavPrevAria: "Previous milestone",
         growthMapNavNextAria: "Next milestone",
+        growthMapMonthNavLabel: "Browse months",
+        growthMapMonthNavPrevAria: "Previous month",
+        growthMapMonthNavNextAria: "Next month",
         growthMapLaunchLabel: "Beta 1.1 (Build 1)",
         growthMapLaunchDate: "Apr 1",
         growthMapReleaseLabel: "Official Launch",
@@ -4232,6 +4345,9 @@
         growthMapTimelineSliderAria: "Chronologie de la couverture",
         growthMapNavPrevAria: "Jalon précédent",
         growthMapNavNextAria: "Jalon suivant",
+        growthMapMonthNavLabel: "Parcourir les mois",
+        growthMapMonthNavPrevAria: "Mois précédent",
+        growthMapMonthNavNextAria: "Mois suivant",
         growthMapLaunchLabel: "Bêta 1.1 (Build 1)",
         growthMapLaunchDate: "1 avr.",
         growthMapReleaseLabel: "Lancement officiel",
@@ -4357,6 +4473,9 @@
         growthMapTimelineSliderAria: "کوریج ٹائم لائن",
         growthMapNavPrevAria: "پچھلا سنگ میل",
         growthMapNavNextAria: "اگلا سنگ میل",
+        growthMapMonthNavLabel: "مہینے دیکھیں",
+        growthMapMonthNavPrevAria: "پچھلا مہینہ",
+        growthMapMonthNavNextAria: "اگلا مہینہ",
         growthMapLaunchLabel: "بیٹا 1.1 (بلڈ 1)",
         growthMapLaunchDate: "1 اپریل",
         growthMapReleaseLabel: "آفیشل لانچ",
@@ -5399,6 +5518,8 @@
         const l0 = lang();
         timelineEl.setAttribute("dir", l0 === "ar" || l0 === "ur" ? "rtl" : "ltr");
       }
+      /* يُستخدم لإعادة تصفير مكان التمرير فقط لما يتغيّر اتجاه RTL/LTR فعلاً (تبديل لغة) — لا عند تبديل الثيم */
+      let _tlLastScrollDir = timelineEl ? timelineEl.getAttribute("dir") : null;
       const startLabelEl = document.getElementById("growthMapTimelineStartLabel");
       const endLabelEl = document.getElementById("growthMapTimelineEndLabel");
       let updateGrowthMapLaunchMilestone = function () {};
@@ -5415,6 +5536,8 @@
       let updateGrowthMapCompanyMilestone = function () {};
       let updateGrowthMapUsers50Milestone = function () {};
       let updateGrowthMapMonthDividers = function () {};
+      let updateMonthNavButtons = function () {};
+      let scrollTimelineToToday = function () {};
       let applyActiveMilestone = function () {};
 
       function formatGrowthMapTimelineDate(ms) {
@@ -5668,20 +5791,11 @@
         minCutoffMs = growthMapTimelineDayEndMs(0);
         maxCutoffMs = growthMapTimelineDayEndMs(timelineDaySpan);
         timelineSpanMs = Math.max(0, maxCutoffMs - minCutoffMs);
-        /* تايم لاين مقسّم بين الفترات (الأشهر): عرض كل شهر يتناسب مع عدد
-           معالمه — الأشهر الحافلة تتّسع والفارغة تنضغط، والتحويل الزمني↔البصري
-           خطي داخل كل فترة (piecewise-linear قابل للعكس بدقة) */
+        /* تايم لاين شهري: كل شهر تقويمي ياخذ نفس العرض بالضبط بغض النظر عن
+           عدد معالمه — بسيط وثابت، ما يحتاج تعديل كل ما نضيف معلم جديد */
         let timelineMonthSegs = [];
         (function buildTimelineWarp() {
           if (timelineSpanMs <= 0) return;
-          var MILESTONE_DATES = [
-            new Date(2026, 3, 1), new Date(2026, 3, 7), new Date(2026, 3, 10),
-            new Date(2026, 3, 12), new Date(2026, 3, 18), new Date(2026, 3, 21),
-            new Date(2026, 3, 22), new Date(2026, 4, 4), new Date(2026, 4, 7),
-            new Date(2026, 5, 20), new Date(2026, 7, 8), new Date(2026, 7, 24),
-            new Date(2026, 8, 1)
-          ];
-          var todayEndMs = growthMapEndOfLocalDay(todayDay);
           /* حدود الأشهر داخل النطاق */
           var bounds = [minCutoffMs];
           var y = timelineStartDay.getFullYear();
@@ -5693,29 +5807,19 @@
             mo++; if (mo > 11) { mo = 0; y++; }
           }
           bounds.push(maxCutoffMs);
-          /* الوزن: 1 أساس + 1.2 لكل معلم + 0.5 لفترة "الآن" */
           var segs = [];
-          var totalW = 0;
           for (var i = 0; i < bounds.length - 1; i++) {
-            var a = bounds[i], b = bounds[i + 1];
-            var count = 0;
-            for (var k = 0; k < MILESTONE_DATES.length; k++) {
-              var mms = growthMapEndOfLocalDay(MILESTONE_DATES[k]);
-              if (mms > a && mms <= b) count++;
-            }
-            var w = 1 + 1.2 * count;
-            if (todayEndMs > a && todayEndMs <= b) w += 0.5;
-            segs.push({ a: a, b: b, w: w });
-            totalW += w;
+            segs.push({ a: bounds[i], b: bounds[i + 1] });
           }
-          var acc = 0;
-          for (var j = 0; j < segs.length; j++) {
-            segs[j].v0 = acc;
-            acc += segs[j].w / totalW;
-            segs[j].v1 = acc;
+          var n = segs.length;
+          for (var j = 0; j < n; j++) {
+            segs[j].v0 = j / n;
+            segs[j].v1 = (j + 1) / n;
           }
-          segs[segs.length - 1].v1 = 1;
           timelineMonthSegs = segs;
+          /* لو عدد الأشهر كبير وضاقت كل واحدة عن 46px، الحاوية تصير قابلة للتمرير أفقياً بدل الازدحام */
+          var rangeWrapEl = document.getElementById("growthMapTimelineRangeWrap");
+          if (rangeWrapEl) rangeWrapEl.style.setProperty("--tl-months", String(n));
           _tlWarpToVisual = function (r) {
             if (r <= 0) return 0; if (r >= 1) return 1;
             var t = minCutoffMs + r * timelineSpanMs;
@@ -6114,6 +6218,52 @@
         }
         updateNavButtons(SLIDER_MAX_TODAY);
 
+        /* تصفّح الأشهر: تمرير الشريط أفقياً فقط — لا يغيّر التاريخ المختار ولا الإحصائيات */
+        const monthScrollEl = document.getElementById("growthMapTimelineScroll");
+        const monthPrevBtn = document.getElementById("growthMapTimelineMonthPrevBtn");
+        const monthNextBtn = document.getElementById("growthMapTimelineMonthNextBtn");
+        updateMonthNavButtons = function () {
+          if (!monthScrollEl || !monthPrevBtn || !monthNextBtn) return;
+          var maxScroll = monthScrollEl.scrollWidth - monthScrollEl.clientWidth;
+          if (maxScroll <= 1) {
+            monthPrevBtn.disabled = true;
+            monthNextBtn.disabled = true;
+            return;
+          }
+          var sl = monthScrollEl.scrollLeft;
+          var isRtl = timelineEl.getAttribute("dir") === "rtl";
+          if (isRtl) {
+            monthPrevBtn.disabled = sl >= -1;
+            monthNextBtn.disabled = sl <= -maxScroll + 1;
+          } else {
+            monthPrevBtn.disabled = sl <= 1;
+            monthNextBtn.disabled = sl >= maxScroll - 1;
+          }
+        };
+        function scrollTimelineByMonth(dir) {
+          if (!monthScrollEl) return;
+          var rangeWrapForScroll = document.getElementById("growthMapTimelineRangeWrap");
+          var monthCount = timelineMonthSegs.length || 1;
+          var monthPx = rangeWrapForScroll ? rangeWrapForScroll.getBoundingClientRect().width / monthCount : monthScrollEl.clientWidth;
+          var isRtl = timelineEl.getAttribute("dir") === "rtl";
+          var sign = isRtl ? -1 : 1;
+          monthScrollEl.scrollBy({ left: sign * dir * monthPx });
+          updateMonthNavButtons();
+        }
+        /* يفتح على "الآن" لا بداية الأشهر — عشان الثامب ما يضيع خارج الرؤية لو الأشهر كثرت */
+        scrollTimelineToToday = function () {
+          if (!monthScrollEl) return;
+          var maxScroll = monthScrollEl.scrollWidth - monthScrollEl.clientWidth;
+          if (maxScroll <= 1) return;
+          var isRtl = timelineEl.getAttribute("dir") === "rtl";
+          monthScrollEl.scrollLeft = isRtl ? -maxScroll : maxScroll;
+        };
+        if (monthPrevBtn) monthPrevBtn.addEventListener("click", function () { scrollTimelineByMonth(-1); });
+        if (monthNextBtn) monthNextBtn.addEventListener("click", function () { scrollTimelineByMonth(1); });
+        if (monthScrollEl) monthScrollEl.addEventListener("scroll", function () { updateMonthNavButtons(); }, { passive: true });
+        /* الحاوية ما تكون جاهزة القياس وقت هذا السطر (نفس سبب setTimeout لـ map.resize تحت) */
+        setTimeout(function () { scrollTimelineToToday(); updateMonthNavButtons(); }, 400);
+
         window.addEventListener(
           "resize",
           function () {
@@ -6131,6 +6281,7 @@
             requestAnimationFrame(updateGrowthMapCompanyMilestone);
             requestAnimationFrame(updateGrowthMapUsers50Milestone);
             requestAnimationFrame(function () { applyActiveMilestone(Number(sliderEl.value)); });
+            requestAnimationFrame(function () { updateMonthNavButtons(); });
           },
           { passive: true }
         );
@@ -6313,6 +6464,12 @@
           updateGrowthMapUsers50Milestone();
           updateGrowthMapMonthDividers();
           applyActiveMilestone(Number(sliderEl.value));
+          const curDir = timelineEl.getAttribute("dir");
+          if (curDir !== _tlLastScrollDir) {
+            _tlLastScrollDir = curDir;
+            scrollTimelineToToday();
+          }
+          updateMonthNavButtons();
         }
       };
       setTimeout(() => map.resize(), 400);
