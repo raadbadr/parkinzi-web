@@ -1447,6 +1447,9 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+      /* overflow-x:auto يفرض قصّاً عمودياً أيضاً — لازم حشو يتّسع لتسميات المعالم فوق الشريط وأسماء الأشهر تحته وإلا تُقصّ */
+      padding: 2.6rem 0 1.4rem;
+      margin: -2.6rem 0 -1.4rem;
     }
     [data-theme="light"] .growth-map-timeline-scroll {
       scrollbar-color: rgba(0, 60, 100, 0.3) transparent;
@@ -6193,6 +6196,8 @@
           sliderEl.value = String(v);
           sliderEl.dispatchEvent(new Event("input", { bubbles: true }));
           sliderEl.dispatchEvent(new Event("change", { bubbles: true }));
+          /* يتوسّط المعلم الجديد داخل منطقة التمرير لو كان خارج الرؤية */
+          scrollTimelineToStep(v);
         }
         function updateNavButtons(pos) {
           if (!prevBtnEl || !nextBtnEl) return;
@@ -6248,6 +6253,18 @@
           var isRtl = timelineEl.getAttribute("dir") === "rtl";
           var sign = isRtl ? -1 : 1;
           monthScrollEl.scrollBy({ left: sign * dir * monthPx });
+          updateMonthNavButtons();
+        }
+        /* يتوسّط موضع سلايدر معيّن داخل منطقة التمرير — يُستخدم عند القفز لمعلم عبر زرّي السابق/التالي تحت الشريط */
+        function scrollTimelineToStep(step) {
+          if (!monthScrollEl) return;
+          var maxScroll = monthScrollEl.scrollWidth - monthScrollEl.clientWidth;
+          if (maxScroll <= 1) return;
+          var ratio = Number(step) / TIMELINE_SLIDER_STEPS;
+          var isRtl = timelineEl.getAttribute("dir") === "rtl";
+          var x = (isRtl ? 1 - ratio : ratio) * monthScrollEl.scrollWidth - monthScrollEl.clientWidth / 2;
+          x = Math.max(0, Math.min(maxScroll, x));
+          monthScrollEl.scrollLeft = isRtl ? -(maxScroll - x) : x;
           updateMonthNavButtons();
         }
         /* يفتح على "الآن" لا بداية الأشهر — عشان الثامب ما يضيع خارج الرؤية لو الأشهر كثرت */
