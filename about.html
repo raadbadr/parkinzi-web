@@ -211,11 +211,6 @@
         <div class="menu-label" data-i18n="appearance">المظهر</div>
         <div class="menu-value" id="currentThemeDisplay">داكن</div>
       </div>
-      <span class="menu-icon">⋯</span>
-      <div class="menu-dropdown" id="themeDropdown">
-        <div class="menu-dropdown-item" data-theme="light"><span class="checkmark" id="check-light" style="display:none">✓</span><span data-i18n="light">فاتح</span></div>
-        <div class="menu-dropdown-item" data-theme="dark"><span class="checkmark" id="check-dark">✓</span><span data-i18n="dark">داكن</span></div>
-      </div>
     </div>
   </header>
 
@@ -440,33 +435,23 @@
       if (logo) logo.src = th === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️";
       document.getElementById("currentThemeDisplay").textContent = translations[currentLanguageCode][th === "dark" ? "dark" : "light"];
-      document.getElementById("check-light").style.display = th === "light" ? "inline" : "none";
-      document.getElementById("check-dark").style.display = th === "dark" ? "inline" : "none";
     }
 
     document.getElementById("langMenuBtn").addEventListener("click", event => {
       event.stopPropagation();
       document.getElementById("langDropdown").classList.toggle("show");
-      document.getElementById("themeDropdown").classList.remove("show");
     });
     document.getElementById("themeMenuBtn").addEventListener("click", event => {
       event.stopPropagation();
-      document.getElementById("themeDropdown").classList.toggle("show");
       document.getElementById("langDropdown").classList.remove("show");
+      setTheme(theme() === "dark" ? "light" : "dark");
     });
     document.addEventListener("click", () => {
       document.getElementById("langDropdown").classList.remove("show");
-      document.getElementById("themeDropdown").classList.remove("show");
     });
 
     document.querySelectorAll("#langDropdown .menu-dropdown-item").forEach(item => {
       item.addEventListener("click", () => setLang(item.dataset.lang));
-    });
-    document.querySelectorAll("#themeDropdown .menu-dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
-        setTheme(item.dataset.theme);
-        document.getElementById("themeDropdown").classList.remove("show");
-      });
     });
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -489,8 +474,6 @@
       if (logo) logo.src = th === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       document.getElementById("themeIcon").textContent = th === "dark" ? "🌙" : "☀️";
       document.getElementById("currentThemeDisplay").textContent = translations[currentLanguageCode][th === "dark" ? "dark" : "light"];
-      document.getElementById("check-light").style.display = th === "light" ? "inline" : "none";
-      document.getElementById("check-dark").style.display = th === "dark" ? "inline" : "none";
     })();
   </script>
   <script>

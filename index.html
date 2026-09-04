@@ -3568,19 +3568,6 @@
         <div class="menu-label" data-i18n="appearance">المظهر</div>
         <div class="menu-value" id="currentThemeDisplay" data-i18n="dark">داكن</div>
       </div>
-      <span class="menu-icon">⋯</span>
-      
-      <!-- Theme Dropdown -->
-      <div class="menu-dropdown" id="themeDropdown">
-        <div class="menu-dropdown-item" data-theme="light">
-          <span class="checkmark" id="check-light" style="display:none">✓</span>
-          <span data-i18n="light">فاتح</span>
-        </div>
-        <div class="menu-dropdown-item" data-theme="dark">
-          <span class="checkmark" id="check-dark">✓</span>
-          <span data-i18n="dark">داكن</span>
-        </div>
-      </div>
     </div>
   </header>
 
@@ -4589,11 +4576,7 @@
       const currentLang = lang();
       const themeText = t === "dark" ? translations[currentLang].dark : translations[currentLang].light;
       document.getElementById("currentThemeDisplay").textContent = themeText;
-      
-      // Update checkmarks
-      document.getElementById("check-light").style.display = t === "light" ? "inline" : "none";
-      document.getElementById("check-dark").style.display = t === "dark" ? "inline" : "none";
-      
+
       // Update all logos based on theme
       const heroLogoSrc = t === "dark" ? "parkinzi-logo-full-dark.png" : "parkinzi-logo-full-light.png";
       const heroLogo = document.getElementById("heroLogo");
@@ -4614,17 +4597,15 @@
     langMenuBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       langDropdown.classList.toggle("show");
-      themeDropdown.classList.remove("show");
     });
 
-    // Theme Menu Toggle
+    // Theme Toggle
     const themeMenuBtn = document.getElementById("themeMenuBtn");
-    const themeDropdown = document.getElementById("themeDropdown");
-    
+
     themeMenuBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      themeDropdown.classList.toggle("show");
       langDropdown.classList.remove("show");
+      setTheme(theme() === "dark" ? "light" : "dark");
     });
 
     // Language Selection
@@ -4636,19 +4617,9 @@
       });
     });
 
-    // Theme Selection
-    document.querySelectorAll("#themeDropdown .menu-dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
-        const selectedTheme = item.dataset.theme;
-        setTheme(selectedTheme);
-        themeDropdown.classList.remove("show");
-      });
-    });
-
-    // Close dropdowns when clicking outside
+    // Close dropdown when clicking outside
     document.addEventListener("click", () => {
       langDropdown.classList.remove("show");
-      themeDropdown.classList.remove("show");
     });
 
     // Initialize
