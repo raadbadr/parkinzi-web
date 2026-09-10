@@ -1445,27 +1445,15 @@
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+      /* السكرول بار مخفي عمداً — زرّا "تصفّح الأشهر" هما الواجهة، وشريط مرئي هنا
+         كان يتمدّد بحكم الحشو السالب تحت ويتراكب مع صف تاريخي البداية/النهاية */
+      scrollbar-width: none;
       /* overflow-x:auto يفرض قصّاً عمودياً أيضاً — لازم حشو يتّسع لتسميات المعالم فوق الشريط وأسماء الأشهر تحته وإلا تُقصّ */
       padding: 2.6rem 0 1.4rem;
       margin: -2.6rem 0 -1.4rem;
     }
-    [data-theme="light"] .growth-map-timeline-scroll {
-      scrollbar-color: rgba(0, 60, 100, 0.3) transparent;
-    }
     .growth-map-timeline-scroll::-webkit-scrollbar {
-      height: 5px;
-    }
-    .growth-map-timeline-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .growth-map-timeline-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 999px;
-    }
-    [data-theme="light"] .growth-map-timeline-scroll::-webkit-scrollbar-thumb {
-      background: rgba(0, 60, 100, 0.25);
+      display: none;
     }
     .growth-map-timeline-range-wrap {
       position: relative;
