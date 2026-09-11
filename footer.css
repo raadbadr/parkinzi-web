@@ -136,11 +136,11 @@
    inside body text for the FULL wordmark. Sized taller than the old
    P-only icon so the "ARKINZI" letters stay legible at body size. */
 .brand-logo-mark {
-  height: 1.25em;
+  height: 1.7em;
   width: auto;
   display: inline-block;
-  vertical-align: -0.3em;
-  margin: 0 0.18em;
+  vertical-align: -0.5em;
+  margin: 0 0.25em;
   max-width: none;
 }
 /* When the mark sits inside a heading, scale it slightly down so it
@@ -148,8 +148,8 @@
 h1 .brand-logo-mark,
 h2 .brand-logo-mark,
 h3 .brand-logo-mark {
-  height: 1em;
-  vertical-align: -0.2em;
+  height: 1.3em;
+  vertical-align: -0.32em;
 }
 
 .brand-logo-text {
