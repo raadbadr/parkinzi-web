@@ -2250,8 +2250,9 @@
     }
     .growth-map-container .parkinzi-map-marker-icon-wrap {
       position: relative;
-      width: calc(26px * 1.25);
-      height: calc(26px * 1.25);
+      /* الشعار الكامل عريض (نسبة ≈ 3.45:1) — العرض يتبع الارتفاع حتى تبقى الحروف مقروءة */
+      width: calc(26px * 1.25 * 2.6);
+      height: calc(26px * 1.25 * 0.75);
       direction: ltr;
     }
     .growth-map-container .parkinzi-map-marker-img {
@@ -5247,11 +5248,11 @@
       return out;
     }
 
-    /** نفس منطق الـ hero: داكن → parkinzi-logo-dark (رمز فاتح)، فاتح → parkinzi-logo-light (رمز داكن) */
+    /** الشعار الكامل دائماً — رمز P وحده يُقرأ كلافتة مواقف عامة لا كعلامة باركينزي */
     function parkinziMapMarkerLogoSrc() {
       return document.documentElement.dataset.theme === "light"
-        ? "parkinzi-logo-light.png"
-        : "parkinzi-logo-dark.png";
+        ? "parkinzi-logo-full-light.png"
+        : "parkinzi-logo-full-dark.png";
     }
 
     function createParkinziMapMarkerElement(row) {
