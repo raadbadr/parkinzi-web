@@ -135,11 +135,13 @@
 /* Inline brand mark used by brand-logo.js to swap the word "PARKINZI"
    inside body text for the FULL wordmark. Sized taller than the old
    P-only icon so the "ARKINZI" letters stay legible at body size. */
+/* الملف مقصوص بلا هامش شفاف (1562×400 ≈ 3.90:1) — كل بكسل من الارتفاع
+   صار شعاراً مرئياً، فالعرض الناتج 6.04em أطول من 5.44em عند زاهي */
 .brand-logo-mark {
-  height: 1.7em;
+  height: 1.55em;
   width: auto;
   display: inline-block;
-  vertical-align: -0.5em;
+  vertical-align: -0.42em;
   margin: 0 0.25em;
   max-width: none;
 }
