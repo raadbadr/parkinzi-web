@@ -1328,8 +1328,7 @@
     .growth-map-timeline[dir="ltr"] input[type="range"] {
       direction: ltr;
     }
-    /* صف تصفّح الأشهر: يمرّر عرض الشريط أفقياً بلا ما يغيّر التاريخ المختار
-       (مختلف عن صف زرّي المعالم تحته اللي يقفز بالتاريخ نفسه) */
+    /* صف تصفّح الأشهر: يقفز بالمؤشر شهراً كاملاً (زرّا الصف تحته يقفزان بين المعالم) */
     .growth-map-timeline-month-nav-row {
       display: flex;
       align-items: center;
@@ -6211,36 +6210,30 @@
         }
         updateNavButtons(SLIDER_MAX_TODAY);
 
-        /* تصفّح الأشهر: تمرير الشريط أفقياً فقط — لا يغيّر التاريخ المختار ولا الإحصائيات */
+        /* تصفّح الأشهر: ينقل المؤشر إلى نهاية الشهر السابق/التالي (يحدّث التاريخ والخريطة والإحصائيات) */
         const monthScrollEl = document.getElementById("growthMapTimelineScroll");
         const monthPrevBtn = document.getElementById("growthMapTimelineMonthPrevBtn");
         const monthNextBtn = document.getElementById("growthMapTimelineMonthNextBtn");
+        const monthStops = timelineMonthSegs
+          .map(function (sg) { return Math.min(SLIDER_MAX_TODAY, Math.floor(sg.v1 * TIMELINE_SLIDER_STEPS) - 1); })
+          .filter(function (v, i, a) { return a.indexOf(v) === i; });
         updateMonthNavButtons = function () {
-          if (!monthScrollEl || !monthPrevBtn || !monthNextBtn) return;
-          var maxScroll = monthScrollEl.scrollWidth - monthScrollEl.clientWidth;
-          if (maxScroll <= 1) {
-            monthPrevBtn.disabled = true;
-            monthNextBtn.disabled = true;
-            return;
-          }
-          var sl = monthScrollEl.scrollLeft;
-          var isRtl = timelineEl.getAttribute("dir") === "rtl";
-          if (isRtl) {
-            monthPrevBtn.disabled = sl >= -1;
-            monthNextBtn.disabled = sl <= -maxScroll + 1;
-          } else {
-            monthPrevBtn.disabled = sl <= 1;
-            monthNextBtn.disabled = sl >= maxScroll - 1;
-          }
+          if (!monthPrevBtn || !monthNextBtn) return;
+          var p = Number(sliderEl.value);
+          monthPrevBtn.disabled = p <= 0;
+          monthNextBtn.disabled = p >= SLIDER_MAX_TODAY;
         };
-        function scrollTimelineByMonth(dir) {
-          if (!monthScrollEl) return;
-          var rangeWrapForScroll = document.getElementById("growthMapTimelineRangeWrap");
-          var monthCount = timelineMonthSegs.length || 1;
-          var monthPx = rangeWrapForScroll ? rangeWrapForScroll.getBoundingClientRect().width / monthCount : monthScrollEl.clientWidth;
-          var isRtl = timelineEl.getAttribute("dir") === "rtl";
-          var sign = isRtl ? -1 : 1;
-          monthScrollEl.scrollBy({ left: sign * dir * monthPx });
+        function stepMonth(dir) {
+          var p = Number(sliderEl.value);
+          var target = null;
+          if (dir < 0) {
+            for (var i = monthStops.length - 1; i >= 0; i--) if (monthStops[i] < p - 1) { target = monthStops[i]; break; }
+            if (target === null) target = 0;
+          } else {
+            for (var j = 0; j < monthStops.length; j++) if (monthStops[j] > p + 1) { target = monthStops[j]; break; }
+            if (target === null) target = SLIDER_MAX_TODAY;
+          }
+          gotoNavStop(target);
           updateMonthNavButtons();
         }
         /* يتوسّط موضع سلايدر معيّن داخل منطقة التمرير — يُستخدم عند القفز لمعلم عبر زرّي السابق/التالي تحت الشريط */
@@ -6263,9 +6256,8 @@
           var isRtl = timelineEl.getAttribute("dir") === "rtl";
           monthScrollEl.scrollLeft = isRtl ? -maxScroll : maxScroll;
         };
-        if (monthPrevBtn) monthPrevBtn.addEventListener("click", function () { scrollTimelineByMonth(-1); });
-        if (monthNextBtn) monthNextBtn.addEventListener("click", function () { scrollTimelineByMonth(1); });
-        if (monthScrollEl) monthScrollEl.addEventListener("scroll", function () { updateMonthNavButtons(); }, { passive: true });
+        if (monthPrevBtn) monthPrevBtn.addEventListener("click", function () { stepMonth(-1); });
+        if (monthNextBtn) monthNextBtn.addEventListener("click", function () { stepMonth(1); });
         /* الحاوية ما تكون جاهزة القياس وقت هذا السطر (نفس سبب setTimeout لـ map.resize تحت) */
         setTimeout(function () { scrollTimelineToToday(); updateMonthNavButtons(); }, 400);
 
@@ -6381,6 +6373,7 @@
           updateThumbNowLabel(pos);
           applyActiveMilestone(pos);
           updateNavButtons(pos);
+          updateMonthNavButtons();
           scheduleGrowthMapTimelineInput(cutoff);
           scheduleGrowthMapTimelineStatsThrottled(pos);
         });
