@@ -360,7 +360,7 @@
       .share-values .pay-now { margin-inline-start: 0; }
     }
     @media (max-width: 520px) { .cards.cols-2 { grid-template-columns: minmax(0, 1fr); } }
-    .seg-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin-bottom: 0.75rem; }
+    .seg-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin: 0.25rem 0 0.75rem; }
     .seg-label { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); }
     .seg { display: inline-flex; border: 1px solid var(--glass-border); border-radius: 12px; padding: 3px; gap: 3px; }
     .seg-opt { position: relative; cursor: pointer; }
@@ -521,14 +521,6 @@
       <p class="hint-p" data-i18n="shareHint">يحجز الزوار مواقفهم ويدفعون عبر التطبيق، ويوزع هذا الدخل بينك وبين المنصة بالنسبة التي تحددها. وكلما زادت حصتك زاد ترخيص الموقف، ولا يقل عن 15 ريالا.</p>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
-      <div class="seg-row">
-        <span class="seg-label" id="camLbl" data-i18n="camQ">كاميرا قراءة اللوحات</span>
-        <div class="seg" role="radiogroup" aria-labelledby="camLbl">
-          <label class="seg-opt"><input type="radio" name="cam" value="1" id="camYes"><span data-i18n="camYes">مع كاميرا</span></label>
-          <label class="seg-opt"><input type="radio" name="cam" value="0" id="camNo" checked><span data-i18n="camNo">بدون كاميرا</span></label>
-        </div>
-        <small class="seg-hint" id="camHint"></small>
-      </div>
       <div class="cards cols-2" role="radiogroup" aria-label="الباقة">
         <label class="choice" for="planNew">
           <input type="radio" name="plan" value="new" id="planNew">
@@ -546,6 +538,14 @@
           </span>
           <span class="choice-price" id="planIntPrice"></span>
         </label>
+      </div>
+      <div class="seg-row">
+        <span class="seg-label" id="camLbl" data-i18n="camQ">كاميرا قراءة اللوحات</span>
+        <div class="seg" role="radiogroup" aria-labelledby="camLbl">
+          <label class="seg-opt"><input type="radio" name="cam" value="1" id="camYes"><span data-i18n="camYes">مع كاميرا</span></label>
+          <label class="seg-opt"><input type="radio" name="cam" value="0" id="camNo" checked><span data-i18n="camNo">بدون كاميرا</span></label>
+        </div>
+        <small class="seg-hint" id="camHint"></small>
       </div>
       <h2 data-i18n="stepRes">3. مواقف السكان</h2>
       <div class="cards cols-2" role="radiogroup">
