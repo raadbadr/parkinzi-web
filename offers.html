@@ -241,7 +241,7 @@
     .ticks { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; direction: ltr; }
     [dir="rtl"] .ticks { flex-direction: row-reverse; }
     .share-values { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.75rem 0; font-size: 1.05rem; }
-    .share-values b, .pay-now b, .price-big, .price-total b, .line b, .line .q, .choice-price { unicode-bidi: isolate; }
+    .share-values b, .pay-now b, .price-big, .line b, .line .q, .choice-price { unicode-bidi: isolate; }
     .share-values b { color: var(--primary); font-variant-numeric: tabular-nums; direction: ltr; }
     .pay-now { margin: 0.4rem 0 0.6rem; font-size: 0.95rem; color: var(--text-primary); }
     .pay-now b { color: var(--primary); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
@@ -253,9 +253,6 @@
     .price-title { font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
     .price-big { font-size: 2.3rem; font-weight: 700; line-height: 1.3; color: var(--primary); font-variant-numeric: tabular-nums; }
     .price-big small { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); }
-    .price-total { font-size: 1.05rem; color: var(--text-primary); font-variant-numeric: tabular-nums; }
-    .price-total b { font-variant-numeric: tabular-nums; }
-    .price-total small { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); }
     .lines { margin-top: 0.35rem; margin-bottom: 0.75rem; display: grid; gap: 0.35rem; }
     .line { display: flex; justify-content: flex-start; align-items: baseline; gap: 0.75rem; font-size: 0.9rem; color: var(--text-secondary); }
     .line .q { display: block; font-size: 0.8rem; opacity: 0.85; font-variant-numeric: tabular-nums; }
@@ -331,7 +328,6 @@
     .price-title { font-size: 0.88rem; margin-bottom: 0; }
     .price-big { font-size: 1.6rem; }
     .price-big small { font-size: 0.8rem; }
-    .price-total { font-size: 0.9rem; }
     .lines { margin-top: 0.25rem; margin-bottom: 0.5rem; gap: 0.25rem; }
     .line { font-size: 0.82rem; }
     .note { font-size: 0.78rem; }
@@ -549,7 +545,7 @@
       </div>
       <div class="share-values">
         <span><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></span>
-        <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا قبل الضريبة</span></span>
+        <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا بعد الضريبة</span></span>
       </div>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
@@ -628,22 +624,19 @@
       <div class="price-block">
         <div class="price-title" data-i18n="oneTime">يدفع مرة واحدة: التأسيس</div>
         <div class="lines" id="setupLines"></div>
-        <div class="price-big"><span id="setupSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
-        <div class="price-total"><b id="setupTotal"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
+        <div class="price-big"><span id="setupTotal"></span> <small data-i18n="afterVat">بعد الضريبة</small></div>
         <p class="note" data-i18n="installments">يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.</p>
       </div>
 
       <div class="price-block">
         <div class="price-title" data-i18n="monthly">يدفع شهريا</div>
         <div class="lines" id="monthLines"></div>
-        <div class="price-big"><span id="monthSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
-        <div class="price-total"><b id="monthTotal"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
+        <div class="price-big"><span id="monthTotal"></span> <small data-i18n="afterVat">بعد الضريبة</small></div>
       </div>
 
       <div class="price-block">
         <div class="price-title" data-i18n="yearly">يدفع سنويا</div>
-        <div class="price-big"><span id="yearSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
-        <div class="price-total"><b id="yearTotal"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
+        <div class="price-big"><span id="yearTotal"></span> <small data-i18n="afterVat">بعد الضريبة</small></div>
       </div>
 
       <div class="price-block" id="extrasBlock" hidden>
@@ -748,9 +741,9 @@
         planNewDesc: "نوفر بوابات جديدة ونركبها ونربطها بالمنصة، مع صيانة وقائية لمدة سنتين.",
         planIntTag: "على منظومتك الحالية", planIntName: "الربط على المنظومة القائمة",
         planIntDesc: "نربط المنصة ببواباتك وكاميراتك وغرفة التحكم الموجودة، دون تغيير أي جهاز.",
-        planSetup: "التأسيس", beforeVat: "قبل الضريبة",
+        planSetup: "التأسيس",
         stepShare: "4. حصتك من دخل مواقف الزوار",
-        yourShare: "حصتك", platformShare: "حصة المنصة", licenseLabel: "ترخيص الموقف", perSpotMonth: "شهريا قبل الضريبة",
+        yourShare: "حصتك", platformShare: "حصة المنصة", licenseLabel: "ترخيص الموقف", perSpotMonth: "شهريا بعد الضريبة",
         perDay: "أي نحو {x} يوميا عن الموقف الواحد.",
         shareHint: "يحجز الزوار مواقفهم ويدفعون عبر التطبيق، ويوزع هذا الدخل بينك وبين المنصة بالنسبة التي تحددها. وكلما زادت حصتك زاد ترخيص الموقف، ولا يقل عن 15 ريالا.",
         stepAddons: "4. الإضافات",
@@ -814,9 +807,9 @@
         planNewDesc: "We supply, install and connect new gates to the platform, with two years of preventive maintenance.",
         planIntTag: "On your current system", planIntName: "Connect your existing system",
         planIntDesc: "We connect the platform to your existing gates, cameras and control room, without replacing any device.",
-        planSetup: "Setup", beforeVat: "excl. VAT",
+        planSetup: "Setup",
         stepShare: "4. Your share of visitor parking income",
-        yourShare: "Your share", platformShare: "Platform share", licenseLabel: "License per space", perSpotMonth: "monthly, excl. VAT",
+        yourShare: "Your share", platformShare: "Platform share", licenseLabel: "License per space", perSpotMonth: "monthly, incl. VAT",
         perDay: "About {x} per space per day.",
         shareHint: "Visitors book and pay for their spaces in the app, and that income is split between you and the platform at the ratio you set. A higher share means a higher license per space, never below 15 SAR.",
         stepAddons: "4. Add-ons",
@@ -880,9 +873,9 @@
         planNewDesc: "Nous fournissons, installons et raccordons de nouvelles barrieres a la plateforme, avec deux ans de maintenance preventive.",
         planIntTag: "Sur votre systeme actuel", planIntName: "Connexion a votre systeme existant",
         planIntDesc: "Nous connectons la plateforme a vos barrieres, cameras et salle de controle existantes, sans remplacer aucun appareil.",
-        planSetup: "Installation", beforeVat: "HT",
+        planSetup: "Installation",
         stepShare: "4. Votre part des revenus du stationnement visiteurs",
-        yourShare: "Votre part", platformShare: "Part de la plateforme", licenseLabel: "Licence par place", perSpotMonth: "par mois, HT",
+        yourShare: "Votre part", platformShare: "Part de la plateforme", licenseLabel: "Licence par place", perSpotMonth: "par mois, TTC",
         perDay: "Soit environ {x} par place et par jour.",
         shareHint: "Les visiteurs reservent et paient leurs places dans l'application, et ce revenu est partage entre vous et la plateforme selon le ratio choisi. Plus votre part est elevee, plus la licence par place augmente, jamais en dessous de 15 SAR.",
         stepAddons: "4. Options",
@@ -946,9 +939,9 @@
         planNewDesc: "ہم نئے گیٹ فراہم کرتے، نصب کرتے اور پلیٹ فارم سے جوڑتے ہیں، دو سال کی حفاظتی دیکھ بھال کے ساتھ۔",
         planIntTag: "آپ کے موجودہ نظام پر", planIntName: "موجودہ نظام سے رابطہ",
         planIntDesc: "ہم پلیٹ فارم کو آپ کے موجودہ گیٹس، کیمروں اور کنٹرول روم سے جوڑتے ہیں، کوئی آلہ تبدیل کیے بغیر۔",
-        planSetup: "سیٹ اپ", beforeVat: "ٹیکس سے پہلے",
+        planSetup: "سیٹ اپ",
         stepShare: "4. مہمانوں کی پارکنگ کی آمدنی میں آپ کا حصہ",
-        yourShare: "آپ کا حصہ", platformShare: "پلیٹ فارم کا حصہ", licenseLabel: "فی جگہ لائسنس", perSpotMonth: "ماہانہ، ٹیکس سے پہلے",
+        yourShare: "آپ کا حصہ", platformShare: "پلیٹ فارم کا حصہ", licenseLabel: "فی جگہ لائسنس", perSpotMonth: "ماہانہ، ٹیکس کے بعد",
         perDay: "یعنی فی جگہ روزانہ تقریبا {x}۔",
         shareHint: "مہمان ایپ کے ذریعے اپنی جگہیں بک کرتے اور ادائیگی کرتے ہیں، اور یہ آمدنی آپ اور پلیٹ فارم کے درمیان آپ کے مقرر کردہ تناسب سے تقسیم ہوتی ہے۔ آپ کا حصہ جتنا زیادہ، فی جگہ لائسنس اتنا زیادہ، اور کبھی 15 ریال سے کم نہیں۔",
         stepAddons: "4. اضافی خدمات",
@@ -1110,12 +1103,13 @@
       if (document.activeElement !== els.share) els.share.value = s.share;
 
       // الباقتان: سعر التأسيس لكل منهما، والأشمل أولا
-      $("planNewPrice").innerHTML = tr("planSetup") + " " + money(sumRows(setupItems("new", s.gates, s.cam))) + " <small>" + tr("beforeVat") + "</small>";
-      $("planIntPrice").innerHTML = tr("planSetup") + " " + money(sumRows(setupItems("link", s.gates, s.cam))) + " <small>" + tr("beforeVat") + "</small>";
+      const gross = n => n + withVat(n);
+      $("planNewPrice").innerHTML = tr("planSetup") + " " + money(gross(sumRows(setupItems("new", s.gates, s.cam)))) + " <small>" + tr("afterVat") + "</small>";
+      $("planIntPrice").innerHTML = tr("planSetup") + " " + money(gross(sumRows(setupItems("link", s.gates, s.cam)))) + " <small>" + tr("afterVat") + "</small>";
 
       // السلايدر
       $("sharePlat").textContent = fmt(100 - s.share) + "%";
-      $("licRate").innerHTML = money(rate);
+      $("licRate").innerHTML = money(rate + withVat(rate));
 
       // أسعار الإضافات
       $("staffPrice").innerHTML = money(PRICE.staff) + "<small>" + tr("perMonth") + "</small>";
@@ -1127,7 +1121,6 @@
       const setupSub = sumRows(setup);
       const setupVat = withVat(setupSub);
       $("setupLines").innerHTML = setup.map(lineHtml).join("");
-      $("setupSub").innerHTML = money(setupSub);
       $("setupTotal").innerHTML = money(setupSub + setupVat);
 
       // الشهري
@@ -1136,9 +1129,7 @@
       const monthSub = sumRows(month);
       const monthVat = withVat(monthSub);
       $("monthLines").innerHTML = month.map(lineHtml).join("");
-      $("monthSub").innerHTML = money(monthSub);
       $("monthTotal").innerHTML = money(monthSub + monthVat);
-      $("yearSub").innerHTML = money(monthSub * 12);
       $("yearTotal").innerHTML = money((monthSub + monthVat) * 12);
 
       // إضافات بلا تكلفة على العميل
