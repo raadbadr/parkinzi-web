@@ -220,7 +220,21 @@
     .choice-desc { color: var(--text-secondary); font-size: 0.93rem; }
     .choice-price { font-weight: 700; color: var(--primary); text-align: end; white-space: nowrap; font-variant-numeric: tabular-nums; }
     .choice-price small { display: block; font-weight: 500; color: var(--text-secondary); font-size: 0.8rem; white-space: normal; }
-    .slider-val { display: block; text-align: center; font-size: 2rem; font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums; line-height: 1.3; }
+    /* رقم دقيق قابل للكتابة + زرّا −/+ فوق سلايدر يقفز على المحطات الرئيسية */
+    .num-row { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin: 0.5rem 0; direction: ltr; }
+    .field .num-box {
+      width: 9rem; flex: none; padding: 0.4rem 0.5rem; border-radius: 12px; border: 1px solid var(--glass-border); background: transparent;
+      text-align: center; font-size: 2rem; font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums;
+      -moz-appearance: textfield; appearance: textfield;
+    }
+    .num-box::-webkit-outer-spin-button, .num-box::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .num-box:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .step-btn {
+      flex: none; padding: 0; width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 2px solid var(--primary); background: transparent;
+      color: var(--primary); font-size: 1.5rem; font-weight: 700; line-height: 1; cursor: pointer; transition: all 0.2s ease;
+    }
+    .step-btn:hover { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); }
+    .step-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
     .share-range { display: block; width: 100%; accent-color: var(--primary); height: 2rem; }
     .ticks { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; direction: ltr; }
     [dir="rtl"] .ticks { flex-direction: row-reverse; }
@@ -296,20 +310,30 @@
 
     <div class="content">
       <h2 data-i18n="stepSite">1. موقعك</h2>
-      <label class="field" for="spots">
-        <span class="label" data-i18n="spotsLabel">عدد المواقف</span>
-        <b class="slider-val" id="spotsVal">100</b>
-        <input class="share-range" id="spots" type="range" min="10" max="2000" step="1" value="100">
-        <div class="ticks" aria-hidden="true"><span>10</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></div>
+      <div class="field">
+        <span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span>
+        <span class="num-row">
+          <button type="button" class="step-btn" data-for="spots" data-d="-10" aria-label="-10">−</button>
+          <input class="num-box" id="spots" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" aria-labelledby="spotsLbl">
+          <button type="button" class="step-btn" data-for="spots" data-d="10" aria-label="+10">+</button>
+        </span>
+        <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1">
+        <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
+        <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
         <small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small>
-      </label>
-      <label class="field" for="gates">
-        <span class="label" data-i18n="gatesLabel">عدد البوابات</span>
-        <b class="slider-val" id="gatesVal">2</b>
-        <input class="share-range" id="gates" type="range" min="1" max="20" step="1" value="2">
-        <div class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
+      </div>
+      <div class="field">
+        <span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span>
+        <span class="num-row">
+          <button type="button" class="step-btn" data-for="gates" data-d="-1" aria-label="-1">−</button>
+          <input class="num-box" id="gates" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" aria-labelledby="gatesLbl">
+          <button type="button" class="step-btn" data-for="gates" data-d="1" aria-label="+1">+</button>
+        </span>
+        <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1">
+        <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
+        <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
         <small data-i18n="gatesHint">مداخل ومخارج المواقف</small>
-      </label>
+      </div>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
       <div class="choices" role="radiogroup" aria-label="الباقة">
@@ -404,6 +428,9 @@
         <li data-i18n="inc6">التحديثات والدعم الفني</li>
       </ul>
       <p class="note" style="margin-top:1rem" data-i18n="term1">الأسعار بالريال السعودي، وتضاف إليها ضريبة القيمة المضافة 15%. التنفيذ خلال نحو أسبوعين من الدفعة الأولى. وتُثبَّت أسعار العرض أسبوعين من تاريخ طلبه.</p>
+    </div>
+    <div style="text-align: center; padding: 2rem;">
+      <a href="index.html" class="back-btn" data-i18n="backBtn">العودة للرئيسية</a>
     </div>
   </main>
 
@@ -749,8 +776,8 @@
     }
     function readUrl() {
       const q = new URLSearchParams(location.search);
-      if (q.has("spots")) { const v = clampInt(q.get("spots"), 1, 100000, 100); if (v > +els.spots.max) els.spots.max = v; if (v < +els.spots.min) els.spots.min = v; els.spots.value = v; }
-      if (q.has("gates")) { const v = clampInt(q.get("gates"), 1, 100, 2); if (v > +els.gates.max) els.gates.max = v; els.gates.value = v; }
+      if (q.has("spots")) els.spots.value = clampInt(q.get("spots"), 1, 100000, 100);
+      if (q.has("gates")) els.gates.value = clampInt(q.get("gates"), 1, 100, 2);
       if (q.has("share")) {
         const s = clampInt(q.get("share"), PRICE.shareMin, PRICE.shareMax, PRICE.shareMin);
         els.share.value = Math.round(s / 10) * 10;
@@ -798,8 +825,8 @@
     function render() {
       const s = state();
       const rate = licenseRate(s.share);
-      $("spotsVal").textContent = fmt(s.spots);
-      $("gatesVal").textContent = fmt(s.gates);
+      $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
+      $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
 
       // الباقتان: سعر التأسيس لكل منهما، والأشمل أولا
       $("planNewPrice").innerHTML = tr("planSetup") + " " + money(sumRows(setupItems("new", s.gates))) + " <small>" + tr("beforeVat") + "</small>";
@@ -857,6 +884,21 @@
 
       writeUrl(s);
     }
+
+    /* السلايدر يقفز على المحطات (كل 50 موقفاً / كل بوابة) ويكتب في الخانة؛ الخانة تقبل أي رقم بالضبط */
+    [["spotsRange", "spots"], ["gatesRange", "gates"]].forEach(([r, b]) => {
+      $(r).addEventListener("input", () => { els[b].value = Math.max(1, Number($(r).value)); render(); });
+    });
+    document.querySelectorAll(".step-btn").forEach(btn => btn.addEventListener("click", () => {
+      const box = els[btn.dataset.for];
+      const d = Number(btn.dataset.d);
+      const cur = clampInt(box.value, 1, +box.max, 1);
+      const next = d > 0 ? Math.floor(cur / d) * d + d : Math.ceil(cur / -d) * -d + d;
+      box.value = Math.min(+box.max, Math.max(1, next));
+      render();
+    }));
+    els.spots.addEventListener("blur", () => { els.spots.value = clampInt(els.spots.value, 1, 100000, 1); render(); });
+    els.gates.addEventListener("blur", () => { els.gates.value = clampInt(els.gates.value, 1, 100, 1); render(); });
 
     ["input", "change"].forEach(ev => {
       [els.spots, els.gates, els.share, els.planNew, els.planInt, els.staff, els.valet, els.golf]
