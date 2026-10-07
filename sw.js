@@ -1,5 +1,5 @@
 /* PARKINZI — تخزين مؤقت للتصفح دون اتصال (نفس أصل الموقع فقط) */
-const CACHE_NAME = "parkinzi-offline-v8";
+const CACHE_NAME = "parkinzi-offline-v9";
 
 const PRECACHE_URLS = [
   "./index.html",
@@ -7,6 +7,7 @@ const PRECACHE_URLS = [
   "./privacy.html",
   "./terms.html",
   "./pricing.html",
+  "./offers.html",
   "./refund.html",
   "./header.css",
   "./footer.css",
