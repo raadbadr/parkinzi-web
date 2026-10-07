@@ -168,6 +168,24 @@ async function handleContact(request, env) {
   return json({ ok: res.ok }, res.status);
 }
 
+// طلب عرض سعر من صفحة «عروضنا»: دالة offer-quote في Supabase تحسب العرض،
+// وتعطيه رقما، وترسل ملف Word للعميل مع نسخة إلى admin@parkinzi.com
+async function handleQuote(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return json({ error: "invalid body" }, 400); }
+  const res = await fetch(`${env.SUPABASE_URL}/functions/v1/offer-quote`, {
+    method: "POST",
+    headers: {
+      ...supaHeaders(env),
+      "Content-Type": "application/json",
+      "x-client-ip": request.headers.get("CF-Connecting-IP") || "",
+    },
+    body: JSON.stringify(body || {}),
+  });
+  const out = await res.json().catch(() => ({ error: "server" }));
+  return json(out, res.status);
+}
+
 // --- Main router ---
 
 export default {
@@ -247,6 +265,7 @@ export default {
       if (path === "/api/assistant" && request.method === "POST") return await handleAssistantRequest(request, env);
       if (path === "/api/waitlist" && request.method === "POST") return await handleWaitlist(request, env);
       if (path === "/api/contact" && request.method === "POST") return await handleContact(request, env);
+      if (path === "/api/quote" && request.method === "POST") return await handleQuote(request, env);
       return json({ error: "not found" }, 404);
     } catch (err) {
       return json({ error: "server error" }, 500);
