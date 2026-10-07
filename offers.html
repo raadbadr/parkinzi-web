@@ -237,10 +237,12 @@
     .step-btn:hover { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); }
     .step-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
     .share-range { display: block; width: 100%; accent-color: var(--primary); height: 2rem; }
+    .ticks > span { direction: ltr; unicode-bidi: isolate; }
     .ticks { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; direction: ltr; }
     [dir="rtl"] .ticks { flex-direction: row-reverse; }
     .share-values { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.75rem 0; font-size: 1.05rem; }
-    .share-values b { color: var(--primary); font-variant-numeric: tabular-nums; }
+    .share-values b, .pay-now b, .price-big, .price-total b, .line b, .line .q, .choice-price { unicode-bidi: isolate; }
+    .share-values b { color: var(--primary); font-variant-numeric: tabular-nums; direction: ltr; }
     .pay-now { margin: 0.4rem 0 0.6rem; font-size: 0.95rem; color: var(--text-primary); }
     .pay-now b { color: var(--primary); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
     .pay-now small { color: var(--text-secondary); }
@@ -437,8 +439,7 @@
         </label>
       </div>
 
-      <h2 data-i18n="stepShare">3. حصتك من دخل مواقف الزوار</h2>
-      <span class="label" data-i18n="resLabel">مواقف السكان</span>
+      <h2 data-i18n="stepRes">3. مواقف السكان</h2>
       <div class="choices res-choices" role="radiogroup">
         <label class="choice" for="resFree">
           <input type="radio" name="res" value="free" id="resFree" checked>
@@ -449,6 +450,8 @@
           <span class="choice-body"><span class="choice-name" data-i18n="resPaid">مدفوعة عبر التطبيق</span><span class="choice-desc" data-i18n="resPaidDesc">يدفع السكان عبر التطبيق، ويدخل دخلها في القسمة مع مواقف الزوار.</span></span>
         </label>
       </div>
+
+      <h2 data-i18n="stepShare">4. حصتك من دخل مواقف الزوار</h2>
       <label class="label" for="share" data-i18n="shareLabel">حرك المؤشر لاختيار حصتك</label>
       <input class="share-range" type="range" id="share" min="0" max="100" step="10" value="60" list="shareTicks">
       <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
@@ -461,7 +464,7 @@
       <div class="pay-now"><span data-i18n="youPay">تدفع شهريا</span> <b id="payMonth"></b> <small data-i18n="beforeVat">قبل الضريبة</small></div>
       <p data-i18n="shareHint">مواقف الزوار تحجز وتدفع عبر التطبيق، ويقسم دخلها بالنسبة التي تختارها. وكلما زادت حصتك زاد ترخيص الموقف، ولا ينزل عن 15 ريالا.</p>
 
-      <h2 data-i18n="stepAddons">4. الإضافات</h2>
+      <h2 data-i18n="stepAddons">5. الإضافات</h2>
       <div class="choices">
         <label class="choice" for="addStaff">
           <input type="checkbox" id="addStaff">
@@ -601,11 +604,11 @@
         planIntTag: "على منظومتك الحالية", planIntName: "الربط على المنظومة القائمة",
         planIntDesc: "نربط المنصة ببواباتك وكاميراتك وغرفة التحكم الموجودة، دون تغيير أي جهاز.",
         planSetup: "التأسيس", beforeVat: "قبل الضريبة",
-        stepShare: "3. حصتك من دخل مواقف الزوار",
+        stepShare: "4. حصتك من دخل مواقف الزوار",
         yourShare: "حصتك", platformShare: "حصة المنصة", licenseLabel: "ترخيص الموقف", perSpotMonth: "شهريا قبل الضريبة",
         perDay: "أي نحو {x} يوميا عن الموقف الواحد.",
         shareHint: "مواقف الزوار تحجز وتدفع عبر التطبيق، ويقسم دخلها بالنسبة التي تختارها. وكلما زادت حصتك زاد ترخيص الموقف، ولا ينزل عن 15 ريالا.",
-        stepAddons: "4. الإضافات",
+        stepAddons: "5. الإضافات",
         addStaffName: "موظف مخصص في الموقع", addStaffDesc: "موظف من فريقنا لخدمة السكان والزوار ومتابعة التشغيل يوميا.",
         addValetName: "خدمة صف السيارات (فاليه)", addValetDesc: "يستلم السائق السيارة عند المدخل ويصفها ويعيدها عند الطلب.",
         addGolfName: "عربة جولف", addGolfDesc: "تنقل السكان والزوار بين المواقف ومدخل المبنى.",
@@ -644,7 +647,7 @@
         mailPlan: "الباقة", mailSpots: "عدد المواقف", mailGates: "عدد البوابات", mailShare: "حصتنا من دخل الزوار",
         mailAddons: "الإضافات", mailNone: "لا يوجد", mailLink: "رابط العرض",
         backBtn: "العودة للرئيسية", copyright: "جميع الحقوق محفوظة", copyrightLine2: "جميع الحقوق محفوظة",
-        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", resLabel: "مواقف السكان", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويدخل دخلها في القسمة مع مواقف الزوار.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إن لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نورد كاميرا لكل بوابة.", perGate: "لكل بوابة",
+        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", stepRes: "3. مواقف السكان", resLabel: "مواقف السكان", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويدخل دخلها في القسمة مع مواقف الزوار.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إن لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نورد كاميرا لكل بوابة.", perGate: "لكل بوابة",
         navHome: "الرئيسية",
         navOffers: "عروضنا",
         navPricing: "الأسعار",
@@ -668,11 +671,11 @@
         planIntTag: "On your current system", planIntName: "Connect your existing system",
         planIntDesc: "We connect the platform to your existing gates, cameras and control room, without replacing any device.",
         planSetup: "Setup", beforeVat: "excl. VAT",
-        stepShare: "3. Your share of visitor parking income",
+        stepShare: "4. Your share of visitor parking income",
         yourShare: "Your share", platformShare: "Platform share", licenseLabel: "License per space", perSpotMonth: "monthly, excl. VAT",
         perDay: "About {x} per space per day.",
         shareHint: "Visitor spaces are booked and paid in the app, and their income is split at the ratio you choose. A higher share means a higher license per space, never below 15 SAR.",
-        stepAddons: "4. Add-ons",
+        stepAddons: "5. Add-ons",
         addStaffName: "Dedicated on-site staff", addStaffDesc: "A member of our team serving residents and visitors and running daily operations.",
         addValetName: "Valet parking", addValetDesc: "A driver takes the car at the entrance, parks it and brings it back on request.",
         addGolfName: "Golf cart", addGolfDesc: "Moves residents and visitors between the parking and the building entrance.",
@@ -711,7 +714,7 @@
         mailPlan: "Package", mailSpots: "Parking spaces", mailGates: "Gates", mailShare: "Our share of visitor income",
         mailAddons: "Add-ons", mailNone: "None", mailLink: "Offer link",
         backBtn: "Back to Home", copyright: "All rights reserved", copyrightLine2: "All rights reserved",
-        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", resLabel: "Residents' parking", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income joins the visitor income split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
+        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", stepRes: "3. Residents' parking", resLabel: "Residents' parking", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income joins the visitor income split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
         navHome: "Home",
         navOffers: "Our Offers",
         navPricing: "Pricing",
@@ -735,11 +738,11 @@
         planIntTag: "Sur votre systeme actuel", planIntName: "Connexion a votre systeme existant",
         planIntDesc: "Nous connectons la plateforme a vos barrieres, cameras et salle de controle existantes, sans remplacer aucun appareil.",
         planSetup: "Installation", beforeVat: "HT",
-        stepShare: "3. Votre part des revenus du stationnement visiteurs",
+        stepShare: "4. Votre part des revenus du stationnement visiteurs",
         yourShare: "Votre part", platformShare: "Part de la plateforme", licenseLabel: "Licence par place", perSpotMonth: "par mois, HT",
         perDay: "Soit environ {x} par place et par jour.",
         shareHint: "Les places visiteurs sont reservees et payees dans l'application, et leurs revenus sont partages selon le ratio choisi. Plus votre part est elevee, plus la licence par place augmente, jamais en dessous de 15 SAR.",
-        stepAddons: "4. Options",
+        stepAddons: "5. Options",
         addStaffName: "Employe dedie sur site", addStaffDesc: "Un membre de notre equipe au service des residents et des visiteurs, qui suit l'exploitation au quotidien.",
         addValetName: "Voiturier", addValetDesc: "Un chauffeur prend la voiture a l'entree, la gare et la ramene sur demande.",
         addGolfName: "Voiturette de golf", addGolfDesc: "Transporte residents et visiteurs entre le parking et l'entree de l'immeuble.",
@@ -778,7 +781,7 @@
         mailPlan: "Formule", mailSpots: "Places", mailGates: "Barrieres", mailShare: "Notre part des revenus visiteurs",
         mailAddons: "Options", mailNone: "Aucune", mailLink: "Lien de l'offre",
         backBtn: "Retour a l'accueil", copyright: "Tous droits reserves", copyrightLine2: "Tous droits reserves",
-        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", resLabel: "Stationnement des residents", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute au partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
+        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", stepRes: "3. Stationnement des residents", resLabel: "Stationnement des residents", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute au partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
         navHome: "Accueil",
         navOffers: "Nos offres",
         navPricing: "Tarifs",
@@ -802,11 +805,11 @@
         planIntTag: "آپ کے موجودہ نظام پر", planIntName: "موجودہ نظام سے رابطہ",
         planIntDesc: "ہم پلیٹ فارم کو آپ کے موجودہ گیٹس، کیمروں اور کنٹرول روم سے جوڑتے ہیں، کوئی آلہ تبدیل کیے بغیر۔",
         planSetup: "سیٹ اپ", beforeVat: "ٹیکس سے پہلے",
-        stepShare: "3. مہمانوں کی پارکنگ کی آمدنی میں آپ کا حصہ",
+        stepShare: "4. مہمانوں کی پارکنگ کی آمدنی میں آپ کا حصہ",
         yourShare: "آپ کا حصہ", platformShare: "پلیٹ فارم کا حصہ", licenseLabel: "فی جگہ لائسنس", perSpotMonth: "ماہانہ، ٹیکس سے پہلے",
         perDay: "یعنی فی جگہ روزانہ تقریبا {x}۔",
         shareHint: "مہمانوں کی جگہیں ایپ کے ذریعے بک اور ادا کی جاتی ہیں، اور ان کی آمدنی آپ کے منتخب تناسب سے تقسیم ہوتی ہے۔ آپ کا حصہ جتنا زیادہ، فی جگہ لائسنس اتنا زیادہ، اور کبھی 15 ریال سے کم نہیں۔",
-        stepAddons: "4. اضافی خدمات",
+        stepAddons: "5. اضافی خدمات",
         addStaffName: "سائٹ پر مخصوص ملازم", addStaffDesc: "ہماری ٹیم کا ایک فرد جو رہائشیوں اور مہمانوں کی خدمت اور روزانہ آپریشن کی نگرانی کرے۔",
         addValetName: "ویلے پارکنگ", addValetDesc: "ڈرائیور داخلی راستے پر گاڑی لے کر پارک کرتا ہے اور طلب پر واپس لاتا ہے۔",
         addGolfName: "گالف کارٹ", addGolfDesc: "رہائشیوں اور مہمانوں کو پارکنگ اور عمارت کے داخلی راستے کے درمیان لے جاتی ہے۔",
@@ -845,7 +848,7 @@
         mailPlan: "پیکج", mailSpots: "پارکنگ کی جگہیں", mailGates: "گیٹ", mailShare: "مہمانوں کی آمدنی میں ہمارا حصہ",
         mailAddons: "اضافی خدمات", mailNone: "کوئی نہیں", mailLink: "پیشکش کا لنک",
         backBtn: "واپس ہوم", copyright: "جملہ حقوق محفوظ ہیں", copyrightLine2: "جملہ حقوق محفوظ ہیں",
-        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", resLabel: "رہائشیوں کی پارکنگ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
+        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", stepRes: "3. رہائشیوں کی پارکنگ", resLabel: "رہائشیوں کی پارکنگ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
         navHome: "ہوم",
         navOffers: "ہماری پیشکشیں",
         navPricing: "قیمتیں",
