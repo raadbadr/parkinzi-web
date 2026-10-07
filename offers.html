@@ -353,9 +353,10 @@
     .sblock .num-row { margin: 0.15rem 0; justify-content: center; }
     .sblock .share-range { display: block; width: 100%; accent-color: var(--primary); height: 1.4rem; margin: 0; }
     .sblock .ticks { font-size: 0.7rem; }
-    .sblock .plat-line { margin-top: 0.6rem; font-size: 0.95rem; color: var(--text-primary); }
+    .sblock .plat-row { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.6rem; }
+    .sblock .plat-line { margin: 0; font-size: 0.8rem; color: var(--text-primary); white-space: nowrap; }
     .sblock .plat-line b { color: var(--primary); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
-    .sblock .plat-line + .plat-line { margin-top: 0.25rem; }
+    @media (min-width: 1101px) { .sliders-4 .sblock { padding-inline: 1rem; } }
     .cards { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
     .cards.cols-1 { grid-template-columns: minmax(0, 1fr); }
     .cards.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -517,12 +518,12 @@
           <span class="label" id="hourLbl" data-i18n="hourRowLabel">سعر الساعة للزوار بالريال</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="hour" data-d="-5" aria-label="-5">−</button>
-            <input class="num-box" id="hour" type="number" inputmode="numeric" min="1" max="100" step="1" value="10" aria-labelledby="hourLbl" autocomplete="off">
+            <input class="num-box" id="hour" type="number" inputmode="numeric" min="0" max="200" step="1" value="10" aria-labelledby="hourLbl" autocomplete="off">
             <button type="button" class="step-btn" data-for="hour" data-d="5" aria-label="+5">+</button>
           </div>
-            <input class="share-range" id="hourRange" type="range" min="0" max="50" step="5" value="10" list="hourTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
-            <datalist id="hourTicks"><option value="0"></option><option value="10"></option><option value="20"></option><option value="30"></option><option value="40"></option><option value="50"></option></datalist>
-            <span class="ticks" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span></span>
+            <input class="share-range" id="hourRange" type="range" min="0" max="200" step="5" value="10" list="hourTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
+            <datalist id="hourTicks"><option value="0"></option><option value="50"></option><option value="100"></option><option value="150"></option><option value="200"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span></span>
         </div>
         <div class="sblock">
           <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span>
@@ -534,8 +535,10 @@
             <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
-            <small class="plat-line"><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></small>
-            <small class="plat-line"><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا بعد الضريبة</span></small>
+            <div class="plat-row">
+              <small class="plat-line"><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></small>
+              <small class="plat-line"><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا بعد الضريبة</span></small>
+            </div>
         </div>
       </div>
 
@@ -1026,7 +1029,7 @@
       const q = new URLSearchParams(location.search);
       if (q.has("spots")) els.spots.value = clampInt(q.get("spots"), 1, 100000, 100);
       if (q.has("gates")) els.gates.value = clampInt(q.get("gates"), 1, 100, 2);
-      if (q.has("hour")) els.hour.value = clampInt(q.get("hour"), 1, 100, 10);
+      if (q.has("hour")) els.hour.value = clampInt(q.get("hour"), 0, 200, 10);
       if (q.has("share")) {
         const s = clampInt(q.get("share"), PRICE.shareMin, PRICE.shareMax, PRICE.shareMin);
         els.share.value = Math.round(s / 10) * 10;
@@ -1045,7 +1048,7 @@
       return {
         spots: clampInt(els.spots.value, 1, 100000, 1),
         gates: clampInt(els.gates.value, 1, 100, 1),
-        hour: clampInt(els.hour.value, 1, 100, 10),
+        hour: clampInt(els.hour.value, 0, 200, 10),
         share: Math.round(clampInt(els.share.value, PRICE.shareMin, PRICE.shareMax, 60) / 10) * 10,
         plan: els.planNew.checked ? "new" : "link", cam: els.cam.checked,
         own: els.ownP.checked, ten: els.tenP.checked, vis: els.visP.checked,
@@ -1167,7 +1170,7 @@
     }));
     els.spots.addEventListener("blur", () => { els.spots.value = clampInt(els.spots.value, 1, 100000, 1); render(); });
     els.gates.addEventListener("blur", () => { els.gates.value = clampInt(els.gates.value, 1, 100, 1); render(); });
-    els.hour.addEventListener("blur", () => { els.hour.value = clampInt(els.hour.value, 1, 100, 10); render(); });
+    els.hour.addEventListener("blur", () => { els.hour.value = clampInt(els.hour.value, 0, 200, 10); render(); });
     els.share.addEventListener("blur", () => { els.share.value = Math.round(clampInt(els.share.value, 0, 100, 60) / 10) * 10; render(); });
 
     ["input", "change"].forEach(ev => {
