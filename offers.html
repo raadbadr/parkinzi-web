@@ -45,7 +45,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="header.css?v=4">
+  <link rel="stylesheet" href="header.css?v=5">
   <link rel="stylesheet" href="footer.css?v=7">
   <style>
     /* Saudi Riyal symbol (SAMA official 2024 mark, rendered from local asset) */
@@ -1200,11 +1200,16 @@
 
     /* كل سطر في الشريط اللاصق يختفي حين تصل كتلته الحقيقية في الملخص إلى الشاشة */
     function dockPayFloat() {
+      const bar = $("payFloat");
+      const b = bar.getBoundingClientRect();
+      // قبل أن يلتصق بأسفل الشاشة (وهو ما زال محجوزا عند بداية الخطوة 2) لا يظهر رأسه إطلاقا
+      const pinLine = window.innerHeight - (parseFloat(getComputedStyle(bar).bottom) || 0);
+      const peeking = b.bottom > pinLine + 1;
       const reached = id => $(id).closest(".price-block").getBoundingClientRect().top < window.innerHeight;
       const s = reached("setupTotal"), m = reached("monthTotal");
       $("setupFloatRow").classList.toggle("is-docked", s);
       $("monthFloatRow").classList.toggle("is-docked", m);
-      $("payFloat").classList.toggle("is-docked", s && m);
+      bar.classList.toggle("is-docked", peeking || (s && m));
     }
     window.addEventListener("scroll", dockPayFloat, { passive: true });
     window.addEventListener("resize", dockPayFloat);
