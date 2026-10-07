@@ -347,6 +347,7 @@
     /* ── السلايدرات بالشكل الأول (رقم كبير فوق سلايدر)، منظمة في صف واحد متطابق ── */
     .cats { margin-bottom: 0.75rem; }
     .cats .sblock { align-items: center; gap: 0.6rem; }
+    .cat-svc { font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); text-align: center; }
     .sliders-3, .sliders-4 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
     .sliders-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     @media (max-width: 1100px) { .sliders-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -533,7 +534,7 @@
             <span class="ticks" aria-hidden="true"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span></span>
         </div>
         <div class="sblock">
-          <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span>
+          <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل المواقف المدفوعة</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="share" data-d="-10" aria-label="-10">−</button>
             <input class="num-box" id="share" type="number" inputmode="numeric" min="0" max="100" step="1" value="60" aria-labelledby="shareLbl" autocomplete="off">
@@ -585,6 +586,7 @@
             <label class="seg-opt"><input type="radio" name="own" value="f" id="ownF" checked><span data-i18n="catFree">مجاني</span></label>
             <label class="seg-opt"><input type="radio" name="own" value="p" id="ownP"><span data-i18n="catPaid">مدفوع</span></label>
           </div>
+          <span class="cat-svc" id="ownSvc"></span>
         </div>
         <div class="sblock">
           <span class="label" data-i18n="catTen">المستأجرون</span>
@@ -592,6 +594,7 @@
             <label class="seg-opt"><input type="radio" name="ten" value="f" id="tenF" checked><span data-i18n="catFree">مجاني</span></label>
             <label class="seg-opt"><input type="radio" name="ten" value="p" id="tenP"><span data-i18n="catPaid">مدفوع</span></label>
           </div>
+          <span class="cat-svc" id="tenSvc"></span>
         </div>
         <div class="sblock">
           <span class="label" data-i18n="catVis">الزوار</span>
@@ -599,6 +602,7 @@
             <label class="seg-opt"><input type="radio" name="vis" value="f" id="visF"><span data-i18n="catFree">مجاني</span></label>
             <label class="seg-opt"><input type="radio" name="vis" value="p" id="visP" checked><span data-i18n="catPaid">مدفوع</span></label>
           </div>
+          <span class="cat-svc" id="visSvc"></span>
         </div>
       </div>
 
@@ -717,6 +721,7 @@
       valet: 50,             // للمرة، يدفعها المستخدم (تغطي راتب السائق من 3 مرات يوميا)
       signsPerGate: 2, sign: 1500,
       camera: 5200,          // كاميرا قراءة اللوحات لكل بوابة، اختيارية مع باقة الربط
+      cameraInstall: 1800,   // تركيب الكاميرا في باقة الربط: الكاميرا مع التركيب 7,000 للبوابة
       plans: {
         link: [ { k: "itProg", perGate: 4800 } ],
         new: [
@@ -771,7 +776,7 @@
         itProg: "البرمجة والربط مع البوابات والكاميرات وغرفة التحكم",
         itSigns: "اللوحات الإرشادية، توريد وتركيب",
         itBarrier: "حاجز آلي بذراع 6 أمتار",
-        itCamera: "كاميرا التعرف على لوحات المركبات",
+        itCamera: "كاميرا التعرف على لوحات المركبات", itCamInstall: "تركيب الكاميرات",
         itInstall: "التركيب والتشغيل التجريبي",
         itBase: "قواعد خرسانية للحواجز",
         itMaint: "الصيانة الوقائية لمدة سنتين",
@@ -788,7 +793,7 @@
         mailPlan: "الباقة", mailSpots: "عدد المواقف", mailGates: "عدد البوابات", mailShare: "حصتنا من دخل الزوار", mailHour: "سعر الساعة للزوار",
         mailAddons: "الإضافات", mailNone: "لا يوجد", mailLink: "رابط العرض",
         backBtn: "العودة للرئيسية", copyright: "جميع الحقوق محفوظة", copyrightLine2: "جميع الحقوق محفوظة",
-        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", camQ: "كاميرا قراءة اللوحات", camYes: "مع كاميرا", camNo: "بدون كاميرا", camHint: "{x} لكل بوابة، وتسري على الباقتين", shareRowLabel: "حصتك من دخل الزوار", hourRowLabel: "سعر الساعة للزوار بالريال", shareRowHint: "والباقي للمنصة", afterVat: "بعد الضريبة", shareLabel: "حرك المؤشر لتحديد حصتك", stepRes: "3. فئات العملاء", resLabel: "فئات العملاء", catOwn: "الملاك", catTen: "المستأجرون", catVis: "الزوار", catFree: "مجاني", catPaid: "مدفوع", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إذا لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نوفر كاميرا لكل بوابة.", perGate: "لكل بوابة",
+        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", camQ: "كاميرا قراءة اللوحات", camYes: "مع كاميرا", camNo: "بدون كاميرا", camHint: "{x} لكل بوابة، وتسري على الباقتين", shareRowLabel: "حصتك من دخل المواقف المدفوعة", hourRowLabel: "سعر الساعة للزوار بالريال", shareRowHint: "والباقي للمنصة", afterVat: "بعد الضريبة", shareLabel: "حرك المؤشر لتحديد حصتك", stepRes: "3. فئات العملاء", resLabel: "فئات العملاء", catOwn: "الملاك", catTen: "المستأجرون", catVis: "الزوار", catFree: "مجاني", catPaid: "مدفوع", svcOwnF: "تسجيل لوحات سياراتهم، والدخول بلوحة السيارة بلا رسوم", svcOwnP: "اشتراك شهري أو حجز بالساعة عبر التطبيق", svcTenF: "تضيفهم الإدارة بصلاحية دخول ولوحاتهم مسجلة، بلا رسوم", svcTenP: "اشتراك شهري عبر التطبيق", svcVisF: "دعوة من الساكن برقم الجوال، ودخول مؤقت بلا رسوم", svcVisP: "حجز ودفع بالساعة عبر التطبيق", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إذا لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نوفر كاميرا لكل بوابة.", perGate: "لكل بوابة",
         navHome: "الرئيسية",
         navOffers: "عروضنا",
         navPricing: "الأسعار",
@@ -837,7 +842,7 @@
         itProg: "Programming and connection to gates, cameras and control room",
         itSigns: "Directional signs, supply and installation",
         itBarrier: "Automatic barrier with 6 m arm",
-        itCamera: "Licence-plate recognition camera",
+        itCamera: "Licence-plate recognition camera", itCamInstall: "Camera installation",
         itInstall: "Installation and trial operation",
         itBase: "Concrete bases for barriers",
         itMaint: "Preventive maintenance for two years",
@@ -854,7 +859,7 @@
         mailPlan: "Package", mailSpots: "Parking spaces", mailGates: "Gates", mailShare: "Our share of visitor income", mailHour: "Visitor hourly rate",
         mailAddons: "Add-ons", mailNone: "None", mailLink: "Offer link",
         backBtn: "Back to Home", copyright: "All rights reserved", copyrightLine2: "All rights reserved",
-        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", camQ: "Plate-reading camera", camYes: "With camera", camNo: "Without camera", camHint: "{x} per gate, applies to both packages", shareRowLabel: "Your share of visitor income", hourRowLabel: "Visitor hourly rate (SAR)", shareRowHint: "the rest goes to the platform", afterVat: "incl. VAT", shareLabel: "Move the slider to set your share", stepRes: "3. Customer categories", resLabel: "Customer categories", catOwn: "Owners", catTen: "Tenants", catVis: "Visitors", catFree: "Free", catPaid: "Paid", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income is added to visitor income in the split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
+        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", camQ: "Plate-reading camera", camYes: "With camera", camNo: "Without camera", camHint: "{x} per gate, applies to both packages", shareRowLabel: "Your share of paid parking income", hourRowLabel: "Visitor hourly rate (SAR)", shareRowHint: "the rest goes to the platform", afterVat: "incl. VAT", shareLabel: "Move the slider to set your share", stepRes: "3. Customer categories", resLabel: "Customer categories", catOwn: "Owners", catTen: "Tenants", catVis: "Visitors", catFree: "Free", catPaid: "Paid", svcOwnF: "Their plates are registered and they enter by plate, free of charge", svcOwnP: "Monthly subscription or hourly booking in the app", svcTenF: "Added by management with access rights and registered plates, free of charge", svcTenP: "Monthly subscription in the app", svcVisF: "Invited by a resident by mobile number, temporary access free of charge", svcVisP: "Hourly booking and payment in the app", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income is added to visitor income in the split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
         navHome: "Home",
         navOffers: "Our Offers",
         navPricing: "Pricing",
@@ -903,7 +908,7 @@
         itProg: "Programmation et connexion aux barrieres, cameras et salle de controle",
         itSigns: "Panneaux de signalisation, fourniture et pose",
         itBarrier: "Barriere automatique, bras de 6 m",
-        itCamera: "Camera de lecture de plaques",
+        itCamera: "Camera de lecture de plaques", itCamInstall: "Installation des cameras",
         itInstall: "Installation et mise en service d'essai",
         itBase: "Socles en beton pour barrieres",
         itMaint: "Maintenance preventive pendant deux ans",
@@ -920,7 +925,7 @@
         mailPlan: "Formule", mailSpots: "Places", mailGates: "Barrieres", mailShare: "Notre part des revenus visiteurs", mailHour: "Tarif horaire visiteurs",
         mailAddons: "Options", mailNone: "Aucune", mailLink: "Lien de l'offre",
         backBtn: "Retour a l'accueil", copyright: "Tous droits reserves", copyrightLine2: "Tous droits reserves",
-        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", camQ: "Camera de lecture de plaques", camYes: "Avec camera", camNo: "Sans camera", camHint: "{x} par barriere, valable pour les deux formules", shareRowLabel: "Votre part des revenus visiteurs", hourRowLabel: "Tarif horaire visiteurs (SAR)", shareRowHint: "le reste revient a la plateforme", afterVat: "TTC", shareLabel: "Deplacez le curseur pour fixer votre part", stepRes: "3. Categories de clients", resLabel: "Categories de clients", catOwn: "Proprietaires", catTen: "Locataires", catVis: "Visiteurs", catFree: "Gratuit", catPaid: "Payant", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute aux revenus visiteurs dans le partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
+        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", camQ: "Camera de lecture de plaques", camYes: "Avec camera", camNo: "Sans camera", camHint: "{x} par barriere, valable pour les deux formules", shareRowLabel: "Votre part des revenus du stationnement payant", hourRowLabel: "Tarif horaire visiteurs (SAR)", shareRowHint: "le reste revient a la plateforme", afterVat: "TTC", shareLabel: "Deplacez le curseur pour fixer votre part", stepRes: "3. Categories de clients", resLabel: "Categories de clients", catOwn: "Proprietaires", catTen: "Locataires", catVis: "Visiteurs", catFree: "Gratuit", catPaid: "Payant", svcOwnF: "Plaques enregistrees, entree par lecture de plaque, sans frais", svcOwnP: "Abonnement mensuel ou reservation a l'heure dans l'application", svcTenF: "Ajoutes par la gestion avec droit d'acces et plaques enregistrees, sans frais", svcTenP: "Abonnement mensuel dans l'application", svcVisF: "Invitation d'un resident par numero de mobile, acces temporaire sans frais", svcVisP: "Reservation et paiement a l'heure dans l'application", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute aux revenus visiteurs dans le partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
         navHome: "Accueil",
         navOffers: "Nos offres",
         navPricing: "Tarifs",
@@ -969,7 +974,7 @@
         itProg: "گیٹس، کیمروں اور کنٹرول روم کے ساتھ پروگرامنگ اور رابطہ",
         itSigns: "رہنما بورڈ، فراہمی اور تنصیب",
         itBarrier: "6 میٹر بازو والا خودکار بیریئر",
-        itCamera: "نمبر پلیٹ شناختی کیمرہ",
+        itCamera: "نمبر پلیٹ شناختی کیمرہ", itCamInstall: "کیمروں کی تنصیب",
         itInstall: "تنصیب اور آزمائشی آپریشن",
         itBase: "بیریئرز کے لیے کنکریٹ بنیادیں",
         itMaint: "دو سال کی حفاظتی دیکھ بھال",
@@ -986,7 +991,7 @@
         mailPlan: "پیکج", mailSpots: "پارکنگ کی جگہیں", mailGates: "گیٹ", mailShare: "مہمانوں کی آمدنی میں ہمارا حصہ", mailHour: "مہمانوں کا فی گھنٹہ ریٹ",
         mailAddons: "اضافی خدمات", mailNone: "کوئی نہیں", mailLink: "پیشکش کا لنک",
         backBtn: "واپس ہوم", copyright: "جملہ حقوق محفوظ ہیں", copyrightLine2: "جملہ حقوق محفوظ ہیں",
-        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", camQ: "نمبر پلیٹ پڑھنے والا کیمرہ", camYes: "کیمرے کے ساتھ", camNo: "کیمرے کے بغیر", camHint: "فی گیٹ {x}، دونوں پیکجز پر لاگو", shareRowLabel: "مہمانوں کی آمدنی میں آپ کا حصہ", hourRowLabel: "مہمانوں کا فی گھنٹہ ریٹ (ریال)", shareRowHint: "باقی پلیٹ فارم کا", afterVat: "ٹیکس کے بعد", shareLabel: "اپنا حصہ مقرر کرنے کے لیے سلائیڈر کو حرکت دیں", stepRes: "3. گاہکوں کی اقسام", resLabel: "گاہکوں کی اقسام", catOwn: "مالکان", catTen: "کرایہ دار", catVis: "مہمان", catFree: "مفت", catPaid: "ادا شدہ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں مہمانوں کی آمدنی کے ساتھ شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
+        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", camQ: "نمبر پلیٹ پڑھنے والا کیمرہ", camYes: "کیمرے کے ساتھ", camNo: "کیمرے کے بغیر", camHint: "فی گیٹ {x}، دونوں پیکجز پر لاگو", shareRowLabel: "ادا شدہ پارکنگ کی آمدنی میں آپ کا حصہ", hourRowLabel: "مہمانوں کا فی گھنٹہ ریٹ (ریال)", shareRowHint: "باقی پلیٹ فارم کا", afterVat: "ٹیکس کے بعد", shareLabel: "اپنا حصہ مقرر کرنے کے لیے سلائیڈر کو حرکت دیں", stepRes: "3. گاہکوں کی اقسام", resLabel: "گاہکوں کی اقسام", catOwn: "مالکان", catTen: "کرایہ دار", catVis: "مہمان", catFree: "مفت", catPaid: "ادا شدہ", svcOwnF: "ان کی نمبر پلیٹیں رجسٹر ہوتی ہیں اور وہ بغیر فیس پلیٹ سے داخل ہوتے ہیں", svcOwnP: "ایپ میں ماہانہ سبسکرپشن یا فی گھنٹہ بکنگ", svcTenF: "انتظامیہ رسائی دے کر شامل کرتی ہے اور پلیٹیں رجسٹر ہوتی ہیں، بغیر فیس", svcTenP: "ایپ میں ماہانہ سبسکرپشن", svcVisF: "رہائشی موبائل نمبر سے دعوت دیتا ہے، عارضی رسائی بغیر فیس", svcVisP: "ایپ میں فی گھنٹہ بکنگ اور ادائیگی", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں مہمانوں کی آمدنی کے ساتھ شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
         navHome: "ہوم",
         navOffers: "ہماری پیشکشیں",
         navPricing: "قیمتیں",
@@ -1084,7 +1089,9 @@
       /* الكاميرا خيار واحد يسري على الباقتين: تضاف لباقة الربط، وتحذف من المنظومة الجديدة عند عدم طلبها */
       const rows = PRICE.plans[plan].filter(it => cam || it.k !== "itCamera")
         .map(it => ({ k: it.k, qty: gates, unit: it.perGate, u: "unitGate" }));
-      if (plan === "link" && cam) rows.push({ k: "itCamera", qty: gates, unit: PRICE.camera, u: "unitGate" });
+      if (plan === "link" && cam) rows.push(
+        { k: "itCamera", qty: gates, unit: PRICE.camera, u: "unitGate" },
+        { k: "itCamInstall", qty: gates, unit: PRICE.cameraInstall, u: "unitGate" });
       rows.push({ k: "itSigns", qty: gates * PRICE.signsPerGate, unit: PRICE.sign, u: "unitSign" });
       return rows;
     }
@@ -1100,6 +1107,9 @@
     function render() {
       const s = state();
       const rate = licenseRate(s.share, s.own || s.ten || s.vis);
+      $("ownSvc").textContent = tr(s.own ? "svcOwnP" : "svcOwnF");
+      $("tenSvc").textContent = tr(s.ten ? "svcTenP" : "svcTenF");
+      $("visSvc").textContent = tr(s.vis ? "svcVisP" : "svcVisF");
       $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
       $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
       $("hourRange").value = Math.min(s.hour, +$("hourRange").max);
