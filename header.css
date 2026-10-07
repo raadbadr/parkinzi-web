@@ -276,3 +276,13 @@ body.has-site-header { padding-top: 52px; }
     justify-content: center;
   }
 }
+
+/* أيقونات المظهر واللغة: SVG متمركزة بدل الإيموجي (هلال الإيموجي لا يتوسط الدائرة) */
+#langMenuBtn .icon-circle .icon, #themeIcon {
+  display: block; width: 20px; height: 20px;
+  font-size: 0 !important; color: transparent; overflow: hidden;
+  background: center / contain no-repeat;
+}
+#langMenuBtn .icon-circle .icon { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%233BA3E0' stroke-width='1.8'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cellipse cx='12' cy='12' rx='4.2' ry='9.5'/%3E%3Cpath d='M2.5 12h19M4 7h16M4 17h16'/%3E%3C/g%3E%3C/svg%3E"); }
+#themeIcon, [data-theme="dark"] #themeIcon { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23F6C445' d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/%3E%3C/svg%3E"); }
+[data-theme="light"] #themeIcon { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23F5A623' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8'/%3E%3C/g%3E%3Ccircle cx='12' cy='12' r='5' fill='%23F5A623'/%3E%3C/svg%3E"); }
