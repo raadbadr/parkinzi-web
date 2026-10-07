@@ -1106,7 +1106,8 @@
 
     function render() {
       const s = state();
-      const rate = licenseRate(s.share, s.own || s.ten || s.vis);
+      // الزوار المدفوعون بسعر 0 للساعة لا يأتون بدخل: يعاملون كالمجانيين في حد الـ25
+      const rate = licenseRate(s.share, s.own || s.ten || (s.vis && s.hour > 0));
       $("ownSvc").textContent = tr(s.own ? "svcOwnP" : "svcOwnF");
       $("tenSvc").textContent = tr(s.ten ? "svcTenP" : "svcTenF");
       $("visSvc").textContent = tr(s.vis ? "svcVisP" : "svcVisF");
