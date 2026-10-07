@@ -599,6 +599,14 @@
       <h2 data-i18n="summaryTitle">ملخص عرضك</h2>
 
       <div class="price-block">
+        <div class="price-title" data-i18n="oneTime">يدفع مرة واحدة: التأسيس</div>
+        <div class="price-big"><span id="setupSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
+        <div class="price-total"><span data-i18n="totalWithVat">الإجمالي مع ضريبة القيمة المضافة 15%</span>: <b id="setupTotal"></b></div>
+        <div class="lines" id="setupLines"></div>
+        <p class="note" data-i18n="installments">يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.</p>
+      </div>
+
+      <div class="price-block">
         <div class="price-title" data-i18n="monthly">يدفع شهريا</div>
         <div class="price-big"><span id="monthSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
         <div class="price-total"><span data-i18n="totalWithVat">الإجمالي مع ضريبة القيمة المضافة 15%</span>: <b id="monthTotal"></b></div>
@@ -606,11 +614,9 @@
       </div>
 
       <div class="price-block">
-        <div class="price-title" data-i18n="oneTime">يدفع مرة واحدة: التأسيس</div>
-        <div class="price-big"><span id="setupSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
-        <div class="price-total"><span data-i18n="totalWithVat">الإجمالي مع ضريبة القيمة المضافة 15%</span>: <b id="setupTotal"></b></div>
-        <div class="lines" id="setupLines"></div>
-        <p class="note" data-i18n="installments">يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.</p>
+        <div class="price-title" data-i18n="yearly">يدفع سنويا</div>
+        <div class="price-big"><span id="yearSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
+        <div class="price-total"><span data-i18n="totalWithVat">الإجمالي مع ضريبة القيمة المضافة 15%</span>: <b id="yearTotal"></b></div>
       </div>
 
       <div class="price-block" id="extrasBlock" hidden>
@@ -669,6 +675,7 @@
       vat: 0.15,
       licenseBase: 15,       // ترخيص الموقف شهريا عند حصة مالك 60%
       licenseStep: 5,        // كل 10% زيادة في حصة المالك ترفع الترخيص 5 ريالات
+      licenseAllFree: 25,    // إذا كانت كل الفئات مجانية فلا دخل تشغيل للمنصة: الترخيص لا ينزل عن 25
       shareMin: 0, shareMax: 100, shareFloorAt: 60,   // الترخيص لا ينزل عن 15 تحت حصة 60%: كل عرض ربح للشركة
       staff: 5976,           // موظف مخصص شهريا
       valet: 30,             // للمرة، يدفعها المستخدم
@@ -719,7 +726,7 @@
         inc5: "تقرير شهري وتحويل حصتك من الدخل",
         inc6: "التحديثات والدعم الفني",
         summaryTitle: "ملخص عرضك",
-        oneTime: "يدفع مرة واحدة: التأسيس", monthly: "يدفع شهريا",
+        oneTime: "يدفع مرة واحدة: التأسيس", monthly: "يدفع شهريا", yearly: "يدفع سنويا",
         subtotal: "المجموع قبل الضريبة", vat: "ضريبة القيمة المضافة 15%", total: "الإجمالي",
         installments: "يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.",
         extrasTitle: "إضافات بلا تكلفة عليك",
@@ -785,7 +792,7 @@
         inc5: "Monthly report and transfer of your income share",
         inc6: "Updates and technical support",
         summaryTitle: "Your offer",
-        oneTime: "Paid once: setup", monthly: "Paid monthly",
+        oneTime: "Paid once: setup", monthly: "Paid monthly", yearly: "Paid yearly",
         subtotal: "Subtotal excl. VAT", vat: "VAT 15%", total: "Total",
         installments: "Paid in three instalments: 60% on signing, 30% when installation and integration are complete, and 10% on handover.",
         extrasTitle: "Add-ons at no cost to you",
@@ -851,7 +858,7 @@
         inc5: "Rapport mensuel et virement de votre part des revenus",
         inc6: "Mises a jour et support technique",
         summaryTitle: "Votre offre",
-        oneTime: "Paye une fois : installation", monthly: "Paye chaque mois",
+        oneTime: "Paye une fois : installation", monthly: "Paye chaque mois", yearly: "Paye chaque annee",
         subtotal: "Sous-total HT", vat: "TVA 15 %", total: "Total",
         installments: "Paiement en trois fois : 60 % a la signature, 30 % a la fin de l'installation et du raccordement, et 10 % a la reception.",
         extrasTitle: "Options sans cout pour vous",
@@ -917,7 +924,7 @@
         inc5: "ماہانہ رپورٹ اور آمدنی میں آپ کے حصے کی منتقلی",
         inc6: "اپ ڈیٹس اور تکنیکی معاونت",
         summaryTitle: "آپ کی پیشکش",
-        oneTime: "ایک بار ادائیگی: سیٹ اپ", monthly: "ماہانہ ادائیگی",
+        oneTime: "ایک بار ادائیگی: سیٹ اپ", monthly: "ماہانہ ادائیگی", yearly: "سالانہ ادائیگی",
         subtotal: "ٹیکس سے پہلے کل", vat: "ویلیو ایڈڈ ٹیکس 15%", total: "کل رقم",
         installments: "تین اقساط میں ادائیگی: معاہدے پر 60%، تنصیب اور رابطہ مکمل ہونے پر 30%، اور حوالگی پر 10%۔",
         extrasTitle: "آپ پر بغیر لاگت کی اضافی خدمات",
@@ -1034,7 +1041,7 @@
     }
 
     /* ── الحساب ── */
-    const licenseRate = share => PRICE.licenseBase + PRICE.licenseStep * (Math.max(0, share - PRICE.shareFloorAt) / 10);
+    const licenseRate = (share, anyPaid) => Math.max(anyPaid ? 0 : PRICE.licenseAllFree, PRICE.licenseBase + PRICE.licenseStep * (Math.max(0, share - PRICE.shareFloorAt) / 10));
     function setupItems(plan, gates, cam) {
       /* الكاميرا خيار واحد يسري على الباقتين: تضاف لباقة الربط، وتحذف من المنظومة الجديدة عند عدم طلبها */
       const rows = PRICE.plans[plan].filter(it => cam || it.k !== "itCamera")
@@ -1054,7 +1061,7 @@
 
     function render() {
       const s = state();
-      const rate = licenseRate(s.share);
+      const rate = licenseRate(s.share, s.own || s.ten || s.vis);
       $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
       $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
       $("shareRange").value = s.share;
@@ -1089,6 +1096,8 @@
       $("monthLines").innerHTML = month.map(lineHtml).join("");
       $("monthSub").innerHTML = money(monthSub);
       $("monthTotal").innerHTML = money(monthSub + monthVat);
+      $("yearSub").innerHTML = money(monthSub * 12);
+      $("yearTotal").innerHTML = money((monthSub + monthVat) * 12);
 
       // إضافات بلا تكلفة على العميل
       $("valetNote").hidden = !s.valet;
@@ -1111,6 +1120,7 @@
         tr("mailAddons") + ": " + (addons.length ? addons.join("، ") : tr("mailNone")),
         tr("oneTime") + ": " + plain(setupSub + setupVat) + " SAR",
         tr("monthly") + ": " + plain(monthSub + monthVat) + " SAR",
+        tr("yearly") + ": " + plain((monthSub + monthVat) * 12) + " SAR",
         tr("mailLink") + ": " + location.href
       ].join("\n");
       $("ctaMail").href = "mailto:admin@parkinzi.com?subject=" + encodeURIComponent(tr("mailSubject")) + "&body=" + encodeURIComponent(body);
