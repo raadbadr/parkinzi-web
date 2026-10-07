@@ -222,8 +222,8 @@
     .choice-price small { display: block; font-weight: 500; color: var(--text-secondary); font-size: 0.8rem; white-space: normal; }
     /* رقم دقيق قابل للكتابة + زرا −/+ فوق سلايدر يقفز على المحطات الرئيسية */
     .num-row { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin: 0.5rem 0; }
-    .field .num-box { direction: ltr; }
-    .field .num-box {
+    .num-row .num-box { direction: ltr; }
+    .num-row .num-box {
       width: 9rem; flex: none; padding: 0.4rem 0.5rem; border-radius: 12px; border: 1px solid var(--glass-border); background: transparent;
       text-align: center; font-size: 2rem; font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums;
       -moz-appearance: textfield; appearance: textfield;
@@ -299,7 +299,7 @@
     .label { font-size: 0.88rem; margin-bottom: 0.2rem; text-align: center; }
     .field small { font-size: 0.78rem; text-align: center; }
     .num-row { gap: 0.5rem; margin: 0.25rem 0; }
-    .field .num-box { width: 6rem; padding: 0.25rem; font-size: 1.35rem; border-radius: 10px; }
+    .num-row .num-box { width: 6rem; padding: 0.25rem; font-size: 1.35rem; border-radius: 10px; }
     .step-btn { width: 34px; height: 34px; font-size: 1.1rem; border-width: 1.5px; }
     .share-range { height: 1.4rem; }
     .ticks { font-size: 0.72rem; }
@@ -334,6 +334,50 @@
       .price-big { font-size: 1.4rem; }
     }
     @media (max-width: 420px) { .site-fields { grid-template-columns: minmax(0, 1fr); } }
+    /* ── الترتيب: صفوف سلايدر متطابقة تحت بعض، والخيارات بطاقات جنب بعض ── */
+    .sliders { display: grid; gap: 1rem; }
+    .srow { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 11rem; align-items: center; gap: 1rem; }
+    .srow-label .label { text-align: start; margin: 0; }
+    .srow-label small { display: block; color: var(--text-secondary); font-size: 0.75rem; text-align: start; }
+    .srow-slider { min-width: 0; }
+    .srow .num-row { margin: 0; justify-content: flex-end; }
+    /* سلايدر بعرض عموده كاملاً: المسار من الطرف للطرف والمقبض يصل للنهايتين */
+    .share-range {
+      -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 22px; margin: 0;
+      background: transparent; cursor: pointer;
+    }
+    .share-range::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: var(--glass-border); }
+    .share-range::-moz-range-track { height: 6px; border-radius: 999px; background: var(--glass-border); }
+    .share-range::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--primary); }
+    .share-range::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 20px; height: 20px; margin-top: -7px; border-radius: 50%;
+      background: var(--primary); border: 3px solid var(--white); box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .share-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid var(--white); box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+    .share-range:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 6px; }
+    /* أرقام المحطات تحت مواقعها الفعلية: نصف عرض المقبض من كل طرف */
+    .ticks { padding-inline: 2px; margin-top: 2px; }
+    .ticks > span { width: 16px; text-align: center; flex: none; }
+
+    .cards { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .cards.cols-1 { grid-template-columns: minmax(0, 1fr); }
+    .cards.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cards.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards .choice { grid-template-columns: auto minmax(0, 1fr); align-content: start; height: 100%; }
+    .cards .choice-price { grid-column: 2; text-align: start; }
+    .cards.cols-1 .choice { grid-template-columns: auto minmax(0, 1fr) auto; }
+    .cards.cols-1 .choice-price { grid-column: auto; text-align: end; }
+    .share-values { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1.5rem; margin: 1rem 0 0.25rem; }
+    .share-values .pay-now { margin: 0; margin-inline-start: auto; }
+    .hint-p { font-size: 0.82rem; margin-top: 0.25rem; }
+
+    @media (max-width: 700px) {
+      .srow { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label num" "slider slider"; row-gap: 0.4rem; }
+      .srow-label { grid-area: label; } .srow-slider { grid-area: slider; } .srow .num-row { grid-area: num; }
+      .cards.cols-3 { grid-template-columns: minmax(0, 1fr); }
+      .share-values .pay-now { margin-inline-start: 0; }
+    }
+    @media (max-width: 520px) { .cards.cols-2 { grid-template-columns: minmax(0, 1fr); } }
   </style>
 </head>
 <body class="has-site-header">
@@ -381,46 +425,66 @@
   <main class="container">
     <div class="header">
       <h1 data-i18n="heroTitle">عروضنا</h1>
-      <p data-i18n="heroSub">لمواقف المباني والأبراج: اختر الباقة والإضافات، فيظهر لك سعر التأسيس والترخيص الشهري مباشرة.</p>
+      <p data-i18n="heroSub">لمواقف المباني والأبراج: اختر الباقة والإضافات وحصتك من دخل الزوار، فيظهر لك سعر التأسيس والترخيص الشهري مباشرة.</p>
     </div>
 
     <div class="content">
       <h2 data-i18n="stepSite">1. موقعك</h2>
-      <div class="site-fields">
-      <div class="field">
-        <span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span>
-        <span class="num-row">
-          <button type="button" class="step-btn" data-for="spots" data-d="-10" aria-label="-10">−</button>
-          <input class="num-box" id="spots" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" aria-labelledby="spotsLbl">
-          <button type="button" class="step-btn" data-for="spots" data-d="10" aria-label="+10">+</button>
-        </span>
-        <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1">
-        <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
-        <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
-        <small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small>
+      <div class="sliders">
+        <div class="srow">
+          <div class="srow-label"><span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span><small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small></div>
+          <div class="srow-slider">
+            <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1">
+            <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
+          </div>
+          <div class="num-row">
+            <button type="button" class="step-btn" data-for="spots" data-d="-10" aria-label="-10">−</button>
+            <input class="num-box" id="spots" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" aria-labelledby="spotsLbl">
+            <button type="button" class="step-btn" data-for="spots" data-d="10" aria-label="+10">+</button>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="srow-label"><span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span><small data-i18n="gatesHint">مداخل ومخارج المواقف</small></div>
+          <div class="srow-slider">
+            <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1">
+            <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
+          </div>
+          <div class="num-row">
+            <button type="button" class="step-btn" data-for="gates" data-d="-1" aria-label="-1">−</button>
+            <input class="num-box" id="gates" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" aria-labelledby="gatesLbl">
+            <button type="button" class="step-btn" data-for="gates" data-d="1" aria-label="+1">+</button>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="srow-label"><span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span><small data-i18n="shareRowHint">والباقي للمنصة</small></div>
+          <div class="srow-slider">
+            <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1">
+            <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
+          </div>
+          <div class="num-row">
+            <button type="button" class="step-btn" data-for="share" data-d="-10" aria-label="-10">−</button>
+            <input class="num-box" id="share" type="number" inputmode="numeric" min="0" max="100" step="1" value="60" aria-labelledby="shareLbl">
+            <button type="button" class="step-btn" data-for="share" data-d="10" aria-label="+10">+</button>
+          </div>
+        </div>
       </div>
-      <div class="field">
-        <span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span>
-        <span class="num-row">
-          <button type="button" class="step-btn" data-for="gates" data-d="-1" aria-label="-1">−</button>
-          <input class="num-box" id="gates" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" aria-labelledby="gatesLbl">
-          <button type="button" class="step-btn" data-for="gates" data-d="1" aria-label="+1">+</button>
-        </span>
-        <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1">
-        <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
-        <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
-        <small data-i18n="gatesHint">مداخل ومخارج المواقف</small>
+      <div class="share-values">
+        <span><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></span>
+        <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا قبل الضريبة</span></span>
+        <span class="pay-now"><span data-i18n="youPay">تدفع شهريا</span> <b id="payMonth"></b> <small data-i18n="beforeVat">قبل الضريبة</small></span>
       </div>
-      </div>
+      <p class="hint-p" data-i18n="shareHint">يحجز الزوار مواقفهم ويدفعون عبر التطبيق، ويوزع هذا الدخل بينك وبين المنصة بالنسبة التي تحددها. وكلما زادت حصتك زاد ترخيص الموقف، ولا يقل عن 15 ريالا.</p>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
-      <div class="choices" role="radiogroup" aria-label="الباقة">
+      <div class="cards cols-2" role="radiogroup" aria-label="الباقة">
         <label class="choice" for="planNew">
           <input type="radio" name="plan" value="new" id="planNew">
           <span class="choice-body">
-            <span class="choice-tag" data-i18n="planNewTag">الأشمل</span>
             <span class="choice-name" data-i18n="planNewName">منظومة جديدة كاملة</span>
-            <span class="choice-desc" data-i18n="planNewDesc">نورد بوابات وكاميرات جديدة ونركبها ونربطها بالمنصة، مع صيانة وقائية لمدة سنتين.</span>
+            <span class="choice-desc" data-i18n="planNewDesc">نوفر بوابات وكاميرات جديدة ونركبها ونربطها بالمنصة، مع صيانة وقائية لمدة سنتين.</span>
           </span>
           <span class="choice-price" id="planNewPrice"></span>
         </label>
@@ -432,40 +496,29 @@
           </span>
           <span class="choice-price" id="planIntPrice"></span>
         </label>
+      </div>
+      <div class="cards cols-1">
         <label class="choice cam-opt" for="addCam" id="camRow">
           <input type="checkbox" id="addCam">
-          <span class="choice-body"><span class="choice-name" data-i18n="addCamName">مع كاميرا قراءة اللوحات</span><span class="choice-desc" data-i18n="addCamDesc">إن لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نورد كاميرا لكل بوابة.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="addCamName">مع كاميرا قراءة اللوحات</span><span class="choice-desc" data-i18n="addCamDesc">إذا لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نوفر كاميرا لكل بوابة.</span></span>
           <span class="choice-price" id="camPrice"></span>
         </label>
       </div>
 
       <h2 data-i18n="stepRes">3. مواقف السكان</h2>
-      <div class="choices res-choices" role="radiogroup">
+      <div class="cards cols-2" role="radiogroup">
         <label class="choice" for="resFree">
           <input type="radio" name="res" value="free" id="resFree" checked>
           <span class="choice-body"><span class="choice-name" data-i18n="resFree">مجانية للسكان</span><span class="choice-desc" data-i18n="resFreeDesc">يدخل السكان بلوحة السيارة بلا رسوم.</span></span>
         </label>
         <label class="choice" for="resPaid">
           <input type="radio" name="res" value="paid" id="resPaid">
-          <span class="choice-body"><span class="choice-name" data-i18n="resPaid">مدفوعة عبر التطبيق</span><span class="choice-desc" data-i18n="resPaidDesc">يدفع السكان عبر التطبيق، ويدخل دخلها في القسمة مع مواقف الزوار.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="resPaid">مدفوعة عبر التطبيق</span><span class="choice-desc" data-i18n="resPaidDesc">يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.</span></span>
         </label>
       </div>
 
-      <h2 data-i18n="stepShare">4. حصتك من دخل مواقف الزوار</h2>
-      <label class="label" for="share" data-i18n="shareLabel">حرك المؤشر لاختيار حصتك</label>
-      <input class="share-range" type="range" id="share" min="0" max="100" step="10" value="60" list="shareTicks">
-      <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
-      <div class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></div>
-      <div class="share-values">
-        <span><span data-i18n="yourShare">حصتك</span>: <b id="shareOwner">60%</b></span>
-        <span><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></span>
-        <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا قبل الضريبة</span></span>
-      </div>
-      <div class="pay-now"><span data-i18n="youPay">تدفع شهريا</span> <b id="payMonth"></b> <small data-i18n="beforeVat">قبل الضريبة</small></div>
-      <p data-i18n="shareHint">مواقف الزوار تحجز وتدفع عبر التطبيق، ويقسم دخلها بالنسبة التي تختارها. وكلما زادت حصتك زاد ترخيص الموقف، ولا ينزل عن 15 ريالا.</p>
-
-      <h2 data-i18n="stepAddons">5. الإضافات</h2>
-      <div class="choices">
+      <h2 data-i18n="stepAddons">4. الإضافات</h2>
+      <div class="cards cols-3">
         <label class="choice" for="addStaff">
           <input type="checkbox" id="addStaff">
           <span class="choice-body"><span class="choice-name" data-i18n="addStaffName">موظف مخصص في الموقع</span><span class="choice-desc" data-i18n="addStaffDesc">موظف من فريقنا لخدمة السكان والزوار ومتابعة التشغيل يوميا.</span></span>
@@ -473,7 +526,7 @@
         </label>
         <label class="choice" for="addValet">
           <input type="checkbox" id="addValet">
-          <span class="choice-body"><span class="choice-name" data-i18n="addValetName">خدمة صف السيارات (فاليه)</span><span class="choice-desc" data-i18n="addValetDesc">يستلم السائق السيارة عند المدخل ويصفها ويعيدها عند الطلب.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="addValetName">خدمة صف السيارات (فاليه)</span><span class="choice-desc" data-i18n="addValetDesc">يستلم موظفنا السيارة من السائق عند المدخل، ويصفها، ثم يعيدها إليه عند الطلب.</span></span>
           <span class="choice-price" id="valetPrice"></span>
         </label>
         <label class="choice" for="addGolf">
@@ -499,7 +552,7 @@
         <div class="price-big"><span id="setupSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
         <div class="price-total"><span data-i18n="totalWithVat">الإجمالي مع ضريبة القيمة المضافة 15%</span>: <b id="setupTotal"></b></div>
         <div class="lines" id="setupLines"></div>
-        <p class="note" data-i18n="installments">على ثلاث دفعات: 60% عند التوقيع، و30% عند إتمام الربط، و10% عند الاستلام.</p>
+        <p class="note" data-i18n="installments">يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.</p>
       </div>
 
       <div class="price-block" id="extrasBlock" hidden>
@@ -595,26 +648,25 @@
         footerLegalCRLabel: "السجل التجاري", footerLegalVATLabel: "الرقم الضريبي",
         title: "عروضنا",
         heroTitle: "عروضنا",
-        heroSub: "لمواقف المباني والأبراج: اختر الباقة والإضافات، فيظهر لك سعر التأسيس والترخيص الشهري مباشرة.",
+        heroSub: "لمواقف المباني والأبراج: اختر الباقة والإضافات وحصتك من دخل الزوار، فيظهر لك سعر التأسيس والترخيص الشهري مباشرة.",
         stepSite: "1. موقعك", spotsLabel: "عدد المواقف", spotsHint: "كل مواقف المبنى، ومنها مواقف السكان",
         gatesLabel: "عدد البوابات", gatesHint: "مداخل ومخارج المواقف",
         stepPlan: "2. اختر الباقة",
         planNewTag: "الأشمل", planNewName: "منظومة جديدة كاملة",
-        planNewDesc: "نورد بوابات وكاميرات جديدة ونركبها ونربطها بالمنصة، مع صيانة وقائية لمدة سنتين.",
+        planNewDesc: "نوفر بوابات وكاميرات جديدة ونركبها ونربطها بالمنصة، مع صيانة وقائية لمدة سنتين.",
         planIntTag: "على منظومتك الحالية", planIntName: "الربط على المنظومة القائمة",
         planIntDesc: "نربط المنصة ببواباتك وكاميراتك وغرفة التحكم الموجودة، دون تغيير أي جهاز.",
         planSetup: "التأسيس", beforeVat: "قبل الضريبة",
         stepShare: "4. حصتك من دخل مواقف الزوار",
         yourShare: "حصتك", platformShare: "حصة المنصة", licenseLabel: "ترخيص الموقف", perSpotMonth: "شهريا قبل الضريبة",
         perDay: "أي نحو {x} يوميا عن الموقف الواحد.",
-        shareHint: "مواقف الزوار تحجز وتدفع عبر التطبيق، ويقسم دخلها بالنسبة التي تختارها. وكلما زادت حصتك زاد ترخيص الموقف، ولا ينزل عن 15 ريالا.",
-        stepAddons: "5. الإضافات",
+        shareHint: "يحجز الزوار مواقفهم ويدفعون عبر التطبيق، ويوزع هذا الدخل بينك وبين المنصة بالنسبة التي تحددها. وكلما زادت حصتك زاد ترخيص الموقف، ولا يقل عن 15 ريالا.",
+        stepAddons: "4. الإضافات",
         addStaffName: "موظف مخصص في الموقع", addStaffDesc: "موظف من فريقنا لخدمة السكان والزوار ومتابعة التشغيل يوميا.",
-        addValetName: "خدمة صف السيارات (فاليه)", addValetDesc: "يستلم السائق السيارة عند المدخل ويصفها ويعيدها عند الطلب.",
+        addValetName: "خدمة صف السيارات (فاليه)", addValetDesc: "يستلم موظفنا السيارة من السائق عند المدخل، ويصفها، ثم يعيدها إليه عند الطلب.",
         addGolfName: "عربة جولف", addGolfDesc: "تنقل السكان والزوار بين المواقف ومدخل المبنى.",
         perMonth: "شهريا", perUse: "للمرة", paidByUser: "يدفعها المستخدم", onRequest: "حسب الطلب",
         includedTitle: "مشمول في كل باقة",
-        inc1: "مواقف السكان <span class=\"free\">مجانية</span>",
         inc2: "تطبيق PARKINZI للسكان والزوار على iOS وAndroid",
         inc3: "الدخول بالتعرف على لوحة السيارة",
         inc4: "حجز مواقف الزوار ودفعها عبر التطبيق",
@@ -623,7 +675,7 @@
         summaryTitle: "ملخص عرضك",
         oneTime: "يدفع مرة واحدة: التأسيس", monthly: "يدفع شهريا",
         subtotal: "المجموع قبل الضريبة", vat: "ضريبة القيمة المضافة 15%", total: "الإجمالي",
-        installments: "على ثلاث دفعات: 60% عند التوقيع، و30% عند إتمام الربط، و10% عند الاستلام.",
+        installments: "يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.",
         extrasTitle: "إضافات بلا تكلفة عليك",
         valetNote: "الفاليه: {x} للمرة يدفعها المستخدم، ولا تتحملها أنت.",
         golfNote: "نرسل سعر عربة الجولف مع العرض النهائي بحسب العدد المطلوب.",
@@ -634,20 +686,20 @@
         itInstall: "التركيب والتشغيل التجريبي",
         itBase: "قواعد خرسانية للحواجز",
         itMaint: "الصيانة الوقائية لمدة سنتين",
-        itLicense: "ترخيص المنصة",
+        itLicense: "ترخيص المواقف",
         itStaff: "موظف مخصص في الموقع",
         unitGate: "بوابة", unitSign: "لوحة", unitSpot: "موقف",
-        ctaRequest: "اطلب هذا العرض", ctaCopy: "انسخ رابط العرض", copied: "نسخ الرابط",
+        ctaRequest: "اطلب هذا العرض", ctaCopy: "انسخ رابط العرض", copied: "تم نسخ الرابط",
         term1: "الأسعار بالريال السعودي، وتضاف إليها ضريبة القيمة المضافة 15%.",
         term2: "التنفيذ خلال نحو أسبوعين من الدفعة الأولى، ويرتبط بجاهزية الموقع وتوافر الأجهزة.",
-        term3: "تثبت أسعار العرض أسبوعين من تاريخ طلبه.",
+        term3: "أسعار العرض ثابتة لمدة أسبوعين من تاريخ طلبه.",
         barSetup: "التأسيس", barMonth: "شهريا", barCta: "الملخص",
         mailSubject: "طلب عرض PARKINZI",
         mailIntro: "نرغب في هذا العرض:",
         mailPlan: "الباقة", mailSpots: "عدد المواقف", mailGates: "عدد البوابات", mailShare: "حصتنا من دخل الزوار",
         mailAddons: "الإضافات", mailNone: "لا يوجد", mailLink: "رابط العرض",
         backBtn: "العودة للرئيسية", copyright: "جميع الحقوق محفوظة", copyrightLine2: "جميع الحقوق محفوظة",
-        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", stepRes: "3. مواقف السكان", resLabel: "مواقف السكان", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويدخل دخلها في القسمة مع مواقف الزوار.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إن لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نورد كاميرا لكل بوابة.", perGate: "لكل بوابة",
+        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", shareRowLabel: "حصتك من دخل الزوار", shareRowHint: "والباقي للمنصة", totalWithVat: "الإجمالي مع ضريبة القيمة المضافة 15%", shareLabel: "حرك المؤشر لتحديد حصتك", stepRes: "3. مواقف السكان", resLabel: "مواقف السكان", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إذا لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نوفر كاميرا لكل بوابة.", perGate: "لكل بوابة",
         navHome: "الرئيسية",
         navOffers: "عروضنا",
         navPricing: "الأسعار",
@@ -662,7 +714,7 @@
         footerLegalCRLabel: "Commercial Registration", footerLegalVATLabel: "VAT Number",
         title: "Our Offers",
         heroTitle: "Our Offers",
-        heroSub: "For buildings and towers: choose your package and add-ons, and see the setup price and monthly license instantly.",
+        heroSub: "For building and tower car parks: choose a package, add-ons and your share of visitor income, and see the setup cost and monthly license instantly.",
         stepSite: "1. Your site", spotsLabel: "Parking spaces", spotsHint: "All spaces in the building, residents' spaces included",
         gatesLabel: "Gates", gatesHint: "Parking entrances and exits",
         stepPlan: "2. Choose a package",
@@ -674,14 +726,13 @@
         stepShare: "4. Your share of visitor parking income",
         yourShare: "Your share", platformShare: "Platform share", licenseLabel: "License per space", perSpotMonth: "monthly, excl. VAT",
         perDay: "About {x} per space per day.",
-        shareHint: "Visitor spaces are booked and paid in the app, and their income is split at the ratio you choose. A higher share means a higher license per space, never below 15 SAR.",
-        stepAddons: "5. Add-ons",
+        shareHint: "Visitors book and pay for their spaces in the app, and that income is split between you and the platform at the ratio you set. A higher share means a higher license per space, never below 15 SAR.",
+        stepAddons: "4. Add-ons",
         addStaffName: "Dedicated on-site staff", addStaffDesc: "A member of our team serving residents and visitors and running daily operations.",
-        addValetName: "Valet parking", addValetDesc: "A driver takes the car at the entrance, parks it and brings it back on request.",
+        addValetName: "Valet parking", addValetDesc: "Our attendant takes the car from the driver at the entrance, parks it, and brings it back on request.",
         addGolfName: "Golf cart", addGolfDesc: "Moves residents and visitors between the parking and the building entrance.",
         perMonth: "monthly", perUse: "per use", paidByUser: "paid by the user", onRequest: "On request",
         includedTitle: "Included in every package",
-        inc1: "Residents' parking is <span class=\"free\">free</span>",
         inc2: "The PARKINZI app for residents and visitors on iOS and Android",
         inc3: "Entry by licence-plate recognition",
         inc4: "Visitor parking booked and paid in the app",
@@ -690,7 +741,7 @@
         summaryTitle: "Your offer",
         oneTime: "Paid once: setup", monthly: "Paid monthly",
         subtotal: "Subtotal excl. VAT", vat: "VAT 15%", total: "Total",
-        installments: "In three payments: 60% at signing, 30% when the connection is complete, 10% at handover.",
+        installments: "Paid in three instalments: 60% on signing, 30% when installation and integration are complete, and 10% on handover.",
         extrasTitle: "Add-ons at no cost to you",
         valetNote: "Valet: {x} per use, paid by the user, not by you.",
         golfNote: "We send the golf cart price with the final offer, based on the number required.",
@@ -701,7 +752,7 @@
         itInstall: "Installation and trial operation",
         itBase: "Concrete bases for barriers",
         itMaint: "Preventive maintenance for two years",
-        itLicense: "Platform license",
+        itLicense: "Parking space licenses",
         itStaff: "Dedicated on-site staff",
         unitGate: "gate", unitSign: "sign", unitSpot: "space",
         ctaRequest: "Request this offer", ctaCopy: "Copy offer link", copied: "Link copied",
@@ -714,7 +765,7 @@
         mailPlan: "Package", mailSpots: "Parking spaces", mailGates: "Gates", mailShare: "Our share of visitor income",
         mailAddons: "Add-ons", mailNone: "None", mailLink: "Offer link",
         backBtn: "Back to Home", copyright: "All rights reserved", copyrightLine2: "All rights reserved",
-        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", stepRes: "3. Residents' parking", resLabel: "Residents' parking", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income joins the visitor income split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
+        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", shareRowLabel: "Your share of visitor income", shareRowHint: "the rest goes to the platform", totalWithVat: "Total incl. 15% VAT", shareLabel: "Move the slider to set your share", stepRes: "3. Residents' parking", resLabel: "Residents' parking", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income is added to visitor income in the split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
         navHome: "Home",
         navOffers: "Our Offers",
         navPricing: "Pricing",
@@ -729,7 +780,7 @@
         footerLegalCRLabel: "Registre de commerce", footerLegalVATLabel: "N° de TVA",
         title: "Nos offres",
         heroTitle: "Nos offres",
-        heroSub: "Pour les immeubles et les tours : choisissez votre formule et vos options, et voyez aussitot le prix d'installation et la licence mensuelle.",
+        heroSub: "Pour les parkings d'immeubles et de tours : choisissez une formule, des options et votre part des revenus visiteurs, et voyez aussitot le cout d'installation et la licence mensuelle.",
         stepSite: "1. Votre site", spotsLabel: "Places de stationnement", spotsHint: "Toutes les places de l'immeuble, y compris celles des residents",
         gatesLabel: "Barrieres", gatesHint: "Entrees et sorties du parking",
         stepPlan: "2. Choisissez une formule",
@@ -741,14 +792,13 @@
         stepShare: "4. Votre part des revenus du stationnement visiteurs",
         yourShare: "Votre part", platformShare: "Part de la plateforme", licenseLabel: "Licence par place", perSpotMonth: "par mois, HT",
         perDay: "Soit environ {x} par place et par jour.",
-        shareHint: "Les places visiteurs sont reservees et payees dans l'application, et leurs revenus sont partages selon le ratio choisi. Plus votre part est elevee, plus la licence par place augmente, jamais en dessous de 15 SAR.",
-        stepAddons: "5. Options",
+        shareHint: "Les visiteurs reservent et paient leurs places dans l'application, et ce revenu est partage entre vous et la plateforme selon le ratio choisi. Plus votre part est elevee, plus la licence par place augmente, jamais en dessous de 15 SAR.",
+        stepAddons: "4. Options",
         addStaffName: "Employe dedie sur site", addStaffDesc: "Un membre de notre equipe au service des residents et des visiteurs, qui suit l'exploitation au quotidien.",
-        addValetName: "Voiturier", addValetDesc: "Un chauffeur prend la voiture a l'entree, la gare et la ramene sur demande.",
+        addValetName: "Voiturier", addValetDesc: "Notre voiturier prend la voiture du conducteur a l'entree, la gare, puis la lui rend sur demande.",
         addGolfName: "Voiturette de golf", addGolfDesc: "Transporte residents et visiteurs entre le parking et l'entree de l'immeuble.",
         perMonth: "par mois", perUse: "par utilisation", paidByUser: "paye par l'utilisateur", onRequest: "Sur demande",
         includedTitle: "Inclus dans chaque formule",
-        inc1: "Stationnement des residents <span class=\"free\">gratuit</span>",
         inc2: "L'application PARKINZI pour residents et visiteurs sur iOS et Android",
         inc3: "Acces par lecture de plaque d'immatriculation",
         inc4: "Places visiteurs reservees et payees dans l'application",
@@ -757,7 +807,7 @@
         summaryTitle: "Votre offre",
         oneTime: "Paye une fois : installation", monthly: "Paye chaque mois",
         subtotal: "Sous-total HT", vat: "TVA 15 %", total: "Total",
-        installments: "En trois versements : 60 % a la signature, 30 % a la fin de la connexion, 10 % a la reception.",
+        installments: "Paiement en trois fois : 60 % a la signature, 30 % a la fin de l'installation et du raccordement, et 10 % a la reception.",
         extrasTitle: "Options sans cout pour vous",
         valetNote: "Voiturier : {x} par utilisation, paye par l'utilisateur et non par vous.",
         golfNote: "Nous envoyons le prix des voiturettes avec l'offre finale, selon le nombre souhaite.",
@@ -768,7 +818,7 @@
         itInstall: "Installation et mise en service d'essai",
         itBase: "Socles en beton pour barrieres",
         itMaint: "Maintenance preventive pendant deux ans",
-        itLicense: "Licence de la plateforme",
+        itLicense: "Licences des places",
         itStaff: "Employe dedie sur site",
         unitGate: "barriere", unitSign: "panneau", unitSpot: "place",
         ctaRequest: "Demander cette offre", ctaCopy: "Copier le lien de l'offre", copied: "Lien copie",
@@ -781,7 +831,7 @@
         mailPlan: "Formule", mailSpots: "Places", mailGates: "Barrieres", mailShare: "Notre part des revenus visiteurs",
         mailAddons: "Options", mailNone: "Aucune", mailLink: "Lien de l'offre",
         backBtn: "Retour a l'accueil", copyright: "Tous droits reserves", copyrightLine2: "Tous droits reserves",
-        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", stepRes: "3. Stationnement des residents", resLabel: "Stationnement des residents", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute au partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
+        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", shareRowLabel: "Votre part des revenus visiteurs", shareRowHint: "le reste revient a la plateforme", totalWithVat: "Total TVA 15 % incluse", shareLabel: "Deplacez le curseur pour fixer votre part", stepRes: "3. Stationnement des residents", resLabel: "Stationnement des residents", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute aux revenus visiteurs dans le partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
         navHome: "Accueil",
         navOffers: "Nos offres",
         navPricing: "Tarifs",
@@ -796,7 +846,7 @@
         footerLegalCRLabel: "کمرشل رجسٹریشن", footerLegalVATLabel: "ویٹ نمبر",
         title: "ہماری پیشکشیں",
         heroTitle: "ہماری پیشکشیں",
-        heroSub: "عمارتوں اور ٹاورز کے لیے: اپنا پیکج اور اضافی خدمات منتخب کریں، اور سیٹ اپ کی قیمت اور ماہانہ لائسنس فورا دیکھیں۔",
+        heroSub: "عمارتوں اور ٹاورز کی پارکنگ کے لیے: پیکج، اضافی خدمات اور مہمانوں کی آمدنی میں اپنا حصہ منتخب کریں، اور سیٹ اپ اور ماہانہ لائسنس کی قیمت فورا دیکھیں۔",
         stepSite: "1. آپ کی جگہ", spotsLabel: "پارکنگ کی جگہیں", spotsHint: "عمارت کی تمام جگہیں، رہائشیوں کی جگہوں سمیت",
         gatesLabel: "گیٹ", gatesHint: "پارکنگ کے داخلی اور خارجی راستے",
         stepPlan: "2. پیکج منتخب کریں",
@@ -808,14 +858,13 @@
         stepShare: "4. مہمانوں کی پارکنگ کی آمدنی میں آپ کا حصہ",
         yourShare: "آپ کا حصہ", platformShare: "پلیٹ فارم کا حصہ", licenseLabel: "فی جگہ لائسنس", perSpotMonth: "ماہانہ، ٹیکس سے پہلے",
         perDay: "یعنی فی جگہ روزانہ تقریبا {x}۔",
-        shareHint: "مہمانوں کی جگہیں ایپ کے ذریعے بک اور ادا کی جاتی ہیں، اور ان کی آمدنی آپ کے منتخب تناسب سے تقسیم ہوتی ہے۔ آپ کا حصہ جتنا زیادہ، فی جگہ لائسنس اتنا زیادہ، اور کبھی 15 ریال سے کم نہیں۔",
-        stepAddons: "5. اضافی خدمات",
+        shareHint: "مہمان ایپ کے ذریعے اپنی جگہیں بک کرتے اور ادائیگی کرتے ہیں، اور یہ آمدنی آپ اور پلیٹ فارم کے درمیان آپ کے مقرر کردہ تناسب سے تقسیم ہوتی ہے۔ آپ کا حصہ جتنا زیادہ، فی جگہ لائسنس اتنا زیادہ، اور کبھی 15 ریال سے کم نہیں۔",
+        stepAddons: "4. اضافی خدمات",
         addStaffName: "سائٹ پر مخصوص ملازم", addStaffDesc: "ہماری ٹیم کا ایک فرد جو رہائشیوں اور مہمانوں کی خدمت اور روزانہ آپریشن کی نگرانی کرے۔",
-        addValetName: "ویلے پارکنگ", addValetDesc: "ڈرائیور داخلی راستے پر گاڑی لے کر پارک کرتا ہے اور طلب پر واپس لاتا ہے۔",
+        addValetName: "ویلے پارکنگ", addValetDesc: "ہمارا ملازم داخلی دروازے پر ڈرائیور سے گاڑی لیتا ہے، اسے پارک کرتا ہے اور طلب پر واپس کرتا ہے۔",
         addGolfName: "گالف کارٹ", addGolfDesc: "رہائشیوں اور مہمانوں کو پارکنگ اور عمارت کے داخلی راستے کے درمیان لے جاتی ہے۔",
         perMonth: "ماہانہ", perUse: "فی استعمال", paidByUser: "صارف ادا کرتا ہے", onRequest: "درخواست پر",
         includedTitle: "ہر پیکج میں شامل",
-        inc1: "رہائشیوں کی پارکنگ <span class=\"free\">مفت</span>",
         inc2: "رہائشیوں اور مہمانوں کے لیے PARKINZI ایپ، iOS اور Android پر",
         inc3: "نمبر پلیٹ کی شناخت سے داخلہ",
         inc4: "مہمانوں کی پارکنگ کی بکنگ اور ادائیگی ایپ کے ذریعے",
@@ -824,7 +873,7 @@
         summaryTitle: "آپ کی پیشکش",
         oneTime: "ایک بار ادائیگی: سیٹ اپ", monthly: "ماہانہ ادائیگی",
         subtotal: "ٹیکس سے پہلے کل", vat: "ویلیو ایڈڈ ٹیکس 15%", total: "کل رقم",
-        installments: "تین اقساط میں: 60% دستخط پر، 30% رابطہ مکمل ہونے پر، اور 10% حوالگی پر۔",
+        installments: "تین اقساط میں ادائیگی: معاہدے پر 60%، تنصیب اور رابطہ مکمل ہونے پر 30%، اور حوالگی پر 10%۔",
         extrasTitle: "آپ پر بغیر لاگت کی اضافی خدمات",
         valetNote: "ویلے: فی استعمال {x}، جو صارف ادا کرتا ہے، آپ نہیں۔",
         golfNote: "ہم گالف کارٹ کی قیمت مطلوبہ تعداد کے مطابق حتمی پیشکش کے ساتھ بھیجیں گے۔",
@@ -835,20 +884,20 @@
         itInstall: "تنصیب اور آزمائشی آپریشن",
         itBase: "بیریئرز کے لیے کنکریٹ بنیادیں",
         itMaint: "دو سال کی حفاظتی دیکھ بھال",
-        itLicense: "پلیٹ فارم لائسنس",
+        itLicense: "پارکنگ جگہوں کے لائسنس",
         itStaff: "سائٹ پر مخصوص ملازم",
         unitGate: "گیٹ", unitSign: "بورڈ", unitSpot: "جگہ",
         ctaRequest: "یہ پیشکش طلب کریں", ctaCopy: "پیشکش کا لنک کاپی کریں", copied: "لنک کاپی ہو گیا",
         term1: "قیمتیں سعودی ریال میں ہیں، اور 15% ویلیو ایڈڈ ٹیکس شامل کیا جاتا ہے۔",
         term2: "پہلی ادائیگی سے تقریبا دو ہفتوں میں تکمیل، سائٹ کی تیاری اور آلات کی دستیابی سے مشروط۔",
-        term3: "پیشکش کی قیمتیں درخواست کی تاریخ سے دو ہفتے تک برقرار رہتی ہیں۔",
+        term3: "پیشکش کی قیمتیں درخواست کی تاریخ سے دو ہفتوں تک مقرر رہتی ہیں۔",
         barSetup: "سیٹ اپ", barMonth: "ماہانہ", barCta: "خلاصہ",
         mailSubject: "PARKINZI پیشکش کی درخواست",
         mailIntro: "ہم یہ پیشکش چاہتے ہیں:",
         mailPlan: "پیکج", mailSpots: "پارکنگ کی جگہیں", mailGates: "گیٹ", mailShare: "مہمانوں کی آمدنی میں ہمارا حصہ",
         mailAddons: "اضافی خدمات", mailNone: "کوئی نہیں", mailLink: "پیشکش کا لنک",
         backBtn: "واپس ہوم", copyright: "جملہ حقوق محفوظ ہیں", copyrightLine2: "جملہ حقوق محفوظ ہیں",
-        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", stepRes: "3. رہائشیوں کی پارکنگ", resLabel: "رہائشیوں کی پارکنگ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
+        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", shareRowLabel: "مہمانوں کی آمدنی میں آپ کا حصہ", shareRowHint: "باقی پلیٹ فارم کا", totalWithVat: "کل رقم بشمول 15% ویلیو ایڈڈ ٹیکس", shareLabel: "اپنا حصہ مقرر کرنے کے لیے سلائیڈر کو حرکت دیں", stepRes: "3. رہائشیوں کی پارکنگ", resLabel: "رہائشیوں کی پارکنگ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں مہمانوں کی آمدنی کے ساتھ شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
         navHome: "ہوم",
         navOffers: "ہماری پیشکشیں",
         navPricing: "قیمتیں",
@@ -915,7 +964,7 @@
       return {
         spots: clampInt(els.spots.value, 1, 100000, 1),
         gates: clampInt(els.gates.value, 1, 100, 1),
-        share: clampInt(els.share.value, PRICE.shareMin, PRICE.shareMax, PRICE.shareMin),
+        share: Math.round(clampInt(els.share.value, PRICE.shareMin, PRICE.shareMax, 60) / 10) * 10,
         plan: els.planNew.checked ? "new" : "link", cam: els.cam.checked, res: els.resPaid.checked ? "paid" : "free",
         staff: els.staff.checked, valet: els.valet.checked, golf: els.golf.checked
       };
@@ -956,13 +1005,14 @@
       $("camPrice").innerHTML = money(PRICE.camera) + "<small>" + tr("perGate") + "</small>";
       $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
       $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
+      $("shareRange").value = s.share;
+      if (document.activeElement !== els.share) els.share.value = s.share;
 
       // الباقتان: سعر التأسيس لكل منهما، والأشمل أولا
       $("planNewPrice").innerHTML = tr("planSetup") + " " + money(sumRows(setupItems("new", s.gates))) + " <small>" + tr("beforeVat") + "</small>";
       $("planIntPrice").innerHTML = tr("planSetup") + " " + money(sumRows(setupItems("link", s.gates, s.cam))) + " <small>" + tr("beforeVat") + "</small>";
 
       // السلايدر
-      $("shareOwner").textContent = fmt(s.share) + "%";
       $("sharePlat").textContent = fmt(100 - s.share) + "%";
       $("licRate").innerHTML = money(rate);
 
@@ -1016,19 +1066,20 @@
     }
 
     /* السلايدر يقفز على المحطات (كل 50 موقفا / كل بوابة) ويكتب في الخانة؛ الخانة تقبل أي رقم بالضبط */
-    [["spotsRange", "spots"], ["gatesRange", "gates"]].forEach(([r, b]) => {
-      $(r).addEventListener("input", () => { els[b].value = Math.max(1, Number($(r).value)); render(); });
+    [["spotsRange", "spots"], ["gatesRange", "gates"], ["shareRange", "share"]].forEach(([r, b]) => {
+      $(r).addEventListener("input", () => { els[b].value = Math.max(+els[b].min, Number($(r).value)); render(); });
     });
     document.querySelectorAll(".step-btn").forEach(btn => btn.addEventListener("click", () => {
       const box = els[btn.dataset.for];
       const d = Number(btn.dataset.d);
-      const cur = clampInt(box.value, 1, +box.max, 1);
+      const cur = clampInt(box.value, +box.min, +box.max, +box.min);
       const next = d > 0 ? Math.floor(cur / d) * d + d : Math.ceil(cur / -d) * -d + d;
-      box.value = Math.min(+box.max, Math.max(1, next));
+      box.value = Math.min(+box.max, Math.max(+box.min, next));
       render();
     }));
     els.spots.addEventListener("blur", () => { els.spots.value = clampInt(els.spots.value, 1, 100000, 1); render(); });
     els.gates.addEventListener("blur", () => { els.gates.value = clampInt(els.gates.value, 1, 100, 1); render(); });
+    els.share.addEventListener("blur", () => { els.share.value = Math.round(clampInt(els.share.value, 0, 100, 60) / 10) * 10; render(); });
 
     ["input", "change"].forEach(ev => {
       [els.spots, els.gates, els.share, els.planNew, els.planInt, els.cam, els.resFree, els.resPaid, els.staff, els.valet, els.golf]
