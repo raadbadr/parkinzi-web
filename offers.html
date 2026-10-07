@@ -274,19 +274,6 @@
     .line .q { display: block; font-size: 0.8rem; opacity: 0.85; font-variant-numeric: tabular-nums; }
     .line b { white-space: nowrap; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
     .note { font-size: 0.88rem; color: var(--text-secondary); margin: 0.5rem 0 0; }
-    .quote-form { margin-top: 1.25rem; }
-    .cta[hidden], .quote-form[hidden], .qf-msg[hidden] { display: none; }
-    .qf-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-    .qf-grid input { width: 100%; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid var(--glass-border); background: transparent; color: var(--text-primary); font: inherit; font-size: 0.95rem; text-align: start; direction: inherit; }
-    .qf-grid input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-    .qf-grid input[aria-invalid="true"] { border-color: #e5484d; }
-    .qf-grid .back-btn { width: 100%; margin: 0; border: none; cursor: pointer; font: inherit; font-weight: 700; }
-    .qf-grid .back-btn:disabled { opacity: 0.6; cursor: wait; }
-    .qf-hp { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; inset-inline-start: -9999px; }
-    .qf-msg { margin: 0.9rem 0 0; font-weight: 600; color: var(--text-primary); }
-    .qf-msg.ok { color: var(--primary); }
-    .qf-msg a { color: var(--primary); }
-    @media (max-width: 768px) { .qf-grid { grid-template-columns: minmax(0, 1fr); } }
     .cta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 1.5rem; }
     .link-btn { background: none; border: 0; padding: 0.5rem 0; color: var(--primary); font-weight: 600; cursor: pointer; }
     .simple-list { list-style: none; display: grid; gap: 0.4rem; }
@@ -684,20 +671,8 @@
       </div>
 
       <div class="cta">
-        <button type="button" id="ctaOpen" class="back-btn" data-i18n="ctaRequest">اطلب هذا العرض</button>
+        <a id="ctaMail" class="back-btn" href="mailto:admin@parkinzi.com" data-i18n="ctaRequest">اطلب هذا العرض</a>
       </div>
-      <form id="quoteForm" class="quote-form" hidden novalidate>
-        <div class="qf-grid">
-          <input id="qCompany" maxlength="100" autocomplete="organization" data-i18n-ph="qCompany" placeholder="الجهة">
-          <input id="qName" maxlength="80" autocomplete="name" data-i18n-ph="qName" placeholder="الاسم">
-          <input id="qEmail" type="email" maxlength="120" autocomplete="email" required data-i18n-ph="qEmail" placeholder="البريد الإلكتروني">
-          <input id="qPhone" type="tel" maxlength="20" autocomplete="tel" data-i18n-ph="qPhone" placeholder="الجوال">
-          <input id="qSite" maxlength="100" data-i18n-ph="qSite" placeholder="موقع المشروع">
-          <button type="submit" class="back-btn" id="qSend" data-i18n="qSend">أرسل العرض إلى بريدي</button>
-        </div>
-        <input class="qf-hp" id="qHp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="qf-msg" id="qMsg" role="status" hidden><span id="qMsgText"></span> <a id="ctaMail" href="mailto:admin@parkinzi.com" hidden>admin@parkinzi.com</a></p>
-      </form>
     </div>
 
     <div style="text-align: center; padding: 2rem;">
@@ -1256,49 +1231,6 @@
         .forEach(el => el.addEventListener(ev, render));
     });
 
-
-    /* طلب العرض: يحسبه الخادم ويعطيه رقما ويرسل ملف Word إلى بريد العميل مع نسخة لنا */
-    const qf = $("quoteForm");
-    $("ctaOpen").addEventListener("click", () => {
-      qf.hidden = false;
-      $("ctaOpen").parentElement.hidden = true;
-      $("qCompany").focus();
-    });
-    function qMsg(kind, text) {
-      $("qMsg").hidden = false;
-      $("qMsg").className = "qf-msg" + (kind === "ok" ? " ok" : "");
-      $("qMsgText").textContent = text;
-      $("ctaMail").hidden = kind !== "mail";
-    }
-    qf.addEventListener("submit", async e => {
-      e.preventDefault();
-      const email = $("qEmail").value.trim();
-      const company = $("qCompany").value.trim(), name = $("qName").value.trim();
-      const okEmail = /^[^\s@<>]+@[^\s@<>]+\.[a-z]{2,}$/i.test(email);
-      $("qEmail").setAttribute("aria-invalid", okEmail ? "false" : "true");
-      if (!okEmail || (!company && !name)) { qMsg("err", tr("qInvalid")); return; }
-      const s = state();
-      const btn = $("qSend");
-      btn.disabled = true; btn.textContent = tr("qSending");
-      try {
-        const res = await fetch("/api/quote", {
-          method: "POST", cache: "no-store", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            client_company: company, client_name: name, client_email: email,
-            client_phone: $("qPhone").value.trim(), site: $("qSite").value.trim(), website: $("qHp").value,
-            lang: l, plan: s.plan, spots: s.spots, gates: s.gates, hourly_rate: s.hour, owner_share: s.share, camera: s.cam,
-            owners_paid: s.own, tenants_paid: s.ten, visitors_paid: s.vis, staff: s.staff, valet: s.valet, golf: s.golf
-          })
-        });
-        const out = await res.json().catch(() => ({}));
-        if (res.ok && out.quote_number) qMsg("ok", fill(tr("qDone"), out.quote_number));
-        else qMsg("mail", tr(res.status === 429 ? "qLimit" : "qFail"));
-      } catch (_) {
-        qMsg("mail", tr("qFail"));
-      } finally {
-        btn.disabled = false; btn.textContent = tr("qSend");
-      }
-    });
 
     /* ── اللغة والمظهر (مطابق لصفحة سياسة الأسعار) ── */
     function applyI18n(code) {
