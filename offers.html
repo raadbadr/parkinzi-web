@@ -356,6 +356,8 @@
     .sblock .num-row { margin: 0.15rem 0; justify-content: center; }
     .sblock .share-range { display: block; width: 100%; accent-color: var(--primary); height: 1.4rem; margin: 0; }
     .sblock .ticks { font-size: 0.7rem; }
+    .sblock .plat-line { margin-top: 0.6rem; font-size: 0.95rem; color: var(--text-primary); }
+    .sblock .plat-line b { color: var(--primary); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
     .cards { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
     .cards.cols-1 { grid-template-columns: minmax(0, 1fr); }
     .cards.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -541,10 +543,10 @@
             <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
+            <small class="plat-line"><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></small>
         </div>
       </div>
       <div class="share-values">
-        <span><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></span>
         <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا بعد الضريبة</span></span>
       </div>
 
