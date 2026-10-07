@@ -521,7 +521,6 @@
       <div class="share-values">
         <span><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></span>
         <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا قبل الضريبة</span></span>
-        <span class="pay-now"><span data-i18n="youPay">تدفع شهريا</span> <b id="payMonth"></b> <small data-i18n="beforeVat">قبل الضريبة</small></span>
       </div>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
@@ -1047,7 +1046,6 @@
     function render() {
       const s = state();
       const rate = licenseRate(s.share);
-      $("payMonth").innerHTML = money(rate * s.spots + (s.staff ? PRICE.staff : 0));
       $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
       $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
       $("shareRange").value = s.share;
