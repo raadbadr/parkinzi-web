@@ -240,7 +240,9 @@
     .ticks > span { direction: ltr; unicode-bidi: isolate; }
     .ticks { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; direction: ltr; }
     [dir="rtl"] .ticks { flex-direction: row-reverse; }
-    .price-big, .line b, .line .q, .choice-price { unicode-bidi: isolate; }
+    .share-values { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.75rem 0; font-size: 1.05rem; }
+    .share-values b { color: var(--primary); font-variant-numeric: tabular-nums; direction: ltr; }
+    .share-values b, .price-big, .line b, .line .q, .choice-price { unicode-bidi: isolate; }
     .pay-now { margin: 0.4rem 0 0.6rem; font-size: 0.95rem; color: var(--text-primary); }
     .pay-now b { color: var(--primary); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
     .pay-now small { color: var(--text-secondary); }
@@ -321,6 +323,7 @@
     .choice-desc { font-size: 0.82rem; }
     .choice-price { font-size: 0.9rem; }
     .choice-price small { font-size: 0.72rem; }
+    .share-values { font-size: 0.9rem; gap: 0.25rem 1.25rem; margin: 0.5rem 0; }
     .price-block { padding: 0.9rem 0; }
     .price-title { font-size: 0.88rem; margin-bottom: 0; }
     .price-big { font-size: 1.6rem; }
@@ -365,6 +368,7 @@
     .cards .choice-price { grid-column: 2; text-align: start; }
     .cards.cols-1 .choice { grid-template-columns: auto minmax(0, 1fr) auto; }
     .cards.cols-1 .choice-price { grid-column: auto; text-align: end; }
+    .share-values { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1.5rem; margin: 1rem 0 0.25rem; }
     .hint-p { font-size: 0.82rem; margin-top: 0.25rem; }
 
     @media (max-width: 700px) {
@@ -389,6 +393,7 @@
       .seg-row { justify-content: center; }
       .seg { width: 100%; } .seg-opt { flex: 1; } .seg-opt span { text-align: center; }
       .seg-hint { width: 100%; text-align: center; }
+      .share-values { flex-direction: column; align-items: stretch; text-align: center; }
       .cta { flex-direction: column; align-items: stretch; } .cta .back-btn { width: 100%; }
     }
 
@@ -423,6 +428,7 @@
     .steps .choice-desc { font-size: 0.9rem; }
     .cards { gap: 1.5rem; }
     .seg-row { justify-content: center; }
+    .share-values { justify-content: center; text-align: center; margin-top: 1.5rem; font-size: 1rem; }
     .hint-p { text-align: center; }
     .container > .content:not(.steps) { border-radius: 24px; padding: 2rem; }
     @media (max-width: 700px) {
@@ -437,8 +443,9 @@
     .steps h2::after, .content > h2::after { left: auto; right: auto; inset-inline-start: 0; transform: none; }
     .sblock .label, .sblock small, .price-title, .sum-block h3 { text-align: start; }
     .seg-row { justify-content: flex-start; }
+    .share-values { justify-content: flex-start; text-align: start; }
     .hint-p { text-align: start; }
-    @media (max-width: 768px) { .content h2, .steps h2 { text-align: start !important; } .seg-row { justify-content: flex-start; text-align: start; } }
+    @media (max-width: 768px) { .content h2, .steps h2 { text-align: start !important; } .seg-row, .share-values { justify-content: flex-start; text-align: start; } }
   </style>
 </head>
 <body class="has-site-header">
@@ -537,9 +544,12 @@
             <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
             <div class="plat-row">
               <small class="plat-line"><span data-i18n="platformShare">حصة المنصة</span>: <b id="sharePlat">40%</b></small>
-              <small class="plat-line"><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا بعد الضريبة</span></small>
             </div>
         </div>
+      </div>
+
+      <div class="share-values">
+        <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا بعد الضريبة</span></span>
       </div>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
