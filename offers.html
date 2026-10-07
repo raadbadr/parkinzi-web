@@ -256,8 +256,8 @@
     .price-total { font-size: 1.05rem; color: var(--text-primary); font-variant-numeric: tabular-nums; }
     .price-total b { font-variant-numeric: tabular-nums; }
     .price-total small { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); }
-    .lines { margin-top: 0.75rem; display: grid; gap: 0.35rem; }
-    .line { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .lines { margin-top: 0.35rem; margin-bottom: 0.75rem; display: grid; gap: 0.35rem; }
+    .line { display: flex; justify-content: flex-start; align-items: baseline; gap: 0.75rem; font-size: 0.9rem; color: var(--text-secondary); }
     .line .q { display: block; font-size: 0.8rem; opacity: 0.85; font-variant-numeric: tabular-nums; }
     .line b { white-space: nowrap; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
     .note { font-size: 0.88rem; color: var(--text-secondary); margin: 0.5rem 0 0; }
@@ -332,7 +332,7 @@
     .price-big { font-size: 1.6rem; }
     .price-big small { font-size: 0.8rem; }
     .price-total { font-size: 0.9rem; }
-    .lines { margin-top: 0.5rem; gap: 0.25rem; }
+    .lines { margin-top: 0.25rem; margin-bottom: 0.5rem; gap: 0.25rem; }
     .line { font-size: 0.82rem; }
     .note { font-size: 0.78rem; }
     .cta { margin-top: 1rem; gap: 0.75rem; }
@@ -351,7 +351,9 @@
     /* ── السلايدرات بالشكل الأول (رقم كبير فوق سلايدر)، منظمة في صف واحد متطابق ── */
     .cats { margin-bottom: 0.75rem; }
     .cats .sblock { align-items: center; gap: 0.6rem; }
-    .sliders-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
+    .sliders-3, .sliders-4 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
+    .sliders-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (max-width: 1100px) { .sliders-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     .sblock { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem 0.9rem 0.75rem; border: 1px solid var(--glass-border); border-radius: 12px; min-width: 0; }
     .sblock .label { text-align: center; margin: 0; }
     .sblock small { display: block; text-align: center; color: var(--text-secondary); font-size: 0.75rem; margin-top: auto; }
@@ -371,7 +373,7 @@
     .hint-p { font-size: 0.82rem; margin-top: 0.25rem; }
 
     @media (max-width: 700px) {
-      .sliders-3 { grid-template-columns: minmax(0, 1fr); }
+      .sliders-3, .sliders-4 { grid-template-columns: minmax(0, 1fr); }
       .cards.cols-3 { grid-template-columns: minmax(0, 1fr); }
       .share-values .pay-now { margin-inline-start: 0; }
     }
@@ -420,7 +422,7 @@
     .sblock { padding: 1.75rem 1.5rem 1.25rem; gap: 0.6rem; }
     .sblock .label { font-size: 1.15rem; font-weight: 700; }
     .sblock small { font-size: 0.85rem; }
-    .sliders-3 { gap: 1.5rem; }
+    .sliders-3, .sliders-4 { gap: 1.5rem; }
     .steps .choice { padding: 1.5rem; }
     .steps .choice:hover { transform: translateY(-3px); }
     .steps .choice:has(input:checked) { border: 2px solid var(--primary); padding: calc(1.5rem - 1px); }
@@ -499,7 +501,7 @@
 
     <div class="content steps">
       <h2 data-i18n="stepSite">1. موقعك</h2>
-      <div class="sliders sliders-3">
+      <div class="sliders sliders-4">
         <div class="sblock">
           <span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span>
           <div class="num-row">
@@ -521,6 +523,17 @@
             <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
+        </div>
+        <div class="sblock">
+          <span class="label" id="hourLbl" data-i18n="hourRowLabel">سعر الساعة للزوار بالريال</span>
+          <div class="num-row">
+            <button type="button" class="step-btn" data-for="hour" data-d="-5" aria-label="-5">−</button>
+            <input class="num-box" id="hour" type="number" inputmode="numeric" min="1" max="100" step="1" value="10" aria-labelledby="hourLbl" autocomplete="off">
+            <button type="button" class="step-btn" data-for="hour" data-d="5" aria-label="+5">+</button>
+          </div>
+            <input class="share-range" id="hourRange" type="range" min="0" max="50" step="5" value="10" list="hourTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
+            <datalist id="hourTicks"><option value="0"></option><option value="10"></option><option value="20"></option><option value="30"></option><option value="40"></option><option value="50"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span></span>
         </div>
         <div class="sblock">
           <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span>
@@ -614,17 +627,17 @@
 
       <div class="price-block">
         <div class="price-title" data-i18n="oneTime">يدفع مرة واحدة: التأسيس</div>
+        <div class="lines" id="setupLines"></div>
         <div class="price-big"><span id="setupSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
         <div class="price-total"><b id="setupTotal"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
-        <div class="lines" id="setupLines"></div>
         <p class="note" data-i18n="installments">يدفع على ثلاث دفعات: 60% عند التوقيع، و30% عند اكتمال التركيب والربط، و10% عند الاستلام.</p>
       </div>
 
       <div class="price-block">
         <div class="price-title" data-i18n="monthly">يدفع شهريا</div>
+        <div class="lines" id="monthLines"></div>
         <div class="price-big"><span id="monthSub"></span> <small data-i18n="beforeVat">قبل الضريبة</small></div>
         <div class="price-total"><b id="monthTotal"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
-        <div class="lines" id="monthLines"></div>
       </div>
 
       <div class="price-block">
@@ -775,10 +788,10 @@
         barSetup: "التأسيس", barMonth: "شهريا", barCta: "الملخص",
         mailSubject: "طلب عرض PARKINZI", qCompany: "الجهة", qName: "الاسم", qEmail: "البريد الإلكتروني", qPhone: "الجوال", qSite: "موقع المشروع", qSend: "أرسل العرض إلى بريدي", qSending: "جار الإرسال", qDone: "أرسلنا العرض رقم {x} إلى بريدك.", qInvalid: "اكتب بريدا صحيحا واسم الجهة أو اسمك.", qLimit: "وصل هذا البريد إلى حد الطلبات اليوم. راسلنا على", qFail: "تعذر الإرسال الآن. راسلنا على",
         mailIntro: "نرغب في هذا العرض:",
-        mailPlan: "الباقة", mailSpots: "عدد المواقف", mailGates: "عدد البوابات", mailShare: "حصتنا من دخل الزوار",
+        mailPlan: "الباقة", mailSpots: "عدد المواقف", mailGates: "عدد البوابات", mailShare: "حصتنا من دخل الزوار", mailHour: "سعر الساعة للزوار",
         mailAddons: "الإضافات", mailNone: "لا يوجد", mailLink: "رابط العرض",
         backBtn: "العودة للرئيسية", copyright: "جميع الحقوق محفوظة", copyrightLine2: "جميع الحقوق محفوظة",
-        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", camQ: "كاميرا قراءة اللوحات", camYes: "مع كاميرا", camNo: "بدون كاميرا", camHint: "{x} لكل بوابة، وتسري على الباقتين", shareRowLabel: "حصتك من دخل الزوار", shareRowHint: "والباقي للمنصة", afterVat: "بعد الضريبة", shareLabel: "حرك المؤشر لتحديد حصتك", stepRes: "3. فئات العملاء", resLabel: "فئات العملاء", catOwn: "الملاك", catTen: "المستأجرون", catVis: "الزوار", catFree: "مجاني", catPaid: "مدفوع", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إذا لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نوفر كاميرا لكل بوابة.", perGate: "لكل بوابة",
+        aboutLink: "من نحن", termsLink: "شروط الاستخدام", pricingLink: "سياسة الأسعار", offersLink: "عروضنا", camQ: "كاميرا قراءة اللوحات", camYes: "مع كاميرا", camNo: "بدون كاميرا", camHint: "{x} لكل بوابة، وتسري على الباقتين", shareRowLabel: "حصتك من دخل الزوار", hourRowLabel: "سعر الساعة للزوار بالريال", shareRowHint: "والباقي للمنصة", afterVat: "بعد الضريبة", shareLabel: "حرك المؤشر لتحديد حصتك", stepRes: "3. فئات العملاء", resLabel: "فئات العملاء", catOwn: "الملاك", catTen: "المستأجرون", catVis: "الزوار", catFree: "مجاني", catPaid: "مدفوع", resFree: "مجانية للسكان", resFreeDesc: "يدخل السكان بلوحة السيارة بلا رسوم.", resPaid: "مدفوعة عبر التطبيق", resPaidDesc: "يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.", youPay: "تدفع شهريا", addCamName: "مع كاميرا قراءة اللوحات", addCamDesc: "إذا لم تكن في منظومتك كاميرا للتعرف على لوحات المركبات، نوفر كاميرا لكل بوابة.", perGate: "لكل بوابة",
         navHome: "الرئيسية",
         navOffers: "عروضنا",
         navPricing: "الأسعار",
@@ -841,10 +854,10 @@
         barSetup: "Setup", barMonth: "Monthly", barCta: "Summary",
         mailSubject: "PARKINZI offer request", qCompany: "Company", qName: "Name", qEmail: "Email", qPhone: "Mobile", qSite: "Project location", qSend: "Send the offer to my email", qSending: "Sending", qDone: "We sent offer {x} to your email.", qInvalid: "Enter a valid email and your company or name.", qLimit: "This email reached today's request limit. Write to", qFail: "Could not send right now. Write to",
         mailIntro: "We would like this offer:",
-        mailPlan: "Package", mailSpots: "Parking spaces", mailGates: "Gates", mailShare: "Our share of visitor income",
+        mailPlan: "Package", mailSpots: "Parking spaces", mailGates: "Gates", mailShare: "Our share of visitor income", mailHour: "Visitor hourly rate",
         mailAddons: "Add-ons", mailNone: "None", mailLink: "Offer link",
         backBtn: "Back to Home", copyright: "All rights reserved", copyrightLine2: "All rights reserved",
-        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", camQ: "Plate-reading camera", camYes: "With camera", camNo: "Without camera", camHint: "{x} per gate, applies to both packages", shareRowLabel: "Your share of visitor income", shareRowHint: "the rest goes to the platform", afterVat: "incl. VAT", shareLabel: "Move the slider to set your share", stepRes: "3. Customer categories", resLabel: "Customer categories", catOwn: "Owners", catTen: "Tenants", catVis: "Visitors", catFree: "Free", catPaid: "Paid", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income is added to visitor income in the split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
+        aboutLink: "About Us", termsLink: "Terms of Use", pricingLink: "Pricing Policy", offersLink: "Our Offers", camQ: "Plate-reading camera", camYes: "With camera", camNo: "Without camera", camHint: "{x} per gate, applies to both packages", shareRowLabel: "Your share of visitor income", hourRowLabel: "Visitor hourly rate (SAR)", shareRowHint: "the rest goes to the platform", afterVat: "incl. VAT", shareLabel: "Move the slider to set your share", stepRes: "3. Customer categories", resLabel: "Customer categories", catOwn: "Owners", catTen: "Tenants", catVis: "Visitors", catFree: "Free", catPaid: "Paid", resFree: "Free for residents", resFreeDesc: "Residents enter by licence plate at no charge.", resPaid: "Paid in the app", resPaidDesc: "Residents pay in the app, and that income is added to visitor income in the split.", youPay: "You pay monthly", addCamName: "With a plate-reading camera", addCamDesc: "If your system has no licence-plate recognition camera, we supply one per gate.", perGate: "per gate",
         navHome: "Home",
         navOffers: "Our Offers",
         navPricing: "Pricing",
@@ -907,10 +920,10 @@
         barSetup: "Installation", barMonth: "Par mois", barCta: "Resume",
         mailSubject: "Demande d'offre PARKINZI", qCompany: "Societe", qName: "Nom", qEmail: "E-mail", qPhone: "Mobile", qSite: "Emplacement du projet", qSend: "Recevoir l'offre par e-mail", qSending: "Envoi", qDone: "Nous avons envoye l'offre {x} a votre e-mail.", qInvalid: "Saisissez un e-mail valide et votre societe ou votre nom.", qLimit: "Cet e-mail a atteint la limite de demandes du jour. Ecrivez a", qFail: "Envoi impossible pour le moment. Ecrivez a",
         mailIntro: "Nous souhaitons cette offre :",
-        mailPlan: "Formule", mailSpots: "Places", mailGates: "Barrieres", mailShare: "Notre part des revenus visiteurs",
+        mailPlan: "Formule", mailSpots: "Places", mailGates: "Barrieres", mailShare: "Notre part des revenus visiteurs", mailHour: "Tarif horaire visiteurs",
         mailAddons: "Options", mailNone: "Aucune", mailLink: "Lien de l'offre",
         backBtn: "Retour a l'accueil", copyright: "Tous droits reserves", copyrightLine2: "Tous droits reserves",
-        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", camQ: "Camera de lecture de plaques", camYes: "Avec camera", camNo: "Sans camera", camHint: "{x} par barriere, valable pour les deux formules", shareRowLabel: "Votre part des revenus visiteurs", shareRowHint: "le reste revient a la plateforme", afterVat: "TTC", shareLabel: "Deplacez le curseur pour fixer votre part", stepRes: "3. Categories de clients", resLabel: "Categories de clients", catOwn: "Proprietaires", catTen: "Locataires", catVis: "Visiteurs", catFree: "Gratuit", catPaid: "Payant", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute aux revenus visiteurs dans le partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
+        aboutLink: "A propos", termsLink: "Conditions d'utilisation", pricingLink: "Politique tarifaire", offersLink: "Nos offres", camQ: "Camera de lecture de plaques", camYes: "Avec camera", camNo: "Sans camera", camHint: "{x} par barriere, valable pour les deux formules", shareRowLabel: "Votre part des revenus visiteurs", hourRowLabel: "Tarif horaire visiteurs (SAR)", shareRowHint: "le reste revient a la plateforme", afterVat: "TTC", shareLabel: "Deplacez le curseur pour fixer votre part", stepRes: "3. Categories de clients", resLabel: "Categories de clients", catOwn: "Proprietaires", catTen: "Locataires", catVis: "Visiteurs", catFree: "Gratuit", catPaid: "Payant", resFree: "Gratuit pour les residents", resFreeDesc: "Les residents entrent par lecture de plaque, sans frais.", resPaid: "Payant dans l'application", resPaidDesc: "Les residents paient dans l'application, et ce revenu s'ajoute aux revenus visiteurs dans le partage.", youPay: "Vous payez par mois", addCamName: "Avec camera de lecture de plaques", addCamDesc: "Si votre systeme n'a pas de camera de lecture de plaques, nous en fournissons une par barriere.", perGate: "par barriere",
         navHome: "Accueil",
         navOffers: "Nos offres",
         navPricing: "Tarifs",
@@ -973,10 +986,10 @@
         barSetup: "سیٹ اپ", barMonth: "ماہانہ", barCta: "خلاصہ",
         mailSubject: "PARKINZI پیشکش کی درخواست", qCompany: "ادارہ", qName: "نام", qEmail: "ای میل", qPhone: "موبائل", qSite: "پروجیکٹ کا مقام", qSend: "پیشکش میری ای میل پر بھیجیں", qSending: "بھیجا جا رہا ہے", qDone: "ہم نے پیشکش {x} آپ کی ای میل پر بھیج دی ہے۔", qInvalid: "درست ای میل اور ادارے یا اپنا نام لکھیں۔", qLimit: "اس ای میل کی آج کی حد پوری ہو گئی ہے۔ ہمیں لکھیں", qFail: "ابھی بھیجنا ممکن نہیں۔ ہمیں لکھیں",
         mailIntro: "ہم یہ پیشکش چاہتے ہیں:",
-        mailPlan: "پیکج", mailSpots: "پارکنگ کی جگہیں", mailGates: "گیٹ", mailShare: "مہمانوں کی آمدنی میں ہمارا حصہ",
+        mailPlan: "پیکج", mailSpots: "پارکنگ کی جگہیں", mailGates: "گیٹ", mailShare: "مہمانوں کی آمدنی میں ہمارا حصہ", mailHour: "مہمانوں کا فی گھنٹہ ریٹ",
         mailAddons: "اضافی خدمات", mailNone: "کوئی نہیں", mailLink: "پیشکش کا لنک",
         backBtn: "واپس ہوم", copyright: "جملہ حقوق محفوظ ہیں", copyrightLine2: "جملہ حقوق محفوظ ہیں",
-        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", camQ: "نمبر پلیٹ پڑھنے والا کیمرہ", camYes: "کیمرے کے ساتھ", camNo: "کیمرے کے بغیر", camHint: "فی گیٹ {x}، دونوں پیکجز پر لاگو", shareRowLabel: "مہمانوں کی آمدنی میں آپ کا حصہ", shareRowHint: "باقی پلیٹ فارم کا", afterVat: "ٹیکس کے بعد", shareLabel: "اپنا حصہ مقرر کرنے کے لیے سلائیڈر کو حرکت دیں", stepRes: "3. گاہکوں کی اقسام", resLabel: "گاہکوں کی اقسام", catOwn: "مالکان", catTen: "کرایہ دار", catVis: "مہمان", catFree: "مفت", catPaid: "ادا شدہ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں مہمانوں کی آمدنی کے ساتھ شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
+        aboutLink: "ہمارے بارے میں", termsLink: "استعمال کی شرائط", pricingLink: "قیمتوں کی پالیسی", offersLink: "ہماری پیشکشیں", camQ: "نمبر پلیٹ پڑھنے والا کیمرہ", camYes: "کیمرے کے ساتھ", camNo: "کیمرے کے بغیر", camHint: "فی گیٹ {x}، دونوں پیکجز پر لاگو", shareRowLabel: "مہمانوں کی آمدنی میں آپ کا حصہ", hourRowLabel: "مہمانوں کا فی گھنٹہ ریٹ (ریال)", shareRowHint: "باقی پلیٹ فارم کا", afterVat: "ٹیکس کے بعد", shareLabel: "اپنا حصہ مقرر کرنے کے لیے سلائیڈر کو حرکت دیں", stepRes: "3. گاہکوں کی اقسام", resLabel: "گاہکوں کی اقسام", catOwn: "مالکان", catTen: "کرایہ دار", catVis: "مہمان", catFree: "مفت", catPaid: "ادا شدہ", resFree: "رہائشیوں کے لیے مفت", resFreeDesc: "رہائشی نمبر پلیٹ کے ذریعے بغیر فیس داخل ہوتے ہیں۔", resPaid: "ایپ میں ادائیگی", resPaidDesc: "رہائشی ایپ میں ادائیگی کرتے ہیں، اور یہ آمدنی تقسیم میں مہمانوں کی آمدنی کے ساتھ شامل ہوتی ہے۔", youPay: "آپ ماہانہ ادا کریں گے", addCamName: "نمبر پلیٹ پڑھنے والے کیمرے کے ساتھ", addCamDesc: "اگر آپ کے نظام میں نمبر پلیٹ شناختی کیمرہ نہیں ہے تو ہم ہر گیٹ کے لیے ایک کیمرہ فراہم کرتے ہیں۔", perGate: "فی گیٹ",
         navHome: "ہوم",
         navOffers: "ہماری پیشکشیں",
         navPricing: "قیمتیں",
@@ -1016,7 +1029,7 @@
     /* ── الحالة، وتقرأ من الرابط لكي يرسل العرض معبأ ── */
     const $ = id => document.getElementById(id);
     const els = {
-      spots: $("spots"), gates: $("gates"), share: $("share"),
+      spots: $("spots"), gates: $("gates"), hour: $("hour"), share: $("share"),
       planNew: $("planNew"), planInt: $("planInt"), cam: $("camYes"), camNo: $("camNo"), ownP: $("ownP"), ownF: $("ownF"), tenP: $("tenP"), tenF: $("tenF"), visP: $("visP"), visF: $("visF"),
       staff: $("addStaff"), valet: $("addValet"), golf: $("addGolf")
     };
@@ -1029,6 +1042,7 @@
       const q = new URLSearchParams(location.search);
       if (q.has("spots")) els.spots.value = clampInt(q.get("spots"), 1, 100000, 100);
       if (q.has("gates")) els.gates.value = clampInt(q.get("gates"), 1, 100, 2);
+      if (q.has("hour")) els.hour.value = clampInt(q.get("hour"), 1, 100, 10);
       if (q.has("share")) {
         const s = clampInt(q.get("share"), PRICE.shareMin, PRICE.shareMax, PRICE.shareMin);
         els.share.value = Math.round(s / 10) * 10;
@@ -1047,6 +1061,7 @@
       return {
         spots: clampInt(els.spots.value, 1, 100000, 1),
         gates: clampInt(els.gates.value, 1, 100, 1),
+        hour: clampInt(els.hour.value, 1, 100, 10),
         share: Math.round(clampInt(els.share.value, PRICE.shareMin, PRICE.shareMax, 60) / 10) * 10,
         plan: els.planNew.checked ? "new" : "link", cam: els.cam.checked,
         own: els.ownP.checked, ten: els.tenP.checked, vis: els.visP.checked,
@@ -1055,7 +1070,7 @@
     }
     function writeUrl(s) {
       const q = new URLSearchParams();
-      q.set("spots", s.spots); q.set("gates", s.gates); q.set("plan", s.plan); q.set("share", s.share);
+      q.set("spots", s.spots); q.set("gates", s.gates); q.set("hour", s.hour); q.set("plan", s.plan); q.set("share", s.share);
       if (s.cam) q.set("cam", "1");
       if (s.own) q.set("own", "p");
       if (s.ten) q.set("ten", "p");
@@ -1090,6 +1105,7 @@
       const rate = licenseRate(s.share, s.own || s.ten || s.vis);
       $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
       $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
+      $("hourRange").value = Math.min(s.hour, +$("hourRange").max);
       $("shareRange").value = s.share;
       if (document.activeElement !== els.share) els.share.value = s.share;
 
@@ -1141,6 +1157,7 @@
         tr("mailSpots") + ": " + s.spots,
         tr("mailGates") + ": " + s.gates,
         tr("mailShare") + ": " + s.share + "%",
+        tr("mailHour") + ": " + s.hour + " SAR",
         tr("camQ") + ": " + tr(s.cam ? "camYes" : "camNo"),
         tr("resLabel") + ": " + [["catOwn", s.own], ["catTen", s.ten], ["catVis", s.vis]].map(([k, p]) => tr(k) + " " + tr(p ? "catPaid" : "catFree")).join(l === "ar" ? "، " : ", "),
         tr("mailAddons") + ": " + (addons.length ? addons.join("، ") : tr("mailNone")),
@@ -1155,7 +1172,7 @@
     }
 
     /* السلايدر يقفز على المحطات (كل 50 موقفا / كل بوابة) ويكتب في الخانة؛ الخانة تقبل أي رقم بالضبط */
-    [["spotsRange", "spots"], ["gatesRange", "gates"], ["shareRange", "share"]].forEach(([r, b]) => {
+    [["spotsRange", "spots"], ["gatesRange", "gates"], ["hourRange", "hour"], ["shareRange", "share"]].forEach(([r, b]) => {
       $(r).addEventListener("input", () => { els[b].value = Math.max(+els[b].min, Number($(r).value)); render(); });
     });
     document.querySelectorAll(".step-btn").forEach(btn => btn.addEventListener("click", () => {
@@ -1168,10 +1185,11 @@
     }));
     els.spots.addEventListener("blur", () => { els.spots.value = clampInt(els.spots.value, 1, 100000, 1); render(); });
     els.gates.addEventListener("blur", () => { els.gates.value = clampInt(els.gates.value, 1, 100, 1); render(); });
+    els.hour.addEventListener("blur", () => { els.hour.value = clampInt(els.hour.value, 1, 100, 10); render(); });
     els.share.addEventListener("blur", () => { els.share.value = Math.round(clampInt(els.share.value, 0, 100, 60) / 10) * 10; render(); });
 
     ["input", "change"].forEach(ev => {
-      [els.spots, els.gates, els.share, els.planNew, els.planInt, els.cam, els.camNo, els.ownF, els.ownP, els.tenF, els.tenP, els.visF, els.visP, els.staff, els.valet, els.golf]
+      [els.spots, els.gates, els.hour, els.share, els.planNew, els.planInt, els.cam, els.camNo, els.ownF, els.ownP, els.tenF, els.tenP, els.visF, els.visP, els.staff, els.valet, els.golf]
         .forEach(el => el.addEventListener(ev, render));
     });
 
@@ -1205,7 +1223,7 @@
           body: JSON.stringify({
             client_company: company, client_name: name, client_email: email,
             client_phone: $("qPhone").value.trim(), site: $("qSite").value.trim(), website: $("qHp").value,
-            lang: l, plan: s.plan, spots: s.spots, gates: s.gates, owner_share: s.share, camera: s.cam,
+            lang: l, plan: s.plan, spots: s.spots, gates: s.gates, hourly_rate: s.hour, owner_share: s.share, camera: s.cam,
             owners_paid: s.own, tenants_paid: s.ten, visitors_paid: s.vis, staff: s.staff, valet: s.valet, golf: s.golf
           })
         });
