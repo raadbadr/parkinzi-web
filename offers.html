@@ -605,7 +605,6 @@
 
       <div class="cta">
         <a id="ctaMail" class="back-btn" href="mailto:admin@parkinzi.com" data-i18n="ctaRequest">اطلب هذا العرض</a>
-        <button id="ctaCopy" class="link-btn" type="button" data-i18n="ctaCopy">انسخ رابط العرض</button>
       </div>
     </div>
 
@@ -731,7 +730,7 @@
         itLicense: "ترخيص المواقف",
         itStaff: "موظف مخصص في الموقع",
         unitGate: "بوابة", unitSign: "لوحة", unitSpot: "موقف",
-        ctaRequest: "اطلب هذا العرض", ctaCopy: "انسخ رابط العرض", copied: "تم نسخ الرابط",
+        ctaRequest: "اطلب هذا العرض",
         term1: "الأسعار بالريال السعودي، وتضاف إليها ضريبة القيمة المضافة 15%.",
         term2: "التنفيذ خلال نحو أسبوعين من الدفعة الأولى، ويرتبط بجاهزية الموقع وتوافر الأجهزة.",
         term3: "أسعار العرض ثابتة لمدة أسبوعين من تاريخ طلبه.",
@@ -797,7 +796,7 @@
         itLicense: "Parking space licenses",
         itStaff: "Dedicated on-site staff",
         unitGate: "gate", unitSign: "sign", unitSpot: "space",
-        ctaRequest: "Request this offer", ctaCopy: "Copy offer link", copied: "Link copied",
+        ctaRequest: "Request this offer",
         term1: "Prices in Saudi Riyals; 15% VAT is added.",
         term2: "Delivery in about two weeks from the first payment, subject to site readiness and device availability.",
         term3: "Offer prices are fixed for two weeks from the request date.",
@@ -863,7 +862,7 @@
         itLicense: "Licences des places",
         itStaff: "Employe dedie sur site",
         unitGate: "barriere", unitSign: "panneau", unitSpot: "place",
-        ctaRequest: "Demander cette offre", ctaCopy: "Copier le lien de l'offre", copied: "Lien copie",
+        ctaRequest: "Demander cette offre",
         term1: "Prix en riyals saoudiens ; la TVA de 15 % s'ajoute.",
         term2: "Realisation en deux semaines environ apres le premier versement, selon la preparation du site et la disponibilite des appareils.",
         term3: "Les prix de l'offre sont garantis deux semaines a compter de la demande.",
@@ -929,7 +928,7 @@
         itLicense: "پارکنگ جگہوں کے لائسنس",
         itStaff: "سائٹ پر مخصوص ملازم",
         unitGate: "گیٹ", unitSign: "بورڈ", unitSpot: "جگہ",
-        ctaRequest: "یہ پیشکش طلب کریں", ctaCopy: "پیشکش کا لنک کاپی کریں", copied: "لنک کاپی ہو گیا",
+        ctaRequest: "یہ پیشکش طلب کریں",
         term1: "قیمتیں سعودی ریال میں ہیں، اور 15% ویلیو ایڈڈ ٹیکس شامل کیا جاتا ہے۔",
         term2: "پہلی ادائیگی سے تقریبا دو ہفتوں میں تکمیل، سائٹ کی تیاری اور آلات کی دستیابی سے مشروط۔",
         term3: "پیشکش کی قیمتیں درخواست کی تاریخ سے دو ہفتوں تک مقرر رہتی ہیں۔",
@@ -1130,15 +1129,6 @@
         .forEach(el => el.addEventListener(ev, render));
     });
 
-    $("ctaCopy").addEventListener("click", () => {
-      const btn = $("ctaCopy");
-      const done = () => { btn.textContent = tr("copied"); setTimeout(() => { btn.textContent = tr("ctaCopy"); }, 2000); };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(location.href).then(done).catch(() => window.prompt("", location.href));
-      } else {
-        window.prompt("", location.href);
-      }
-    });
 
     /* ── اللغة والمظهر (مطابق لصفحة سياسة الأسعار) ── */
     function applyI18n(code) {
