@@ -969,7 +969,9 @@
         maximumFractionDigits: 2
       }).format(n);
     }
-    const money = n => '<bdi class="v">' + fmt(n) + " " + SAR + "</bdi>";
+    /* الرمز بعد القيمة في اتجاه الصفحة: يسار الرقم في العربية والأردو، ويمينه في الإنجليزية والفرنسية.
+       الاتجاه صريح (لا dir=auto) لأن الأرقام وحدها تجعل المتصفح يعامل القيمة كنص من اليسار لليمين */
+    const money = n => '<span class="v" dir="' + ((l === "ar" || l === "ur") ? "rtl" : "ltr") + '">' + fmt(n) + " " + SAR + "</span>";
     const fill = (s, x) => s.replace("{x}", x);
     const tr = k => (t[l] && t[l][k]) || t.ar[k] || k;
 
