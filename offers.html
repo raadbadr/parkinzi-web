@@ -715,7 +715,10 @@
       vat: 0.15,
       licenseBase: 15,       // ترخيص الموقف شهريا عند حصة مالك 60%
       licenseStep: 5,        // كل 10% زيادة في حصة المالك ترفع الترخيص 5 ريالات
-      licenseAllFree: 25,    // إذا كانت كل الفئات مجانية فلا دخل تشغيل للمنصة: الترخيص لا ينزل عن 25
+      // فئات العملاء (جدول جلسة عروض داماك): الأساس 15 = ملاك مجاني، مستأجرون مجاني، زوار مدفوع
+      catOwnPaid: 3,         // الملاك مدفوع
+      catTenPaid: 6,         // المستأجرون مدفوع
+      catVisFree: 10,        // الزوار مجانا، أو مدفوعون بسعر 0 للساعة
       shareMin: 0, shareMax: 100, shareFloorAt: 60,   // الترخيص لا ينزل عن 15 تحت حصة 60%: كل عرض ربح للشركة
       staff: 5976,           // موظف مخصص شهريا
       valet: 50,             // للمرة، يدفعها المستخدم (تغطي راتب السائق من 3 مرات يوميا)
@@ -1084,7 +1087,12 @@
     }
 
     /* ── الحساب ── */
-    const licenseRate = (share, anyPaid) => Math.max(anyPaid ? 0 : PRICE.licenseAllFree, PRICE.licenseBase + PRICE.licenseStep * (Math.max(0, share - PRICE.shareFloorAt) / 10));
+    /* ترخيص الموقف: لكل تركيبة من الفئات الثماني سعر مختلف، ولا ينزل أي منها عن 15 */
+    const licenseRate = (share, s) => PRICE.licenseBase
+      + (s.own ? PRICE.catOwnPaid : 0)
+      + (s.ten ? PRICE.catTenPaid : 0)
+      + (s.vis && s.hour > 0 ? 0 : PRICE.catVisFree)
+      + PRICE.licenseStep * (Math.max(0, share - PRICE.shareFloorAt) / 10);
     function setupItems(plan, gates, cam) {
       /* الكاميرا خيار واحد يسري على الباقتين: تضاف لباقة الربط، وتحذف من المنظومة الجديدة عند عدم طلبها */
       const rows = PRICE.plans[plan].filter(it => cam || it.k !== "itCamera")
@@ -1106,8 +1114,7 @@
 
     function render() {
       const s = state();
-      // الزوار المدفوعون بسعر 0 للساعة لا يأتون بدخل: يعاملون كالمجانيين في حد الـ25
-      const rate = licenseRate(s.share, s.own || s.ten || (s.vis && s.hour > 0));
+      const rate = licenseRate(s.share, s);
       $("ownSvc").textContent = tr(s.own ? "svcOwnP" : "svcOwnF");
       $("tenSvc").textContent = tr(s.ten ? "svcTenP" : "svcTenF");
       $("visSvc").textContent = tr(s.vis ? "svcVisP" : "svcVisF");
