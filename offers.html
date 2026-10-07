@@ -494,7 +494,6 @@
             <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
-          <small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small>
         </div>
         <div class="sblock">
           <span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span>
@@ -506,7 +505,6 @@
             <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
-          <small data-i18n="gatesHint">مداخل ومخارج المواقف</small>
         </div>
         <div class="sblock">
           <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span>
@@ -518,7 +516,6 @@
             <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
-          <small data-i18n="shareRowHint">والباقي للمنصة</small>
         </div>
       </div>
       <div class="share-values">
@@ -526,7 +523,6 @@
         <span><span data-i18n="licenseLabel">ترخيص الموقف</span>: <b id="licRate"></b> <span data-i18n="perSpotMonth">شهريا قبل الضريبة</span></span>
         <span class="pay-now"><span data-i18n="youPay">تدفع شهريا</span> <b id="payMonth"></b> <small data-i18n="beforeVat">قبل الضريبة</small></span>
       </div>
-      <p class="hint-p" data-i18n="shareHint">يحجز الزوار مواقفهم ويدفعون عبر التطبيق، ويوزع هذا الدخل بينك وبين المنصة بالنسبة التي تحددها. وكلما زادت حصتك زاد ترخيص الموقف، ولا يقل عن 15 ريالا.</p>
 
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
       <div class="cards cols-2" role="radiogroup" aria-label="الباقة">
@@ -534,7 +530,7 @@
           <input type="radio" name="plan" value="new" id="planNew">
           <span class="choice-body">
             <span class="choice-name" data-i18n="planNewName">منظومة جديدة كاملة</span>
-            <span class="choice-desc" data-i18n="planNewDesc">نوفر بوابات جديدة ونركبها ونربطها بالمنصة، مع صيانة وقائية لمدة سنتين.</span>
+            
           </span>
           <span class="choice-price" id="planNewPrice"></span>
         </label>
@@ -542,7 +538,7 @@
           <input type="radio" name="plan" value="link" id="planInt" checked>
           <span class="choice-body">
             <span class="choice-name" data-i18n="planIntName">الربط على المنظومة القائمة</span>
-            <span class="choice-desc" data-i18n="planIntDesc">نربط المنصة ببواباتك وكاميراتك وغرفة التحكم الموجودة، دون تغيير أي جهاز.</span>
+            
           </span>
           <span class="choice-price" id="planIntPrice"></span>
         </label>
@@ -553,17 +549,16 @@
           <label class="seg-opt"><input type="radio" name="cam" value="1" id="camYes"><span data-i18n="camYes">مع كاميرا</span></label>
           <label class="seg-opt"><input type="radio" name="cam" value="0" id="camNo" checked><span data-i18n="camNo">بدون كاميرا</span></label>
         </div>
-        <small class="seg-hint" id="camHint"></small>
       </div>
       <h2 data-i18n="stepRes">3. مواقف السكان</h2>
       <div class="cards cols-2" role="radiogroup">
         <label class="choice" for="resFree">
           <input type="radio" name="res" value="free" id="resFree" checked>
-          <span class="choice-body"><span class="choice-name" data-i18n="resFree">مجانية للسكان</span><span class="choice-desc" data-i18n="resFreeDesc">يدخل السكان بلوحة السيارة بلا رسوم.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="resFree">مجانية للسكان</span></span>
         </label>
         <label class="choice" for="resPaid">
           <input type="radio" name="res" value="paid" id="resPaid">
-          <span class="choice-body"><span class="choice-name" data-i18n="resPaid">مدفوعة عبر التطبيق</span><span class="choice-desc" data-i18n="resPaidDesc">يدفع السكان عبر التطبيق، ويضاف هذا الدخل إلى دخل الزوار في القسمة.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="resPaid">مدفوعة عبر التطبيق</span></span>
         </label>
       </div>
 
@@ -571,17 +566,17 @@
       <div class="cards cols-3">
         <label class="choice" for="addStaff">
           <input type="checkbox" id="addStaff">
-          <span class="choice-body"><span class="choice-name" data-i18n="addStaffName">موظف مخصص في الموقع</span><span class="choice-desc" data-i18n="addStaffDesc">موظف من فريقنا لخدمة السكان والزوار ومتابعة التشغيل يوميا.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="addStaffName">موظف مخصص في الموقع</span></span>
           <span class="choice-price" id="staffPrice"></span>
         </label>
         <label class="choice" for="addValet">
           <input type="checkbox" id="addValet">
-          <span class="choice-body"><span class="choice-name" data-i18n="addValetName">خدمة صف السيارات (فاليه)</span><span class="choice-desc" data-i18n="addValetDesc">يستلم موظفنا السيارة من السائق عند المدخل، ويصفها، ثم يعيدها إليه عند الطلب.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="addValetName">خدمة صف السيارات (فاليه)</span></span>
           <span class="choice-price" id="valetPrice"></span>
         </label>
         <label class="choice" for="addGolf">
           <input type="checkbox" id="addGolf">
-          <span class="choice-body"><span class="choice-name" data-i18n="addGolfName">عربة جولف</span><span class="choice-desc" data-i18n="addGolfDesc">تنقل السكان والزوار بين المواقف ومدخل المبنى.</span></span>
+          <span class="choice-body"><span class="choice-name" data-i18n="addGolfName">عربة جولف</span></span>
           <span class="choice-price" data-i18n="onRequest">حسب الطلب</span>
         </label>
       </div>
@@ -1054,7 +1049,6 @@
       const s = state();
       const rate = licenseRate(s.share);
       $("payMonth").innerHTML = money(rate * s.spots + (s.staff ? PRICE.staff : 0));
-      $("camHint").innerHTML = fill(tr("camHint"), money(PRICE.camera));
       $("spotsRange").value = Math.min(s.spots, +$("spotsRange").max);
       $("gatesRange").value = Math.min(s.gates, +$("gatesRange").max);
       $("shareRange").value = s.share;
