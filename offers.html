@@ -246,11 +246,11 @@
     .pay-now { margin: 0.4rem 0 0.6rem; font-size: 0.95rem; color: var(--text-primary); }
     .pay-now b { color: var(--primary); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
     .pay-now small { color: var(--text-secondary); }
-    /* «يدفع شهريا» يلتصق أعلى الشاشة كتايم لاين الرئيسية: من تحت ترخيص الموقف حتى يظهر مكانه في الملخص */
+    /* شريط المجاميع (التأسيس والشهري) يلتصق أسفل الشاشة كتايم لاين الرئيسية: من بداية الخطوة 2 حتى يستقر فوق الملخص */
     .pay-float {
-      position: sticky; top: 58px; z-index: 20;
-      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.5rem;
-      margin: 0.25rem 0 1rem; padding: 0.6rem 1.1rem;
+      position: sticky; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 20;
+      display: flex; flex-direction: column; gap: 0.15rem;
+      margin: 1rem 0 0.25rem; padding: 0.6rem 1.1rem;
       background: var(--glass-strong); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
       border: 1px solid var(--glass-border); border-radius: 16px;
       box-shadow: 0 8px 24px var(--shadow-dark), inset 0 0 0 1px rgba(255,255,255,0.1);
@@ -259,6 +259,8 @@
     [data-theme="dark"] .pay-float { box-shadow: 0 8px 24px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.05); }
     .pay-float b { color: var(--primary); font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; unicode-bidi: isolate; }
     .pay-float small { font-size: 0.9rem; color: var(--text-secondary); }
+    .pay-float .pay-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.5rem; }
+    .pay-float .pay-row.is-docked { display: none; }
     .pay-float.is-docked { visibility: hidden; }
 
     /* ── السعر ── */
@@ -420,6 +422,7 @@
     /* ── بعرض الشاشة بأسلوب بطاقات الرئيسية (.feature-card): كل عنصر بطاقة زجاجية مستقلة على الخلفية ── */
     .container { max-width: 1200px; }
     .content.steps { background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 0; }
+    .container > .content:not(.steps) > h2:first-child { margin-top: 0 !important; }
     .steps h2, .content > h2 {
       text-align: center; font-size: 1.5rem; font-weight: 800; color: var(--text-primary); -webkit-text-fill-color: var(--text-primary);
       margin: 2.5rem 0 1.75rem; position: relative;
@@ -573,7 +576,6 @@
       </div>
     </div>
 
-    <div class="pay-float" id="payFloat"><span><span data-i18n="monthly">يدفع شهريا</span>:</span> <b id="monthFloat"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
 
     <div class="content steps">
       <h2 data-i18n="stepPlan">2. اختر الباقة</h2>
@@ -646,6 +648,11 @@
           <span class="choice-body"><span class="choice-name" data-i18n="addGolfName">عربة جولف</span></span>
           <span class="choice-price" data-i18n="onRequest">حسب الطلب</span>
         </label>
+      </div>
+
+      <div class="pay-float" id="payFloat">
+        <div class="pay-row" id="setupFloatRow"><span><span data-i18n="planSetup">التأسيس</span>:</span> <b id="setupFloat"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
+        <div class="pay-row" id="monthFloatRow"><span><span data-i18n="monthly">يدفع شهريا</span>:</span> <b id="monthFloat"></b> <small data-i18n="afterVat">بعد الضريبة</small></div>
       </div>
     </div>
 
@@ -738,10 +745,10 @@
       vat: 0.15,
       licenseBase: 15,       // ترخيص الموقف شهريا عند حصة مالك 60%
       licenseStep: 5,        // كل 10% زيادة في حصة المالك ترفع الترخيص 5 ريالات
-      // فئات العملاء (جدول جلسة عروض داماك): الأساس 15 = ملاك مجاني، مستأجرون مجاني، زوار مدفوع
-      catOwnPaid: 3,         // الملاك مدفوع
-      catTenPaid: 6,         // المستأجرون مدفوع
-      catVisFree: 10,        // الزوار مجانا، أو مدفوعون بسعر 0 للساعة
+      // فئات العملاء (جدول جلسة عروض داماك): الأساس 15 = الكل مدفوع، وكل فئة مجانية ترفع الترخيص
+      catOwnFree: 1,         // الملاك مجانا
+      catTenFree: 3,         // المستأجرون مجانا
+      catVisFree: 6,         // الزوار مجانا، أو مدفوعون بسعر 0 للساعة
       shareMin: 0, shareMax: 100, shareFloorAt: 60,   // الترخيص لا ينزل عن 15 تحت حصة 60%: كل عرض ربح للشركة
       staff: 5976,           // موظف مخصص شهريا
       valet: 50,             // للمرة، يدفعها المستخدم (تغطي راتب السائق من 3 مرات يوميا)
@@ -1111,11 +1118,17 @@
 
     /* ── الحساب ── */
     /* ترخيص الموقف: لكل تركيبة من الفئات الثماني سعر مختلف، ولا ينزل أي منها عن 15 */
-    const licenseRate = (share, s) => PRICE.licenseBase
-      + (s.own ? PRICE.catOwnPaid : 0)
-      + (s.ten ? PRICE.catTenPaid : 0)
-      + (s.vis && s.hour > 0 ? 0 : PRICE.catVisFree)
-      + PRICE.licenseStep * (Math.max(0, share - PRICE.shareFloorAt) / 10);
+    /* الفئة المجانية تضيف قيمتها كاملة، والمدفوعة تضيفها بقدر ما تأخذ من حصة المنصة فوق 60%:
+       عند حصة 100% لا يبقى للمنصة شيء من دخلها، فتعامل كالمجانية تماما */
+    const licenseRate = (share, s) => {
+      const g = Math.max(0, share - PRICE.shareFloorAt) / (100 - PRICE.shareFloorAt);
+      const add = (paid, v) => paid ? v * g : v;
+      return PRICE.licenseBase
+        + add(s.own, PRICE.catOwnFree)
+        + add(s.ten, PRICE.catTenFree)
+        + add(s.vis && s.hour > 0, PRICE.catVisFree)
+        + PRICE.licenseStep * (Math.max(0, share - PRICE.shareFloorAt) / 10);
+    };
     function setupItems(plan, gates, cam) {
       /* الكاميرا خيار واحد يسري على الباقتين: تضاف لباقة الربط، وتحذف من المنظومة الجديدة عند عدم طلبها */
       const rows = PRICE.plans[plan].filter(it => cam || it.k !== "itCamera")
@@ -1167,6 +1180,7 @@
       const setupVat = withVat(setupSub);
       $("setupLines").innerHTML = setup.map(lineHtml).join("");
       $("setupTotal").innerHTML = money(setupSub + setupVat);
+      $("setupFloat").innerHTML = money(setupSub + setupVat);
 
       // الشهري
       const month = [{ k: "itLicense", qty: s.spots, unit: rate, u: "unitSpot" }];
@@ -1209,10 +1223,13 @@
       dockPayFloat();
     }
 
-    /* الشريط اللاصق يختفي حين تظهر كتلة «يدفع شهريا» الحقيقية في الملخص */
+    /* كل سطر في الشريط اللاصق يختفي حين تصل كتلته الحقيقية في الملخص إلى الشاشة */
     function dockPayFloat() {
-      const r = $("monthTotal").closest(".price-block").getBoundingClientRect();
-      $("payFloat").classList.toggle("is-docked", r.top < window.innerHeight && r.bottom > 0);
+      const reached = id => $(id).closest(".price-block").getBoundingClientRect().top < window.innerHeight;
+      const s = reached("setupTotal"), m = reached("monthTotal");
+      $("setupFloatRow").classList.toggle("is-docked", s);
+      $("monthFloatRow").classList.toggle("is-docked", m);
+      $("payFloat").classList.toggle("is-docked", s && m);
     }
     window.addEventListener("scroll", dockPayFloat, { passive: true });
     window.addEventListener("resize", dockPayFloat);
