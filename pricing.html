@@ -45,7 +45,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="header.css?v=2">
   <link rel="stylesheet" href="footer.css?v=7">
   <style>
     /* Saudi Riyal symbol (SAMA official 2024 mark, rendered from local asset) */
@@ -203,6 +203,23 @@
 </head>
 <body class="has-site-header">
   <header class="site-header">
+    <nav class="site-nav" aria-label="PARKINZI">
+      <a href="index.html" data-i18n="navHome">الرئيسية</a>
+      <a href="offers.html" data-i18n="navOffers">عروضنا</a>
+      <a href="pricing.html" class="is-active" aria-current="page" data-i18n="navPricing">الأسعار</a>
+      <a href="/blog/" data-i18n="navBlog">المدونة</a>
+      <a href="about.html" data-i18n="navAbout">من نحن</a>
+    </nav>
+    <details class="menu-btn site-nav-menu">
+      <summary class="icon-circle" aria-label="القائمة" data-i18n-aria-label="navMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg></summary>
+      <div class="menu-dropdown">
+        <a href="index.html" class="menu-dropdown-item" data-i18n="navHome">الرئيسية</a>
+        <a href="offers.html" class="menu-dropdown-item" data-i18n="navOffers">عروضنا</a>
+        <a href="pricing.html" class="menu-dropdown-item is-active" aria-current="page" data-i18n="navPricing">الأسعار</a>
+        <a href="/blog/" class="menu-dropdown-item" data-i18n="navBlog">المدونة</a>
+        <a href="about.html" class="menu-dropdown-item" data-i18n="navAbout">من نحن</a>
+      </div>
+    </details>
     <div class="menu-btn" id="langMenuBtn">
       <div class="icon-circle"><span class="icon">🌐</span></div>
       <div class="menu-text">
@@ -313,9 +330,9 @@
         commissionLabel: "2. عمولة المنصة",
         commissionText: "تبلغ عمولة المنصة 30% من قيمة الحجز الإجمالية.",
         commissionNote: "يحصل مقدم الخدمة على 70% من قيمة كل حجز بعد خصم العمولة. الأسعار المعروضة في التطبيق تمثل قيمة الحجز الكاملة قبل أي خصومات.",
-        commissionExample: "مثال: إذا حدد مقدم الخدمة سعر الساعة بمبلغ 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>، يدفع السائق 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>، ويحصل مقدم الخدمة على 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> بعد خصم عمولة المنصة (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>).",
+        commissionExample: "مثال: إذا حدد مقدم الخدمة سعر الساعة بمبلغ 20 <span class='sar-symbol' aria-label='ريال سعودي'></span>، يدفع السائق 20 <span class='sar-symbol' aria-label='ريال سعودي'></span>، ويحصل مقدم الخدمة على 14 <span class='sar-symbol' aria-label='ريال سعودي'></span> بعد خصم عمولة المنصة (6 <span class='sar-symbol' aria-label='ريال سعودي'></span>).",
         pricingLabel: "3. تحديد الأسعار",
-        pricingText: "مقدم الخدمة هو من يحدد سعر الحجز بشكل مستقل. العملة المعتمدة هي الريال السعودي (<span class="sar-symbol" aria-label="ريال سعودي"></span>).",
+        pricingText: "مقدم الخدمة هو من يحدد سعر الحجز بشكل مستقل. العملة المعتمدة هي الريال السعودي (<span class='sar-symbol' aria-label='ريال سعودي'></span>).",
         paymentLabel: "4. طرق الدفع",
         paymentText: "يقبل الدفع حاليا عبر البطاقة من خلال التطبيق. كما يتوفر الدفع عبر جهاز الدفع (POS) في المواقع المدعومة.",
         vatLabel: "5. ضريبة القيمة المضافة",
@@ -334,6 +351,12 @@
         aboutLink: "من نحن",
         termsLink: "شروط الاستخدام",
         offersLink: "عروضنا",
+        navHome: "الرئيسية",
+        navOffers: "عروضنا",
+        navPricing: "الأسعار",
+        navBlog: "المدونة",
+        navAbout: "من نحن",
+        navMenu: "القائمة",
         pricingLink: "سياسة الأسعار",
         privacyLink: "سياسة الخصوصية",
         deleteAccountLink: "حذف الحساب",
@@ -355,9 +378,9 @@
         commissionLabel: "2. Platform Commission",
         commissionText: "The platform commission is 30% of the total booking value.",
         commissionNote: "The service provider receives 70% of each booking value after commission deduction. Prices displayed in the app represent the full booking value before any deductions.",
-        commissionExample: "Example: If the service provider sets the hourly rate at 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>, the driver pays 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>, and the provider receives 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> after the platform commission (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>) is deducted.",
+        commissionExample: "Example: If the service provider sets the hourly rate at 20 <span class='sar-symbol' aria-label='ريال سعودي'></span>, the driver pays 20 <span class='sar-symbol' aria-label='ريال سعودي'></span>, and the provider receives 14 <span class='sar-symbol' aria-label='ريال سعودي'></span> after the platform commission (6 <span class='sar-symbol' aria-label='ريال سعودي'></span>) is deducted.",
         pricingLabel: "3. Price Setting",
-        pricingText: "The service provider independently sets the booking price. The accepted currency is the Saudi Riyal (<span class="sar-symbol" aria-label="ريال سعودي"></span>).",
+        pricingText: "The service provider independently sets the booking price. The accepted currency is the Saudi Riyal (<span class='sar-symbol' aria-label='ريال سعودي'></span>).",
         paymentLabel: "4. Payment Methods",
         paymentText: "Payment is currently accepted by card through the app. POS terminal payment is also available at supported locations.",
         vatLabel: "5. Value Added Tax",
@@ -376,6 +399,12 @@
         aboutLink: "About Us",
         termsLink: "Terms of Use",
         offersLink: "Our Offers",
+        navHome: "Home",
+        navOffers: "Our Offers",
+        navPricing: "Pricing",
+        navBlog: "Blog",
+        navAbout: "About",
+        navMenu: "Menu",
         pricingLink: "Pricing Policy",
         privacyLink: "Privacy Policy",
         deleteAccountLink: "Delete Account",
@@ -397,9 +426,9 @@
         commissionLabel: "2. Commission de la plateforme",
         commissionText: "La commission de la plateforme est de 30% de la valeur totale de la reservation.",
         commissionNote: "Le prestataire recoit 70% de la valeur de chaque reservation apres deduction de la commission. Les prix affiches dans l'application representent la valeur totale avant toute deduction.",
-        commissionExample: "Exemple : si le prestataire fixe le tarif horaire a 20 <span class="sar-symbol" aria-label="ريال سعودي"></span>, le conducteur paie 20 <span class="sar-symbol" aria-label="ريال سعودي"></span> et le prestataire recoit 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> apres deduction de la commission (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>).",
+        commissionExample: "Exemple : si le prestataire fixe le tarif horaire a 20 <span class='sar-symbol' aria-label='ريال سعودي'></span>, le conducteur paie 20 <span class='sar-symbol' aria-label='ريال سعودي'></span> et le prestataire recoit 14 <span class='sar-symbol' aria-label='ريال سعودي'></span> apres deduction de la commission (6 <span class='sar-symbol' aria-label='ريال سعودي'></span>).",
         pricingLabel: "3. Fixation des prix",
-        pricingText: "Le prestataire fixe independamment le prix de la reservation. La devise acceptee est le Riyal saoudien (<span class="sar-symbol" aria-label="ريال سعودي"></span>).",
+        pricingText: "Le prestataire fixe independamment le prix de la reservation. La devise acceptee est le Riyal saoudien (<span class='sar-symbol' aria-label='ريال سعودي'></span>).",
         paymentLabel: "4. Modes de paiement",
         paymentText: "Le paiement est actuellement accepte par carte via l'application. Le paiement par terminal (TPE) est egalement disponible sur les sites pris en charge.",
         vatLabel: "5. Taxe sur la valeur ajoutee",
@@ -418,6 +447,12 @@
         aboutLink: "A propos",
         termsLink: "Conditions d'utilisation",
         offersLink: "Nos offres",
+        navHome: "Accueil",
+        navOffers: "Nos offres",
+        navPricing: "Tarifs",
+        navBlog: "Blog",
+        navAbout: "A propos",
+        navMenu: "Menu",
         pricingLink: "Politique tarifaire",
         privacyLink: "Politique de confidentialite",
         deleteAccountLink: "Supprimer le compte",
@@ -439,9 +474,9 @@
         commissionLabel: "2. پلیٹ فارم کمیشن",
         commissionText: "پلیٹ فارم کمیشن بکنگ کی کل قیمت کا 30% ہے۔",
         commissionNote: "خدمت فراہم کنندہ کو کمیشن کٹوتی کے بعد ہر بکنگ کی قیمت کا 70% ملتا ہے۔ ایپ میں دکھائی گئی قیمتیں کسی بھی کٹوتی سے پہلے مکمل بکنگ کی قیمت ہیں۔",
-        commissionExample: "مثال: اگر خدمت فراہم کنندہ فی گھنٹہ شرح 20 <span class="sar-symbol" aria-label="ريال سعودي"></span> مقرر کرتا ہے، تو ڈرائیور 20 <span class="sar-symbol" aria-label="ريال سعودي"></span> ادا کرتا ہے، اور فراہم کنندہ کو پلیٹ فارم کمیشن (6 <span class="sar-symbol" aria-label="ريال سعودي"></span>) کٹوتی کے بعد 14 <span class="sar-symbol" aria-label="ريال سعودي"></span> ملتے ہیں۔",
+        commissionExample: "مثال: اگر خدمت فراہم کنندہ فی گھنٹہ شرح 20 <span class='sar-symbol' aria-label='ريال سعودي'></span> مقرر کرتا ہے، تو ڈرائیور 20 <span class='sar-symbol' aria-label='ريال سعودي'></span> ادا کرتا ہے، اور فراہم کنندہ کو پلیٹ فارم کمیشن (6 <span class='sar-symbol' aria-label='ريال سعودي'></span>) کٹوتی کے بعد 14 <span class='sar-symbol' aria-label='ريال سعودي'></span> ملتے ہیں۔",
         pricingLabel: "3. قیمت کا تعین",
-        pricingText: "خدمت فراہم کنندہ آزادانہ طور پر بکنگ کی قیمت طے کرتا ہے۔ قبول شدہ کرنسی سعودی ریال (<span class="sar-symbol" aria-label="ريال سعودي"></span>) ہے۔",
+        pricingText: "خدمت فراہم کنندہ آزادانہ طور پر بکنگ کی قیمت طے کرتا ہے۔ قبول شدہ کرنسی سعودی ریال (<span class='sar-symbol' aria-label='ريال سعودي'></span>) ہے۔",
         paymentLabel: "4. ادائیگی کے طریقے",
         paymentText: "ادائیگی اس وقت ایپ کے ذریعے کارڈ سے قبول کی جاتی ہے۔ معاونت یافتہ مقامات پر POS ڈیوائس کے ذریعے ادائیگی بھی دستیاب ہے۔",
         vatLabel: "5. ویلیو ایڈڈ ٹیکس",
@@ -460,6 +495,12 @@
         aboutLink: "ہمارے بارے میں",
         termsLink: "استعمال کی شرائط",
         offersLink: "ہماری پیشکشیں",
+        navHome: "ہوم",
+        navOffers: "ہماری پیشکشیں",
+        navPricing: "قیمتیں",
+        navBlog: "بلاگ",
+        navAbout: "ہمارے بارے میں",
+        navMenu: "مینو",
         pricingLink: "قیمتوں کی پالیسی",
         privacyLink: "رازداری کی پالیسی",
         deleteAccountLink: "اکاؤنٹ حذف کریں",

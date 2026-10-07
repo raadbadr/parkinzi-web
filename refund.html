@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Monoton&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="header.css?v=2">
   <link rel="stylesheet" href="footer.css?v=7">
   <style>
     /* Saudi Riyal symbol (SAMA official 2024 mark) */
@@ -327,6 +327,23 @@
 </head>
 <body class="has-site-header">
   <header class="site-header">
+    <nav class="site-nav" aria-label="PARKINZI">
+      <a href="index.html" data-i18n="navHome">الرئيسية</a>
+      <a href="offers.html" data-i18n="navOffers">عروضنا</a>
+      <a href="pricing.html" data-i18n="navPricing">الأسعار</a>
+      <a href="/blog/" data-i18n="navBlog">المدونة</a>
+      <a href="about.html" data-i18n="navAbout">من نحن</a>
+    </nav>
+    <details class="menu-btn site-nav-menu">
+      <summary class="icon-circle" aria-label="القائمة" data-i18n-aria-label="navMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg></summary>
+      <div class="menu-dropdown">
+        <a href="index.html" class="menu-dropdown-item" data-i18n="navHome">الرئيسية</a>
+        <a href="offers.html" class="menu-dropdown-item" data-i18n="navOffers">عروضنا</a>
+        <a href="pricing.html" class="menu-dropdown-item" data-i18n="navPricing">الأسعار</a>
+        <a href="/blog/" class="menu-dropdown-item" data-i18n="navBlog">المدونة</a>
+        <a href="about.html" class="menu-dropdown-item" data-i18n="navAbout">من نحن</a>
+      </div>
+    </details>
     <div class="menu-btn" id="langMenuBtn">
       <div class="icon-circle"><span class="icon">🌐</span></div>
       <div class="menu-text">
@@ -607,16 +624,22 @@
         towFees: "مقابل السحب والحجز",
         thArticle: "المادة",
         thViolationType: "نوع المخالفة",
-        thFine: "الغرامة (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
+        thFine: "الغرامة (<span class='sar-symbol' aria-label='ريال سعودي'></span>)",
         thPenalty: "العقوبة",
         thVehicleWeight: "وزن المركبة",
-        thTowFee: "المقابل المادي للسحب (<span class="sar-symbol" aria-label="ريال سعودي"></span>/يوم)",
-        thImpoundFee: "المقابل المالي للحجز (<span class="sar-symbol" aria-label="ريال سعودي"></span>/يوم)",
+        thTowFee: "المقابل المادي للسحب (<span class='sar-symbol' aria-label='ريال سعودي'></span>/يوم)",
+        thImpoundFee: "المقابل المالي للحجز (<span class='sar-symbol' aria-label='ريال سعودي'></span>/يوم)",
         privacyLink: "سياسة الخصوصية",
         deleteAccountLink: "حذف الحساب",
         aboutLink: "من نحن",
         termsLink: "شروط الاستخدام",
         offersLink: "عروضنا",
+        navHome: "الرئيسية",
+        navOffers: "عروضنا",
+        navPricing: "الأسعار",
+        navBlog: "المدونة",
+        navAbout: "من نحن",
+        navMenu: "القائمة",
         pricingLink: "سياسة الأسعار",
         violationsLink: "دليل المخالفات",
         refundLink: "سياسة الاسترجاع",
@@ -635,16 +658,22 @@
         towFees: "Tow and Impound Fees",
         thArticle: "Article",
         thViolationType: "Violation Type",
-        thFine: "Fine (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
+        thFine: "Fine (<span class='sar-symbol' aria-label='ريال سعودي'></span>)",
         thPenalty: "Penalty",
         thVehicleWeight: "Vehicle Weight",
-        thTowFee: "Tow Fee (<span class="sar-symbol" aria-label="ريال سعودي"></span>/day)",
-        thImpoundFee: "Impound Fee (<span class="sar-symbol" aria-label="ريال سعودي"></span>/day)",
+        thTowFee: "Tow Fee (<span class='sar-symbol' aria-label='ريال سعودي'></span>/day)",
+        thImpoundFee: "Impound Fee (<span class='sar-symbol' aria-label='ريال سعودي'></span>/day)",
         privacyLink: "Privacy Policy",
         deleteAccountLink: "Delete Account",
         aboutLink: "About Us",
         termsLink: "Terms of Use",
         offersLink: "Our Offers",
+        navHome: "Home",
+        navOffers: "Our Offers",
+        navPricing: "Pricing",
+        navBlog: "Blog",
+        navAbout: "About",
+        navMenu: "Menu",
         pricingLink: "Pricing Policy",
         violationsLink: "Violations Guide",
         refundLink: "Refund Policy",
@@ -663,16 +692,22 @@
         towFees: "Frais de remorquage et mise en fourrière",
         thArticle: "Article",
         thViolationType: "Type d'infraction",
-        thFine: "Amende (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
+        thFine: "Amende (<span class='sar-symbol' aria-label='ريال سعودي'></span>)",
         thPenalty: "Sanction",
         thVehicleWeight: "Poids du véhicule",
-        thTowFee: "Frais de remorquage (<span class="sar-symbol" aria-label="ريال سعودي"></span>/jour)",
-        thImpoundFee: "Frais de fourrière (<span class="sar-symbol" aria-label="ريال سعودي"></span>/jour)",
+        thTowFee: "Frais de remorquage (<span class='sar-symbol' aria-label='ريال سعودي'></span>/jour)",
+        thImpoundFee: "Frais de fourrière (<span class='sar-symbol' aria-label='ريال سعودي'></span>/jour)",
         privacyLink: "Politique de confidentialité",
         deleteAccountLink: "Supprimer le compte",
         aboutLink: "À propos",
         termsLink: "Conditions d'utilisation",
         offersLink: "Nos offres",
+        navHome: "Accueil",
+        navOffers: "Nos offres",
+        navPricing: "Tarifs",
+        navBlog: "Blog",
+        navAbout: "A propos",
+        navMenu: "Menu",
         pricingLink: "Politique tarifaire",
         violationsLink: "Guide des infractions",
         refundLink: "Politique de remboursement",
@@ -691,16 +726,22 @@
         towFees: "ٹو اور ضبطی فیس",
         thArticle: "دفعہ",
         thViolationType: "خلاف ورزی کی قسم",
-        thFine: "جرمانہ (<span class="sar-symbol" aria-label="ريال سعودي"></span>)",
+        thFine: "جرمانہ (<span class='sar-symbol' aria-label='ريال سعودي'></span>)",
         thPenalty: "سزا",
         thVehicleWeight: "گاڑی کا وزن",
-        thTowFee: "ٹو فیس (<span class="sar-symbol" aria-label="ريال سعودي"></span>/دن)",
-        thImpoundFee: "ضبطی فیس (<span class="sar-symbol" aria-label="ريال سعودي"></span>/دن)",
+        thTowFee: "ٹو فیس (<span class='sar-symbol' aria-label='ريال سعودي'></span>/دن)",
+        thImpoundFee: "ضبطی فیس (<span class='sar-symbol' aria-label='ريال سعودي'></span>/دن)",
         privacyLink: "رازداری کی پالیسی",
         deleteAccountLink: "اکاؤنٹ حذف کریں",
         aboutLink: "ہمارے بارے میں",
         termsLink: "استعمال کی شرائط",
         offersLink: "ہماری پیشکشیں",
+        navHome: "ہوم",
+        navOffers: "ہماری پیشکشیں",
+        navPricing: "قیمتیں",
+        navBlog: "بلاگ",
+        navAbout: "ہمارے بارے میں",
+        navMenu: "مینو",
         pricingLink: "قیمتوں کی پالیسی",
         violationsLink: "خلاف ورزیوں کی گائیڈ",
         refundLink: "واپسی کی پالیسی",
