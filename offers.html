@@ -334,31 +334,14 @@
       .price-big { font-size: 1.4rem; }
     }
     @media (max-width: 420px) { .site-fields { grid-template-columns: minmax(0, 1fr); } }
-    /* ── الترتيب: صفوف سلايدر متطابقة تحت بعض، والخيارات بطاقات جنب بعض ── */
-    .sliders { display: grid; gap: 1rem; }
-    .srow { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 11rem; align-items: center; gap: 1rem; }
-    .srow-label .label { text-align: start; margin: 0; }
-    .srow-label small { display: block; color: var(--text-secondary); font-size: 0.75rem; text-align: start; }
-    .srow-slider { min-width: 0; }
-    .srow .num-row { margin: 0; justify-content: flex-end; }
-    /* سلايدر بعرض عموده كاملا: المسار من الطرف للطرف والمقبض يصل للنهايتين */
-    .share-range {
-      -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 22px; margin: 0;
-      background: transparent; cursor: pointer;
-    }
-    .share-range::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: var(--glass-border); }
-    .share-range::-moz-range-track { height: 6px; border-radius: 999px; background: var(--glass-border); }
-    .share-range::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--primary); }
-    .share-range::-webkit-slider-thumb {
-      -webkit-appearance: none; appearance: none; width: 20px; height: 20px; margin-top: -7px; border-radius: 50%;
-      background: var(--primary); border: 3px solid var(--white); box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-    .share-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid var(--white); box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
-    .share-range:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 6px; }
-    /* أرقام المحطات تحت مواقعها الفعلية: نصف عرض المقبض من كل طرف */
-    .ticks { padding-inline: 2px; margin-top: 2px; }
-    .ticks > span { width: 16px; text-align: center; flex: none; }
-
+    /* ── السلايدرات بالشكل الأول (رقم كبير فوق سلايدر)، منظمة في صف واحد متطابق ── */
+    .sliders-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
+    .sblock { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem 0.9rem 0.75rem; border: 1px solid var(--glass-border); border-radius: 12px; min-width: 0; }
+    .sblock .label { text-align: center; margin: 0; }
+    .sblock small { display: block; text-align: center; color: var(--text-secondary); font-size: 0.75rem; margin-top: auto; }
+    .sblock .num-row { margin: 0.15rem 0; justify-content: center; }
+    .sblock .share-range { display: block; width: 100%; accent-color: var(--primary); height: 1.4rem; margin: 0; }
+    .sblock .ticks { font-size: 0.7rem; }
     .cards { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
     .cards.cols-1 { grid-template-columns: minmax(0, 1fr); }
     .cards.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -372,8 +355,7 @@
     .hint-p { font-size: 0.82rem; margin-top: 0.25rem; }
 
     @media (max-width: 700px) {
-      .srow { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label num" "slider slider"; row-gap: 0.4rem; }
-      .srow-label { grid-area: label; } .srow-slider { grid-area: slider; } .srow .num-row { grid-area: num; }
+      .sliders-3 { grid-template-columns: minmax(0, 1fr); }
       .cards.cols-3 { grid-template-columns: minmax(0, 1fr); }
       .share-values .pay-now { margin-inline-start: 0; }
     }
@@ -439,45 +421,42 @@
 
     <div class="content">
       <h2 data-i18n="stepSite">1. موقعك</h2>
-      <div class="sliders">
-        <div class="srow">
-          <div class="srow-label"><span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span><small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small></div>
-          <div class="srow-slider">
-            <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1">
-            <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
-            <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
-          </div>
+      <div class="sliders sliders-3">
+        <div class="sblock">
+          <span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="spots" data-d="-10" aria-label="-10">−</button>
             <input class="num-box" id="spots" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" aria-labelledby="spotsLbl">
             <button type="button" class="step-btn" data-for="spots" data-d="10" aria-label="+10">+</button>
           </div>
+            <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1">
+            <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
+          <small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small>
         </div>
-        <div class="srow">
-          <div class="srow-label"><span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span><small data-i18n="gatesHint">مداخل ومخارج المواقف</small></div>
-          <div class="srow-slider">
-            <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1">
-            <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
-            <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
-          </div>
+        <div class="sblock">
+          <span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="gates" data-d="-1" aria-label="-1">−</button>
             <input class="num-box" id="gates" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" aria-labelledby="gatesLbl">
             <button type="button" class="step-btn" data-for="gates" data-d="1" aria-label="+1">+</button>
           </div>
+            <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1">
+            <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
+          <small data-i18n="gatesHint">مداخل ومخارج المواقف</small>
         </div>
-        <div class="srow">
-          <div class="srow-label"><span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span><small data-i18n="shareRowHint">والباقي للمنصة</small></div>
-          <div class="srow-slider">
-            <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1">
-            <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
-            <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
-          </div>
+        <div class="sblock">
+          <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="share" data-d="-10" aria-label="-10">−</button>
             <input class="num-box" id="share" type="number" inputmode="numeric" min="0" max="100" step="1" value="60" aria-labelledby="shareLbl">
             <button type="button" class="step-btn" data-for="share" data-d="10" aria-label="+10">+</button>
           </div>
+            <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1">
+            <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
+            <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
+          <small data-i18n="shareRowHint">والباقي للمنصة</small>
         </div>
       </div>
       <div class="share-values">
