@@ -283,7 +283,7 @@
     }
 
     /* ── مضغوط بأسلوب بطاقات مستر زاهي: عناوين صغيرة، حشو أقل، أدوات 34–40px ── */
-    .container { max-width: 760px; }
+    .container { max-width: 1040px; }
     .header { padding: 1.5rem; margin-bottom: 1rem; }
     h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
     .header p { font-size: 0.92rem; margin: 0; }
@@ -369,6 +369,17 @@
     .seg-opt input:checked + span { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); }
     .seg-opt input:focus-visible + span { outline: 2px solid var(--primary); outline-offset: 2px; }
     .seg-hint { color: var(--text-secondary); font-size: 0.8rem; }
+    @media (max-width: 700px) {
+      .step-btn { width: 44px; height: 44px; font-size: 1.3rem; }
+      .num-row .num-box { width: 7rem; font-size: 1.5rem; }
+      .sblock { padding: 1rem; }
+      .sblock .share-range { height: 2rem; }
+      .seg-row { justify-content: center; }
+      .seg { width: 100%; } .seg-opt { flex: 1; } .seg-opt span { text-align: center; }
+      .seg-hint { width: 100%; text-align: center; }
+      .share-values { flex-direction: column; align-items: stretch; text-align: center; }
+      .cta { flex-direction: column; align-items: stretch; } .cta .back-btn { width: 100%; }
+    }
   </style>
 </head>
 <body class="has-site-header">
@@ -426,10 +437,10 @@
           <span class="label" id="spotsLbl" data-i18n="spotsLabel">عدد المواقف</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="spots" data-d="-10" aria-label="-10">−</button>
-            <input class="num-box" id="spots" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" aria-labelledby="spotsLbl">
+            <input class="num-box" id="spots" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" aria-labelledby="spotsLbl" autocomplete="off">
             <button type="button" class="step-btn" data-for="spots" data-d="10" aria-label="+10">+</button>
           </div>
-            <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1">
+            <input class="share-range" id="spotsRange" type="range" min="0" max="2000" step="50" value="100" list="spotsTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="spotsTicks"><option value="0"></option><option value="500"></option><option value="1000"></option><option value="1500"></option><option value="2000"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span></span>
           <small data-i18n="spotsHint">كل مواقف المبنى، ومنها مواقف السكان</small>
@@ -438,10 +449,10 @@
           <span class="label" id="gatesLbl" data-i18n="gatesLabel">عدد البوابات</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="gates" data-d="-1" aria-label="-1">−</button>
-            <input class="num-box" id="gates" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" aria-labelledby="gatesLbl">
+            <input class="num-box" id="gates" type="number" inputmode="numeric" min="1" max="100" step="1" value="2" aria-labelledby="gatesLbl" autocomplete="off">
             <button type="button" class="step-btn" data-for="gates" data-d="1" aria-label="+1">+</button>
           </div>
-            <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1">
+            <input class="share-range" id="gatesRange" type="range" min="1" max="20" step="1" value="2" list="gatesTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="gatesTicks"><option value="1"></option><option value="5"></option><option value="10"></option><option value="15"></option><option value="20"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></span>
           <small data-i18n="gatesHint">مداخل ومخارج المواقف</small>
@@ -450,10 +461,10 @@
           <span class="label" id="shareLbl" data-i18n="shareRowLabel">حصتك من دخل الزوار</span>
           <div class="num-row">
             <button type="button" class="step-btn" data-for="share" data-d="-10" aria-label="-10">−</button>
-            <input class="num-box" id="share" type="number" inputmode="numeric" min="0" max="100" step="1" value="60" aria-labelledby="shareLbl">
+            <input class="num-box" id="share" type="number" inputmode="numeric" min="0" max="100" step="1" value="60" aria-labelledby="shareLbl" autocomplete="off">
             <button type="button" class="step-btn" data-for="share" data-d="10" aria-label="+10">+</button>
           </div>
-            <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1">
+            <input class="share-range" id="shareRange" type="range" min="0" max="100" step="10" value="60" list="shareTicks" aria-hidden="true" tabindex="-1" autocomplete="off">
             <datalist id="shareTicks"><option value="0"></option><option value="20"></option><option value="40"></option><option value="60"></option><option value="80"></option><option value="100"></option></datalist>
             <span class="ticks" aria-hidden="true"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></span>
           <small data-i18n="shareRowHint">والباقي للمنصة</small>
