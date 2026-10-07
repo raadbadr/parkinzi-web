@@ -423,6 +423,14 @@
       .steps .choice:has(input:checked) { padding: calc(1.1rem - 1px); }
       .container > .content:not(.steps) { padding: 1.25rem; }
     }
+    /* العناوين تبدأ من بداية السطر: يمين في العربية والأردو، يسار في اللغات الأخرى (text-align: start يتبع dir) */
+    .steps h2, .content > h2, .content h2 { text-align: start !important; }
+    .steps h2::after, .content > h2::after { left: auto; right: auto; inset-inline-start: 0; transform: none; }
+    .sblock .label, .sblock small, .price-title, .sum-block h3 { text-align: start; }
+    .seg-row { justify-content: flex-start; }
+    .share-values { justify-content: flex-start; text-align: start; }
+    .hint-p { text-align: start; }
+    @media (max-width: 768px) { .content h2, .steps h2 { text-align: start !important; } .seg-row, .share-values { justify-content: flex-start; text-align: start; } }
   </style>
 </head>
 <body class="has-site-header">
