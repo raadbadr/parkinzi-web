@@ -9,13 +9,26 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Tue, 13 Oct 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>كاميرات ANPR والتعرف الآلي على لوحات السيارات في المواقف الذكية</title>
+      <link>https://parkinzi.com/blog/daily-2026-10-14-anpr-cameras-license-plate-recognition-p.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-10-14-anpr-cameras-license-plate-recognition-p.html</guid>
+      <pubDate>Wed, 14 Oct 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>ANPR</category>
+      <category>المواقف الذكية</category>
+      <category>التعرف على لوحات السيارات</category>
+      <category>التقنيات الحديثة</category>
+      <description>تعرّف على تقنية ANPR وكيفية عملها في المواقف الذكية، وأهميتها في تحسين الكفاءة والأمان في مواقف السيارات الحديثة.</description>
+    </item>
 
     <item>
       <title>تقنيات إنترنت الأشياء في إدارة مواقف السيارات: الحل الذكي للمدن</title>
