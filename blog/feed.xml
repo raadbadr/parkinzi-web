@@ -9,13 +9,26 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Wed, 14 Oct 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Oct 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>الذكاء الاصطناعي وتوقع ازدحام المواقف: ثورة في إدارة المساحات</title>
+      <link>https://parkinzi.com/blog/daily-2026-10-15-artificial-intelligence-predicting-parki.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-10-15-artificial-intelligence-predicting-parki.html</guid>
+      <pubDate>Thu, 15 Oct 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>الذكاء الاصطناعي</category>
+      <category>المواقف الذكية</category>
+      <category>التنبؤ بالازدحام</category>
+      <category>المدن الذكية</category>
+      <description>تعرف على كيف يستخدم الذكاء الاصطناعي لتوقع ازدحام المواقف وتحسين تجربة السائقين في المدن الذكية.</description>
+    </item>
 
     <item>
       <title>كاميرات ANPR والتعرف الآلي على لوحات السيارات في المواقف الذكية</title>
