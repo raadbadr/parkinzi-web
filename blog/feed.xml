@@ -9,13 +9,27 @@
     <copyright>© 2026 PARKINZI</copyright>
     <managingEditor>support@parkinzi.com (فريق PARKINZI)</managingEditor>
     <webMaster>support@parkinzi.com (فريق PARKINZI)</webMaster>
-    <lastBuildDate>Tue, 27 Oct 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 07:00:00 +0000</lastBuildDate>
     <generator>PARKINZI</generator>
     <image>
       <url>https://parkinzi.com/parkinzi-logo-full-dark.png</url>
       <title>مدونة PARKINZI</title>
       <link>https://parkinzi.com/blog/</link>
     </image>
+
+    <item>
+      <title>واجهات برمجية التطبيقات وتكامل أنظمة المواقف مع تطبيقات الملاحة</title>
+      <link>https://parkinzi.com/blog/daily-2026-10-28-api-integration-parking-navigation-apps.html</link>
+      <guid isPermaLink="true">https://parkinzi.com/blog/daily-2026-10-28-api-integration-parking-navigation-apps.html</guid>
+      <pubDate>Wed, 28 Oct 2026 07:00:00 +0000</pubDate>
+      <dc:creator>فريق PARKINZI</dc:creator>
+      <category>API</category>
+      <category>المواقف الذكية</category>
+      <category>التطبيقات</category>
+      <category>الملاحة</category>
+      <category>التكامل التقني</category>
+      <description>اكتشف كيف تعمل واجهات البرمجة (API) على ربط أنظمة المواقف الذكية مع تطبيقات الملاحة، وتحسين تجربة المستخدم في البحث عن المواقف المتاحة.</description>
+    </item>
 
     <item>
       <title>منصات SaaS لإدارة المواقف للمنشآت: الحل الذكي للشركات الحديثة</title>
