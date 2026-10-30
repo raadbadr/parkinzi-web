@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#1a2933">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="apple-itunes-app" content="app-id=6751274124">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="شرح مفصّل لتقنية المواقف الذاتية الركن (Automated Parking)، آلية عملها، المستشعرات المستخدمة، والفوائد العملية والاقتصادية للمستخدمين.">
+  <meta name="keywords" content="مواقف ذكية, تقنية المواقف, المواقف الآلية, حلول وقوف السيارات">
+  <meta name="author" content="فريق PARKINZI">
+  <link rel="canonical" href="https://parkinzi.com/blog/daily-2026-10-30-self-parking-vehicles-how-they-work-exam.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://parkinzi.com/blog/daily-2026-10-30-self-parking-vehicles-how-they-work-exam.html">
+  <meta property="og:title" content="مواقف ذاتية الركن — كيف تعمل وأمثلة عملية">
+  <meta property="og:description" content="شرح مفصّل لتقنية المواقف الذاتية الركن (Automated Parking)، آلية عملها، المستشعرات المستخدمة، والفوائد العملية والاقتصادية للمستخدمين.">
+  <meta property="og:image" content="https://parkinzi.com/parkinzi-logo-full-dark.png">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:site_name" content="PARKINZI">
+  <meta property="article:published_time" content="2026-10-30T10:00:00+03:00">
+  <meta property="article:author" content="فريق PARKINZI">
+  <meta property="article:section" content="تقنية">
+  <meta property="article:tag" content="مواقف ذكية">
+  <meta property="article:tag" content="تقنية المواقف">
+  <meta property="article:tag" content="المواقف الآلية">
+  <meta property="article:tag" content="حلول وقوف السيارات">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="مواقف ذاتية الركن — كيف تعمل وأمثلة عملية">
+  <meta name="twitter:description" content="شرح مفصّل لتقنية المواقف الذاتية الركن (Automated Parking)، آلية عملها، المستشعرات المستخدمة، والفوائد العملية والاقتصادية للمستخدمين.">
+  <meta name="twitter:image" content="https://parkinzi.com/parkinzi-logo-full-dark.png">
+  <title>مواقف ذاتية الركن — كيف تعمل وأمثلة عملية | مدونة PARKINZI</title>
+  <link rel="alternate" type="application/rss+xml" title="مدونة PARKINZI — RSS" href="https://parkinzi.com/blog/feed.xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/footer.css?v=7">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <script>
+    (function(){
+      var t = localStorage.getItem('parkinzi_theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "مواقف ذاتية الركن — كيف تعمل وأمثلة عملية",
+    "description": "شرح مفصّل لتقنية المواقف الذاتية الركن (Automated Parking)، آلية عملها، المستشعرات المستخدمة، والفوائد العملية والاقتصادية للمستخدمين.",
+    "image": "https://parkinzi.com/parkinzi-logo-full-dark.png",
+    "datePublished": "2026-10-30T10:00:00+03:00",
+    "dateModified": "2026-10-30T10:00:00+03:00",
+    "author": {"@type": "Organization", "name": "فريق PARKINZI", "url": "https://parkinzi.com/about.html"},
+    "publisher": {"@type": "Organization", "name": "PARKINZI", "logo": {"@type": "ImageObject", "url": "https://parkinzi.com/parkinzi-logo-full-dark.png"}},
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://parkinzi.com/blog/daily-2026-10-30-self-parking-vehicles-how-they-work-exam.html"},
+    "inLanguage": "ar-SA",
+    "keywords": "مواقف ذكية, تقنية المواقف, المواقف الآلية, حلول وقوف السيارات"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://parkinzi.com/"},
+      {"@type": "ListItem", "position": 2, "name": "المدونة", "item": "https://parkinzi.com/blog/"},
+      {"@type": "ListItem", "position": 3, "name": "المواقف الذاتية الركن — التقنية"}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{"@type":"Question","name":"هل المواقف الذاتية آمنة تماماً؟","acceptedAnswer":{"@type":"Answer","text":"نعم، أنظمة المواقف الذاتية الحديثة تتمتع بمستويات عالية جداً من الأمان، حيث تستخدم مستشعرات متعددة وخوارزميات ذكية للتنبؤ بالعوائق. مع ذلك، أي نظام تقني يمكن أن يواجه أعطالاً نادرة، لذلك يجب على مشغلي المواقف الالتزام بصيانة دورية صارمة."}},{"@type":"Question","name":"كم تستغرق عملية الركن الذاتي من الوقت؟","acceptedAnswer":{"@type":"Answer","text":"تختلف المدة حسب تعقيد الموقف وحجم الفراغ المتاح، لكن عملية الركن الذاتي عادة ما تستغرق من دقيقة إلى دقيقتين تقريباً، وهو أسرع بكثير من محاولات الركن اليدوي المتكررة."}},{"@type":"Question","name":"هل يمكن استخدام المواقف الذاتية في جميع أنواع السيارات؟","acceptedAnswer":{"@type":"Answer","text":"لا، تتطلب المواقف الذاتية أن تكون السيارة مجهزة بأنظمة التحكم الإلكترونية والمستشعرات المتوافقة. السيارات القديمة والنماذج البسيطة قد لا تدعم هذه الخاصية."}},{"@type":"Question","name":"ما الفرق بين مساعدة الركن والركن الآلي الكامل؟","acceptedAnswer":{"@type":"Answer","text":"مساعدة الركن توجه السائق بصرياً أو صوتياً وتساعده في التحكم الجزئي، بينما الركن الآلي الكامل يتحكم بالسيارة بالكامل من البداية إلى النهاية دون تدخل السائق."}},{"@type":"Question","name":"هل أنظمة المواقف الذاتية توفر المال على المدى الطويل؟","acceptedAnswer":{"@type":"Answer","text":"نعم، رغم التكاليف الأولية العالية، توفر هذه الأنظمة المال على المدى الطويل من خلال استيعاب عدد أكبر من السيارات في نفس المساحة، تقليل الأضرار، وتوفير تكاليف التشغيل."}}]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".post-wrap h1", ".post-tldr"]
+    },
+    "url": "https://parkinzi.com/blog/daily-2026-10-30-self-parking-vehicles-how-they-work-exam.html"
+  }
+  </script>
+</head>
+<body>
+  <div class="post-progress" aria-hidden="true"><span></span></div>
+
+  <div class="post-hero" data-blog-cover data-cover-slug="daily-2026-10-30-self-parking-vehicles-how-they-work-exam" data-cover-tags="مواقف ذكية,تقنية المواقف,المواقف الآلية,حلول وقوف السيارات" data-cover-size="large"></div>
+
+  <article class="post-wrap">
+    <nav class="breadcrumb" aria-label="مسار التنقل">
+      <ol>
+        <li><a href="/">الرئيسية</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="/blog/">المدونة</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page">المواقف الذاتية الركن — التقنية</li>
+      </ol>
+    </nav>
+
+    <h1>مواقف ذاتية الركن — كيف تعمل وأمثلة عملية</h1>
+
+    <div class="post-meta">
+      <time datetime="2026-10-30">30 أكتوبر 2026</time>
+      <span aria-hidden="true">•</span>
+      <span>قراءة 6 دقائق</span>
+      <span aria-hidden="true">•</span>
+      <span>فريق PARKINZI</span>
+    </div>
+
+    <p class="ai-disclosure" role="note">مقال مدعوم بالذكاء الاصطناعي ومراجَع بشرياً.</p>
+
+    <aside class="post-tldr" aria-label="ملخص سريع">
+        <span class="post-tldr-eyebrow">باختصار</span>
+        <p>المواقف ذاتية الركن هي أنظمة تقنية متقدمة تستخدم المستشعرات والكاميرات والبرمجيات الذكية لإيقاف السيارة بشكل آلي بدون تدخل السائق، مما يوفر الوقت والمساحة ويقلل الحوادث.</p>
+      </aside>
+
+    <div class="post-tags"><a href="/blog/?tag=%D9%85%D9%88%D8%A7%D9%82%D9%81%20%D8%B0%D9%83%D9%8A%D8%A9" class="post-tag">مواقف ذكية</a><a href="/blog/?tag=%D8%AA%D9%82%D9%86%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%88%D8%A7%D9%82%D9%81" class="post-tag">تقنية المواقف</a><a href="/blog/?tag=%D8%A7%D9%84%D9%85%D9%88%D8%A7%D9%82%D9%81%20%D8%A7%D9%84%D8%A2%D9%84%D9%8A%D8%A9" class="post-tag">المواقف الآلية</a><a href="/blog/?tag=%D8%AD%D9%84%D9%88%D9%84%20%D9%88%D9%82%D9%88%D9%81%20%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA" class="post-tag">حلول وقوف السيارات</a></div>
+
+    <section class="post-takeaways" aria-label="أهم النقاط">
+        <h2>أهم النقاط — في 30 ثانية</h2>
+        <ul><li>تعتمد المواقف الذاتية على شبكة متقدمة من المستشعرات والكاميرات وأنظمة الذكاء الاصطناعي لتحديد المسافات والعوائق بدقة</li><li>توفر هذه التقنية مساحات أصغر للمواقف مقارنة بالطرق التقليدية، مما يسمح باستيعاب عدد أكبر من السيارات في نفس المنطقة</li><li>تقلل المواقف الذاتية من حوادث الاصطدام والأضرار الناتجة عن أخطاء الركن اليدوي بشكل كبير</li><li>تتطلب هذه الأنظمة استثمارات عالية في البنية التحتية والصيانة الدورية، لكنها تحقق توفيراً اقتصادياً على المدى الطويل</li></ul>
+      </section>
+
+    <div class="post-content"><p>مع تزايد الازدحام المروري والنمو العمراني السريع في منطقة الخليج والمملكة العربية السعودية، برزت الحاجة الملحّة لإيجاد حلول ذكية وفعّالة لمشكلة وقوف السيارات. من هنا جاءت تقنية المواقف ذاتية الركن، التي تمثل قفزة نوعية في مجال إدارة حركة المرور والمساحات الحضرية. هذه التقنية لا تقتصر على الراحة الشخصية للسائق، بل تمتد فوائدها إلى تحسين استخدام الأراضي والحد من الانبعاثات والأمان العام.</p><h2>ما هي المواقف ذاتية الركن؟</h2><p>المواقف ذاتية الركن (Automated Parking) هي أنظمة متطورة تمكّن السيارة من توقيف نفسها بنفسها دون تدخل مباشر من السائق. يقوم السائق بإيقاف السيارة عند مدخل الموقف، ثم تتولى البرمجيات والأجهزة الحساسة مهمة البحث عن موقع فارغ وإيقاف السيارة به بشكل آمن وسليم.</p><p>هذه الأنظمة توجد في نمطين رئيسيين: النمط الأول يركّز على مساعدة السائق من داخل السيارة، والنمط الثاني يقوم بالعملية برمتها بشكل مستقل تماماً، حيث يترك السائق السيارة تماماً والنظام يتحكم في جميع جوانب الركن.</p><h2>كيف تعمل أنظمة المواقف الذاتية؟</h2><h3>المستشعرات والكاميرات</h3><p>يعتمد نظام الموقف الذاتي على شبكة متقدمة من الأجهزة الحساسة والكاميرات عالية الدقة. تقوم هذه المستشعرات بالمهام التالية:</p><ul><li>قياس المسافات والفراغات المتاحة في منطقة الموقف</li><li>تحديد موقع السيارات الأخرى والعوائق المحيطة</li><li>مراقبة أبعاد الفراغ المتاح والتأكد من توافقه مع حجم السيارة</li><li>تسجيل حركة المشاة أو أي عائق متحرك قد يظهر أثناء عملية الركن</li></ul><h3>معالجة البيانات والذكاء الاصطناعي</h3><p>بعد جمع البيانات من المستشعرات والكاميرات، تعالج خوارزميات الذكاء الاصطناعي هذه المعلومات لاتخاذ القرارات الصحيحة. يقوم النظام بـ:</p><ul><li>تحليل خريطة الموقف وتحديد المواقع الخالية المناسبة</li><li>حساب مسار السيارة الأمثل للوصول إلى الموقف</li><li>التنبؤ بأي عوائق قد تظهر أثناء الركن</li><li>ضبط سرعة السيارة وزوايا الحركة باستمرار</li></ul><h3>التحكم في محرك السيارة والتوجيه</h3><p>عندما تتخذ البرمجيات قرارها بشأن الموقف المناسب والمسار الأمثل، تتولى أنظمة التحكم الإلكترونية في السيارة تنفيذ الحركات اللازمة. يتم التحكم في:</p><ul><li>عجلة القيادة والتوجيه بدقة عالية</li><li>سرعة المحرك والتسارع والكبح</li><li>مسافة الأمان من السيارات المجاورة والجدران</li></ul><h2>أنواع وأمثلة على المواقف الذاتية</h2><h3>نظام المساعدة في الركن (Parking Assist)</h3><p>هذا النمط يساعد السائق من خلال توجيهه المرئي والصوتي أثناء محاولة الركن. يقوم النظام بإظهار المسافات والعوائق على شاشة لوحة المعلومات، ويمكن للسائق التحكم في بعض جوانب الحركة بينما ينصحه النظام بالاتجاهات الصحيحة. هذا النوع شائع نسبياً في السيارات الحديثة المتوسطة الثمن.</p><h3>نظام الركن الآلي الكامل (Full Autonomous Parking)</h3><p>في هذا النمط، يترك السائق السيارة تماماً عند مدخل الموقف، والنظام يتحكم في كل شيء: البحث عن موقف فارغ، حساب المسار، والركن بشكل مستقل تماماً. يتطلب هذا النظام أجهزة استشعار أكثر تقدماً وبرمجيات أكثر تطوراً.</p><h3>الأنظمة المدمجة في الأبنية الذكية</h3><p>بعض المرافق الحديثة في المدن الخليجية تعتمد على أنظمة متكاملة حيث يتم إرشاد السائق بواسطة تطبيقات ذكية تظهر الفراغات المتاحة على خريطة الموقف قبل أن يدخل السيارة، مما يقلل من الوقت الضائع في البحث.</p><h2>المميزات والفوائد</h2><h3>توفير الوقت والراحة</h3><p>يعتبر توفير الوقت من أهم فوائد هذه التقنية. السائقون لا يحتاجون إلى قضاء دقائق في البحث عن موقف مناسب أو محاولة الركن في مساحات ضيقة. هذا الأمر ذو أهمية خاصة في المدن المكتظة بالسكان مثل الرياض وجدة والدوحة وأبوظبي.</p><h3>الأمان وتقليل الحوادث</h3><p>تقلل المواقف الذاتية من الحوادث الناتجة عن خطأ الركن اليدوي. النظام يعمل بدقة عالية ولا يتأثر بعوامل مثل التعب أو الإرهاق. كما يقلل من الاصطدامات بين السيارات والأضرار الناتجة عنها.</p><h3>استخدام أمثل للمساحات</h3><p>تتطلب المواقف الذاتية مساحات أقل بكثير من المواقف التقليدية. السيارات يمكن أن تركن بمسافات أقرب إلى بعضها، مما يسمح باستيعاب عدد أكبر من السيارات في نفس المساحة. هذا له تأثير اقتصادي مباشر على مشغلي المواقف والمطورين العقاريين.</p><h3>الفوائد البيئية</h3><p>بتقليل الوقت الضائع في البحث عن موقف، تنخفض انبعاثات الكربون والتلوث الناجم عن السيارات الدائرة بلا هدف. هذا يساهم في تحقيق أهداف الاستدامة البيئية التي تركز عليها الرؤى الحكومية في دول الخليج.</p><h2>التحديات والاعتبارات</h2><h3>التكاليف الأولية المرتفعة</h3><p>تتطلب أنظمة المواقف الذاتية استثمارات عالية في البنية التحتية والمعدات والبرمجيات. هذا يجعل سعر الخدمة أعلى في البداية، لكن التوفيرات على المدى الطويل قد تعوض هذه التكاليف.</p><h3>الصيانة والتطور المستمر</h3><p>مثل أي نظام تقني متقدم، تتطلب المواقف الذاتية صيانة دورية منتظمة وتحديثات برمجية. يجب أن يكون لديك فريق فني متخصص لضمان عمل النظام بكفاءة.</p><h3>المسؤولية القانونية</h3><p>تثير المواقف الذاتية تساؤلات قانونية حول من يتحمل المسؤولية في حالة حدوث ضرر أو حادث — هل مالك السيارة أم مشغل الموقف أم الشركة المصنعة للنظام. هذه الأسئلة لا تزال قيد النقاش في الأطر التنظيمية.</p><h2>واقع المواقف الذاتية في المنطقة</h2><p>المملكة العربية السعودية والإمارات وقطر والكويت تستثمر في تقنيات الذكاء الاصطناعي والمدن الذكية. بعض المشاريع الحديثة في المناطق التجارية والفنادق الخمس نجوم بدأت باستخدام أنظمة موقف ذاتية أو شبه ذاتية. هذه التطبيقات تشكل نقطة انطلاق نحو توسع أكبر في استخدام هذه التقنية في المستقبل القريب.</p></div>
+
+    <section class="post-faq" aria-label="أسئلة شائعة">
+        <h2>أسئلة شائعة</h2>
+        
+        <details open>
+          <summary>هل المواقف الذاتية آمنة تماماً؟</summary>
+          <p>نعم، أنظمة المواقف الذاتية الحديثة تتمتع بمستويات عالية جداً من الأمان، حيث تستخدم مستشعرات متعددة وخوارزميات ذكية للتنبؤ بالعوائق. مع ذلك، أي نظام تقني يمكن أن يواجه أعطالاً نادرة، لذلك يجب على مشغلي المواقف الالتزام بصيانة دورية صارمة.</p>
+        </details>
+        <details>
+          <summary>كم تستغرق عملية الركن الذاتي من الوقت؟</summary>
+          <p>تختلف المدة حسب تعقيد الموقف وحجم الفراغ المتاح، لكن عملية الركن الذاتي عادة ما تستغرق من دقيقة إلى دقيقتين تقريباً، وهو أسرع بكثير من محاولات الركن اليدوي المتكررة.</p>
+        </details>
+        <details>
+          <summary>هل يمكن استخدام المواقف الذاتية في جميع أنواع السيارات؟</summary>
+          <p>لا، تتطلب المواقف الذاتية أن تكون السيارة مجهزة بأنظمة التحكم الإلكترونية والمستشعرات المتوافقة. السيارات القديمة والنماذج البسيطة قد لا تدعم هذه الخاصية.</p>
+        </details>
+        <details>
+          <summary>ما الفرق بين مساعدة الركن والركن الآلي الكامل؟</summary>
+          <p>مساعدة الركن توجه السائق بصرياً أو صوتياً وتساعده في التحكم الجزئي، بينما الركن الآلي الكامل يتحكم بالسيارة بالكامل من البداية إلى النهاية دون تدخل السائق.</p>
+        </details>
+        <details>
+          <summary>هل أنظمة المواقف الذاتية توفر المال على المدى الطويل؟</summary>
+          <p>نعم، رغم التكاليف الأولية العالية، توفر هذه الأنظمة المال على المدى الطويل من خلال استيعاب عدد أكبر من السيارات في نفس المساحة، تقليل الأضرار، وتوفير تكاليف التشغيل.</p>
+        </details>
+      </section>
+
+    
+    <nav class="post-share" aria-label="مشاركة المقال">
+      <span class="post-share-label">شارك المقال</span>
+      <a href="https://wa.me/?text=%D9%85%D9%88%D8%A7%D9%82%D9%81%20%D8%B0%D8%A7%D8%AA%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B1%D9%83%D9%86%20%E2%80%94%20%D9%83%D9%8A%D9%81%20%D8%AA%D8%B9%D9%85%D9%84%20%D9%88%D8%A3%D9%85%D8%AB%D9%84%D8%A9%20%D8%B9%D9%85%D9%84%D9%8A%D8%A9%20https%3A%2F%2Fparkinzi.com%2Fblog%2Fdaily-2026-10-30-self-parking-vehicles-how-they-work-exam.html" target="_blank" rel="noopener" aria-label="شارك عبر واتساب" class="post-share-btn post-share-btn--whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5C18.3 1.2 15.2 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.6 1.4 5.6 1.4h.1c6.6 0 12-5.4 12-12 0-3.2-1.3-6.2-3.4-8.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.5 4.5-9.9 9.9-9.9 2.6 0 5.1 1 7 2.9 1.9 1.9 2.9 4.4 2.9 7-.1 5.4-4.6 9.8-10 9.8zm5.4-7.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.6.1-.3-.1-1.2-.4-2.4-1.4-.9-.8-1.4-1.8-1.6-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
+        واتساب
+      </a>
+      <a href="https://twitter.com/intent/tweet?text=%D9%85%D9%88%D8%A7%D9%82%D9%81%20%D8%B0%D8%A7%D8%AA%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B1%D9%83%D9%86%20%E2%80%94%20%D9%83%D9%8A%D9%81%20%D8%AA%D8%B9%D9%85%D9%84%20%D9%88%D8%A3%D9%85%D8%AB%D9%84%D8%A9%20%D8%B9%D9%85%D9%84%D9%8A%D8%A9&url=https%3A%2F%2Fparkinzi.com%2Fblog%2Fdaily-2026-10-30-self-parking-vehicles-how-they-work-exam.html" target="_blank" rel="noopener" aria-label="شارك عبر X" class="post-share-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fparkinzi.com%2Fblog%2Fdaily-2026-10-30-self-parking-vehicles-how-they-work-exam.html" target="_blank" rel="noopener" aria-label="شارك عبر LinkedIn" class="post-share-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        LinkedIn
+      </a>
+      <button type="button" class="post-share-btn post-share-copy" data-share-url="https://parkinzi.com/blog/daily-2026-10-30-self-parking-vehicles-how-they-work-exam.html" aria-label="نسخ رابط المقال">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span class="post-share-copy-label">نسخ الرابط</span>
+      </button>
+    </nav>
+
+    <div class="post-footer-cta">
+      <h2>جرّب PARKINZI</h2>
+      <p>حمّل التطبيق واعرف أحدث حلول المواقف في السعودية.</p>
+      <a href="https://apps.apple.com/sa/app/parkinzi/id6751274124" class="cta-btn" target="_blank" rel="noopener noreferrer" aria-label="تحميل من App Store (يفتح في نافذة جديدة)">تحميل من App Store ↗</a>
+    </div>
+
+    <section id="relatedPosts" class="related-posts" aria-label="مقالات ذات صلة"></section>
+
+    <a href="/blog/" class="back-link">← العودة لكل المنشورات</a>
+  </article>
+
+  <footer class="footer">
+    <p class="footer-links">
+      <a href="/about.html">من نحن</a>
+      <a href="/terms.html">شروط الاستخدام</a>
+      <a href="/offers.html">عروضنا</a>
+      <a href="/pricing.html">سياسة الأسعار</a>
+      <a href="/privacy.html">سياسة الخصوصية</a>
+      <a href="/blog/">المدونة</a>
+      <a href="/delete-account">حذف الحساب</a>
+      <a href="/refund.html">سياسة الاسترجاع</a>
+      <a href="/#contact">تواصل معنا</a>
+    </p>
+    <p class="footer-copyright">
+      <span>جميع الحقوق محفوظة</span>
+      <span> <img src="/parkinzi-logo-full-dark.png" alt="" aria-hidden="true" class="brand-logo-inline brand-logo-inline--xs"> © 2026</span>
+    </p>
+  </footer>
+
+  <script src="/blog/cover-gen.js?v=2" defer></script>
+  <script src="/blog/post-runtime.js?v=2" defer></script>
+  <script src="/brand-logo.js?v=5" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGDPERQEF4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TGDPERQEF4');
+  </script>
+</body>
+</html>
